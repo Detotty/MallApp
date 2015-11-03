@@ -1,0 +1,46 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white" >
+
+<!--     <RelativeLayout -->
+<!--         android:id="@+id/top" -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="55dp" -->
+<!--         android:background="@drawable/top_bar" > -->
+        
+<!--         <ImageButton -->
+<!--             android:id="@+id/compose_new_message" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_alignParentRight="true" -->
+<!--             android:layout_centerVertical="true" -->
+<!--             android:layout_marginRight="10dp" -->
+<!--             android:background="@android:color/transparent" -->
+<!--             android:src="@drawable/compose_button" -->
+<!--             android:visibility="visible" -->
+<!--             android:contentDescription="@string/app_name" -->
+<!--             /> -->
+
+<!--         <TextView -->
+<!--             android:id="@+id/endorsement_name" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:layout_centerVertical="true" -->
+<!--             android:layout_centerHorizontal="true" -->
+<!--             android:text="Recent Chat" -->
+<!--             android:textColor="@android:color/white" -->
+<!--             android:textSize="25sp" /> -->
+<!--     </RelativeLayout> -->
+
+<!--     <ListView -->
+<!--         android:id="@+id/recent_chat_list" -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:listSelector="@color/grey2" -->
+<!--         android:layout_below="@+id/top" > -->
+
+<!--     </ListView> -->
+    
+</RelativeLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/fragment_parent_tab_messages.xml -->

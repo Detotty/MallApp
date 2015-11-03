@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources xmlns:android="http://schemas.android.com/apk/res/android">
+    
+	<color name="purple">#663399</color>
+	<color name="green1">#56C6A0</color>
+	
+	
+	<color name="text_profile_gray">#929497</color>
+	
+	
+	<color name="white">#FFFFFF</color>
+	<color name="black">#000000</color>
+	<color name="black1">#404040</color>
+	<color name="black2">#5A5A5A</color>
+	<color name="black3">#595959</color>
+	
+	<color name="viewpager">#CECECE</color>
+	<color name="search_area">#BFC0C2</color>
+	<color name="text_interest">#AAAAAA</color>
+	<color name="hint_color">#C7C7CD</color>
+	<color name="section_header">#E6E6E6</color>
+	
+	
+	
+	
+	<color name="text_gray">#58595b</color>
+	<color name="grey">#7A7A7A</color>
+	<color name="grey1">#939393</color>
+  	<color name="grey2">#D1D0CE</color>
+  	<color name="grey3">#B6B6B4</color>
+  	<color name="grey4">#B8B8B8</color>
+  	<color name="grey5">#AAAAAA</color>
+  	
+  	
+  	
+  	<color name="greylight">#E5E4E2</color>
+  	<color name="border_grey">#C1C1BE</color>
+  	<color name="bottom_tabs">#E2E2E2</color>
+  
+  
+  
+	<color name="splash_bg">#292929</color>
+  	<color name="transparent">#00000000</color>
+  
+  
+  <color name="send_message_list_selector">#A8E1EB</color>
+  <color name="dummy_bg">#FEB777</color>
+  <color name="tab_bg">#333333</color> 
+  <color name="selected_tab_bg">#007FFE</color>
+  <color name="where_are_you_know_action_bar_color">#CC39617d</color>
+
+  <color name="list_item_text">#5d5047</color>
+</resources>

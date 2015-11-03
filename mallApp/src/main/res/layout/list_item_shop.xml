@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:paddingTop="10dp">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:baselineAligned="false"
+        android:background="@drawable/offer_list_bg" 
+        android:weightSum="1" >
+        
+    	<LinearLayout
+            android:layout_width="match_parent"
+        	android:layout_height="fill_parent"
+        	android:layout_weight="0.5">
+            <ImageView
+                android:id="@+id/center_image"
+                android:layout_width="fill_parent"
+                android:layout_height="fill_parent"
+                
+                android:layout_marginLeft="4dp"
+                android:layout_marginTop="2dp"
+                android:layout_marginBottom="5dp"
+                android:contentDescription="@string/app_name" />
+        </LinearLayout>
+        
+        <RelativeLayout 
+            android:layout_width="match_parent"
+        	android:layout_height="match_parent"
+        	android:layout_weight="0.5"
+        	android:orientation="vertical">
+
+            <TextView
+                android:id="@+id/title"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginRight="5dp"
+                android:layout_marginTop="5dp"
+                android:layout_marginLeft="5dp"
+                android:layout_toLeftOf="@+id/fav_center"
+                android:text="TextView"
+                android:textColor="@color/purple"
+                android:textStyle="bold"
+                android:textSize="15sp" 
+                android:ellipsize="end"
+        		android:singleLine="true"
+                android:maxLength="20"/>
+
+        	<TextView
+        	    android:id="@+id/decs"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:layout_alignParentLeft="true"
+        	    android:layout_below="@+id/title"
+        	    android:layout_marginRight="5dp"
+        	    android:layout_marginLeft="5dp"
+        	    android:layout_marginTop="5dp"
+        	    android:layout_toLeftOf="@+id/fav_center"
+        	    android:text="TextView"
+        	    android:textStyle="italic"
+        	    android:textColor="@color/black3"
+        	    android:textSize="13sp"
+        	    android:ellipsize="end"
+        		android:maxLines="2"/>
+
+        	<ImageButton
+        	    android:id="@+id/fav_center"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:layout_alignParentRight="true"
+        	    android:layout_alignParentTop="true"
+        	    android:layout_marginTop="10dp"
+        	    android:layout_marginRight="10dp"
+        	    android:layout_alignTop="@+id/floor_no"
+        	    android:contentDescription="@string/app_name"
+        	    android:src="@drawable/offer_fav"
+        	    android:background="@color/transparent" />
+
+        	<TextView
+        	    android:id="@+id/floor_no"
+        	    android:layout_width="wrap_content"
+        	    android:layout_height="wrap_content"
+        	    android:layout_below="@+id/decs"
+        	    android:layout_marginRight="5dp"
+        	    android:layout_marginLeft="5dp"
+        	    android:layout_marginTop="5dp"
+        	    android:textColor="@color/purple"
+        	    android:textSize="13sp"
+        	    android:text="TextView"
+        	    android:ellipsize="end"
+        		android:singleLine="true" />
+        	
+		</RelativeLayout>
+    </LinearLayout>
+</LinearLayout>

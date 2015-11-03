@@ -1,0 +1,71 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/transparent"
+    android:padding="@dimen/margin_left_10" >
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:padding="5dp">
+        <TextView
+            android:id="@+id/textView4"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:text="@string/shop_offers"
+            android:textColor="@color/black3"
+            android:textSize="@dimen/text_22" />
+        <View 
+            android:id="@+id/v"
+            android:layout_width="fill_parent"
+            android:layout_below="@+id/textView4"
+            android:layout_height="1dp"
+            android:layout_marginTop="@dimen/margin_left_5"
+            android:background="@color/black3"/>
+        
+    </RelativeLayout>
+    
+    <RelativeLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content">
+		<ImageView
+            android:id="@+id/imageView1"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_alignParentLeft="true"
+            android:src="@drawable/shop_expand_left"
+            android:contentDescription="@string/app_name" />
+        
+         <HorizontalScrollView
+             android:id="@+id/horizontalScrollView1"
+             android:layout_width="wrap_content"
+             android:layout_height="wrap_content"
+             android:scrollbars="none"
+             android:layout_marginLeft="@dimen/margin_left_5"
+             android:layout_marginRight="@dimen/margin_left_5"
+             android:layout_toLeftOf="@+id/imageView2"
+             android:layout_toRightOf="@+id/imageView1" >
+	        <LinearLayout
+		        android:id="@+id/shop_offers"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:orientation="horizontal">
+	    	</LinearLayout>
+    	</HorizontalScrollView>
+        
+        
+        <ImageView
+            android:id="@+id/imageView2"
+            android:layout_centerVertical="true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentRight="true"
+            android:src="@drawable/shop_expand_right"
+            android:contentDescription="@string/app_name" />
+        
+    </RelativeLayout>
+</LinearLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/shop_detail_offers.xml -->

@@ -1,0 +1,74 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+<!--     <RelativeLayout -->
+<!--         android:layout_width="match_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:id="@+id/search" -->
+<!--         android:background="@drawable/top_bar" -->
+<!--         android:orientation="horizontal" -->
+<!--         android:paddingLeft="10dp" -->
+<!--         android:paddingRight="10dp"> -->
+        
+<!-- 		<EditText -->
+<!--         	android:id="@+id/auto_complete_search" -->
+<!--         	android:layout_width="fill_parent" -->
+<!-- 			android:layout_height="wrap_content" -->
+<!-- 			android:layout_centerVertical="true" -->
+<!-- 			android:layout_centerHorizontal="true" -->
+<!--         	android:drawableLeft="@drawable/search_icon1" -->
+<!--         	android:drawablePadding="10dp" -->
+<!--         	android:background="@drawable/edit_profile_textfield" -->
+<!--         	android:paddingLeft="15dp" -->
+<!--         	android:textColor="@android:color/black"> -->
+<!--         	<requestFocus /> -->
+<!--     	</EditText> -->
+<!-- 	</RelativeLayout> -->
+	
+<!-- 	<LinearLayout -->
+<!-- 		android:layout_width="match_parent" -->
+<!-- 		android:layout_height="wrap_content" -->
+<!-- 		android:layout_below="@+id/search" -->
+<!-- 		android:padding="5dp" -->
+<!-- 		android:layout_marginTop="5dp" -->
+<!-- 		android:background="@color/white" -->
+<!-- 		android:id="@+id/filter" -->
+<!-- 		android:weightSum="1" > -->
+<!-- 		<ImageButton -->
+<!-- 		    android:id="@+id/endorse_contacts" -->
+<!-- 		    android:layout_weight="0.5" -->
+<!-- 		    android:layout_width="wrap_content" -->
+<!-- 		    android:layout_height="wrap_content" -->
+<!-- 		    android:background="@drawable/contacts_endorsements" -->
+<!-- 		    android:contentDescription="@string/accept" -->
+<!-- 		     /> -->
+<!-- 		<ImageButton  -->
+<!-- 		    android:id="@+id/all_contacts" -->
+<!-- 			android:layout_weight="0.5" -->
+<!-- 		    android:layout_width="wrap_content" -->
+<!-- 		    android:layout_height="wrap_content" -->
+<!-- 		    android:background="@drawable/contacts_alldata" -->
+<!-- 		    android:contentDescription="@string/accept" -->
+<!-- 		     /> -->
+<!-- 	</LinearLayout> -->
+    
+<!-- 	<FrameLayout -->
+<!-- 	    android:layout_width="match_parent" -->
+<!-- 	    android:layout_height="fill_parent" -->
+<!-- 	    android:layout_above="@+id/ll_tabs_bottom" -->
+<!-- 	    android:layout_below="@+id/filter" > -->
+
+<!--         List View -->
+<!--         <ListView -->
+<!--             android:id="@+id/contacts_list" -->
+<!--             android:layout_width="fill_parent" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:visibility="visible" /> -->
+        
+<!--     </FrameLayout> -->
+    
+	
+</RelativeLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/fragment_parent_tab_contacts.xml -->

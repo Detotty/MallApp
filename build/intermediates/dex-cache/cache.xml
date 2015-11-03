@@ -1,0 +1,236 @@
+<?xml version="1.0" encoding="utf-8"?>
+<items version="2" >
+
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="95758a2905669affbffc5ddd262921d375674fad">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-9ccdfd09ac0fcb0ea64932722b552e98b7339ea1.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="17449c47df35c754b257532052f1270c444f7993">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-01467ae53391a0de88a95e88658ec8ecf1a50077.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AppData\Local\Android\sdk\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-48c576b7545114d56093060574622627c095d0d4.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-ce45348cf2af64e222f38bbe1a6ae6e34f178bd2.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-e18e1f1124ad3432452439ddc1d21d940da9aa8e.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d0dda274b703dd9c5bb056867649d22b4171ae7d">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-8428c2b35b3a52c9a6500669826c13cbb2217be9.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="482de223655d06253cc6a4955d653f8994169500">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-b5c05876c3cb83ec462fe029e3bd0e9bbf061b7e.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-5e1ba863276a4d795874bbc4b96e3f7c3cd5e7c3.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4477ea44f5ec5ad064022a22691732d7638ff197">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-2b10b7222db42776cb8c527865c8ccfeaa11ec2f.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="69a867aa0163d230c8e2ff38c8140bb3822b3138">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-dcf5b89044543e230df0035053cf3a9cf46e2da4.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3178362320bcf51228835b60ff978efadfd1f783">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-f5b56cb8e2c7c7dcbe4576b31a0e260c618fde6d.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7175a1ecd0a87578c251e41bb9ee8ca3bf66631c">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-7d16af0ec7bd0332cfa3cd1059a55714202ebdf9.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-3b108598303ca08ae229041fe7641a74a240def2.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d294caf562c4c678b2ef351662a0ca6f1a4d06c0">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-6205a67332281483e34acc46cc25ee8bdcb5af2c.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-54eee6668b2c375e7d35f023012064a1b2b143fc.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3b05c18f60969ecc2ba49c0409c4b96be2d9cb0c">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-9a7ce4384163f3c3ac0384cc9c622fff10dfd8c7.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="041d93cf0533591c29d1d7263b2fa114dbfb20bd">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-fdf4dc72b02528785501c25cf68b0670599d88bd.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-b96b1713e583b7c2cb8acd62da6b0cd0da2a5a20.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="b92002cb2f0e11a226ac5bac6dff1dc2a9d0b774">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-83932b3fb35338d7310767b168936e99d8673380.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\gson-2.3.1-d9bac33cd68ee7615e3d4ca804d9caa55571e350.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d93480da1d303122ee67dc3bc23e6297bdef9951">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-7e04f486e65d5a6b69fcf4f30e0c2188b38b2a15.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3aed37c38c56679602255dd72ef356da5d327cda">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-0e3f40c0fdbf4f558974320e80f258947644b3f6.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\libs\twitter4j-core-4.0.2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="381cf31e9200c2902782f17248d2af18e2ab4c56">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\twitter4j-core-4.0.2-988ed99f78cac3878a11f5b9c25914668c8252c2.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="325788a04b436a0bccbc5b4c54cf0f12ebdcbd2d">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-0afab3a5d2252d77fe309128e03712698826e4c3.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-767ff8b5bfbc72a6be045d363eef5f2f6f5fa05a.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-wearable\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="97f3b099801a9ad9d70e835b9125273e986eb68d">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-aeb61bea63e5b6cdabdf91c115c6770114bbbf25.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="dcb5b75baf05d92e61d5706737200ee55949f97b">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-c9d9d604614cd098bd828e6d93f1e6578b37b64a.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="997773777cf3904c11d6764fe3b7668538220e49">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-35d12923e3ab80e92f22c5d5ba4e420d95f3af79.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\libs\acra-4.5.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="44a5eb946e0d83eed4a0128d877ca1fd8168b83a">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\acra-4.5.0-6b468773e29b8a8f344f7eb9116e67dfbe61fbec.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-eba14b7f23f0f40a3cc10d6a89b32985420e4813.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-d444d7d7f53c87fdc123210c0f86b919892f90bd.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2a7e47da654546f9457deb6132364f1bf33a1857">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-7307d47380503210a2ce87fdc32c8a33648d897c.jar" />
+    </item>
+    <item
+        jar="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9cf8c0ef60847621c7ad00b4f78dbfc9daba4af2">
+        <dex dex="C:\Users\appster\AndroidStudioProjects\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-af3e65f1ebc9fd471c7cc268b9db6ee5567761c3.jar" />
+    </item>
+
+</items>

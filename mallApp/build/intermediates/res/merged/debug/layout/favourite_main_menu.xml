@@ -1,0 +1,78 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+    
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include layout="@layout/shop_main_menu_header" />
+        <include layout="@layout/favourite_main_menu_segment"/>
+        <include layout="@layout/main_menu_list_search" />
+    </LinearLayout>
+    
+    <LinearLayout
+        android:layout_below="@+id/header"
+        android:layout_width="fill_parent"
+		android:layout_height="fill_parent"
+	   	android:orientation="vertical">
+	    
+<!-- 	    <LinearLayout  -->
+<!-- 		    android:id="@+id/scroll_side_index" -->
+<!-- 		    android:layout_width="fill_parent" -->
+<!-- 		    android:layout_height="wrap_content" -->
+<!-- 		    android:baselineAligned="false" -->
+<!-- 		    android:orientation="horizontal" -->
+<!-- 		    android:weightSum="1"> -->
+        
+<!-- 			<com.foound.widget.AmazingListView  -->
+<!-- 			    android:layout_width="0dp" -->
+<!-- 	       		android:animateLayoutChanges="true" -->
+<!-- 			    android:layout_height="wrap_content"  -->
+<!-- 			    android:visibility="visible" -->
+<!-- 			    android:layout_weight="0.93" -->
+<!-- 			    android:scrollbars="none" -->
+<!-- 			    android:divider="@null" -->
+<!-- 				android:dividerHeight="0dp" -->
+<!-- 			    android:id="@+id/shop_list"/> -->
+	    
+<!-- 		    <ScrollView -->
+<!-- 		        android:layout_width="0dp" -->
+<!-- 		        android:layout_height="match_parent" -->
+<!-- 		        android:visibility="visible" -->
+<!-- 		        android:layout_weight="0.07" -->
+<!-- 		        android:scrollbars="none"> -->
+<!-- 		        <LinearLayout -->
+<!-- 		            android:id="@+id/side_index" -->
+<!-- 		            android:layout_width="match_parent" -->
+<!-- 		            android:layout_height="0dp" -->
+<!-- 		            android:background="@android:color/transparent" -->
+<!-- 		            android:gravity="center_horizontal" -->
+<!-- 		            android:orientation="vertical" > -->
+<!-- 		        </LinearLayout> -->
+<!-- 		    </ScrollView> -->
+<!-- 		</LinearLayout> -->
+        
+        <ExpandableListView
+		    android:id="@+id/expandableListView"
+		    android:layout_width="match_parent"
+       		android:layout_height="wrap_content"
+       		android:divider="@null"
+			android:dividerHeight="0dp"
+		    android:visibility="visible" >
+		</ExpandableListView>
+	
+		<ListView
+		    android:id="@+id/search_list_view"
+		    android:layout_width="match_parent"
+       		android:layout_height="wrap_content"
+       		android:divider="@null"
+			android:dividerHeight="0dp"
+		    android:visibility="gone" >
+		</ListView>
+    </LinearLayout>
+</RelativeLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/favourite_main_menu.xml -->

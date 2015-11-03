@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    
+    
+    <string-array name="interest_list" >
+        <item>Accessories</item>
+        <item>Art Gallery</item>
+        <item>Arts Crafts</item>
+        <item>Athletic Apparel</item>
+        <item>Books Stationery</item>
+        <item>Childrens Apparel</item>
+        <item>Department Stores</item>
+        <item>Convenience</item>
+        <item>Fast Food</item>
+        <item>Gifts</item>
+        <item>Health Beauty</item>
+        <item>Hobby</item>
+        <item>Home Furnishings</item>
+        <item>Jewelry</item>
+        <item>Luggage</item>
+        <item>Mens Apparel</item>
+        <item>Music Electronics</item>
+        
+	</string-array>
+    
+</resources>

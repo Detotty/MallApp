@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+	<string name="heading_favourite">FAVOURITE</string>
+	<string name="heading_services">Services</string>
+	<string name="heading_directions"> Directions &amp; Parking</string>
+	<string name="address">Address</string>
+	<string name="Parking">Park here</string>
+	<string name="parking_heading">Where is my car</string>
+	<string name="parking_decs">Parking is 24 hour. Parking rate is 2$ per hour. Other parking info will be available on our system. Enjoy secured parking system.</string>
+    
+    
+<!--     <string name="shops_">Shops</string> -->
+<!--     <string name="restaurants_">Restaurants</string> -->
+<!--     <string name="cancel">Cancel</string> -->
+     
+<!--     shop header -->
+<!--     <string name="alphabetic">A/A</string> -->
+<!--     <string name="category">Category</string> -->
+<!--     <string name="floor">Floor</string> -->
+<!--     <string name="shop_1">Type Shop Name</string> -->
+<!--     <string name="shop_offers">The Shop Offers</string> -->
+<!--     <string name="related_shop">Related Shops</string> -->
+    
+    
+    
+    
+</resources>

@@ -1,0 +1,37 @@
+<RelativeLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@drawable/background">
+    
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <include layout="@layout/shop_main_menu_header" />
+        <include layout="@layout/directions_text_area" />
+        <include layout="@layout/directions_tab2_area" />
+    </LinearLayout>
+    
+    <fragment
+        android:id="@+id/map"
+        android:layout_below="@+id/header"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        class="com.google.android.gms.maps.MapFragment" />
+
+    <Button
+        android:id="@+id/park_here"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentBottom="true"
+        android:layout_centerHorizontal="true"
+        android:layout_marginBottom="@dimen/margin_left_20"
+        android:textColor="@color/white"
+        android:textSize="@dimen/text_20"
+        android:background="@drawable/continue_selector"
+        android:text="@string/Parking" />
+    
+</RelativeLayout>

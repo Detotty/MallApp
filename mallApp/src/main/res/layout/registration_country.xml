@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/purple">
+    
+    
+<LinearLayout
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:gravity="left"
+    android:paddingLeft="25dp"
+    android:paddingRight="25dp"
+    android:paddingTop="100dp"
+    android:orientation="vertical">
+    
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:textSize="15sp"
+        android:textStyle="italic"
+        android:text="@string/register_country_1" />
+
+    <TextView
+        android:id="@+id/textView2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="20dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/country" />
+
+    <TextView
+        android:id="@+id/country_name"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_field"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:gravity="center_vertical"
+        android:textColor="@color/black3"
+        android:textSize="@dimen/text_18"
+        android:hint="@string/register_country_2"
+        android:textColorHint="@color/hint_color"
+        />
+		
+
+    <TextView
+        android:id="@+id/textView3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="30dp"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:text="@string/phone_no" />
+
+    <EditText
+        android:id="@+id/phone_no"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/text_field"
+        android:layout_marginTop="10dp"
+        android:paddingLeft="10dp"
+        android:inputType="number"
+        android:hint="@string/register_country_3"
+        android:textColorHint="@color/hint_color"
+        android:textSize="@dimen/text_18"
+        android:textColor="@color/black3"
+        android:ems="10" >
+    </EditText>
+
+    <CheckBox
+        android:id="@+id/push_notification"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:button="@drawable/register_checkbox_design" 
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="50dp"
+        android:checked="true"
+        android:text="@string/register_country_4" />
+
+     	<Button
+	        android:id="@+id/r_continue"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_gravity="center_horizontal"
+        	android:layout_marginTop="20dp"
+	        android:background="@drawable/continue_selector"
+	        android:text="@string/continue_"
+	        android:textColor="@color/white"
+	        android:textSize="@dimen/text_20"
+	        />
+
+     <TextView
+         android:id="@+id/textView4"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_gravity="center_horizontal"
+         android:layout_marginTop="10dp"
+         android:textSize="12sp"
+         android:textColor="@android:color/white"
+         android:text="@string/register_country_5" />
+    
+    
+
+</LinearLayout>
+</ScrollView>

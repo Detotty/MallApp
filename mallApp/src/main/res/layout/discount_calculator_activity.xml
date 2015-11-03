@@ -1,0 +1,126 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <include 
+        android:id="@+id/header"
+        layout="@layout/shop_main_menu_header" />
+    
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:layout_marginTop="@dimen/margin_left_25"
+        android:baselineAligned="false">
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_vertical|center_horizontal"
+           	android:layout_weight="0.5" >
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:textStyle="bold"
+                android:text="@string/s_price" />
+            
+            <EditText
+		        android:id="@+id/start_value"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:inputType="number"
+		        android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:background="@drawable/calculator_text_box"
+                android:layout_marginTop="@dimen/margin_left_5"
+                android:paddingLeft="@dimen/margin_left_5"
+                android:paddingRight="@dimen/margin_left_5" >
+		        <requestFocus />
+		    </EditText>
+    		
+            <TextView
+		        android:id="@+id/textView3"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:layout_marginTop="@dimen/margin_left_10"
+		        android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:textStyle="bold"
+		        android:text="@string/ur_discount" />
+		
+		    <TextView
+		        android:id="@+id/discount_value"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_vertical"
+		        android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:background="@drawable/calculator_text_box"
+                android:layout_marginTop="@dimen/margin_left_5"
+                android:paddingLeft="@dimen/margin_left_5"
+                android:paddingRight="@dimen/margin_left_5"
+		         />
+		
+		    <TextView
+		        android:id="@+id/textView5"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:text="@string/n_price"
+		        android:layout_marginTop="@dimen/margin_left_10"
+		        android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:textStyle="bold"
+                 />
+		
+		    <TextView
+		        android:id="@+id/discount_price"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:gravity="center_vertical"
+		        android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:background="@drawable/calculator_text_box"
+                android:layout_marginTop="@dimen/margin_left_5"
+                android:paddingLeft="@dimen/margin_left_5"
+                android:paddingRight="@dimen/margin_left_5"
+		        />
+
+        </LinearLayout>
+
+        <LinearLayout
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:orientation="vertical"
+            android:gravity="center_horizontal"
+            android:layout_weight="0.5" >
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text="@string/discount" 
+                android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"
+                android:textStyle="bold"
+                />
+            
+            <NumberPicker
+		        android:id="@+id/discount_picker"
+		        android:layout_width="wrap_content"
+		        android:layout_height="wrap_content"
+		        android:background="@color/transparent"
+		        android:layout_marginTop="10dp"
+		         />
+        </LinearLayout>
+    </LinearLayout>
+
+    
+    
+</LinearLayout>

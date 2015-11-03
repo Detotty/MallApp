@@ -1,0 +1,146 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical" >
+    
+	<LinearLayout
+    	android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_detail_menu_bg"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/location"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.05"
+	        android:contentDescription="@string/accept"
+	        android:background="@android:color/transparent"
+	        android:src="@drawable/shop_detail_location"/>
+        <ImageButton
+            android:id="@+id/timing"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/shop_detail_clock"/>
+        <ImageButton
+            android:id="@+id/social_sharing"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/shop_detail_share"/>
+	</LinearLayout>
+	
+	
+	
+	<RelativeLayout
+	    android:id="@+id/timing_layout"
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:layout_marginRight="@dimen/margin_left_20"
+		android:layout_marginLeft="@dimen/margin_left_20"
+		android:layout_marginTop="@dimen/margin_left_10"
+		android:layout_marginBottom="@dimen/margin_left_10"
+		android:visibility="gone">
+
+		<ImageView
+		    android:id="@+id/imageView1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    android:src="@drawable/shop_detail_clock"
+		    android:contentDescription="@string/app_name" />
+
+		<TextView
+		    android:id="@+id/textView1"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentTop="true"
+		    android:layout_marginLeft="@dimen/margin_left_15"
+		    android:layout_toRightOf="@+id/imageView1"
+		    android:textSize="@dimen/text_15"
+		    android:textColor="@color/purple"
+		    android:text="@string/timing_m1" />
+
+		<TextView
+		    android:id="@+id/textView2"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_below="@+id/textView1"
+		    android:layout_marginLeft="@dimen/margin_left_15"
+		    android:layout_toRightOf="@+id/imageView1"
+		    android:textSize="@dimen/text_15"
+		    android:textColor="@color/purple"
+		    android:text="@string/timing_m2" />
+        
+        </RelativeLayout>
+	
+	
+	<LinearLayout
+	    android:id="@+id/social_layout"
+	   	android:layout_width="fill_parent"
+	   	android:layout_height="wrap_content"
+		android:orientation="horizontal"
+		android:background="@drawable/e_det_social_background"
+		android:visibility="gone">
+
+		<ImageButton
+    		android:id="@+id/fb"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/accept"
+            android:src="@drawable/e_det_facebook"/>
+		
+		<ImageButton
+            android:id="@+id/twiter"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/e_det_twitter"/>
+        
+        <ImageButton
+            android:id="@+id/chat"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:background="@android:color/transparent"
+            android:contentDescription="@string/accept"
+            android:src="@drawable/e_det_chat"/>
+        
+        <ImageButton
+            android:id="@+id/sms"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/e_det_sms"/>
+        
+        <ImageButton
+            android:id="@+id/email"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/e_det_email"/>
+	</LinearLayout>
+
+	<LinearLayout
+	    android:id="@+id/location_layout"
+	    android:layout_width="match_parent"
+	    android:layout_height="wrap_content"
+	    android:orientation="vertical" >
+	</LinearLayout>
+	
+</LinearLayout>

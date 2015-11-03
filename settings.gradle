@@ -1,0 +1,3 @@
+include ':parallax'
+include ':libraryviewpager'
+include ':mallApp'

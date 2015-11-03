@@ -1,0 +1,102 @@
+<net.appkraft.parallax.ParallaxScrollView 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/scrollView1"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:overScrollMode="never"
+    android:background="@color/purple"
+    app:zoomRatio="1.4">
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="600dp"
+        tools:context=".MainActivity">
+
+        <RelativeLayout
+            android:id="@+id/relativeLayout1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@android:color/white"
+            tools:context=".MainActivity">
+
+            <ImageView
+                android:id="@+id/set_profile_image"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:src="@drawable/parallax_avatar"
+                android:contentDescription="@string/app_name" />
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentBottom="true"
+                android:layout_centerHorizontal="true"
+                android:gravity="center_vertical|center_horizontal"
+                android:background="@drawable/add_photo_bar"
+                android:text="@string/register_profile_1"
+                android:textColor="#ffffff"
+                android:textSize="25sp" />
+        </RelativeLayout>
+
+        <EditText
+	        android:id="@+id/name"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_below="@+id/relativeLayout1"
+	        android:layout_centerHorizontal="true"
+	        android:layout_marginTop="20dp"
+	        android:background="@drawable/text_field"
+	        android:inputType="text"
+	        android:ems="10"
+	        android:hint="@string/register_profile_2"
+	        android:textColorHint="@color/hint_color"
+	        android:textColor="@color/black3"
+        	android:textSize="@dimen/text_18"
+	        android:paddingLeft="15dp"
+	        android:layout_marginLeft="20dp"
+	        android:layout_marginRight="20dp" >
+	        <requestFocus />
+    	</EditText>
+    	
+        
+        <Button
+	        android:id="@+id/synce_facebook"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_below="@+id/name"
+	        android:layout_marginTop="20dp"
+	        android:paddingRight="10dp"
+	        android:paddingLeft="20dp"
+	        android:background="@drawable/fb_selector_indicator"
+	        android:text="@string/register_profile_3"
+	        android:textColor="@color/white"
+	        android:textSize="@dimen/text_15"/>
+
+	    <Button
+	        android:id="@+id/continue_save"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_centerHorizontal="true"
+	        android:layout_below="@+id/synce_facebook"
+	        android:layout_marginTop="15dp"
+	        android:background="@drawable/continue_selector"
+	        android:text="@string/continue_"
+	        android:textColor="@color/white"
+	        android:textSize="@dimen/text_18"/>
+
+<!-- 	    <TextView -->
+<!-- 	        android:id="@+id/textView2" -->
+<!-- 	        android:layout_width="wrap_content" -->
+<!-- 	        android:layout_height="wrap_content" -->
+<!-- 	        android:layout_alignLeft="@+id/name" -->
+<!-- 	        android:layout_below="@+id/continue_save" -->
+<!-- 	        android:layout_marginTop="10dp" -->
+<!-- 	        android:text="TextView" -->
+<!-- 	        android:textColor="@color/white" /> -->
+
+    </RelativeLayout>
+</net.appkraft.parallax.ParallaxScrollView><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/registration_profile.xml -->

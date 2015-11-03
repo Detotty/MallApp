@@ -1,0 +1,61 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@color/white"
+    android:orientation="vertical" >
+    
+    <com.mallapp.layouts.SegmentedRadioGroup
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:layout_margin="5dip"
+		android:orientation="horizontal"
+		android:id="@+id/segment_text"
+		android:weightSum="4"
+		android:checkedButton="@+id/button_one">
+		
+		<RadioButton 
+		    android:id="@id/button_one"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:textSize="@dimen/text_15"
+			android:button="@null"
+			android:gravity="center"
+			android:text="@string/offer_"
+			android:textColor="@color/radio_colors" />
+		
+		<RadioButton 
+		    android:id="@+id/button_two"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:button="@null"
+			android:gravity="center"
+			android:textSize="@dimen/text_15"
+			android:text="@string/news_"
+			android:textColor="@color/radio_colors" />
+		
+		<RadioButton 
+		    android:id="@+id/button_three"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:button="@null"
+			android:gravity="center"
+			android:textSize="@dimen/text_15"
+			android:text="@string/shops_"
+			android:textColor="@color/radio_colors" />
+		
+		<RadioButton android:id="@+id/button_four"
+			android:layout_weight="1"
+			android:layout_width="0dip"
+			android:layout_height="wrap_content"
+			android:button="@null"
+			android:gravity="center"
+			android:textSize="@dimen/text_15"
+			android:text="@string/restaurants_"
+			android:textColor="@color/radio_colors" />
+
+	</com.mallapp.layouts.SegmentedRadioGroup>
+</LinearLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/favourite_main_menu_segment.xml -->

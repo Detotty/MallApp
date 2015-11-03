@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_detail_menu_bg"
+        android:orientation="horizontal" >
+        
+        <ImageButton
+            android:id="@+id/parking_picture"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.05"
+	        android:contentDescription="@string/accept"
+	        android:background="@android:color/transparent"
+	        android:src="@drawable/location_camera"/>
+        <ImageButton
+            android:id="@+id/parking_text"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/location_comments"/>
+        <ImageButton
+            android:id="@+id/new_parking_object"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/locations_new"/>
+</LinearLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/directions_tab2_area.xml -->

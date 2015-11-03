@@ -1,0 +1,31 @@
+apply plugin: 'com.android.application'
+
+android {
+    compileSdkVersion 22
+    buildToolsVersion "22.0.1"
+
+    defaultConfig {
+        applicationId "com.mallapp.View"
+        minSdkVersion 15
+        targetSdkVersion 22
+    }
+
+    buildTypes {
+        release {
+            minifyEnabled false
+            proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.txt'
+        }
+    }
+}
+
+dependencies {
+    compile project(':parallax')
+    compile 'com.android.support:appcompat-v7:22.2.1'
+    compile project(':libraryviewpager')
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.google.code.gson:gson:2.3.1'
+    compile 'com.google.code.gson:gson:2.2.4'
+    compile 'com.google.android.gms:play-services:8.1.0'
+    compile files('libs/acra-4.5.0.jar')
+    compile files('libs/twitter4j-core-4.0.2.jar')
+}

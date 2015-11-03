@@ -1,0 +1,112 @@
+package com.mallapp.Model;
+
+public class UserProfile {
+
+	private String name, date_birth, education, location, gender, picture_path;
+	private String country, countryCode, phone_no;
+	private  boolean push_notification;
+
+	
+
+	public UserProfile(String name, String date_birth, String education,
+			String location, String gender) {
+		super();
+		this.name = name;
+		this.date_birth = date_birth;
+		this.education = education;
+		this.location = location;
+		this.gender= gender;
+	}
+
+	public String getCountry() {
+		return country;
+	}
+	
+	public void setCountry(String country) {
+		this.country = country;
+	}
+	
+	public String getCountryCode() {
+		return countryCode;
+	}
+	
+	public void setCountryCode(String countryCode) {
+		this.countryCode = countryCode;
+	}
+	
+	public String getPhone_no() {
+		return phone_no;
+	}
+	
+	public void setPhone_no(String phone_no) {
+		this.phone_no = phone_no;
+	}
+
+	public UserProfile(String country, String countryCode, String phone_no, boolean push_notification) {
+		super();
+		this.country = country;
+		this.countryCode = countryCode;
+		this.phone_no = phone_no;
+		this.push_notification= push_notification;
+	}
+	
+	public UserProfile() {
+		super();
+	}
+	
+	public String getName() {
+		return name;
+	}
+
+	public void setName(String name) {
+		this.name = name;
+	}
+
+	public String getDate_birth() {
+		return date_birth;
+	}
+	
+	public void setDate_birth(String date_birth) {
+		this.date_birth = date_birth;
+	}
+	
+	public String getEducation() {
+		return education;
+	}
+	
+	public void setEducation(String education) {
+		this.education = education;
+	}
+	
+	public String getLocation() {
+		return location;
+	}
+	
+	public void setLocation(String location) {
+		this.location = location;
+	}
+	
+	public String getPicture_path() {
+		return picture_path;
+	}
+	
+	public void setPicture_path(String picture_path) {
+		this.picture_path = picture_path;
+	}
+	
+	public String getGender() {
+		return gender;
+	}
+	
+	public void setGender(String gender) {
+		this.gender = gender;
+	}
+	
+	public boolean isPush_notification() {
+		return push_notification;
+	}
+	
+	public void setPush_notification(boolean push_notification) {
+		this.push_notification = push_notification;
+	}
+}

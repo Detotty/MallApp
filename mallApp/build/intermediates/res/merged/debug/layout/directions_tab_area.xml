@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/shop_detail_menu_bg"
+        android:orientation="horizontal">
+        <ImageButton
+            android:id="@+id/display_map"
+	        android:layout_width="wrap_content"
+	        android:layout_height="match_parent"
+	        android:layout_weight="0.05"
+	        android:contentDescription="@string/accept"
+	        android:background="@android:color/transparent"
+	        android:src="@drawable/directions_map"/>
+        <ImageButton
+            android:id="@+id/parking"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_weight="0.05"
+            android:contentDescription="@string/accept"
+            android:background="@android:color/transparent"
+            android:src="@drawable/directions_parking"/>
+</LinearLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/directions_tab_area.xml -->
