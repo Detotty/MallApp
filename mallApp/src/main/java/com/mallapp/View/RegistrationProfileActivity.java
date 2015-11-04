@@ -6,7 +6,6 @@ import java.util.GregorianCalendar;
 import net.appkraft.parallax.ParallaxScrollView;
 import org.json.JSONObject;
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -46,7 +45,7 @@ import com.mallapp.imagecapture.ScalingUtilities.ScalingLogic;
 import com.mallapp.socialsharing.SessionStore;
 import com.mallapp.socialsharing.Util;
 
-public class Registration_Profile extends Activity implements OnClickListener{
+public class RegistrationProfileActivity extends Activity implements OnClickListener{
 
 	//private static final String TAG = CreateProfileActivity.class.getSimpleName();
 	private ImageImportHelper mImageImportHelper;
@@ -91,14 +90,14 @@ public class Registration_Profile extends Activity implements OnClickListener{
 		
 		
 		
-		mImageImportHelper 	= ImageImportHelper.getInstance(Registration_Profile.this);
-		name 				= (EditText) findViewById(R.id.name);
+		mImageImportHelper 	= ImageImportHelper.getInstance(RegistrationProfileActivity.this);
+		name 				= (EditText) findViewById(R.id.user_name);
 		continue_next 		= (Button) findViewById(R.id.continue_save);
 		sync_fb 			= (Button) findViewById(R.id.synce_facebook);
-		parallax 			= (ParallaxScrollView) findViewById(R.id.scrollView1);
-		profileImageView 	= (ImageView) findViewById(R.id.set_profile_image);
+//		parallax 			= (ParallaxScrollView) findViewById(R.id.scrollView1);
+		profileImageView 	= (ImageView) findViewById(R.id.profile_image_edit);
 		
-		parallax.setImageViewToParallax(profileImageView);
+//		parallax.setImageViewToParallax(profileImageView);
 		profileImageView.setOnClickListener(this);
 		sync_fb.setOnClickListener(loginButtonListener);
 		continue_next.setOnClickListener(this);
@@ -107,7 +106,7 @@ public class Registration_Profile extends Activity implements OnClickListener{
 	
 	private void selectProfileImage(String dialogTitle) {
 		final CharSequence[] options = {"Take Photo", "Choose from Gallery", "Cancel"};
-		AlertDialog.Builder builder = new AlertDialog.Builder(Registration_Profile.this);
+		AlertDialog.Builder builder = new AlertDialog.Builder(RegistrationProfileActivity.this);
 		builder.setTitle(dialogTitle);
 		builder.setItems(options, new DialogInterface.OnClickListener() {
 			@Override
@@ -153,7 +152,7 @@ public class Registration_Profile extends Activity implements OnClickListener{
 					Uri selectedImageUri = data.getData();
 					String picturePath = getPath(selectedImageUri);
 					profile_image_arr = picturePath;
-					SharedPreferenceManager.saveString(Registration_Profile.this, GlobelProfile.profile_image, profile_image_arr);
+					SharedPreferenceManager.saveString(RegistrationProfileActivity.this, GlobelProfile.profile_image, profile_image_arr);
 					
 					Bitmap bitmapSelectedImage = BitmapFactory.decodeFile(picturePath);
 					if (bitmapSelectedImage == null) {
@@ -243,12 +242,12 @@ public class Registration_Profile extends Activity implements OnClickListener{
 	private OnClickListener loginButtonListener = new OnClickListener() {
 		public void onClick( View v ) {
 			if( !facebook.isSessionValid() ) {
-    			Toast.makeText(Registration_Profile.this, "Authorizing", Toast.LENGTH_SHORT).show();
-    			facebook.authorize(Registration_Profile.this, new String[] { "" }, new LoginDialogListener());
+    			Toast.makeText(RegistrationProfileActivity.this, "Authorizing", Toast.LENGTH_SHORT).show();
+    			facebook.authorize(RegistrationProfileActivity.this, new String[] { "" }, new LoginDialogListener());
     			}
 			else {
-				Toast.makeText(Registration_Profile.this, "Authorizing", Toast.LENGTH_SHORT).show();
-    			//Toast.makeText( Registration_Profile.this, "Has valid session", Toast.LENGTH_SHORT).show();
+				Toast.makeText(RegistrationProfileActivity.this, "Authorizing", Toast.LENGTH_SHORT).show();
+    			//Toast.makeText( RegistrationProfileActivity.this, "Has valid session", Toast.LENGTH_SHORT).show();
     			try {
     				if (android.os.Build.VERSION.SDK_INT > 9) {
     					StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
@@ -288,15 +287,15 @@ public class Registration_Profile extends Activity implements OnClickListener{
 	    			String lastName = json.getString("last_name");
 	    			
 	    			name.setText(""+firstName + " " + lastName );
-	    			//Toast.makeText(Registration_Profile.this, "You already have a valid session, " + firstName + " " + lastName + ". No need to re-authorize.", Toast.LENGTH_SHORT).show();
+	    			//Toast.makeText(RegistrationProfileActivity.this, "You already have a valid session, " + firstName + " " + lastName + ". No need to re-authorize.", Toast.LENGTH_SHORT).show();
 	    			}
     			catch( Exception error ) {
     				error.printStackTrace();
-    				Toast.makeText( Registration_Profile.this, error.toString(), Toast.LENGTH_SHORT).show();
+    				Toast.makeText( RegistrationProfileActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
     			}
     			catch( FacebookError error ) {
     				error.printStackTrace();
-    				Toast.makeText( Registration_Profile.this, error.toString(), Toast.LENGTH_SHORT).show();
+    				Toast.makeText( RegistrationProfileActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
     			}
 			}
 		}
@@ -319,31 +318,31 @@ public class Registration_Profile extends Activity implements OnClickListener{
 				
 				name.setText(""+firstName + " " + lastName );
 				
-				//Toast.makeText( Registration_Profile.this, "Thank you for Logging In, " +facebookID+"     ....   "+ firstName + " " + lastName + "!", Toast.LENGTH_SHORT).show();
-				SessionStore.save(facebook, Registration_Profile.this);
+				//Toast.makeText( RegistrationProfileActivity.this, "Thank you for Logging In, " +facebookID+"     ....   "+ firstName + " " + lastName + "!", Toast.LENGTH_SHORT).show();
+				SessionStore.save(facebook, RegistrationProfileActivity.this);
 			}
 			catch( Exception error ) {
 				error.printStackTrace();
-				Toast.makeText( Registration_Profile.this, error.toString(), Toast.LENGTH_SHORT).show();
+				Toast.makeText( RegistrationProfileActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
 			}
 			catch( FacebookError error ) {
 				error.printStackTrace();
-				Toast.makeText( Registration_Profile.this, error.toString(), Toast.LENGTH_SHORT).show();
+				Toast.makeText( RegistrationProfileActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
 			}
 		}
 		
 		public void onFacebookError(FacebookError error) {
 			error.printStackTrace();
-			Toast.makeText( Registration_Profile.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
+			Toast.makeText( RegistrationProfileActivity.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
 		}
 		
 		public void onError(DialogError error) {
 			error.printStackTrace();
-			Toast.makeText( Registration_Profile.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
+			Toast.makeText( RegistrationProfileActivity.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
 		}
 		
 		public void onCancel() {
-			Toast.makeText( Registration_Profile.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
+			Toast.makeText( RegistrationProfileActivity.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
 		}
 	}
     
@@ -378,7 +377,7 @@ public class Registration_Profile extends Activity implements OnClickListener{
 			 */
 			Toast.makeText(getApplicationContext(), "Registration Successfully!", Toast.LENGTH_LONG).show();
 			//Intent intent = new Intent(CreateProfileActivity.this, Endorsment.class);
-			Intent intent 	= new Intent(Registration_Profile.this, Select_Favourite_Center.class);
+			Intent intent 	= new Intent(RegistrationProfileActivity.this, Select_Favourite_Center.class);
 			//Intent tabIntent 	= new Intent(CreateProfileActivity.this, Endorsment.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 			startActivity(intent);

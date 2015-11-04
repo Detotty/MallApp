@@ -2,7 +2,6 @@ package com.mallapp.View;
 
 import java.util.Locale;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.content.Context;
@@ -26,13 +25,13 @@ import com.Location.Gps.Lattitude_Logitude;
 import com.mallapp.Controllers.SendVerificationCode;
 import com.mallapp.utils.AlertMessages;
 
-public class Registration_Country extends Activity implements OnClickListener{
+public class PhoneRegistrationActivity extends Activity implements OnClickListener{
 
 	Lattitude_Logitude gps;
 	double latitude;
     double longitude;
 	public static final int REQUEST_CODE_FOR_COUNTRY = 1;
-	private static final String TAG = Registration_Country.class.getSimpleName();
+	private static final String TAG = PhoneRegistrationActivity.class.getSimpleName();
     String countryName, CountryID="", CountryZipCode;
     EditText  phone_no;
     TextView country;
@@ -44,13 +43,13 @@ public class Registration_Country extends Activity implements OnClickListener{
 	protected void onCreate(Bundle savedInstanceState) {
 	
 		super.onCreate(savedInstanceState);
-		setContentView(R.layout.registration_country);
+		setContentView(R.layout.registration_phone_activity);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		res = getResources();
 		init();
-        //getDefaultLocation();
+//        getDefaultLocation();
 	}
 	
 	private void init() {
@@ -92,7 +91,7 @@ public class Registration_Country extends Activity implements OnClickListener{
 	}
 	
 	
-	protected void sendSMSVerificationCode(String phone_N) {
+	protected void sendSMSVerificationCode(final String phone_N) {
 	
 		try {
 			boolean push_notify= false;
@@ -100,9 +99,14 @@ public class Registration_Country extends Activity implements OnClickListener{
 			if (checkBox.isChecked()) {
 				push_notify= true;
 			}
-			
-			SendVerificationCode.sendVerificationCode(Registration_Country.this, phone_N, push_notify, countryName, CountryZipCode);
-			Intent intent= new Intent(Registration_Country.this, Registration_Access_Code.class);
+			final boolean finalPush_notify = push_notify;
+			new Thread() {
+				@Override
+				public void run() {
+					SendVerificationCode.sendVerificationCode(PhoneRegistrationActivity.this, phone_N, finalPush_notify, countryName, CountryZipCode);
+				}
+			}.start();
+			Intent intent= new Intent(PhoneRegistrationActivity.this, Registration_Access_Code.class);
 			finish();
      		startActivity(intent);
      		
@@ -123,12 +127,12 @@ public class Registration_Country extends Activity implements OnClickListener{
 			String phone_N= CountryZipCode + phone_no.getText().toString().trim();
 			phoneNoVerification(phone_N);
 		}else{
-			AlertMessages.show_alert(Registration_Country.this, ""+R.string.app_name1, "Please accept, recieving push notifications/SMS", "OK");
+			AlertMessages.show_alert(PhoneRegistrationActivity.this, ""+R.string.app_name1, "Please accept, recieving push notifications/SMS", "OK");
 		}
 	}
 	
 	private void open_setting(){
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration_Country.this);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PhoneRegistrationActivity.this);
 		alertDialogBuilder.setTitle("Location services disabled");
 		// set dialog message
 		alertDialogBuilder.setMessage("Mall App needs access to your location. Please turn on location access.")
@@ -157,7 +161,7 @@ public class Registration_Country extends Activity implements OnClickListener{
 	@SuppressWarnings("unused")
 	private void wifi_setting(){
 	
-		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(Registration_Country.this);
+		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(PhoneRegistrationActivity.this);
 		if(android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.ICE_CREAM_SANDWICH)
 			alertDialogBuilder = new AlertDialog.Builder(this,android.R.style.Theme_DeviceDefault_Light_Panel);
         else
@@ -288,7 +292,7 @@ public class Registration_Country extends Activity implements OnClickListener{
 			//Log.e(TAG, "on resume call from mobile network ...."+ country.getText().toString());
 		} else {
 		  // No SIM card on the phone
-			getDefaultLocation();
+//			getDefaultLocation();
 		//	Log.e(TAG, "on resume call from web locaton...."+ country.getText().toString());
 		}
 		super.onResume();
@@ -383,7 +387,7 @@ public class Registration_Country extends Activity implements OnClickListener{
 	public void onClick(View v) {
 		
 		if(v.getId()== country.getId()){
-			Intent intent= new Intent(Registration_Country.this, Registration_Select_Country.class);
+			Intent intent= new Intent(PhoneRegistrationActivity.this, Registration_Select_Country.class);
 			startActivityForResult(intent , REQUEST_CODE_FOR_COUNTRY);
 
 		}else if(v.getId() == continue_next.getId()){

@@ -45,7 +45,7 @@ public class SplashScreen extends Activity {
 						startActivity(tabIntent);
 					}else{
 						Log.e("", "elsee case");
-						Intent mainIntent = new Intent(SplashScreen.this, Registration_Country.class);
+						Intent mainIntent = new Intent(SplashScreen.this, RegistrationActivity.class);
 						SplashScreen.this.startActivity(mainIntent);
 					}
 				} catch (Exception e) {

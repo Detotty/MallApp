@@ -1,5 +1,18 @@
 package com.mallapp.utils;
 
+import android.app.Activity;
+import android.app.AlertDialog;
+import android.content.Context;
+import android.content.DialogInterface;
+import android.content.Intent;
+import android.provider.Settings;
+import android.widget.Toast;
+
+import com.Location.Gps.Lattitude_Logitude;
+import com.mallapp.Constants.AppConstants;
+import com.mallapp.Model.UserLocationModel;
+import com.mallapp.View.R;
+
 import java.io.InputStream;
 import java.io.OutputStream;
 
@@ -19,5 +32,114 @@ public class Utils {
             }
         }
         catch(Exception ex){}
+    }
+
+
+    public static void getDefaultLocation(Context context) {
+
+        Lattitude_Logitude gps = new Lattitude_Logitude(context);
+
+        //String countryZipCode = null;
+
+        // check if GPS enabled
+        if(gps.canGetLocation()){
+
+            double latitude ;
+            double longitude;
+            String countryName;
+            String countryID;
+
+
+
+            try {
+
+                String address = gps.onLocationCountry();
+
+                if(address!= null) {
+                    latitude = gps.getLatitude();
+                    longitude = gps.getLongitude();
+                    countryName = gps.getCountryName();
+                    countryID = gps.getCountryCode();
+                    String cityName = gps.getCityName();
+                    android.util.Log.e(" condition..", "address ..." + address + ": City Name:" + cityName);
+
+
+                    UserLocationModel model = new UserLocationModel();
+                    model.setCountryName(countryName);
+                    model.setLatitude(latitude);
+                    model.setLongitude(longitude);
+                    model.setCountryCode(countryID);
+                    model.setCityName(cityName);
+
+                    SharedInstance.getInstance().getSharedHashMap().put(AppConstants.USER_LOCATION, model);
+
+
+//                if(countryID!= null && countryID.length()>0 &&  !countryID.equals("null")){
+//
+//                    String[] rl = context.getResources().getStringArray(R.array.CountryCodes);
+//
+//                    for(int i = 0; i<rl.length; i++ ){
+//
+//                        String[] g = rl[i].split(",");
+//                        if(g[1].trim().equals(countryID.trim())){
+//                            countryZipCode  = g[0];
+//                            break;
+//                        }
+//
+//                    }
+//                }
+
+                    android.util.Log.d(context.getClass().getSimpleName(), "GPS:" + gps.toString());
+                }
+
+
+            }catch (Exception e) {
+                e.printStackTrace();
+                //countryEditText.setText("");
+                Toast.makeText(context, R.string.location_msg3, Toast.LENGTH_LONG).show();
+            }
+
+
+
+
+//            phone_no.requestFocus();
+//            Handler mHandler= new Handler();
+//            mHandler.post(new Runnable() {
+//            	public void run() {
+//            		InputMethodManager inputMethodManager =  (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
+//            		inputMethodManager.toggleSoftInputFromWindow(phone_no.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+//            		phone_no.requestFocus();
+//            	}
+//            });
+//            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
+
+        }else{
+            android.util.Log.e(" else condition..", "call pop up for location ..");
+            open_setting(context);
+        }
+    }
+
+    public static void open_setting(final Context context){
+
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(context);
+        alertDialogBuilder.setTitle(R.string.location_msg1);
+        // set dialog message
+        alertDialogBuilder	.setMessage(R.string.location_msg2)
+                .setCancelable(false)
+                .setPositiveButton(R.string.yes_,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, close
+                        // current activity
+                        Intent intent = new Intent(Settings.ACTION_LOCATION_SOURCE_SETTINGS);
+                        ((Activity)context).startActivityForResult(intent, AppConstants.OPEN_LOCATION_SETTING_RESULT_CODE);
+                    }})
+                .setNegativeButton(R.string.no_,new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog,int id) {
+                        // if this button is clicked, just close the dialog box and do nothing
+                        dialog.cancel();
+                    }
+                });
+
+        alertDialogBuilder.show();
     }
 }

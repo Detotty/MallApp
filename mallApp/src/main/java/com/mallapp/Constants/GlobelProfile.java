@@ -1,7 +1,10 @@
 package com.mallapp.Constants;
 
 public class GlobelProfile {
-	
+
+	public static String securityToken	=  "securityToken";
+
+
 	public static String name="name";
 	public static String b_day="b_day";
 	public static String gender= "gender";

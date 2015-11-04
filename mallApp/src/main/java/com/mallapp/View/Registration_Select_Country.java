@@ -7,7 +7,6 @@ import java.util.Collections;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -177,7 +176,7 @@ public class Registration_Select_Country extends Activity implements  OnItemClic
 	public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 		Intent resultIntent = new Intent();
 		resultIntent.putExtra("result", adapter.getItem(position));
-		setResult(Registration_Country.REQUEST_CODE_FOR_COUNTRY, resultIntent);
+		setResult(PhoneRegistrationActivity.REQUEST_CODE_FOR_COUNTRY, resultIntent);
 		finish();
 	}
 	
@@ -186,7 +185,7 @@ public class Registration_Select_Country extends Activity implements  OnItemClic
 	@Override
 	public void onClick(View v) {
 		if(v.getId() == back_screen.getId()){
-			Intent intent= new Intent(Registration_Select_Country.this, Registration_Country.class);
+			Intent intent= new Intent(Registration_Select_Country.this, PhoneRegistrationActivity.class);
 			finish();
 			startActivity(intent);
 		}
@@ -196,7 +195,7 @@ public class Registration_Select_Country extends Activity implements  OnItemClic
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		Intent intent= new Intent(Registration_Select_Country.this, Registration_Country.class);
+		Intent intent= new Intent(Registration_Select_Country.this, PhoneRegistrationActivity.class);
 		finish();
 		startActivity(intent);
 	}

@@ -1,6 +1,5 @@
 package com.mallapp.View;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -81,7 +80,7 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 
 	
 	protected void startProfileActivity() {
-		Intent intent = new Intent(Registration_Access_Code.this, Registration_Profile.class);
+		Intent intent = new Intent(Registration_Access_Code.this, RegistrationProfileActivity.class);
 		intent.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 		finish();
 		startActivity(intent);
@@ -128,7 +127,7 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 				//	startProfileActivity();
 			}
 		}else if(v.getId() == back_screen.getId()){
-			Intent intent= new Intent(Registration_Access_Code.this, Registration_Country.class);
+			Intent intent= new Intent(Registration_Access_Code.this, PhoneRegistrationActivity.class);
 			finish();
 			startActivity(intent);
 		}
@@ -152,7 +151,7 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		Intent intent= new Intent(Registration_Access_Code.this, Registration_Country.class);
+		Intent intent= new Intent(Registration_Access_Code.this, PhoneRegistrationActivity.class);
 		finish();
 		startActivity(intent);
 	}

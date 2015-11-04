@@ -12,10 +12,13 @@ import com.mallapp.utils.Log;
 
 
 public class SharedPreferenceUserProfile {
-	
+
 	private static final String TAG = "SharedPreferenceUserProfile";
+	private static final String tokenTag = "EndorsementUserToken";
 	private static SharedPreferences usrPrefrence = null;
-	
+	private static SharedPreferences tokenPreferences = null;
+
+
 	private static void initPrefrence(Context mContext) {
 		try {
 			SharedPreferenceUserProfile.usrPrefrence = mContext.getSharedPreferences
@@ -105,7 +108,7 @@ public class SharedPreferenceUserProfile {
 				final Editor editor = SharedPreferenceUserProfile.usrPrefrence.edit();
 				editor.putString(GlobelProfile.country_name, userProfile.getCountry());
 		 		editor.putString(GlobelProfile.country_code, userProfile.getCountryCode());
-		 		editor.putString(GlobelProfile.phone_no, 	 userProfile.getPhone_no());
+		 		editor.putString(GlobelProfile.phone_no, userProfile.getPhone_no());
 		 		editor.putBoolean(GlobelProfile.push_notification, userProfile.isPush_notification());
 		 		editor.apply();
 			}
@@ -134,6 +137,35 @@ public class SharedPreferenceUserProfile {
 	
 	public void name() {
 		
+	}
+	private static void initTokenPreference(Context context){
+		try {
+			SharedPreferenceUserProfile.tokenPreferences = context.getSharedPreferences
+					(AppConstants.USER_TOKEN, Context.MODE_PRIVATE);
+
+		} catch (final Exception exception) {
+			Log.e(tokenTag, "" + exception);
+		}
+	}
+
+	public static String getUserToken(Context context) {
+
+		try{
+			if (SharedPreferenceUserProfile.tokenPreferences == null) {
+				SharedPreferenceUserProfile.initTokenPreference(context);
+			}
+//            String userToken  = tokenPreferences.getString(GlobelProfile.profileID, 	null);
+
+			String userToken = tokenPreferences.getString(GlobelProfile.securityToken, null);
+
+
+			return userToken;
+
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+			Log.e(tokenTag, "" + exception);
+		}
+		return null;
 	}
 
 }

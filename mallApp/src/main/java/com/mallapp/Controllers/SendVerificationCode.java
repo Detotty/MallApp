@@ -20,7 +20,7 @@ public class SendVerificationCode {
 		//String message= ""+R.string.access_code_country;
 		JSONObject obj = new JSONObject();
 		JSONObject jsonObj = null ;
-		phone_N= "+"+phone_N;
+//		phone_N= "+"+phone_N;
 		try {
 			obj.put("PhoneNumber", phone_N);
 			obj.put("LanguageID", "1");
@@ -31,8 +31,8 @@ public class SendVerificationCode {
 		
 		try {
 
-			String url= GlobelServices.SEND_SMS_URL_KEY;
-			String result= MySqlConnection.executeHttpPost(url, obj);
+			String url= GlobelServices.SEND_SMS_URL_KEY+phone_N;
+			String result= MySqlConnection.executeHttpGet(url);
 			jsonObj  = new JSONObject(result);
 			
 			boolean success= jsonObj.getBoolean("Success");
@@ -55,11 +55,11 @@ public class SendVerificationCode {
 		
 		JSONObject obj = new JSONObject();
 		JSONObject jsonObj = null ;
-		phone_N= "+"+phone_N;
+//		phone_N= "+"+phone_N;
 		
 		try {
-			obj.put("PhoneNumber", phone_N);
-			obj.put("ValidationCode", access_code);
+			obj.put("mobileNo", phone_N);
+			obj.put("code", access_code);
 		} catch (JSONException e) {
 			e.printStackTrace();
 		}

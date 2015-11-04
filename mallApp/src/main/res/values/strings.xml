@@ -1,6 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
+
+
+
     <string name="app_name">MallApp 0.0.8</string>
     <string name="app_name1">The Mall App</string>
     <string name="hello_world">Hello world!</string>
@@ -17,6 +20,7 @@
     <string name="next_">Next</string>
     <string name="all_">All</string>
     <string name="yes_">Yes</string>
+	<string name="no_">No</string>
     <string name="edit_">Edit</string>
     <string name="nearby_">Nearby</string>
     <string name="offer_">Offers</string>
@@ -41,7 +45,8 @@
 	<string name="register_country_11">SMS sent.</string>\n
 	<string name="register_welcome">Welcome to The Mall App</string>
 	<string name="register_dummy">Lorem ipsum dolor sit er elit lamet,  consectetaur cilium adepisicing pecu, sed do eiusmod tempor incidedunt ut labore et dolore magna aliqua.</string>
-
+	<string name="registration_with_phone_button_title">Register with Phone</string>
+	<string name="registration_wtih_facebook_button_title">Register with Facebook</string>
 	
 	
 	<string name="access_code_country">Sent SMS successfully</string>
@@ -58,6 +63,12 @@
 	<string name="register_profile_1">Add photo</string>
 	<string name="register_profile_2">Your Name</string>
 	<string name="register_profile_3">Sync with Facebook</string>
+
+	<string name="location_msg1">Location services disabled</string>
+	<string name="location_msg2">Mall App needs access to your location. Please turn on location access.</string>
+	<string name="location_msg3">Check Network Connection</string>
+	<string name="location_msg4">Location services disabled</string>
+	<string name="location_msg5">Location services disabled</string>
 	
 	
 	<string name="fav_center1">Select your favourite Center</string>
@@ -70,12 +81,20 @@
     <string name="share_points"> 5pts</string>
     <string name="go_to_shop">Go to Shop</string>
     <string name="related_offers">Related Offers</string>
-	
-	
-	
-	
-	
-	
+
+
+	<string name="name">Name</string>
+	<string name="add_photo">Add Photo</string>
+	<string name="email">Email</string>
+	<string name="birthday">Birthday</string>
+	<string name="location">Add Location</string>
+	<string name="add_date">Add Date</string>
+	<string name="enter_location">Enter Location</string>
+
+
+	<string name="male">Male</string>
+	<string name="female">Female</string>
+	<string name="sync_facebook_button_title">Sync with Facebook</string>
 	
 	
 	

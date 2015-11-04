@@ -3,16 +3,16 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical" 
-    android:background="@drawable/background">
+    android:background="@drawable/splash">
 
-    <ImageView
+    <!--<ImageView
         android:id="@+id/textView1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:src="@drawable/logo"
-        android:contentDescription="@string/app_name"/>
+        android:contentDescription="@string/app_name"/>-->
 
 </RelativeLayout>
 <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/activity_splash_screen.xml -->
