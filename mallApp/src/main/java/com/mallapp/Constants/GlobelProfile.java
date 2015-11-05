@@ -2,6 +2,7 @@ package com.mallapp.Constants;
 
 public class GlobelProfile {
 
+	public static String profileID		=  "profileID";
 	public static String securityToken	=  "securityToken";
 
 

@@ -25,8 +25,8 @@ public final class R {
 	}
 	public static final class string {
 		public static final int action_settings = 0x7f06003e;
-		public static final int app_name = 0x7f060044;
-		public static final int hello_world = 0x7f060067;
+		public static final int app_name = 0x7f060045;
+		public static final int hello_world = 0x7f060068;
 	}
 	public static final class style {
 		public static final int AppBaseTheme = 0x7f080003;

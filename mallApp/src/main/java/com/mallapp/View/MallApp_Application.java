@@ -27,7 +27,7 @@ public class MallApp_Application extends Application implements Serializable{
 	private static final long serialVersionUID = -6734652616751863916L;
 	public static String TAG = MallApp_Application.class.getSimpleName();
 	public static ArrayList<Offers_News> offer_objects =  new ArrayList<Offers_News>();
-	
+
 	@Override
     public void onCreate() {
         super.onCreate();

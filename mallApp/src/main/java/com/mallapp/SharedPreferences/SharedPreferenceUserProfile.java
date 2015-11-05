@@ -168,4 +168,23 @@ public class SharedPreferenceUserProfile {
 		return null;
 	}
 
+	public static void saveUserToken(String token,String userId, Context context) {
+
+		try {
+			if (SharedPreferenceUserProfile.tokenPreferences == null) {
+				SharedPreferenceUserProfile.initTokenPreference(context);
+			}
+			if (SharedPreferenceUserProfile.tokenPreferences != null) {
+				Editor editor = SharedPreferenceUserProfile.tokenPreferences.edit();
+
+				editor.putString(GlobelProfile.profileID, userId);
+				editor.putString(GlobelProfile.securityToken, token);
+				editor.apply();
+			}
+		} catch (final Exception exception) {
+			exception.printStackTrace();
+			Log.e(TAG, "" + exception);
+		}
+	}
+
 }

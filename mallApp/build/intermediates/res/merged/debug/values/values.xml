@@ -678,6 +678,7 @@
     <string name="access_code_country_5">No Code</string>
     <string name="action_settings">Settings</string>
     <string name="add_date">Add Date</string>
+    <string name="add_new_place_error_message">Please enter place name</string>
     <string name="add_photo">Add Photo</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/mainmenu_strings.xml -->
     <eat-comment/>
@@ -850,12 +851,18 @@
     <string name="register_profile_2">Your Name</string>
     <string name="register_profile_3">Sync with Facebook</string>
     <string name="register_welcome">Welcome to The Mall App</string>
+    <string name="registration_with_fb_dialog_message">Registration with Facebook</string>
     <string name="registration_with_phone_button_title">Register with Phone</string>
     <string name="registration_wtih_facebook_button_title">Register with Facebook</string>
     <string name="related_offers">Related Offers</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="related_shop">Related Shops</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="request_error_message">Something went wrong. Please try again later</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
+    <eat-comment/>
     <string name="restaurants_">Restaurants</string>
     <string name="s_price">STARTING PRICE</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->

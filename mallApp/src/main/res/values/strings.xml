@@ -98,25 +98,28 @@
 	<string name="male">Male</string>
 	<string name="female">Female</string>
 	<string name="sync_facebook_button_title">Sync with Facebook</string>
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-<string-array name="CountryCodes" >
+	<string name="registration_with_fb_dialog_message">Registration with Facebook</string>
+	<!-- Error Messages -->
+	<string name="request_error_message">Something went wrong. Please try again later</string>
+	<string name="add_new_place_error_message">Please enter place name</string>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+	<string-array name="CountryCodes" >
 	    <item>93,AF</item>
 		<item>355,AL</item>
 		<item>213,DZ</item>

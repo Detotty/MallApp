@@ -17,10 +17,15 @@ import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
+import com.google.gson.Gson;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.SocialSharingConstants;
+import com.mallapp.Controllers.RegistrationController;
+import com.mallapp.Model.FacebookProfileModel;
+import com.mallapp.Model.UserProfile;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.socialsharing.SessionStore;
+import com.mallapp.utils.SharedInstance;
 import com.mallapp.utils.Utils;
 
 import org.json.JSONObject;
@@ -142,11 +147,10 @@ public class RegistrationActivity extends Activity {
         @Override
         public void onClick(View v) {
 
-            if( !facebook.isSessionValid() ) {
+            if (!facebook.isSessionValid()) {
                 Toast.makeText(RegistrationActivity.this, "Logining with facebook", Toast.LENGTH_SHORT).show();
-                facebook.authorize(RegistrationActivity.this, new String[] { "public_profile","email","user_birthday" }, new LoginDialogListener());
-            }
-            else {
+                facebook.authorize(RegistrationActivity.this, new String[]{"public_profile", "email", "user_birthday"}, new LoginDialogListener());
+            } else {
                 Toast.makeText(RegistrationActivity.this, "Logining with facebook", Toast.LENGTH_SHORT).show();
                 //Toast.makeText( RegistrationProfileActivity.this, "Has valid session", Toast.LENGTH_SHORT).show();
                 try {
@@ -156,19 +160,17 @@ public class RegistrationActivity extends Activity {
                     }
 
                     JSONObject json = Util.parseJson(facebook.request("me"));
-                    Log.e("", "JSON: ....."+ json.toString());
+                    Log.e("", "JSON: ....." + json.toString());
 
-//                    setFbData(json);
+                    setFbData(json);
 
                     //Toast.makeText(RegistrationProfileActivity.this, "You already have a valid session, " + firstName + " " + lastName + ". No need to re-authorize.", Toast.LENGTH_SHORT).show();
-                }
-                catch( Exception error ) {
+                } catch (Exception error) {
                     error.printStackTrace();
-                    Toast.makeText( RegistrationActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
-                }
-                catch( FacebookError error ) {
+                    Toast.makeText(RegistrationActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                } catch (FacebookError error) {
                     error.printStackTrace();
-                    Toast.makeText( RegistrationActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
+                    Toast.makeText(RegistrationActivity.this, error.toString(), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -186,7 +188,7 @@ public class RegistrationActivity extends Activity {
                 JSONObject json = Util.parseJson(facebook.request("me"));
                 Log.e("", "JSON: ....." + json.toString());
 
-//                setFbData(json);
+                setFbData(json);
 
                 SessionStore.save(facebook, RegistrationActivity.this);
 
@@ -217,7 +219,7 @@ public class RegistrationActivity extends Activity {
         }
     }
 
-    /*private void setFbData(JSONObject jsonObject){
+    private void setFbData(JSONObject jsonObject){
 
         try {
 
@@ -271,10 +273,10 @@ public class RegistrationActivity extends Activity {
         //SharedPreferenceUserProfile.SaveUserProfile(userProfile, this);
         //Toast.makeText(getApplicationContext(), "Registration Successfully!", Toast.LENGTH_LONG).show();
 
-        Intent intent 	= new Intent(Register.this, RegistrationProfileActivity.class);
+        Intent intent 	= new Intent(RegistrationActivity.this, RegistrationProfileActivity.class);
         finish();
         startActivity(intent);
 
-    }*/
+    }
 
 }
