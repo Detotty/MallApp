@@ -2,6 +2,7 @@ package com.mallapp.View;
 
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
+import java.util.Date;
 import java.util.GregorianCalendar;
 import net.appkraft.parallax.ParallaxScrollView;
 import org.json.JSONObject;
@@ -23,18 +24,26 @@ import android.provider.MediaStore;
 import android.util.Log;
 import android.view.View;
 import android.view.View.OnClickListener;
+import android.view.Window;
 import android.view.WindowManager;
+import android.widget.AdapterView;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
 import android.widget.ImageView;
+import android.widget.ListView;
+import android.widget.RadioButton;
+import android.widget.RadioGroup;
+import android.widget.TextView;
 import android.widget.Toast;
-import com.facebook.android.DialogError;
+
 import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
 import com.facebook.android.FacebookError;
+import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelProfile;
 import com.mallapp.Constants.SocialSharingConstants;
+import com.mallapp.Model.UserLocationModel;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.SharedPreferences.SharedPreferenceManager;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
@@ -42,15 +51,38 @@ import com.mallapp.imagecapture.ImageImportHelper;
 import com.mallapp.imagecapture.Image_Scaling;
 import com.mallapp.imagecapture.ScalingUtilities;
 import com.mallapp.imagecapture.ScalingUtilities.ScalingLogic;
+import com.mallapp.layouts.ParentDialog;
+import com.mallapp.socialsharing.Facebook_Login;
 import com.mallapp.socialsharing.SessionStore;
 import com.mallapp.socialsharing.Util;
+import com.mallapp.utils.SharedInstance;
+import com.mallapp.utils.Utils;
 
 public class RegistrationProfileActivity extends Activity implements OnClickListener{
 
 	//private static final String TAG = CreateProfileActivity.class.getSimpleName();
 	private ImageImportHelper mImageImportHelper;
 	private ImageView profileImageView;
-	private EditText name;
+	private EditText nameEditText, emailEditText;
+	private TextView DOBEditText, locationTextView;
+	private Date dateOfBirthday;
+	//private String profile_image_array;
+	private Button continueButton, syncFbButton;
+
+	private RadioGroup gender_group;
+	private RadioButton genderRadioButton, male, female;
+	String nameString, DOBString, locationString, emailString, genderRadioButtonText;
+
+	private static String FB_APP_ID = SocialSharingConstants.FB_APP_ID;
+
+	Facebook facebook = new Facebook(FB_APP_ID);
+
+	Bitmap profile_image_bitmap = null;
+
+	String profile_image_path= null;
+
+	private String requestType;
+
 	//TextView text_;
 	private String profile_image_arr;
 	private Button continue_next, sync_fb;
@@ -58,9 +90,6 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 	
 	String user_name, date_birth, locat, edu, gender_s;
 
-	private static String FB_APP_ID= SocialSharingConstants.FB_APP_ID;
-	
-	Facebook facebook = new Facebook(FB_APP_ID);
 	
 	
 	@Override
@@ -89,18 +118,37 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 
 		
 		
-		
+		init();
 		mImageImportHelper 	= ImageImportHelper.getInstance(RegistrationProfileActivity.this);
-		name 				= (EditText) findViewById(R.id.user_name);
-		continue_next 		= (Button) findViewById(R.id.continue_save);
-		sync_fb 			= (Button) findViewById(R.id.synce_facebook);
-//		parallax 			= (ParallaxScrollView) findViewById(R.id.scrollView1);
-		profileImageView 	= (ImageView) findViewById(R.id.profile_image_edit);
-		
-//		parallax.setImageViewToParallax(profileImageView);
-		profileImageView.setOnClickListener(this);
-		sync_fb.setOnClickListener(loginButtonListener);
-		continue_next.setOnClickListener(this);
+
+	}
+
+	private void init() {
+
+		nameEditText = (EditText) findViewById(R.id.user_name);
+		emailEditText = (EditText) findViewById(R.id.user_email);
+		locationTextView = (TextView) findViewById(R.id.user_location);
+		DOBEditText = (TextView) findViewById(R.id.user_dob);
+
+		continueButton = (Button) findViewById(R.id.continue_save);
+		syncFbButton = (Button) findViewById(R.id.synce_facebook);
+
+		profileImageView= (ImageView) findViewById(R.id.profile_image_edit);
+
+		male 			= (RadioButton) findViewById(R.id.male);
+		female 			= (RadioButton) findViewById(R.id.female);
+		gender_group 	= (RadioGroup) findViewById(R.id.radioGroup1);
+
+
+//		Bitmap profile_bitmap 	= BitmapFactory.decodeResource(getResources(), R.drawable.parallax_avatar);
+//		Image_Scaling.setRoundedImgeToImageView(getApplicationContext(), profileImageView, profile_bitmap);
+//		profile_image_bitmap = profile_bitmap;
+
+		DOBEditText.setOnClickListener(dobEditTextListener);
+//		locationTextView.setOnClickListener(locationTextViewListener);
+		profileImageView.setOnClickListener(profileImageListener);
+//		syncFbButton.setOnClickListener(loginButtonListener);
+		continueButton.setOnClickListener(continueButtonListener);
 	}
 
 	
@@ -232,14 +280,14 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 
 	 
 	protected void set_user_profile() {
-		user_name= name.getText().toString();
+		user_name= nameEditText.getText().toString();
 		Log.e("", "user name fr peofile "+ user_name);
 		UserProfile userProfile= new UserProfile(user_name, date_birth,edu, locat,gender_s );
 		SharedPreferenceUserProfile.SaveUserProfile(userProfile, getApplicationContext());
 	}
 	
 	
-	private OnClickListener loginButtonListener = new OnClickListener() {
+	/*private OnClickListener loginButtonListener = new OnClickListener() {
 		public void onClick( View v ) {
 			if( !facebook.isSessionValid() ) {
     			Toast.makeText(RegistrationProfileActivity.this, "Authorizing", Toast.LENGTH_SHORT).show();
@@ -255,7 +303,7 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
     				}
     				JSONObject json = Util.parseJson(facebook.request("me"));
 	    			//String facebookID = json.getString("id");
-    				/*
+    				*//*
     				 * {"id":"988220997868656","first_name":"Ashoo","birthday":"02\/29\/1988","timezone":5,
     				 * "location":{"id":"108104849224069","name":"Lahore, Pakistan"},"verified":true,
     				 * "name":"Ashoo Tariq","locale":"en_US",
@@ -281,12 +329,12 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
     				 * "school":{"id":"107853569236131","name":"Punjab University College of Information Technology"},
     				 * "type":"Graduate School"}],"updated_time":"2015-06-15T05:28:18+0000"}
 
-    				 */
+    				 *//*
     				Log.e("", "JSON: ....."+ json.toString());
 	    			String firstName = json.getString("first_name");
 	    			String lastName = json.getString("last_name");
-	    			
-	    			name.setText(""+firstName + " " + lastName );
+
+					nameEditText.setText(""+firstName + " " + lastName );
 	    			//Toast.makeText(RegistrationProfileActivity.this, "You already have a valid session, " + firstName + " " + lastName + ". No need to re-authorize.", Toast.LENGTH_SHORT).show();
 	    			}
     			catch( Exception error ) {
@@ -299,10 +347,10 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
     			}
 			}
 		}
-	};
+	};*/
     
     
-	public final class LoginDialogListener implements DialogListener {
+	/*public final class LoginDialogListener implements DialogListener {
 		public void onComplete(Bundle values) {
 			try {
 				//The user has logged in, so now you can query and use their Facebook info
@@ -344,7 +392,48 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 		public void onCancel() {
 			Toast.makeText( RegistrationProfileActivity.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
 		}
-	}
+	}*/
+
+	private OnClickListener profileImageListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			selectProfileImage("Add Photo!");
+		}
+	};
+
+	private OnClickListener continueButtonListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			if (nameEditText.getText().toString().trim().length() <= 0) {
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_name_message), Toast.LENGTH_LONG).show();
+				return;
+			}else if (emailEditText.getText().toString() == null || emailEditText.getText().length() <= 0) {
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_email_message), Toast.LENGTH_LONG).show();
+				return;
+			}else if(!Utils.isValidEmailAddress(emailEditText.getText().toString())){
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_email_validity_message), Toast.LENGTH_LONG).show();
+				return;
+			}
+			/**
+			 * save user nameEditText in shared prefernece
+			 */
+			saveUserProfile();
+		}
+	};
+
+	/*private OnClickListener locationTextViewListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			select_location();
+		}
+	};*/
+
+	private OnClickListener dobEditTextListener = new OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			show_date();
+		}
+	};
     
 	
 	@Override
@@ -357,7 +446,7 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 //			fb_profile.loginToFacebook();
 //			
 		}else if(continue_next.getId()== v.getId()){
-			if (name.getText().toString().trim().length() <= 0) {
+			if (nameEditText.getText().toString().trim().length() <= 0) {
 				Toast.makeText(getApplicationContext(), "Please enter name.", Toast.LENGTH_LONG).show();
 				return;
 			}
@@ -369,7 +458,7 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 			/**
 			 * save user name in shared prefernece
 			 */
-			user_name= name.getText().toString();
+			user_name= nameEditText.getText().toString();
 			set_user_profile();
 			
 			/**
@@ -384,6 +473,142 @@ public class RegistrationProfileActivity extends Activity implements OnClickList
 			finish();
 		}
 	}
+
+	protected void saveUserProfile() {
+
+		nameString = nameEditText.getText().toString();
+		emailString = emailEditText.getText().toString();
+		locationString = locationTextView.getText().toString();
+
+		DOBString = DOBEditText.getText().toString();
+		int selectedId = gender_group.getCheckedRadioButtonId();
+
+		genderRadioButton = (RadioButton) findViewById(selectedId);
+		genderRadioButtonText = genderRadioButton.getText().toString();
+
+		UserProfile userProfile = null;
+
+		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.PROFILE_DATA)) {
+			userProfile = (UserProfile) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.PROFILE_DATA);
+		}
+
+		if(userProfile == null)
+			userProfile = new UserProfile();
+
+		userProfile.setName(nameString);
+		userProfile.setEmail(emailString);
+		userProfile.setDefaultLocationName(locationString);
+		userProfile.setDeviceType("android");
+
+		if(genderRadioButtonText.trim().startsWith("M")|| genderRadioButtonText.trim().startsWith("m"))
+			userProfile.setGender("Male");
+		else
+			userProfile.setGender("Female");
+
+		if(DOBString != null && DOBString.length()>0){
+			long unixDOB = Utils.convertToUnixDate(DOBString, "MMM dd, yyyy");
+			userProfile.setUnixDob(unixDOB);
+//				Date date 			= null;
+//				//date = GetCurrentDate.StringToDate("MMM dd , yyyy", DOBString);
+//
+//				SimpleDateFormat d_format = new SimpleDateFormat("MMM dd , yyyy", Locale.ENGLISH);
+//				//DateFormat d_format = new SimpleDateFormat(format,  Locale.ENGLISH);
+//
+//				try {
+//					date = d_format.parse(DOBString);
+//					//d_format.setTimeZone(TimeZone.getTimeZone("UTC"));
+//
+//				} catch (ParseException e) {
+//					e.printStackTrace();
+//				}
+
+//				if(date!= null){
+//
+//					String date_as_encoded = GetCurrentDate.DateToString("yyyy-MM-dd KK:mm:ss a Z", date);
+//
+//					if(date_as_encoded !=null){
+//
+//						date = GetCurrentDate.StringToDate("yyyy-MM-dd KK:mm:ss a Z", date_as_encoded);
+//						date_as_encoded= GetCurrentDate.unixDateConversion(date);
+//						userProfile.setDob(DOBString);
+//
+//						Log.e("", "UTC date conversion "+ date_as_encoded);
+//						Log.e("", "new Date() "+ new Date());
+//						Log.e("", "DOBString "+ DOBString);
+//						Log.e("", "DOBString "+ date);
+//					}
+//				}
+		}
+
+		if(profile_image_bitmap != null){
+			//String user_profile_image = encodeTobase64(profile_image_bitmap);
+			userProfile.setImageBitmap(profile_image_bitmap);
+		}
+		/*requestType = RequestType.UPDATE_USER_PROFILE;
+
+		controller.updateUserProfile(userProfile,this);*/
+
+	}
+
+//	protected void select_location() {
+//
+//		location_dialog = new ParentDialog(RegistrationProfileActivity.this);
+//		location_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
+//		location_dialog.setContentView(R.layout.add_location);
+//		location_dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
+//
+//		Button confirm = (Button) location_dialog.findViewById(R.id.cancel);
+//		Button done = (Button) location_dialog.findViewById(R.id.done);
+//
+//		UserLocationModel userLocationModel = null;
+//
+//		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
+//			userLocationModel = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+//		}
+//
+//		final PlacesAutoCompleteAdapter adapter1	= new PlacesAutoCompleteAdapter(this,R.id.item_code_list,null,userLocationModel);
+//		AutoCompleteTextView autoCompView	= (AutoCompleteTextView) location_dialog.findViewById(R.id.autoComplete);
+//		//autoCompView.setAdapter(adapter1);
+//
+//		//autoCompView.setOnItemClickListener(locationItemClickListener);
+//
+//		listView	= (ListView) location_dialog.findViewById(R.id.search_list);
+//
+//		autoCompView.addTextChangedListener(new MyTextWatcher(adapter1));
+//
+//		listView.setAdapter(adapter1);
+//
+//		listView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+//			@Override
+//			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+//				PlaceAutocompleteModel item = (PlaceAutocompleteModel) parent.getItemAtPosition(position);
+//				locationTextView.setText("" + item.getDescription());
+//				location_dialog.dismiss();
+//			}
+//		});
+//
+//
+//
+//		confirm.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View v) {
+//				location_dialog.dismiss();
+//			}
+//		});
+//
+//
+//		done.setOnClickListener(new OnClickListener() {
+//			@Override
+//			public void onClick(View arg0) {
+//				location_dialog.dismiss();
+//				//set_tag_view();
+//				//add_selected_tags.removeAllViews();
+//				//add_selected_tags.addView(linear);
+//			}
+//		});
+//
+//		location_dialog.show();
+//	}
 
 
 	

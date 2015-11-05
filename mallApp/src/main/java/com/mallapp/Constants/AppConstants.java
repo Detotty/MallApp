@@ -13,6 +13,7 @@ public class AppConstants {
 	public static final String PREF_URI_KEY = 
 			"http://androidexample.com/media/webservice/LazyListView_images/image6.png";
 
+	public static final String PROFILE_DATA = "USER_PROFILE_DATA";
 
 	public static  final int OPEN_LOCATION_SETTING_RESULT_CODE = 1;
 

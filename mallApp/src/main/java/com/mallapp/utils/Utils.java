@@ -15,6 +15,8 @@ import com.mallapp.View.R;
 
 import java.io.InputStream;
 import java.io.OutputStream;
+import java.text.SimpleDateFormat;
+import java.util.Date;
 
 public class Utils {
     public static void CopyStream(InputStream is, OutputStream os)
@@ -141,5 +143,38 @@ public class Utils {
                 });
 
         alertDialogBuilder.show();
+    }
+
+    public static boolean isValidEmailAddress(String email) {
+        String ePattern = "^[a-zA-Z0-9.!#$%&'*+/=?^_`{|}~-]+@((\\[[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\.[0-9]{1,3}\\])|(([a-zA-Z\\-0-9]+\\.)+[a-zA-Z]{2,}))$";
+        java.util.regex.Pattern p = java.util.regex.Pattern.compile(ePattern);
+        java.util.regex.Matcher m = p.matcher(email);
+        return m.matches();
+    }
+
+    public static long convertToUnixDate(String dateString, String format) {
+
+        try {
+
+            Date date = null; // *1000 is to convert seconds to milliseconds
+            SimpleDateFormat sdf = new SimpleDateFormat(format); // the format of your date
+            //sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
+            //String formattedDate = sdf.format(date);
+
+            date = sdf.parse(dateString);
+            System.out.println(date);
+
+            long unixDate = date.getTime()/1000;
+            System.out.println(unixDate);
+
+            return unixDate;
+
+        }catch (Exception e)
+        {
+            // execution will come here if the String that is given
+            // does not match the expected format.
+            e.printStackTrace();
+        }
+        return 0;
     }
 }

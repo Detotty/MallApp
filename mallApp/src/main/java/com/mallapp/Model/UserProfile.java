@@ -1,10 +1,14 @@
 package com.mallapp.Model;
 
+import android.graphics.Bitmap;
+
 public class UserProfile {
 
-	private String name, date_birth, education, location, gender, picture_path;
+	private String name, date_birth, education, location, gender, picture_path, Email, DefaultLocationName, DeviceType;
 	private String country, countryCode, phone_no;
 	private  boolean push_notification;
+	long UnixDob;
+	Bitmap imageBitmap;
 
 	
 
@@ -18,6 +22,34 @@ public class UserProfile {
 		this.gender= gender;
 	}
 
+	public String getEmail ()
+	{
+		return Email;
+	}
+
+	public void setEmail (String Email)
+	{
+		this.Email = Email;
+	}
+	public String getDefaultLocationName ()
+	{
+		return DefaultLocationName;
+	}
+
+	public void setDefaultLocationName (String DefaultLocationName)
+	{
+		this.DefaultLocationName = DefaultLocationName;
+	}
+
+	public String getDeviceType ()
+	{
+		return DeviceType;
+	}
+
+	public void setDeviceType (String DeviceType)
+	{
+		this.DeviceType = DeviceType;
+	}
 	public String getCountry() {
 		return country;
 	}
@@ -108,5 +140,23 @@ public class UserProfile {
 	
 	public void setPush_notification(boolean push_notification) {
 		this.push_notification = push_notification;
+	}
+
+	public long getUnixDob ()
+	{
+		return UnixDob;
+	}
+
+	public void setUnixDob (long UnixDob)
+	{
+		this.UnixDob = UnixDob;
+	}
+
+	public Bitmap getImageBitmap(){
+		return imageBitmap;
+	}
+
+	public void setImageBitmap(Bitmap bitmap){
+		this.imageBitmap = bitmap;
 	}
 }

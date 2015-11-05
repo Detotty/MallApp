@@ -63,6 +63,9 @@
 	<string name="register_profile_1">Add photo</string>
 	<string name="register_profile_2">Your Name</string>
 	<string name="register_profile_3">Sync with Facebook</string>
+	<string name="register_error_name_message">Please enter name.</string>
+	<string name="register_error_email_message">Please enter email.</string>
+	<string name="register_error_email_validity_message">Please enter valid email.</string>
 
 	<string name="location_msg1">Location services disabled</string>
 	<string name="location_msg2">Mall App needs access to your location. Please turn on location access.</string>

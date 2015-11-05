@@ -49,7 +49,7 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 //		actionBar.hide();
 		res = getResources();
 		init();
-//        getDefaultLocation();
+        getDefaultLocation();
 	}
 	
 	private void init() {

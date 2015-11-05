@@ -33,6 +33,11 @@ import android.os.StrictMode;
 import android.provider.Settings;
 import android.util.Log;
 
+import com.android.volley.Request;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonObjectRequest;
+
 
 public class Lattitude_Logitude extends Service implements LocationListener {
 
@@ -63,9 +68,66 @@ public class Lattitude_Logitude extends Service implements LocationListener {
 
 	public Lattitude_Logitude(Context context) {
 		this.mContext = context;
+		getLocation();
 	}
 
+	public Location getLocation() {
+		try {
+			locationManager = (LocationManager) mContext.getSystemService(LOCATION_SERVICE);
+			// getting GPS status
+			isGPSEnabled = locationManager.isProviderEnabled(LocationManager.GPS_PROVIDER);
 
+			// getting network status
+			isNetworkEnabled = locationManager.isProviderEnabled(LocationManager.NETWORK_PROVIDER);
+
+			if (!isGPSEnabled && !isNetworkEnabled) {
+				Log.e("no network", "isGPSEnabled .."+ isGPSEnabled+"..isNetworkEnabled.."+isNetworkEnabled);
+				// no network provider is enabl
+			} else {
+				this.canGetLocation = true;
+
+				if (isNetworkEnabled) {
+					locationManager.requestLocationUpdates(LocationManager.NETWORK_PROVIDER,MIN_TIME_BW_UPDATES,
+							MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+					Log.d("Network", "Network");
+					if (locationManager != null) {
+						location = locationManager.getLastKnownLocation(LocationManager.NETWORK_PROVIDER);
+
+						if (location != null) {
+							latitude = location.getLatitude();
+							longitude = location.getLongitude();
+//							Log.e("no network provider is enabled ", "latitude .."+ latitude+".......longitude...."+longitude
+//									+"\n"+countryName+""+countryCode);
+							getLocationFormGoogle(latitude, longitude);
+
+						}
+					}
+				}
+				// if GPS Enabled get lat/long using GPS Services
+				if (isGPSEnabled) {
+					if (location == null) {
+						locationManager.requestLocationUpdates(
+								LocationManager.GPS_PROVIDER,MIN_TIME_BW_UPDATES,MIN_DISTANCE_CHANGE_FOR_UPDATES, this);
+						Log.d("GPS Enabled", "GPS Enabled");
+
+						if (locationManager != null) {
+							location = locationManager.getLastKnownLocation(LocationManager.GPS_PROVIDER);
+
+							if (location != null) {
+								latitude = location.getLatitude();
+								longitude = location.getLongitude();
+								getLocationFormGoogle(latitude, longitude);
+								//onLocationCountry();
+							}
+						}
+					}
+				}
+			}
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+		return location;
+	}
 
 	/**
 	 * Stop using GPS listener
@@ -143,7 +205,71 @@ public class Lattitude_Logitude extends Service implements LocationListener {
 //	}
 
 
+	public static void getLocationFormGoogle(double lat, double lon ) {
 
+		String placesName =lat + "," + lon;
+
+//		StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+//		StrictMode.setThreadPolicy(policy);
+
+		String url = "http://maps.google.com/maps/api/geocode/json?address=" +placesName+"&ka&sensor=false";
+
+		JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
+			@Override
+			public void onResponse(JSONObject response) {
+
+				getCityAddress(response);
+
+			}
+		}, new Response.ErrorListener() {
+			@Override
+			public void onErrorResponse(VolleyError volleyError) {
+				com.mallapp.utils.Log.d("TAG", "volleyError :" + volleyError.toString());
+
+//				String message = VolleyErrorHelper.getMessage(volleyError, context);
+//
+//
+//
+//				com.salamplanet.utils.Log.e("", " error message ..." + message);
+//
+//				if(message!=null && message!= "")
+//					Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+//				else {
+//					String serverError = context.getResources().getString(R.string.request_error_message);
+//					Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+//				}
+			}
+		});
+
+//	    HttpGet httpGet = new HttpGet("http://maps.google.com/maps/api/geocode/json?address=" +placesName+"&ka&sensor=false");
+//	    HttpClient client = new DefaultHttpClient();
+//	    HttpResponse response;
+//	    StringBuilder stringBuilder = new StringBuilder();
+//
+//	    try {
+//	        response = client.execute(httpGet);
+//	        HttpEntity entity = response.getEntity();
+//	        InputStream stream = entity.getContent();
+//	        int b;
+//	        while ((b = stream.read()) != -1) {
+//	            stringBuilder.append((char) b);
+//	        }
+//	    } catch (ClientProtocolException e) {
+//	    } catch (IOException e) {
+//	    }
+//
+//	   // Log.e("errerre", "stringBuilder"+stringBuilder);
+//
+//	    JSONObject jsonObject = new JSONObject();
+//	    try {
+//	        jsonObject = new JSONObject(stringBuilder.toString());
+//	    } catch (JSONException e) {
+//
+//	        e.printStackTrace();
+//	    }
+//
+//	    return jsonObject;
+	}
 
 
 
@@ -307,6 +433,5 @@ public class Lattitude_Logitude extends Service implements LocationListener {
 	public IBinder onBind(Intent arg0) {
 		return null;
 	}
-
 
 }
