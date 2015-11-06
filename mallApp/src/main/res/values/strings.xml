@@ -85,6 +85,11 @@
     <string name="go_to_shop">Go to Shop</string>
     <string name="related_offers">Related Offers</string>
 
+	<string name="cancel_button_title">Cancel</string>
+	<string name="done_title">Done</string>
+	<string name="location_title">Location</string>
+	<string name="location_text_view_place_holder">Enter location</string>
+
 
 	<string name="name">Name</string>
 	<string name="add_photo">Add Photo</string>
@@ -97,8 +102,16 @@
 
 	<string name="male">Male</string>
 	<string name="female">Female</string>
+
 	<string name="sync_facebook_button_title">Sync with Facebook</string>
+	<string name="sending_phone_number_dialog_message">Sending Verification Code</string>
+	<string name="verifying_code_dialog_message">Verifying Verification Code</string>
 	<string name="registration_with_fb_dialog_message">Registration with Facebook</string>
+	<string name="updating_profile_data_message">Updating Profile</string>
+
+	<string name="login_in_message">Signing In</string>
+
+
 	<!-- Error Messages -->
 	<string name="request_error_message">Something went wrong. Please try again later</string>
 	<string name="add_new_place_error_message">Please enter place name</string>

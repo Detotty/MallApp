@@ -187,4 +187,24 @@ public class SharedPreferenceUserProfile {
 		}
 	}
 
+	public static String getUserId(Context context) {
+
+		try{
+			if (SharedPreferenceUserProfile.tokenPreferences == null) {
+				SharedPreferenceUserProfile.initTokenPreference(context);
+			}
+			String userId  = tokenPreferences.getString(GlobelProfile.profileID, null);
+
+//            String userId = usrPrefrence.getString(GlobelProfile.securityToken, null);
+
+
+			return userId;
+
+		} catch (Exception exception) {
+			exception.printStackTrace();
+			Log.e(tokenTag, "UserId: " + exception);
+		}
+		return null;
+	}
+
 }

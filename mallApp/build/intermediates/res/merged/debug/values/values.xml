@@ -704,6 +704,9 @@
     <eat-comment/>
     <string name="calculaor">CALCULATOR</string>
     <string name="cancel">Cancel</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="cancel_button_title">Cancel</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.1.0/res/values/cast_strings.xml -->
     <eat-comment/>
     <string name="cast_notification_connected_message">Connected to <ns1:g id="name">%1$s</ns1:g></string>
@@ -765,6 +768,7 @@
     <string name="done">Done</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="done_title">Done</string>
     <string name="edit_">Edit</string>
     <string name="email">Email</string>
     <string name="enter_location">Enter Location</string>
@@ -795,6 +799,9 @@
     <string name="location_msg3">Check Network Connection</string>
     <string name="location_msg4">Location services disabled</string>
     <string name="location_msg5">Location services disabled</string>
+    <string name="location_text_view_place_holder">Enter location</string>
+    <string name="location_title">Location</string>
+    <string name="login_in_message">Signing In</string>
     <string name="male">Male</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/keys.xml -->
     <eat-comment/>
@@ -867,6 +874,7 @@
     <string name="s_price">STARTING PRICE</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="sending_phone_number_dialog_message">Sending Verification Code</string>
     <string name="share">Share</string>
     <string name="share_points"> 5pts</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
@@ -899,9 +907,13 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="updating_profile_data_message">Updating Profile</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="ur_discount">YOUR DISCOUNT</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="verifying_code_dialog_message">Verifying Verification Code</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-wallet/8.1.0/res/values/wallet_strings.xml -->
     <eat-comment/>
     <string name="wallet_buy_button_place_holder">Buy with Google</string>

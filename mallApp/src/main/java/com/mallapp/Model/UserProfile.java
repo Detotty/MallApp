@@ -4,7 +4,8 @@ import android.graphics.Bitmap;
 
 public class UserProfile {
 
-	private String name, date_birth, education, location, gender, picture_path, Email, DefaultLocationName, DeviceType;
+	private String name, date_birth, education, location, gender, picture_path, Email, DefaultLocationName, DeviceType, FirstName,
+			FileName, ImageBase64String, UserId;
 	private String country, countryCode, phone_no;
 	private  boolean push_notification;
 	long UnixDob;
@@ -85,6 +86,15 @@ public class UserProfile {
 	public UserProfile() {
 		super();
 	}
+	public String getFirstName ()
+	{
+		return FirstName;
+	}
+
+	public void setFirstName (String FirstName)
+	{
+		this.FirstName = FirstName;
+	}
 	
 	public String getName() {
 		return name;
@@ -92,6 +102,16 @@ public class UserProfile {
 
 	public void setName(String name) {
 		this.name = name;
+	}
+
+	public String getUserId ()
+	{
+		return UserId;
+	}
+
+	public void setUserId (String UserId)
+	{
+		this.UserId = UserId;
 	}
 
 	public String getDate_birth() {
@@ -158,5 +178,25 @@ public class UserProfile {
 
 	public void setImageBitmap(Bitmap bitmap){
 		this.imageBitmap = bitmap;
+	}
+
+	public String getFileName ()
+	{
+		return FileName;
+	}
+
+	public void setFileName (String FileName)
+	{
+		this.FileName = FileName;
+	}
+
+	public String getImageBase64String ()
+	{
+		return ImageBase64String;
+	}
+
+	public void setImageBase64String (String ImageBase64String)
+	{
+		this.ImageBase64String = ImageBase64String;
 	}
 }

@@ -177,4 +177,27 @@ public class Utils {
         }
         return 0;
     }
+
+    public static String convertUnixDate(long unixDate, String format) {
+
+        try {
+
+            long unixSeconds = unixDate;
+            Date date = new Date(unixSeconds * 1000L); // *1000 is to convert seconds to milliseconds
+            SimpleDateFormat sdf = new SimpleDateFormat(format); // the format of your date
+            //sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
+            String formattedDate = sdf.format(date);
+            Log.d("unix date", "unix date:" + formattedDate);
+
+            return formattedDate;
+
+        }catch (Exception e)
+        {
+            // execution will come here if the String that is given
+            // does not match the expected format.
+            e.printStackTrace();
+        }
+        return null;
+    }
+
 }

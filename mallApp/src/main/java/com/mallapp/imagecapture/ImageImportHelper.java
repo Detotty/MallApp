@@ -40,7 +40,7 @@ public class ImageImportHelper {
 	// public static final int ACTION_TAKE_PHOTO_SMALL = 2;
 	public static final int ACTION_TAKE_PHOTO_IMAGEVIEW = 11;
 	public static final int ACTION_TAKE_PHOTO_FROM_GALLERY = 22;
-	private static final int DEFAULT_WIDTH_HEIGHT_PROFILE_IMAGE = 300;
+	public static final int DEFAULT_WIDTH_HEIGHT_PROFILE_IMAGE = 300;
 
 	private static final String JPEG_FILE_PREFIX = "IMG_";
 	private static final String JPEG_FILE_SUFFIX = ".jpg";

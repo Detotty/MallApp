@@ -19,6 +19,7 @@ import android.content.Context;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.os.Handler;
+import android.util.Log;
 import android.widget.ImageView;
 
 import com.mallapp.View.R;
@@ -49,11 +50,11 @@ public class ImageLoader {
     }
     
     final int stub_id = R.drawable.shop_logo1;
-    
+
     public void DisplayImage(String url, ImageView imageView){
     	imageViews.put(imageView, url);
         Bitmap bitmap=memoryCache.get(url);
-        
+
         if(bitmap!=null){
         	bitmap= ScalingUtilities.createScaledBitmap(bitmap, mDstWidth,mDstHeight, ScalingLogic.FIT);
         	imageView.setImageBitmap(bitmap);
@@ -62,12 +63,43 @@ public class ImageLoader {
             imageView.setImageResource(stub_id);
         }
     }
-        
+
     private void queuePhoto(String url, ImageView imageView){
         PhotoToLoad p=new PhotoToLoad(url, imageView);
         executorService.submit(new PhotosLoader(p));
     }
-    
+
+    public void DisplayImage(String url, ImageView imageView, boolean isrounded) {
+        Log.e("DisplayImage", "bitmap url= " + url);
+        imageViews.put(imageView, url);
+        Bitmap bitmap=memoryCache.get(url);
+
+        if(bitmap!=null){
+            Log.e("DisplayImage", "bitmap not null");
+            if(isrounded){
+                Image_Scaling.setRoundedImgeToImageView(context, imageView, bitmap);
+            }else{
+                bitmap= ScalingUtilities.createScaledBitmap(bitmap, mDstWidth,mDstHeight, ScalingLogic.FIT);
+                imageView.setImageBitmap(bitmap);
+            }
+        }else{
+            Log.e("DisplayImage", "bitmap null");
+            queuePhoto(url, imageView, isrounded);
+            if(isrounded){
+
+            }
+            else{
+//        		queuePhoto(url, imageView);
+                imageView.setImageResource(stub_id);
+            }
+        }
+    }
+
+    private void queuePhoto(String url, ImageView imageView, boolean isrounded){
+        PhotoToLoad p=new PhotoToLoad(url, imageView, isrounded);
+        executorService.submit(new PhotosLoader(p));
+    }
+
     private Bitmap getBitmap(String url){
         File f=fileCache.getFile(url);
         
@@ -141,9 +173,15 @@ public class ImageLoader {
     {
         public String url;
         public ImageView imageView;
+        public boolean isrounded;
         public PhotoToLoad(String u, ImageView i){
-            url=u; 
+            url=u;
             imageView=i;
+        }
+        public PhotoToLoad(String u, ImageView i , boolean rounded){
+            url=u;
+            imageView=i;
+            isrounded=rounded;
         }
     }
     
