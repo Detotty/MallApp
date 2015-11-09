@@ -81,7 +81,7 @@ public class RegistrationController {
 
             String url		= GlobelServices.PROFILE_UPDATE_URL_KEY;
 
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.PUT, url, jsonObject, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {

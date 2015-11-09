@@ -1,6 +1,6 @@
 package com.mallapp.View;
 
-import android.app.ActionBar;
+
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -108,8 +108,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		setContentView(R.layout.registration_profile);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-		ActionBar actionBar = getActionBar();
-		actionBar.hide();
+		/*ActionBar actionBar = getActionBar();
+		actionBar.hide();*/
 
 		init();
 		mImageImportHelper 	= ImageImportHelper.getInstance(RegistrationProfileActivity.this);
@@ -535,7 +535,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 //			Intent tabIntent = new Intent(RegistrationProfileActivity.this, DashBoardCrowedEye.class);
 
-			Intent intent = new Intent(RegistrationProfileActivity.this, DashboardTabFragmentActivity.class);
+			Intent intent = new Intent(RegistrationProfileActivity.this, Select_Favourite_Center.class);
 			finishAffinity();
 			startActivity(intent);
 

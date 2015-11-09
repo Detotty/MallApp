@@ -850,7 +850,10 @@
     <string name="register_country_7">Phone Number Verification</string>
     <string name="register_country_8">Is this your correct number?</string>
     <string name="register_country_9">An SMS with your Access code will be sent into this number.</string>
-    <string name="register_dummy">Lorem ipsum dolor sit er elit lamet,  consectetaur cilium adepisicing pecu, sed do eiusmod tempor incidedunt ut labore et dolore magna aliqua.</string>
+    <string name="register_dummy1">Lorem ipsum dolor sit er elit lamet,</string>
+    <string name="register_dummy2">consectetaur cilium adepisicing pecu,</string>
+    <string name="register_dummy3">sed do eiusmod tempor incidedunt ut</string>
+    <string name="register_dummy4">labore et dolore magna aliqua.</string>
     <string name="register_error_email_message">Please enter email.</string>
     <string name="register_error_email_validity_message">Please enter valid email.</string>
     <string name="register_error_name_message">Please enter name.</string>

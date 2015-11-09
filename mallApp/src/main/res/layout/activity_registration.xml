@@ -15,7 +15,7 @@
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:layout_centerHorizontal="true"
-        android:layout_below="@+id/tv_dummy"
+        android:layout_below="@+id/tv_dummy4"
         android:paddingLeft="40dp"
         android:paddingRight="40dp"
         android:textColor="@color/white"
@@ -30,7 +30,9 @@
         android:layout_below="@+id/btn_register_phone"
         android:layout_centerVertical="true"
         android:layout_centerHorizontal="true"
-        android:padding="10dp"
+        android:paddingRight="12dp"
+        android:paddingTop="8dp"
+        android:paddingBottom="8dp"
         android:layout_marginLeft="40dp"
         android:layout_marginRight="40dp"
         android:textColor="@color/white"
@@ -58,7 +60,7 @@
         android:textSize="20sp"
         android:layout_below="@id/iv_icon_logo"/>
     <TextView
-        android:id="@+id/tv_dummy"
+        android:id="@+id/tv_dummy1"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:textColor="@color/white"
@@ -68,6 +70,40 @@
         android:layout_marginRight="40dp"
         android:layout_centerHorizontal="true"
         android:textSize="15sp"
-        android:text="@string/register_dummy"/>
+        android:text="@string/register_dummy1"/>
+    <TextView
+        android:id="@+id/tv_dummy2"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_below="@+id/tv_dummy1"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:text="@string/register_dummy2"/>
+    <TextView
+        android:id="@+id/tv_dummy3"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_below="@+id/tv_dummy2"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:text="@string/register_dummy3"/>
+    <TextView
+        android:id="@+id/tv_dummy4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@color/white"
+        android:layout_below="@+id/tv_dummy3"
+        android:layout_marginLeft="40dp"
+        android:layout_marginRight="40dp"
+        android:layout_centerHorizontal="true"
+        android:textSize="15sp"
+        android:text="@string/register_dummy4"/>
+
 
 </RelativeLayout>

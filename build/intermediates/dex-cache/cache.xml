@@ -2,39 +2,53 @@
 <items version="2" >
 
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\libs\twitter4j-core-4.0.2.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="381cf31e9200c2902782f17248d2af18e2ab4c56">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\twitter4j-core-4.0.2-e0ae3816eceeacd10634364ba6e96eeed3730512.jar" />
+        sha1="dcb5b75baf05d92e61d5706737200ee55949f97b">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-717decbee4df35426f8c7eee9b73eaed46974fb0.jar" />
     </item>
     <item
-        jar="C:\Users\hpp\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\libs\acra-4.5.0.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\gson-2.3.1-d938b82777612aaf9d60cc56122b1872c3455c9d.jar" />
+        sha1="44a5eb946e0d83eed4a0128d877ca1fd8168b83a">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\acra-4.5.0-0939265320f51357f3fd626f781f668bb9c48916.jar" />
     </item>
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.1.0\jars\classes.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-b48bef9fc8996b04cedc89a1236e8ca6931a04af.jar" />
+        sha1="3aed37c38c56679602255dd72ef356da5d327cda">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-8a68febe1a5ad18d3940533dc606b5da6a216b56.jar" />
     </item>
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.1.0\jars\classes.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="3178362320bcf51228835b60ff978efadfd1f783">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-fe186b1529f36ceb32e6605762bc9f50d950db8a.jar" />
+        sha1="8730e7271aff866008c490a7f19579a266bd0286">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-82207202cf6a9388f6a024787574a444eea1ce89.jar" />
     </item>
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\jars\classes.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="eca69ad24b7bdd666a821e0ea697707d37b28237">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-1451ff334a3b8646878826480561cee53f1383a3.jar" />
+        sha1="b92002cb2f0e11a226ac5bac6dff1dc2a9d0b774">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-78ad01ee3c4878f999502e6d5cd275510dd19235.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="041d93cf0533591c29d1d7263b2fa114dbfb20bd">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-92b4437aef57a3b97e433ec8cf7c7179f54fc17a.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3b05c18f60969ecc2ba49c0409c4b96be2d9cb0c">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-87a8b68f6a4e2b0a664cd9449b271ca84aca4ca2.jar" />
     </item>
     <item
         jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-appindexing\8.1.0\jars\classes.jar"
@@ -44,32 +58,11 @@
         <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-26513789780fe8b54e1e9b8482098e58295f8783.jar" />
     </item>
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
+        jar="J:\Android\SDK\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="f8efd0096475e0daf054267b61544e10dc776503">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-c7bef0dac17ca929bf683b01fb8f3492311ac922.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d93480da1d303122ee67dc3bc23e6297bdef9951">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-40d6383192c51f9898e932d01fe1c2bafaa50a5f.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d4558be486039d0518a32249aa175c2665334d7b">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-82207202cf6a9388f6a024787574a444eea1ce89.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-597c399701853c673cd9b3b123a7b64ae0ca730c.jar" />
+        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-fbfdc805c00a9e56d18d28743114425f91c4cb09.jar" />
     </item>
     <item
         jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\jars\classes.jar"
@@ -93,6 +86,132 @@
         <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-e73c8aaff397881676d78eb7fc620a3c7eeca409.jar" />
     </item>
     <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-a23e95ca5acdf94de996c8324af58365f5d6f349.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-468e0e079a63b43b6a4844d5ee2bf88772105321.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="95758a2905669affbffc5ddd262921d375674fad">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-f311d1cace060849c7a7ff8beb2f4ac6da5bdef8.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-484a9ec0cad4845bcd50cd2ba37fd178fa0a66da.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="325788a04b436a0bccbc5b4c54cf0f12ebdcbd2d">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-bf0207e151e73ba894d5b8b0482de515545ccbdc.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-plus\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="d61920aba361832a9545a43fa8c9453eb02f18f7">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-597c399701853c673cd9b3b123a7b64ae0ca730c.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="17449c47df35c754b257532052f1270c444f7993">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-0c7c7fa4158f60589d0b2b9c3fa3e759756de795.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="482de223655d06253cc6a4955d653f8994169500">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-bbe1b9f93ed214d25716c55f718e6f4606cf74c4.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="f8efd0096475e0daf054267b61544e10dc776503">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-c7bef0dac17ca929bf683b01fb8f3492311ac922.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-5e4787be0d8b0cf16c798c2f9059017ad6645ab4.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="7f0ddfaf2e41ad8477c2afb31c4c3b51e472d775">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-1451ff334a3b8646878826480561cee53f1383a3.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="2a7e47da654546f9457deb6132364f1bf33a1857">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-62caf342a8ac8cfe6b7e706851d35901f1f691d8.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-drive\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="3c729e6d76a36c5dc27e6a4c4009296f49eaa88a">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-b48bef9fc8996b04cedc89a1236e8ca6931a04af.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\libs\internal_impl-22.2.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-a0eeb85e0b21ed9124fc633b1cd7a996d27bc6d6.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\libs\twitter4j-core-4.0.2.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="381cf31e9200c2902782f17248d2af18e2ab4c56">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\twitter4j-core-4.0.2-e0ae3816eceeacd10634364ba6e96eeed3730512.jar" />
+    </item>
+    <item
+        jar="C:\Users\hpp\.gradle\caches\modules-2\files-2.1\com.google.code.gson\gson\2.3.1\ecb6e1f8e4b0e84c4b886c2f14a1500caf309757\gson-2.3.1.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="ecb6e1f8e4b0e84c4b886c2f14a1500caf309757">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\gson-2.3.1-d938b82777612aaf9d60cc56122b1872c3455c9d.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.1.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="9cf8c0ef60847621c7ad00b4f78dbfc9daba4af2">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-937be987a8bd42cc547e04607a086fb177b53c6b.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-214d4009b127ceec1c2aba7125315d8081e05265.jar" />
+    </item>
+    <item
         jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-identity\8.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
@@ -107,60 +226,18 @@
         <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-790dd76f8b79a908a01955bdf8ce7a0a4d8d15ed.jar" />
     </item>
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\classes.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-panorama\8.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="dcf8c83c3dead00a6c4fe313e95f7aaca20dc641">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-214d4009b127ceec1c2aba7125315d8081e05265.jar" />
+        sha1="d93480da1d303122ee67dc3bc23e6297bdef9951">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-40d6383192c51f9898e932d01fe1c2bafaa50a5f.jar" />
     </item>
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\libs\acra-4.5.0.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-cast\8.1.0\jars\classes.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="44a5eb946e0d83eed4a0128d877ca1fd8168b83a">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\acra-4.5.0-0939265320f51357f3fd626f781f668bb9c48916.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-gcm\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="dcb5b75baf05d92e61d5706737200ee55949f97b">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-717decbee4df35426f8c7eee9b73eaed46974fb0.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="2a7e47da654546f9457deb6132364f1bf33a1857">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-62caf342a8ac8cfe6b7e706851d35901f1f691d8.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-fitness\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="9cf8c0ef60847621c7ad00b4f78dbfc9daba4af2">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-937be987a8bd42cc547e04607a086fb177b53c6b.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-measurement\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="482de223655d06253cc6a4955d653f8994169500">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-bbe1b9f93ed214d25716c55f718e6f4606cf74c4.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\mediarouter-v7\22.2.0\jars\libs\internal_impl-22.2.0.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="0632f06970823b7e3436f649bfa65b47035c91d0">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\internal_impl-22.2.0-a0eeb85e0b21ed9124fc633b1cd7a996d27bc6d6.jar" />
-    </item>
-    <item
-        jar="J:\Android\SDK\extras\android\m2repository\com\android\support\support-annotations\22.2.1\support-annotations-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="61a0ff5c29295ec56d7e0bd3d25d95dbf71b4b2b">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\support-annotations-22.2.1-fbfdc805c00a9e56d18d28743114425f91c4cb09.jar" />
+        sha1="3178362320bcf51228835b60ff978efadfd1f783">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-fe186b1529f36ceb32e6605762bc9f50d950db8a.jar" />
     </item>
     <item
         jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\jars\classes.jar"
@@ -168,83 +245,6 @@
         revision="22.0.1"
         sha1="997773777cf3904c11d6764fe3b7668538220e49">
         <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-bf39564acba5299d5f530927f623b270a538638b.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="325788a04b436a0bccbc5b4c54cf0f12ebdcbd2d">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-bf0207e151e73ba894d5b8b0482de515545ccbdc.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-appinvite\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="b92002cb2f0e11a226ac5bac6dff1dc2a9d0b774">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-78ad01ee3c4878f999502e6d5cd275510dd19235.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-safetynet\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3b05c18f60969ecc2ba49c0409c4b96be2d9cb0c">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-87a8b68f6a4e2b0a664cd9449b271ca84aca4ca2.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-games\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="993834cb17d07d51b92db89d2c330243592ebf77">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-468e0e079a63b43b6a4844d5ee2bf88772105321.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-vision\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="17449c47df35c754b257532052f1270c444f7993">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-0c7c7fa4158f60589d0b2b9c3fa3e759756de795.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-location\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="3aed37c38c56679602255dd72ef356da5d327cda">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-8a68febe1a5ad18d3940533dc606b5da6a216b56.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\appcompat-v7\22.2.1\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="4486e953d1f35f8ccab098b1dd67146366d5f731">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-a23e95ca5acdf94de996c8324af58365f5d6f349.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-nearby\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="041d93cf0533591c29d1d7263b2fa114dbfb20bd">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-92b4437aef57a3b97e433ec8cf7c7179f54fc17a.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\jars\libs\internal_impl-22.2.1.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="c471eaaba13ff64f6e0383d1c30a9cdc9a97efeb">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\internal_impl-22.2.1-5e4787be0d8b0cf16c798c2f9059017ad6645ab4.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-base\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="82825756edeeb3b56b15e73b2edd56e93da5a444">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-484a9ec0cad4845bcd50cd2ba37fd178fa0a66da.jar" />
-    </item>
-    <item
-        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-analytics\8.1.0\jars\classes.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="95758a2905669affbffc5ddd262921d375674fad">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-f311d1cace060849c7a7ff8beb2f4ac6da5bdef8.jar" />
     </item>
 
 </items>

@@ -44,7 +44,10 @@
 	<string name="register_country_10">SMS faild, please try again.</string>
 	<string name="register_country_11">SMS sent.</string>\n
 	<string name="register_welcome">Welcome to The Mall App</string>
-	<string name="register_dummy">Lorem ipsum dolor sit er elit lamet,  consectetaur cilium adepisicing pecu, sed do eiusmod tempor incidedunt ut labore et dolore magna aliqua.</string>
+	<string name="register_dummy1">Lorem ipsum dolor sit er elit lamet,</string>
+	<string name="register_dummy2">consectetaur cilium adepisicing pecu,</string>
+	<string name="register_dummy3">sed do eiusmod tempor incidedunt ut</string>
+	<string name="register_dummy4">labore et dolore magna aliqua.</string>
 	<string name="registration_with_phone_button_title">Register with Phone</string>
 	<string name="registration_wtih_facebook_button_title">Register with Facebook</string>
 	
