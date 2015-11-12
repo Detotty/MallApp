@@ -8,6 +8,7 @@ import android.graphics.drawable.Drawable;
 
 import com.mallapp.Fragments.OfferPagerTabFragment;
 import com.mallapp.Model.FavouriteCenters;
+import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.Offers_News;
 
 public class GlobelOffersNews {
@@ -33,7 +34,7 @@ public class GlobelOffersNews {
 	public static ArrayList<Drawable> news_audience_images;
 	
 	public static List<OfferPagerTabFragment> fragment_instences;
-	public static ArrayList<FavouriteCenters> TITLES_centers;
+	public static ArrayList<FavouriteCentersModel> TITLES_centers;
 	public static ArrayList<String> TITLES;
 	
 	

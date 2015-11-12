@@ -62,9 +62,9 @@ public class RegistrationActivity extends Activity {
         init();
         //getDefaultLocation();
 
-        String token = SharedPreferenceUserProfile.getUserToken(this);
+//        String token = SharedPreferenceUserProfile.getUserToken(this);
 
-        if( token == null )
+//        if( token == null )
             Utils.getDefaultLocation(this);
     }
 

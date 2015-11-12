@@ -31,6 +31,7 @@ import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.FavouriteCentersFiltration;
 import com.mallapp.Controllers.OffersNewsFiltration;
 import com.mallapp.Model.FavouriteCenters;
+import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.View.DashboardTabFragmentActivity;
 import com.mallapp.View.R;
 import com.mallapp.cache.CentersCacheManager;
@@ -149,14 +150,14 @@ public class OffersTabFragment 	extends Fragment
 			MainMenuConstants.SELECTED_CENTER_LOGO = null;
 			
 		}else {
-			ArrayList<FavouriteCenters> TITLES_Centers= GlobelOffersNews.TITLES_centers;
+			ArrayList<FavouriteCentersModel> TITLES_Centers= GlobelOffersNews.TITLES_centers;
 			
 			if(TITLES_Centers == null || TITLES_Centers.size()==0){
 				TITLES_Centers = CentersCacheManager.getAllCenters(context);
 			}
-			for(FavouriteCenters center : TITLES_Centers){
-				if(center.isIsfav() && center.getCenter_title().trim().equals(selectedCenter)){
-					String center_logo_name= center.getCenter_logo();
+			for(FavouriteCentersModel center : TITLES_Centers){
+				if(center.isIsfav() && center.getName().trim().equals(selectedCenter)){
+					String center_logo_name= center.getLogoUrl();
 					setCenter_logo(center_logo_name);
 					setSelected_center_logo(center_logo_name);
 				}

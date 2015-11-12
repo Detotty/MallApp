@@ -9,6 +9,7 @@ import android.content.Context;
 
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.FavouriteCenters;
+import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.SharedPreferences.SharedPreferenceFavourites;
 import com.mallapp.cache.CentersCacheManager;
@@ -25,12 +26,12 @@ public class FavouriteCentersFiltration {
 			
 			String value= Offers_News_Constants.AUDIENCE_FILTER_ALL;
 			SharedPreferenceFavourites.saveFavouritesArray(context, value);
-			ArrayList<FavouriteCenters> TITLES_Centers = CentersCacheManager.getAllCenters(context);
+			ArrayList<FavouriteCentersModel> TITLES_Centers = CentersCacheManager.getAllCenters(context);
 			GlobelOffersNews.TITLES_centers= TITLES_Centers;
 			
-			for( FavouriteCenters centers: TITLES_Centers){
+			for( FavouriteCentersModel centers: TITLES_Centers){
 				if(centers.isIsfav()){
-					value= centers.getCenter_title();
+					value= centers.getName();
 					SharedPreferenceFavourites.saveFavouritesArray(context, value);
 				}
 			}

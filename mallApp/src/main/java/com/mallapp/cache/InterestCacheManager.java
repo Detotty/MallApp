@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 
+import com.mallapp.Model.InterestSelectionModel;
 import com.mallapp.Model.Interst_Selection;
 
 public class InterestCacheManager {
@@ -22,7 +23,7 @@ public class InterestCacheManager {
 	
 	
 
-	private static void writeObjectList(Context context, ArrayList<Interst_Selection> centers_list) throws IOException {
+	private static void writeObjectList(Context context, ArrayList<InterestSelectionModel> centers_list) throws IOException {
 		// Create FileOutputStream to write file
 		FileOutputStream fos = new FileOutputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		// Create ObjectOutputStream to write object
@@ -36,8 +37,8 @@ public class InterestCacheManager {
 		objOutputStream.close();
 	}
 
-	private static ArrayList<Interst_Selection> readObjectList(Context context) throws ClassNotFoundException, IOException {
-		ArrayList<Interst_Selection> list = new ArrayList<Interst_Selection>();
+	private static ArrayList<InterestSelectionModel> readObjectList(Context context) throws ClassNotFoundException, IOException {
+		ArrayList<InterestSelectionModel> list = new ArrayList<InterestSelectionModel>();
 		// Create new FileInputStream object to read file
 		FileInputStream fis = new FileInputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		// Create new ObjectInputStream object to read object from file
@@ -45,7 +46,7 @@ public class InterestCacheManager {
 		try {
 			while (fis.available() != -1) {
 				// Read object from file
-				Interst_Selection acc = (Interst_Selection) obj.readObject();
+				InterestSelectionModel acc = (InterestSelectionModel) obj.readObject();
 				list.add(acc);
 			}
 		} catch (EOFException ex) {
@@ -63,14 +64,14 @@ public class InterestCacheManager {
 	
 	
 	private static int readCountObjectList(Context context) throws ClassNotFoundException, IOException {
-		ArrayList<Interst_Selection> list = new ArrayList<Interst_Selection>();
+		ArrayList<InterestSelectionModel> list = new ArrayList<InterestSelectionModel>();
 		
 		FileInputStream fis = new FileInputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		
 		ObjectInputStream obj = new ObjectInputStream(fis);
 		try {
 			while (fis.available() != -1) {
-				Interst_Selection acc = (Interst_Selection) obj.readObject();
+				InterestSelectionModel acc = (InterestSelectionModel) obj.readObject();
 				if(acc.isInterested())
 					list.add(acc);
 			}
@@ -88,17 +89,18 @@ public class InterestCacheManager {
 	}
 
 	
-	public static void updateCenters(Context context, Interst_Selection obj) {
+	public static void updateCenters(Context context, InterestSelectionModel obj) {
 		
-		ArrayList<Interst_Selection> allcentersList= getAllCenters(context);
+		ArrayList<InterestSelectionModel> allcentersList= getAllCenters(context);
 		if (allcentersList != null) {
-			allcentersList.set(obj.getId(), obj);
+//			allcentersList.set(obj.getId(), obj);
+			allcentersList.add(obj);
 			saveFavorites(context, allcentersList);
 		}
 	}
 	
 	
-	public static void saveFavorites(Context context, ArrayList<Interst_Selection> allcentersList) {
+	public static void saveFavorites(Context context, ArrayList<InterestSelectionModel> allcentersList) {
 		try {
 			writeObjectList(context, allcentersList);
 		} catch (IOException e) {
@@ -107,8 +109,8 @@ public class InterestCacheManager {
 		}
 	}
 	
-	public static ArrayList<Interst_Selection> getAllCenters(Context context) {
-		ArrayList<Interst_Selection> allentersList = null;
+	public static ArrayList<InterestSelectionModel> getAllCenters(Context context) {
+		ArrayList<InterestSelectionModel> allentersList = null;
 		try {
 			allentersList = readObjectList(context);
 		} catch (ClassNotFoundException e) {
@@ -139,6 +141,31 @@ public class InterestCacheManager {
 	public static void clearCache(Context context, String fileName) {
 		mCacheManager = CacheManager.getInstance(context);
 		mCacheManager.deleteFile(fileName);
+	}
+
+	public static ArrayList<InterestSelectionModel> readSelectedObjectList(Context context) throws ClassNotFoundException, IOException {
+		ArrayList<InterestSelectionModel> list = new ArrayList<InterestSelectionModel>();
+
+		FileInputStream fis = new FileInputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
+
+		ObjectInputStream obj = new ObjectInputStream(fis);
+		try {
+			while (fis.available() != -1) {
+				InterestSelectionModel acc = (InterestSelectionModel) obj.readObject();
+				if(acc.isInterested())
+					list.add(acc);
+			}
+		} catch (EOFException ex) {
+			ex.printStackTrace();
+		}finally{
+			// releases any associated system files with this stream
+			if(fis!=null)
+				fis.close();
+			if(obj!=null)
+				obj.close();
+		}
+		Log.w("read centers", "read centers list completed " + list.size());
+		return list;
 	}
 
 }

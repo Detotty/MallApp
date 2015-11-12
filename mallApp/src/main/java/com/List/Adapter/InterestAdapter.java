@@ -12,19 +12,20 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mallapp.Model.InterestSelectionModel;
 import com.mallapp.Model.Interst_Selection;
 import com.mallapp.View.R;
 import com.mallapp.cache.InterestCacheManager;
 
 @SuppressLint("InflateParams") 
-public class InterestAdapter extends ArrayAdapter<Interst_Selection>{
+public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 
 	//private static final String TAG = PhoneContactsArrayAdapter.class.getSimpleName();
-	private ArrayList<Interst_Selection> interst_;
+	private ArrayList<InterestSelectionModel> interst_;
 	Context context;
 	
 	public InterestAdapter(Context context, int textViewResourceId, 
-						ArrayList<Interst_Selection> objects) {
+						ArrayList<InterestSelectionModel> objects) {
 		super(context, textViewResourceId, objects);
 		interst_= objects;
 		this.context= context;
@@ -37,7 +38,7 @@ public class InterestAdapter extends ArrayAdapter<Interst_Selection>{
 	}
 
 	@Override
-	public Interst_Selection getItem(int position) {
+	public InterestSelectionModel getItem(int position) {
 		return this.interst_.get(position);
 	}
 	
@@ -47,7 +48,7 @@ public class InterestAdapter extends ArrayAdapter<Interst_Selection>{
 	}
 
 	@Override
-	public int getPosition(Interst_Selection item) {
+	public int getPosition(InterestSelectionModel item) {
 		return super.getPosition(item);
 	}
 	
@@ -73,8 +74,8 @@ public class InterestAdapter extends ArrayAdapter<Interst_Selection>{
 			holder = (ViewHolder) view.getTag();
 		
 		
-		Interst_Selection interst_obj= getItem(position);
-		holder.interst_title.setText(interst_obj.getInterest_title());
+		InterestSelectionModel interst_obj= getItem(position);
+		holder.interst_title.setText(interst_obj.getCategoryText());
 		boolean is_interts= interst_obj.isInterested();
 		
 		if(is_interts){
@@ -89,7 +90,7 @@ public class InterestAdapter extends ArrayAdapter<Interst_Selection>{
 		holder.is_interest.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				Interst_Selection fav_obj= getItem(position);
+				InterestSelectionModel fav_obj= getItem(position);
 				if(fav_obj.isInterested()){
 					fav_obj.setInterested(false);
 					InterestCacheManager.updateCenters(context, fav_obj);
@@ -109,7 +110,7 @@ public class InterestAdapter extends ArrayAdapter<Interst_Selection>{
 			@Override
 			public void onClick(View v) {
 
-				Interst_Selection fav_obj= getItem(position);
+				InterestSelectionModel fav_obj= getItem(position);
 				if(fav_obj.isInterested()){
 					fav_obj.setInterested(false);
 					InterestCacheManager.updateCenters(context, fav_obj);

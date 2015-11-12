@@ -111,6 +111,7 @@
 	<string name="verifying_code_dialog_message">Verifying Verification Code</string>
 	<string name="registration_with_fb_dialog_message">Registration with Facebook</string>
 	<string name="updating_profile_data_message">Updating Profile</string>
+	<string name="loading_data_message">Loading</string>
 
 	<string name="login_in_message">Signing In</string>
 

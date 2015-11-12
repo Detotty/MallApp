@@ -66,6 +66,7 @@
     <!--android:paddingLeft="10dp"-->
     <!--android:paddingRight="10dp"-->
     <!--android:orientation="horizontal">-->
+    <!--android:drawableLeft="@drawable/search_icon1"-->
 
     <AutoCompleteTextView
         android:id="@+id/autoComplete"
@@ -73,7 +74,6 @@
         android:layout_height="wrap_content"
         android:ems="10"
         android:textSize="14sp"
-        android:drawableLeft="@drawable/search_icon1"
         android:drawableTop="@drawable/dividing_line"
         android:drawableBottom="@drawable/dividing_line"
         android:hint="@string/location_text_view_place_holder"

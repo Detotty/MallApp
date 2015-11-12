@@ -153,22 +153,16 @@ public class Utils {
     }
 
     public static long convertToUnixDate(String dateString, String format) {
-
         try {
-
             Date date = null; // *1000 is to convert seconds to milliseconds
             SimpleDateFormat sdf = new SimpleDateFormat(format); // the format of your date
             //sdf.setTimeZone(TimeZone.getTimeZone("GMT-4")); // give a timezone reference for formating (see comment at the bottom
             //String formattedDate = sdf.format(date);
-
             date = sdf.parse(dateString);
             System.out.println(date);
-
             long unixDate = date.getTime()/1000;
             System.out.println(unixDate);
-
             return unixDate;
-
         }catch (Exception e)
         {
             // execution will come here if the String that is given

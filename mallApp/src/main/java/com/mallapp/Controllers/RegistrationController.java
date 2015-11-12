@@ -1,35 +1,51 @@
 package com.mallapp.Controllers;
 
+import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
 import android.widget.Toast;
 
+import com.List.Adapter.FavouriteCenterAdapter;
+import com.List.Adapter.InterestAdapter;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
+import com.google.gson.JsonObject;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.FacebookProfileModel;
+import com.mallapp.Model.FavouriteCenters;
+import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.Model.InterestSelectionModel;
 import com.mallapp.Model.ThirdPartyRegistrationModel;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.Model.VolleyErrorHelper;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.View.DashboardTabFragmentActivity;
 import com.mallapp.View.R;
 import com.mallapp.View.RegistrationProfileActivity;
+import com.mallapp.View.Select_Interest;
+import com.mallapp.cache.CentersCacheManager;
+import com.mallapp.cache.InterestCacheManager;
 import com.mallapp.globel.GlobelServices;
 import com.mallapp.imagecapture.Image_Scaling;
+import com.mallapp.listeners.NearbyListener;
 import com.mallapp.listeners.RegistrationUserListener;
 import com.mallapp.utils.SharedInstance;
 
+import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -284,133 +300,239 @@ public class RegistrationController {
 
     }
 
-    //Download CatagoryList
-    /*public void downloadCategoryList(boolean facebookRegistration){
+    public void GetMallList(String url, final FavouriteCenterAdapter adapter, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList, final NearbyListener nearbyListener){
+        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+//        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
+        try{
 
-        if(!facebookRegistration)
-            progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.login_in_message));
 
-        InitialDataDownload initialDataDownload = new InitialDataDownload(context);
-        initialDataDownload.getCategory();
+            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
 
-        if( !facebookRegistration )
-            getUserProfile(null);
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
 
+                    Log.d(TAG, jsonArr.toString());
+
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        try {
+
+                            JSONObject obj = jsonArr.getJSONObject(i);
+                            FavouriteCentersModel fav = new Gson().fromJson(String.valueOf(obj), FavouriteCentersModel.class);
+
+                            // adding movie to movies array
+                            favouriteCentersArrayList.add(fav);
+                            adapter.notifyDataSetChanged();
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
+                    }
+                    nearbyListener.onMallDataReceived(favouriteCentersArrayList);
+                    CentersCacheManager.saveFavorites(context, favouriteCentersArrayList);
+//                    adapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
+
+
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+
+
+
+                    Log.e("", " error message ..." + message);
+
+                    if(message!=null && message!= "")
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.request_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
+
+
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
 
-    public void getUserProfile(  RegistrationUserListener registrationUserListener) {
-
-        if(registrationUserListener != null)
-            this.listener  = registrationUserListener;
-
-        String userId = SharedPreferenceUserProfile.getUserId(context);
-
-        String url = GlobelAPIURLs.GET_USER_PROFILE_URL_KEY+"/"+userId;
-
-        Log.e("Registration Controller:", " url ..." + url);
-
-        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.GET, url, null, new Response.Listener<JSONObject>() {
-            @Override
-            public void onResponse(JSONObject obj) {
-                Log.d("","ProfileModel:"+obj.toString());
-                if(progressDialog!=null)
-                    progressDialog.dismiss();
-
-                try {
-
-                    boolean success = obj.getBoolean("Success");
-
-                    if (success) {
-                        JSONObject jsonObj = obj.getJSONObject("Profile");
-                        Log.e("", " user not exist ..." + obj.toString());
-
-                        UserProfile user_profile = null;
-
-                        Gson gson = new Gson();
-
-                        user_profile  = gson.fromJson(jsonObj.toString(),UserProfile.class);
-                        if(user_profile== null)
-                            user_profile = new UserProfile();
-
-//                            if(listener!= null)
-//                                 listener.onDataReceived(user_profile);
-//                            else
-                        SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA,user_profile);
-                        ((Code_Verifiction)context).startProfileActivity();
+    public ArrayList<InterestSelectionModel> GetInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels){
+        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+//        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
+        try{
 
 
-				*//*
-                 * {"httpStatusCode":200,"Success":true,
-				 * "Profile":{"Street":null,"Phone":"923361466623",
-				 * "Password":null,"LastUpdateUnixDatetime":1300124700,
-				 * "CurrentLoctionName":null,"DeviceType":"android","LastName":"Attiq",
-				 * "Dob":"2010-03-05T19:00:00Z","LastLoginUTCDateTime":null,
-				 * "Zipcode":null,"IsActive":true,"Image":null,"LastLoginUnixDateTime":0,
-				 * "FirstName":"Attiq","MobilePhone":"923361466623","LastUpdateUTCDateTime":"2011-03-14T17:45:00",
-				 * "ImageBase64String":null,"DefaultLocationName":"Lahore, Punjab, Pakistan",
-				 * "CreatedUnixDatetime":1.438680902327E9,"UserId":"3def09ea-9850-46dc-9831-a8d6b1f44b00",
-				 * "LanguageId":null,"DefaultLocationLatLong":"0.00.0","Country":"Pakistan","Title":"Mr.",
-				 * "City":null,"Summary":null,"UnixDob":1267815600,"CurrentLocationLatLong":null,"Email":"atr@quantumcph.com",
-				 * "PersonIdentificationNumber":null,"FileName":"http:\/\/52.28.59.218:9010\/\/profiles\/images\/3def09ea-9850-46dc-9831-a8d6b1f44b00.png",
-				 * "Username":null,"Gender":"Female","CreatedUTCDateTime":"2015-08-04T09:35:02.327","IsDeleted":false},"Message":""}
-				 *//*
+            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
+
+                    Log.d(TAG, jsonArr.toString());
+
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        try {
+
+                            JSONObject obj = jsonArr.getJSONObject(i);
+                            InterestSelectionModel fav = new Gson().fromJson(String.valueOf(obj), InterestSelectionModel.class);
+
+                            // adding movie to movies array
+                            interestSelectionModels.add(fav);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+
+
                     }
-                    else if (obj.has("Message")){
+                    InterestCacheManager.saveFavorites(context, interestSelectionModels);
+                    adapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
 
-                        String message = obj.getString("Message");
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
 
-                        if(message!=null && message!= "")
-                            Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+
+
+
+                    Log.e("", " error message ..." + message);
+
+                    if(message!=null && message!= "")
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.request_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
                     }
-
-
-                } catch (JSONException e) {
-                    e.printStackTrace();
                 }
 
             }
-        }, new Response.ErrorListener() {
-            @Override
-            public void onErrorResponse(VolleyError volleyError) {
-                Log.e("", " user not exist ..." + volleyError.toString());
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
 
-                if(progressDialog!=null)
-                    progressDialog.dismiss();
-
-                String message = VolleyErrorHelper.getMessage(volleyError,context);
-
-
-
-                Log.e("", " error message ..." + message);
-
-                if(message!=null && message!= "")
-                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                else {
-                    String serverError = context.getResources().getString(R.string.request_error_message);
-                    Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    return headers;
                 }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
 
-            }
-        }) {
-            @Override
-            public Map<String, String> getHeaders() throws AuthFailureError {
 
-                Map<String, String> headers = new HashMap<String, String>();
-                String token = SharedPreferenceUserProfile.getUserToken(context);
-                Log.e("", " token" + token);
-                headers.put("Content-Type", "application/json");
-                headers.put("Auth-Token", token);
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+        return interestSelectionModels;
+    }
 
-                return headers;
+    public void PostMallInterestSelection(String url, final boolean act){
 
-            }
+        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.updating_profile_data_message) );
 
-        };
+        JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject jsonObject) {
+                    try {
+                        boolean success = jsonObject.getBoolean("Success");
+                        if (success){
+                            if (act){
+                                Intent fav= new Intent(context, Select_Interest.class);
+                                ((Activity) context).finish();
+                                context.startActivity(fav);
+                            }
+                            else {
+                                Intent select_interest= new Intent(context, DashboardTabFragmentActivity.class);
+                                ((Activity) context).finish();
+                                context.startActivity(select_interest);
+                            }
+                        }
+                        else {
+                            if( jsonObject.has("Message")) {
+                                String message = jsonObject.getString("Message");
+                                if(message != "")
+                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
+                            }
+                        }
 
-        MallApplication.getInstance().addToRequestQueue(jsonRequest, tag_json_obj);
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
 
-    }*/
+                    String message = VolleyErrorHelper.getMessage(volleyError,context);
+
+
+
+                    Log.e("", " error message ..." + message);
+
+                    if(message!=null && message!= "")
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.request_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            })
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+//                    headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            MallApplication.getInstance().addToRequestQueue(jsonRequest, tag_json_obj);
+
+        }
 
 
 }
+

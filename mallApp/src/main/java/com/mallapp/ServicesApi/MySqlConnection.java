@@ -22,8 +22,10 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.StringUtils;
 
+import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
 
@@ -57,7 +59,7 @@ public class MySqlConnection {
 	 * 
 	 * @param url
 	 *            The web address to post the request to
-	 * @param postParameters
+	 * @param header
 	 *            The parameters to send via the request
 	 * @return The result of the request
 	 * @throws Exception
@@ -79,7 +81,7 @@ public class MySqlConnection {
 			StringEntity entity = new StringEntity(header.toString(), HTTP.UTF_8);
 			entity.setContentType("application/json");
 			request.setEntity(entity);
-			
+
 			HttpResponse response = client.execute(request);
 			HttpEntity httpEntity = response.getEntity();
 			
@@ -149,6 +151,52 @@ public class MySqlConnection {
 				}
 			}
 		}
+	}
+
+
+	public static String executeHttpPostWithHeader(String url, JSONObject header, Context context) throws Exception {
+		BufferedReader in = null;
+		String result = "";
+		//
+		Log.w("Sendiong request...." , url);
+
+		try {
+			StrictMode.ThreadPolicy policy = new StrictMode.ThreadPolicy.Builder().permitAll().build();
+			StrictMode.setThreadPolicy(policy);
+
+			HttpClient client = getHttpClient();
+			HttpPost request = new HttpPost(url);
+			request.addHeader("Auth-Token", SharedPreferenceUserProfile.getUserToken(context));
+			StringEntity entity = new StringEntity(header.toString(), HTTP.UTF_8);
+			entity.setContentType("application/json");
+			request.setEntity(entity);
+
+			HttpResponse response = client.execute(request);
+			HttpEntity httpEntity = response.getEntity();
+
+			if (httpEntity != null) {
+				InputStream is = httpEntity.getContent();
+				result = StringUtils.convertStreamToString(is);
+
+				//jsonObj1  = new JSONObject(result);
+				Log.i("", "Result: " + result);
+				//Log.w("", "Result: " + jsonObj1.toString());
+			}
+
+			return result;
+		} catch (Exception e) {
+			e.printStackTrace();
+
+		} finally {
+			if (in != null) {
+				try {
+					in.close();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
+			}
+		}
+		return null;
 	}
 
 }

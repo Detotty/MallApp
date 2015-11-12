@@ -793,6 +793,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
+    <string name="loading_data_message">Loading</string>
     <string name="location">Add Location</string>
     <string name="location_msg1">Location services disabled</string>
     <string name="location_msg2">Mall App needs access to your location. Please turn on location access.</string>

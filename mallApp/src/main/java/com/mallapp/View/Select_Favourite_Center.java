@@ -1,10 +1,11 @@
 package com.mallapp.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
+import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -13,26 +14,48 @@ import android.widget.Button;
 import android.widget.ListView;
 
 import com.List.Adapter.FavouriteCenterAdapter;
+import com.mallapp.Constants.AppConstants;
+import com.mallapp.Controllers.RegistrationController;
+import com.mallapp.Controllers.SendVerificationCode;
 import com.mallapp.Model.FavouriteCenters;
+import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.Model.InterestSelectionModel;
+import com.mallapp.Model.UserLocationModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.cache.CentersCacheManager;
+import com.mallapp.globel.GlobelServices;
+import com.mallapp.listeners.NearbyListener;
 import com.mallapp.utils.AlertMessages;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.SharedInstance;
 
-public class Select_Favourite_Center extends Activity implements OnClickListener {
+import org.json.JSONException;
+import org.json.JSONObject;
+
+public class Select_Favourite_Center extends Activity implements OnClickListener, NearbyListener {
 	Button next, all, nearby ;
 	ListView list_view;
 	FavouriteCenterAdapter adapter;
 	ArrayList<FavouriteCenters> centers_list;
+	ArrayList<FavouriteCentersModel> centers_listM;
+	ArrayList<FavouriteCentersModel> nearByCenters;
+	private RegistrationController controller;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_favourite_center);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		centers_listM= new ArrayList<FavouriteCentersModel>();
+		list_view= (ListView) findViewById(R.id.search_list);
+		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers_listM);
+		list_view.setAdapter(adapter);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
-		
-		getCenterList();
+		controller = new RegistrationController(this);
+		controller.GetMallList(GlobelServices.GET_MALL_URL_KEY,adapter,centers_listM,this);
+//		SendVerificationCode.GetMallList("http://52.28.59.218:5001/api/MallService/GetMalls?countryCode=PK&languageId=1");
+//		getCenterList();
 		
 		next 	= (Button) findViewById(R.id.next_screen);
 		all		= (Button) findViewById(R.id.all_centers);
@@ -42,9 +65,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		next.setOnClickListener(this);
 		nearby.setOnClickListener(this);
 		
-		list_view= (ListView) findViewById(R.id.search_list);
-		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers_list);
-		list_view.setAdapter(adapter);
+
 		
 		all.setBackgroundResource(R.drawable.all_fav_p);
 		nearby.setBackgroundResource(R.drawable.nearby_fav);
@@ -63,7 +84,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 				"rest_logo7", "rest_logo8"};
 		
 		String [] interest= getResources().getStringArray(R.array.centers_list);
-		centers_list= new ArrayList<FavouriteCenters>();
+		centers_listM= new ArrayList<FavouriteCentersModel>();
 
 		for(int i=0; i<interest.length; i++){
 			FavouriteCenters i_s= new FavouriteCenters();
@@ -104,36 +125,86 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		if(v.getId()== next.getId()){
 			
 			int count= CentersCacheManager.countCenters(getApplicationContext());
+			ArrayList<FavouriteCentersModel> selectedCenters = new ArrayList<>();
+			try {
+				selectedCenters = CentersCacheManager.readSelectedObjectList(this);
+			} catch (ClassNotFoundException e) {
+				e.printStackTrace();
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
 			if(count>0){
-				Intent select_interest= new Intent(Select_Favourite_Center.this, Select_Interest.class);
-				finish();
-				startActivity(select_interest);
+
+				StringBuilder sb = new StringBuilder();
+				for (FavouriteCentersModel fv:selectedCenters) {
+						sb.append(fv.getMallPlaceId() + ",");
+				}
+				String UserID = SharedPreferenceUserProfile.getUserId(this);
+				String MallPlaceID = sb.toString().substring(0, sb.length() - 1);
+				controller.PostMallInterestSelection(GlobelServices.POST_FAV_MALL_URL_KEY+"?UserId="+UserID+"&MallPlaceId="+MallPlaceID,true);
+
 			}else
 				AlertMessages.show_alert(Select_Favourite_Center.this, "The Mall App", "Please select at least one center.", "OK");
-			
-			
+
 		}else if(v.getId()== all.getId()){
 			
 			all.setBackgroundResource(R.drawable.all_fav_p);
 			nearby.setBackgroundResource(R.drawable.nearby_fav);
 			all.setTextColor(getResources().getColor(R.color.white));
 			nearby.setTextColor(getResources().getColor(R.color.purple));
+
+			adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, nearByCenters);
+			list_view.setAdapter(adapter);
+			adapter.notifyDataSetChanged();
 			
 		}else if(v.getId()== nearby.getId()){
-			
-			
-			
-			
+
 			all.setBackgroundResource(R.drawable.all_fav);
 			nearby.setBackgroundResource(R.drawable.nearby_fav_p);
 			all.setTextColor(getResources().getColor(R.color.purple));
 			nearby.setTextColor(getResources().getColor(R.color.white));
-		
+			CalculateNearByCenters();
+
 		}
 	}
 
 	private void saveCenters() {
-		Log.e("save center list ", "size = "+centers_list.size());
-		CentersCacheManager.saveFavorites(getApplicationContext(), centers_list);
+		Log.e("save center list ", "size = " + centers_list.size());
+//		CentersCacheManager.saveFavorites(getApplicationContext(), centers_list);
+//		CentersCacheManager.getAllCenters(this);
+	}
+
+
+	@Override
+	public void onMallDataReceived(ArrayList<FavouriteCentersModel> mallList) {
+
+		nearByCenters = mallList;
+	}
+
+	void CalculateNearByCenters(){
+		UserLocationModel model = null;
+		Location locationA = new Location("point A");
+		Location locationB = new Location("point B");
+		ArrayList<FavouriteCentersModel> centers = new ArrayList<>();
+
+		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
+			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+			if (model!=null){
+				locationA.setLatitude(model.getLatitude());
+				locationA.setLongitude(model.getLongitude());
+			}
+		}
+		for (FavouriteCentersModel fv:nearByCenters) {
+			locationB.setLatitude(Double.parseDouble(fv.getLatitude()));
+			locationB.setLongitude(Double.parseDouble(fv.getLongitude()));
+			float distance = locationA.distanceTo(locationB);;
+			if (distance<10000){
+				centers.add(fv);
+			}
+		}
+		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers);
+		list_view.setAdapter(adapter);
+		adapter.notifyDataSetChanged();
+
 	}
 }

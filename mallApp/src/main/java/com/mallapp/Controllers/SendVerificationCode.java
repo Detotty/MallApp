@@ -117,6 +117,25 @@ public class SendVerificationCode {
 			e.printStackTrace();
 		}
 	}
+
+	public static void GetMallList(String url){
+		try {
+			JSONObject obj = new JSONObject();
+			JSONObject jsonObj = null ;
+			String result= MySqlConnection.executeHttpGet(url);
+			jsonObj  = new JSONObject(result);
+
+			boolean success= jsonObj.getBoolean("Success");
+			if(success){
+
+				//AlertMessages.show_alert(context, ""+R.string.app_name1, message, "OK");
+			}
+			Log.e("", ""+result);
+		} catch (Exception e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+	}
 	
 
 	
