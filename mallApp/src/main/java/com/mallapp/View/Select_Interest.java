@@ -3,7 +3,6 @@ package com.mallapp.View;
 import java.io.IOException;
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -16,18 +15,12 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.List.Adapter.InterestAdapter;
-import com.mallapp.Controllers.RegistrationController;
-import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.InterestSelectionModel;
-import com.mallapp.Model.Interst_Selection;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
-import com.mallapp.cache.CentersCacheManager;
 import com.mallapp.cache.InterestCacheManager;
-import com.mallapp.globel.GlobelServices;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.utils.AlertMessages;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Select_Interest extends Activity implements OnClickListener {
 	
@@ -55,7 +48,7 @@ public class Select_Interest extends Activity implements OnClickListener {
 		adapter		= new InterestAdapter(getApplicationContext(),R.layout.list_item_interest, interst_list);
 		list_view.setAdapter(adapter);
 		controller = new RegistrationController(this);
-		interst_list_this = controller.GetInterestList(GlobelServices.GET_INTEREST_URL_KEY,adapter,interst_list);
+		interst_list_this = controller.GetInterestList(ApiConstants.GET_INTEREST_URL_KEY,adapter,interst_list);
 		is_interest_select_all= (ImageView) findViewById(R.id.is_select_all_interst);
 		next 	= (Button) findViewById(R.id.next_screen);
 		back	= (ImageButton) findViewById(R.id.back_screen);
@@ -153,7 +146,7 @@ public class Select_Interest extends Activity implements OnClickListener {
 				}
 				String UserID = SharedPreferenceUserProfile.getUserId(this);
 				String CatID = sb.toString().substring(0, sb.length() - 1);
-				controller.PostMallInterestSelection(GlobelServices.POST_SELECTED_INTEREST_URL_KEY + "?UserId=" + UserID + "&CategoryId="+CatID,false);
+				controller.PostMallInterestSelection(ApiConstants.POST_SELECTED_INTEREST_URL_KEY + "?UserId=" + UserID + "&CategoryId="+CatID,false);
 
 			}else
 				AlertMessages.show_alert(Select_Interest.this, "The Mall App", "Please select at least one interest.", "OK");

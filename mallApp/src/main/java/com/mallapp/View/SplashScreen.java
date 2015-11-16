@@ -9,6 +9,8 @@ import android.os.Bundle;
 import android.view.KeyEvent;
 
 import com.mallapp.Constants.GlobelProfile;
+import com.mallapp.Model.UserProfile;
+import com.mallapp.Model.UserProfileModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.Log;
 
@@ -18,7 +20,6 @@ public class SplashScreen extends Activity {
 	long m_dwSplashTime = 3000;
 	boolean m_bPaused = false;
 	boolean m_bSplashActive = true;
-	String token = null;
 	private String country_name, phone_no, name,  profile_image;
 	
 
@@ -28,7 +29,7 @@ public class SplashScreen extends Activity {
 		setContentView(R.layout.activity_splash_screen);
 		//ActionBar actionBar = getActionBar();
 		//actionBar.hide();
-//		getPreferenes();
+		getPreferenes();
 		Thread splashTimer = new Thread() {
 			public void run() {
 				try {
@@ -38,9 +39,7 @@ public class SplashScreen extends Activity {
 						if (!m_bPaused)
 							ms += 100;
 					}
-					token = SharedPreferenceUserProfile.getUserToken(SplashScreen.this);
-
-					if(token!=null){
+					if(	name!=null 	&& name.length()>0){
 						
 						Intent tabIntent = new Intent(SplashScreen.this, DashboardTabFragmentActivity.class);
 						startActivity(tabIntent);
@@ -72,5 +71,11 @@ public class SplashScreen extends Activity {
 	protected void onResume() {
 		super.onResume();
 		m_bPaused = false;
+	}
+
+	public void getPreferenes(){
+		UserProfileModel userProfile = SharedPreferenceUserProfile.getUserProfile(this);
+		name 			= userProfile.getFullName();
+		//Log.e("", ""+ country_code+""+ name+""+ mobile_no+""+ birthday);
 	}
 }

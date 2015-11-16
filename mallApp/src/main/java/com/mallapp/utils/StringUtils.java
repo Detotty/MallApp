@@ -3,6 +3,7 @@ package com.mallapp.utils;
 import java.io.BufferedReader;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.util.regex.Pattern;
 
 public class StringUtils {
 
@@ -19,5 +20,10 @@ public class StringUtils {
 			// Toast.LENGTH_SHORT).show();
 		}
 		return total.toString();
+	}
+
+	public static boolean isValidMobile(String phone)
+	{
+		return android.util.Patterns.PHONE.matcher(phone).matches();
 	}
 }

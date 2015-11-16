@@ -14,7 +14,7 @@ public class GlobelProfile {
 	public static String profile_image= "profile_image";
 	
 	public static String country_name="country_name";
-	public static String phone_no= "phone_no";
+	public static String mobile_no = "mobile_no";
 	public static String country_code="country_code";
 	public static String push_notification= "push_notification";
 	

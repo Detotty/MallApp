@@ -20,10 +20,10 @@ import com.facebook.android.Util;
 import com.google.gson.Gson;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.SocialSharingConstants;
-import com.mallapp.Controllers.RegistrationController;
+import com.mallapp.Model.UserProfileModel;
+import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FacebookProfileModel;
 import com.mallapp.Model.UserProfile;
-import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.socialsharing.SessionStore;
 import com.mallapp.utils.SharedInstance;
 import com.mallapp.utils.Utils;
@@ -266,7 +266,7 @@ public class RegistrationActivity extends Activity {
 
     }
 
-    public void showDashboard(UserProfile userProfile){
+    public void showDashboard(UserProfileModel userProfile){
 
         SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
 

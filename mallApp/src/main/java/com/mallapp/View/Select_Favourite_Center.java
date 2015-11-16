@@ -4,7 +4,6 @@ import java.io.IOException;
 import java.util.ArrayList;
 
 import android.app.Activity;
-import android.content.Intent;
 import android.location.Location;
 import android.os.Bundle;
 import android.view.View;
@@ -15,22 +14,17 @@ import android.widget.ListView;
 
 import com.List.Adapter.FavouriteCenterAdapter;
 import com.mallapp.Constants.AppConstants;
-import com.mallapp.Controllers.RegistrationController;
-import com.mallapp.Controllers.SendVerificationCode;
+import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FavouriteCenters;
 import com.mallapp.Model.FavouriteCentersModel;
-import com.mallapp.Model.InterestSelectionModel;
 import com.mallapp.Model.UserLocationModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.cache.CentersCacheManager;
-import com.mallapp.globel.GlobelServices;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.listeners.NearbyListener;
 import com.mallapp.utils.AlertMessages;
 import com.mallapp.utils.Log;
 import com.mallapp.utils.SharedInstance;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class Select_Favourite_Center extends Activity implements OnClickListener, NearbyListener {
 	Button next, all, nearby ;
@@ -53,7 +47,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		controller = new RegistrationController(this);
-		controller.GetMallList(GlobelServices.GET_MALL_URL_KEY,adapter,centers_listM,this);
+		controller.GetMallList(ApiConstants.GET_MALL_URL_KEY,adapter,centers_listM,this);
 //		SendVerificationCode.GetMallList("http://52.28.59.218:5001/api/MallService/GetMalls?countryCode=PK&languageId=1");
 //		getCenterList();
 		
@@ -141,7 +135,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 				}
 				String UserID = SharedPreferenceUserProfile.getUserId(this);
 				String MallPlaceID = sb.toString().substring(0, sb.length() - 1);
-				controller.PostMallInterestSelection(GlobelServices.POST_FAV_MALL_URL_KEY+"?UserId="+UserID+"&MallPlaceId="+MallPlaceID,true);
+				controller.PostMallInterestSelection(ApiConstants.POST_FAV_MALL_URL_KEY+"?UserId="+UserID+"&MallPlaceId="+MallPlaceID,true);
 
 			}else
 				AlertMessages.show_alert(Select_Favourite_Center.this, "The Mall App", "Please select at least one center.", "OK");

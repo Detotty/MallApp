@@ -6,6 +6,7 @@ import android.os.Bundle;
 import android.text.Editable;
 import android.text.Html;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -15,7 +16,8 @@ import android.widget.ImageButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.mallapp.Controllers.SendVerificationCode;
+import com.mallapp.Model.UserProfileModel;
+import com.mallapp.utils.SendVerificationCode;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 
@@ -72,7 +74,6 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 		String code_text= code_not_receive.getText().toString();
 		String htmlString=code_text+"<u> "+getResources().getString(R.string.access_code_country_5)+"</u>";
 		code_not_receive.setText(Html.fromHtml(htmlString));
-		
 		//SpannableString content = new SpannableString(getResources().getString(R.string.access_code_country_5));
 		//content.setSpan(new UnderlineSpan(), 0, content.length(), 0);
 		//code_text= code_text+" "+content;
@@ -112,17 +113,25 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 	public 	void onClick(View v) {
 		
 		if(v.getId() == code_not_receive.getId()){
-			UserProfile userProfile=	SharedPreferenceUserProfile.getUserCountry(getApplicationContext());	
-			SendVerificationCode.sendVerificationCode(getApplicationContext(), userProfile.getPhone_no(), 
-														userProfile.isPush_notification(), userProfile.getCountry(), 
-														userProfile.getCountryCode());
+			final UserProfileModel userProfile=	SharedPreferenceUserProfile.getUserCountry(getApplicationContext());
+			new Thread() {
+				@Override
+				public void run() {
+					SendVerificationCode.sendVerificationCode(getApplicationContext(), userProfile.getPhone(),
+							userProfile.isPush_notification(), null,
+							userProfile.getCountryCode());
+				}
+			}.start();
+
 			
 		}else if(v.getId() == continue_next.getId()){
 			if (code.getText().toString().trim().length() > 0 ) {
 				VerifyAccessCode(code.getText().toString().trim());
 				
 			} else {
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.access_code_country_4), Toast.LENGTH_LONG).show();
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.access_code_country_4), Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+				toast.show();
 				//if (Log.MODE_DEBUG)
 				//	startProfileActivity();
 			}
@@ -136,8 +145,8 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 	
 	private void VerifyAccessCode(String access_Code) {
 		
-		UserProfile userProfile=	SharedPreferenceUserProfile.getUserCountry(getApplicationContext());
-		String phone_N = userProfile.getPhone_no();
+		UserProfileModel userProfile=	SharedPreferenceUserProfile.getUserCountry(getApplicationContext());
+		String phone_N = userProfile.getMobilePhone();
 		
 		boolean success= SendVerificationCode.verifyAccessCode(Registration_Access_Code.this, phone_N, access_Code);
 		if(success)

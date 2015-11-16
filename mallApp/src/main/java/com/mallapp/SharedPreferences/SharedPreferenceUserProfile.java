@@ -6,7 +6,7 @@ import android.content.SharedPreferences.Editor;
 
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelProfile;
-import com.mallapp.Model.UserProfile;
+import com.mallapp.Model.UserProfileModel;
 import com.mallapp.utils.Log;
 
 
@@ -28,7 +28,7 @@ public class SharedPreferenceUserProfile {
 		}
 	}
 
-	public static void SaveUserProfile(UserProfile userProfile, Context context) {
+	public static void SaveUserProfile(UserProfileModel userProfile, Context context) {
 		try {
 			if (SharedPreferenceUserProfile.usrPrefrence == null) {
 				SharedPreferenceUserProfile.initPrefrence(context);
@@ -37,10 +37,9 @@ public class SharedPreferenceUserProfile {
 				
 				final Editor editor = SharedPreferenceUserProfile.usrPrefrence.edit();
 				
-				editor.putString(GlobelProfile.name, 	userProfile.getName());
-				editor.putString(GlobelProfile.b_day, 	userProfile.getDate_birth());
-				editor.putString(GlobelProfile.location,userProfile.getLocation());
-				editor.putString(GlobelProfile.education,userProfile.getEducation());
+				editor.putString(GlobelProfile.name, 	userProfile.getFullName());
+				editor.putString(GlobelProfile.b_day, 	userProfile.getDOB());
+				editor.putString(GlobelProfile.location,userProfile.getCityName());
 				editor.putString(GlobelProfile.gender, 	userProfile.getGender());
 				//editor.putString(GlobelProfile.profile_image, userProfile.getPicture_path());
 				editor.apply();
@@ -50,19 +49,19 @@ public class SharedPreferenceUserProfile {
 		}
 	}
 
-	public static UserProfile getUserProfile(Context context) {
+	public static UserProfileModel getUserProfile(Context context) {
 		try {
 			if (SharedPreferenceUserProfile.usrPrefrence == null) {
 				SharedPreferenceUserProfile.initPrefrence(context);
 			}
-			UserProfile userProfile= new UserProfile();
+			UserProfileModel userProfile= new UserProfileModel();
 			
-			userProfile.setName		(usrPrefrence.getString(GlobelProfile.name, null));
-			userProfile.setEducation(usrPrefrence.getString(GlobelProfile.education, null));
-			userProfile.setLocation	(usrPrefrence.getString(GlobelProfile.location, null));
-			userProfile.setGender	(usrPrefrence.getString(GlobelProfile.gender, null));
-			userProfile.setDate_birth(usrPrefrence.getString(GlobelProfile.b_day, null));
-			userProfile.setPicture_path(usrPrefrence.getString(GlobelProfile.profile_image, null));
+			userProfile.setFullName(usrPrefrence.getString(GlobelProfile.name, null));
+//			userProfile.setEducation(usrPrefrence.getString(GlobelProfile.education, null));
+//			userProfile.setLocation	(usrPrefrence.getString(GlobelProfile.location, null));
+			userProfile.setGender(usrPrefrence.getString(GlobelProfile.gender, null));
+			userProfile.setDOB(usrPrefrence.getString(GlobelProfile.b_day, null));
+//			userProfile.setPicture_path(usrPrefrence.getString(GlobelProfile.profile_image, null));
 			
 			return userProfile;
 		} catch (final Exception exception) {
@@ -88,7 +87,7 @@ public class SharedPreferenceUserProfile {
 				editor.putString(GlobelProfile.gender, 	null);
 				editor.putString(GlobelProfile.country_name, null);
 		 		editor.putString(GlobelProfile.country_code, null);
-		 		editor.putString(GlobelProfile.phone_no, null);
+		 		editor.putString(GlobelProfile.mobile_no, null);
 		 		editor.putBoolean(GlobelProfile.push_notification, true);
 				editor.putString(GlobelProfile.profile_image, null);
 				editor.apply();
@@ -99,16 +98,16 @@ public class SharedPreferenceUserProfile {
 	}
 	
 	
-	public static void SaveUserCountry(UserProfile userProfile, Context context) {
+	public static void SaveUserCountry(UserProfileModel userProfile, Context context) {
 		try {
 			if (SharedPreferenceUserProfile.usrPrefrence == null) {
 				SharedPreferenceUserProfile.initPrefrence(context);
 			}
 			if (SharedPreferenceUserProfile.usrPrefrence != null) {
 				final Editor editor = SharedPreferenceUserProfile.usrPrefrence.edit();
-				editor.putString(GlobelProfile.country_name, userProfile.getCountry());
+//				editor.putString(GlobelProfile.country_name, userProfile.getCountry());
 		 		editor.putString(GlobelProfile.country_code, userProfile.getCountryCode());
-		 		editor.putString(GlobelProfile.phone_no, userProfile.getPhone_no());
+		 		editor.putString(GlobelProfile.mobile_no, userProfile.getMobilePhone());
 		 		editor.putBoolean(GlobelProfile.push_notification, userProfile.isPush_notification());
 		 		editor.apply();
 			}
@@ -117,15 +116,15 @@ public class SharedPreferenceUserProfile {
 		}
 	}
 
-	public static UserProfile getUserCountry(Context context) {
+	public static UserProfileModel getUserCountry(Context context) {
 		try {
 			if (SharedPreferenceUserProfile.usrPrefrence == null) {
 				SharedPreferenceUserProfile.initPrefrence(context);
 			}
-			UserProfile userLoction= new UserProfile();
-			userLoction.setCountry(		usrPrefrence.getString(GlobelProfile.country_name, null));
-			userLoction.setCountryCode(	usrPrefrence.getString(GlobelProfile.country_code, null));
-			userLoction.setPhone_no(	usrPrefrence.getString(GlobelProfile.phone_no, null));
+			UserProfileModel userLoction= new UserProfileModel();
+//			userLoction.setCountry(		usrPrefrence.getString(GlobelProfile.country_name, null));
+			userLoction.setCountryCode(usrPrefrence.getString(GlobelProfile.country_code, null));
+			userLoction.setMobilePhone(usrPrefrence.getString(GlobelProfile.mobile_no, null));
 			return userLoction;
 			//return SharedPreferenceUserProfile.usrPrefrence.getString(key, null);
 		} catch (final Exception exception) {

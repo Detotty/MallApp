@@ -11,6 +11,7 @@ import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
 import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.os.StrictMode;
 import android.provider.MediaStore;
@@ -18,6 +19,7 @@ import android.text.Editable;
 import android.text.TextWatcher;
 import android.util.Base64;
 import android.util.Log;
+import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
@@ -34,17 +36,21 @@ import android.widget.RadioGroup;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.android.volley.Response;
 import com.android.volley.VolleyError;
+import com.android.volley.toolbox.ImageRequest;
 import com.facebook.android.DialogError;
 import com.facebook.android.Facebook;
 import com.facebook.android.FacebookError;
 import com.facebook.android.Util;
 import com.mallapp.Adapters.PlaceAutoCompleteAdapter;
 import com.mallapp.Application.MallApplication;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelProfile;
 import com.mallapp.Constants.SocialSharingConstants;
-import com.mallapp.Controllers.RegistrationController;
+import com.mallapp.Model.UserProfileModel;
+import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FacebookProfileModel;
 import com.mallapp.Model.PlaceAutoCompleteModel;
 import com.mallapp.Model.UserLocationModel;
@@ -157,7 +163,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 //		profile_image_bitmap = profile_bitmap;
 
 		controller = new RegistrationController(this);
-
+		requestType = RequestType.GET_USER_PROFILE;
+		controller.getUserProfile(ApiConstants.PROFILE_GET_URL_KEY,this);
 		setUserProfile();
 
 		DOBEditText.setOnClickListener(dobEditTextListener);
@@ -459,16 +466,16 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		genderRadioButton = (RadioButton) findViewById(selectedId);
 		genderRadioButtonText = genderRadioButton.getText().toString();
 
-		UserProfile userProfile = null;
+		UserProfileModel userProfile = null;
 
 		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.PROFILE_DATA)) {
-			userProfile = (UserProfile) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.PROFILE_DATA);
+			userProfile = (UserProfileModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.PROFILE_DATA);
 		}
 
 		if(userProfile == null)
-			userProfile = new UserProfile();
+			userProfile = new UserProfileModel();
 
-		userProfile.setFirstName(nameString);
+		userProfile.setFullName(nameString);
 		userProfile.setEmail(emailString);
 		userProfile.setDefaultLocationName(locationString);
 		userProfile.setDeviceType("android");
@@ -478,44 +485,46 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		else
 			userProfile.setGender("Female");
 
-		if(DOBString != null && DOBString.length()>0){
-			long unixDOB = Utils.convertToUnixDate(DOBString, "MMM dd, yyyy");
-			userProfile.setUnixDob(unixDOB);
-//				Date date 			= null;
-//				//date = GetCurrentDate.StringToDate("MMM dd , yyyy", DOBString);
-//
-//				SimpleDateFormat d_format = new SimpleDateFormat("MMM dd , yyyy", Locale.ENGLISH);
-//				//DateFormat d_format = new SimpleDateFormat(format,  Locale.ENGLISH);
-//
-//				try {
-//					date = d_format.parse(DOBString);
-//					//d_format.setTimeZone(TimeZone.getTimeZone("UTC"));
-//
-//				} catch (ParseException e) {
-//					e.printStackTrace();
-//				}
+		if(DOBString != null && DOBString.length()>0)
+		{
+			userProfile.setDOB(DOBString);
+			/*long unixDOB = Utils.convertToUnixDate(DOBString, "MMM dd, yyyy");
+			userProfile.setDOB(String.valueOf(unixDOB));
+				Date date 			= null;
+				//date = GetCurrentDate.StringToDate("MMM dd , yyyy", DOBString);
 
-//				if(date!= null){
-//
-//					String date_as_encoded = GetCurrentDate.DateToString("yyyy-MM-dd KK:mm:ss a Z", date);
-//
-//					if(date_as_encoded !=null){
-//
-//						date = GetCurrentDate.StringToDate("yyyy-MM-dd KK:mm:ss a Z", date_as_encoded);
-//						date_as_encoded= GetCurrentDate.unixDateConversion(date);
-//						userProfile.setDob(DOBString);
-//
-//						Log.e("", "UTC date conversion "+ date_as_encoded);
-//						Log.e("", "new Date() "+ new Date());
-//						Log.e("", "DOBString "+ DOBString);
-//						Log.e("", "DOBString "+ date);
-//					}
-//				}
+				SimpleDateFormat d_format = new SimpleDateFormat("MMM dd , yyyy", Locale.ENGLISH);
+				//DateFormat d_format = new SimpleDateFormat(format,  Locale.ENGLISH);
+
+				try {
+					date = d_format.parse(DOBString);
+					//d_format.setTimeZone(TimeZone.getTimeZone("UTC"));
+
+				} catch (ParseException e) {
+					e.printStackTrace();
+				}
+
+				if(date!= null){
+
+					String date_as_encoded = GetCurrentDate.DateToString("yyyy-MM-dd KK:mm:ss a Z", date);
+
+					if(date_as_encoded !=null){
+
+						date = GetCurrentDate.StringToDate("yyyy-MM-dd KK:mm:ss a Z", date_as_encoded);
+						date_as_encoded= GetCurrentDate.unixDateConversion(date);
+						userProfile.setDob(DOBString);
+
+						Log.e("", "UTC date conversion "+ date_as_encoded);
+						Log.e("", "new Date() "+ new Date());
+						Log.e("", "DOBString "+ DOBString);
+						Log.e("", "DOBString "+ date);
+					}
+				}*/
 		}
 
 		if(profile_image_bitmap != null){
-			//String user_profile_image = encodeTobase64(profile_image_bitmap);
-			userProfile.setImageBitmap(profile_image_bitmap);
+//			String user_profile_image = encodeTobase64(profile_image_bitmap);
+			userProfile.setImageBase64String(Image_Scaling.encodeTobase64(profile_image_bitmap));
 		}
 		requestType = com.mallapp.ServicesApi.RequestType.UPDATE_USER_PROFILE;
 
@@ -524,7 +533,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 	}
 
 	@Override
-	public void onDataReceived(UserProfile userProfile) {
+	public void onDataReceived(UserProfileModel userProfile) {
 
 		if(requestType.equals(RequestType.UPDATE_USER_PROFILE)) {
 
@@ -536,19 +545,21 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 //			Intent tabIntent = new Intent(RegistrationProfileActivity.this, DashBoardCrowedEye.class);
 
 			Intent intent = new Intent(RegistrationProfileActivity.this, Select_Favourite_Center.class);
-			finishAffinity();
+			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+				finishAffinity();
+			}
 			startActivity(intent);
 
 		}else if(requestType.equals(RequestType.GET_USER_PROFILE)){
 
 			if (userProfile != null) {
 
-				if (userProfile.getFirstName()== null || userProfile.getFirstName() == ("null")) {
+				if (userProfile.getFullName()== null || userProfile.getFullName() == ("null")) {
 					nameEditText.setText("");
 				} else {
 					//Log.e("", "not null user nameEditText  "+ user_profile.getName());
-					nameEditText.setText(userProfile.getFirstName());
-					userProfile.setFirstName(userProfile.getFirstName());
+					nameEditText.setText(userProfile.getFullName());
+					userProfile.setFullName(userProfile.getFullName());
 				}
 
 				if (userProfile.getEmail() == null || userProfile.getEmail() == "null")
@@ -558,13 +569,27 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					userProfile.setEmail(userProfile.getEmail());
 				}
 
-				if (userProfile.getFileName() == null || userProfile.getFileName()== "null")
+				if (userProfile.getImageURL() == null || userProfile.getImageURL()== "null")
 					;
 				else {
-					profile_image_path = userProfile.getFileName();
-					userProfile.setFirstName(userProfile.getFileName());
+					profile_image_path = userProfile.getImageURL();
+					userProfile.setFullName(userProfile.getFullName());
 					Log.e("profile_image_path ", "profile_image_path = " + profile_image_path);
-					imageLoader.DisplayImage(profile_image_path, profileImageView, true);
+
+					// Retrieves an image specified by the URL, displays it in the UI.
+					ImageRequest request = new ImageRequest(profile_image_path,
+							new Response.Listener<Bitmap>() {
+								@Override
+								public void onResponse(Bitmap bitmap) {
+									imageLoader.DisplayImage(profile_image_path, profileImageView, true);
+								}
+							}, 0, 0, null,
+							new Response.ErrorListener() {
+								public void onErrorResponse(VolleyError error) {
+								}
+							});
+// Access the RequestQueue through your singleton class.
+					MallApplication.getInstance().addToRequestQueue(request);
 				}
 
 				String gender = userProfile.getGender();
@@ -577,12 +602,9 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					//userProfile.setGender_male(true);
 					userProfile.setGender("female");
 				}
-
 				userProfile.setDeviceType(userProfile.getDeviceType());
 				//userProfile.set(userProfile.getVersion());
-
 				SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
-
 				//SharedPreferenceUserProfile.SaveUserProfile(userProfile, getApplicationContext());
 
 			}else {
@@ -909,13 +931,19 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		@Override
 		public void onClick(View v) {
 			if (nameEditText.getText().toString().trim().length() <= 0) {
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_name_message), Toast.LENGTH_LONG).show();
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_name_message), Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER| Gravity.CENTER_HORIZONTAL, 0, 0);
+				toast.show();
 				return;
 			}else if (emailEditText.getText().toString() == null || emailEditText.getText().length() <= 0) {
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_email_message), Toast.LENGTH_LONG).show();
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_email_message), Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+				toast.show();
 				return;
 			}else if(!Utils.isValidEmailAddress(emailEditText.getText().toString())){
-				Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_email_validity_message), Toast.LENGTH_LONG).show();
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.register_error_email_validity_message), Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.CENTER | Gravity.CENTER_HORIZONTAL, 0, 0);
+				toast.show();
 				return;
 			}
 			/**
@@ -1024,17 +1052,17 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		}
 		else if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.PROFILE_DATA))
 		{
-			UserProfile userProfile = (UserProfile) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.PROFILE_DATA);
+				UserProfileModel userProfile = (UserProfileModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.PROFILE_DATA);
 
 			if(userProfile!= null){
 
-				if (userProfile.getFirstName() != null && userProfile.getFirstName().length() > 0 )
-					nameEditText.setText(userProfile.getFirstName());
+				if (userProfile.getFullName() != null && userProfile.getFullName().length() > 0 )
+					nameEditText.setText(userProfile.getFullName());
 
 				if(userProfile.getEmail()!= null )
 					emailEditText.setText( userProfile.getEmail() ) ;
 
-				String unixDate = Utils.convertUnixDate(userProfile.getUnixDob(),"MMM dd, yyyy");
+				String unixDate = Utils.convertUnixDate(Long.parseLong(userProfile.getDOB()),"MMM dd, yyyy");
 				if(unixDate!= null) {
 					dateOfBirthday = GetCurrentDate.StringToDate("MMM dd, yyyy", unixDate);
 					Log.d("date","date of birthday:"+dateOfBirthday);

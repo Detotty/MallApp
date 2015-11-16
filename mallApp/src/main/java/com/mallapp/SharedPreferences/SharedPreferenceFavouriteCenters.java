@@ -89,7 +89,7 @@ public class SharedPreferenceFavouriteCenters {
 				editor.putString(GlobelProfile.gender, 	null);
 				editor.putString(GlobelProfile.country_name, null);
 		 		editor.putString(GlobelProfile.country_code, null);
-		 		editor.putString(GlobelProfile.phone_no, null);
+		 		editor.putString(GlobelProfile.mobile_no, null);
 		 		editor.putBoolean(GlobelProfile.push_notification, true);
 				editor.putString(GlobelProfile.profile_image, null);
 				editor.apply();

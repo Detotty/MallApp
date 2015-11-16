@@ -104,13 +104,13 @@ public class Utils {
 
 
 
-//            phone_no.requestFocus();
+//            mobile_no.requestFocus();
 //            Handler mHandler= new Handler();
 //            mHandler.post(new Runnable() {
 //            	public void run() {
 //            		InputMethodManager inputMethodManager =  (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-//            		inputMethodManager.toggleSoftInputFromWindow(phone_no.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
-//            		phone_no.requestFocus();
+//            		inputMethodManager.toggleSoftInputFromWindow(mobile_no.getApplicationWindowToken(), InputMethodManager.SHOW_FORCED, 0);
+//            		mobile_no.requestFocus();
 //            	}
 //            });
 //            getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);

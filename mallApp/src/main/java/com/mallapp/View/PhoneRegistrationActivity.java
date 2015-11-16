@@ -22,7 +22,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.Location.Gps.Lattitude_Logitude;
-import com.mallapp.Controllers.SendVerificationCode;
+import com.mallapp.utils.SendVerificationCode;
 import com.mallapp.utils.AlertMessages;
 
 public class PhoneRegistrationActivity extends Activity implements OnClickListener{
@@ -124,7 +124,11 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 			push_notify= true;
 		
 		if(push_notify){
-			String phone_N= CountryZipCode + phone_no.getText().toString().trim();
+			String ph = phone_no.getText().toString();
+			if (ph.startsWith("0")){
+				ph = ph.substring(1);
+			}
+			String phone_N= CountryZipCode + ph.trim();
 			phoneNoVerification(phone_N);
 		}else{
 			AlertMessages.show_alert(PhoneRegistrationActivity.this, ""+R.string.app_name1, "Please accept, recieving push notifications/SMS", "OK");
@@ -237,13 +241,13 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
         		
         		
         		//InputMethodManager inputMethodManager =  (InputMethodManager)getSystemService(INPUT_METHOD_SERVICE);
-        		//inputMethodManager.toggleSoftInputFromWindow(phone_no.getApplicationWindowToken(), InputMethodManager.SHOW_IMPLICIT, 0);
+        		//inputMethodManager.toggleSoftInputFromWindow(mobile_no.getApplicationWindowToken(), InputMethodManager.SHOW_IMPLICIT, 0);
 //                Handler mHandler= new Handler();
 //                
 //                mHandler.post(new Runnable() {
 //                	public void run() {
 //                		
-//                		phone_no.requestFocus();
+//                		mobile_no.requestFocus();
 //                	}
 //                });
                 
