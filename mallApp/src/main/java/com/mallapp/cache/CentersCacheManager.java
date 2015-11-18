@@ -53,7 +53,7 @@ public class CentersCacheManager {
 			}
 		} catch (EOFException ex) {
 			//Log.e("offers news list class", "mall app apllication excepton");
-			//ex.printStackTrace();
+			ex.printStackTrace();
 		}finally{
 	         // releases any associated system files with this stream
 			if(fis!=null)

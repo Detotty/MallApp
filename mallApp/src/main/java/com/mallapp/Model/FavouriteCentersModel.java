@@ -9,11 +9,21 @@ public class FavouriteCentersModel implements Serializable
 {
     private String CountryName;
 
+    private String WebURL;
+
     private String CityName;
 
     private String MallPlaceId;
 
+    private String LinkedIn;
+
+    private String TwitterURL;
+
+    private String MallId;
+
     private String Name;
+
+    private String FacebookURL;
 
     private String BriefText;
 
@@ -45,6 +55,16 @@ public class FavouriteCentersModel implements Serializable
         this.CountryName = CountryName;
     }
 
+    public String getWebURL ()
+    {
+        return WebURL;
+    }
+
+    public void setWebURL (String WebURL)
+    {
+        this.WebURL = WebURL;
+    }
+
     public String getCityName ()
     {
         return CityName;
@@ -65,6 +85,36 @@ public class FavouriteCentersModel implements Serializable
         this.MallPlaceId = MallPlaceId;
     }
 
+    public String getLinkedIn ()
+    {
+        return LinkedIn;
+    }
+
+    public void setLinkedIn (String LinkedIn)
+    {
+        this.LinkedIn = LinkedIn;
+    }
+
+    public String getTwitterURL ()
+    {
+        return TwitterURL;
+    }
+
+    public void setTwitterURL (String TwitterURL)
+    {
+        this.TwitterURL = TwitterURL;
+    }
+
+    public String getMallId ()
+    {
+        return MallId;
+    }
+
+    public void setMallId (String MallId)
+    {
+        this.MallId = MallId;
+    }
+
     public String getName ()
     {
         return Name;
@@ -73,6 +123,16 @@ public class FavouriteCentersModel implements Serializable
     public void setName (String Name)
     {
         this.Name = Name;
+    }
+
+    public String getFacebookURL ()
+    {
+        return FacebookURL;
+    }
+
+    public void setFacebookURL (String FacebookURL)
+    {
+        this.FacebookURL = FacebookURL;
     }
 
     public String getBriefText ()
@@ -176,6 +236,6 @@ public class FavouriteCentersModel implements Serializable
     @Override
     public String toString()
     {
-        return "ClassPojo [CountryName = "+CountryName+", CityName = "+CityName+", MallPlaceId = "+MallPlaceId+", Name = "+Name+", BriefText = "+BriefText+", AboutText = "+AboutText+", CorporateColor = "+CorporateColor+", LogoUrl = "+LogoUrl+", Address = "+Address+", Latitude = "+Latitude+", Longitude = "+Longitude+", AppBackgroundImageUrl = "+AppBackgroundImageUrl+", PlaceName = "+PlaceName+"]";
+        return "ClassPojo [CountryName = "+CountryName+", WebURL = "+WebURL+", CityName = "+CityName+", MallPlaceId = "+MallPlaceId+", LinkedIn = "+LinkedIn+", TwitterURL = "+TwitterURL+", MallId = "+MallId+", Name = "+Name+", FacebookURL = "+FacebookURL+", BriefText = "+BriefText+", AboutText = "+AboutText+", CorporateColor = "+CorporateColor+", LogoUrl = "+LogoUrl+", Address = "+Address+", Latitude = "+Latitude+", Longitude = "+Longitude+", AppBackgroundImageUrl = "+AppBackgroundImageUrl+", PlaceName = "+PlaceName+"]";
     }
 }

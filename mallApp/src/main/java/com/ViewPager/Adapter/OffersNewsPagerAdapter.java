@@ -26,11 +26,11 @@ public class OffersNewsPagerAdapter extends FragmentStatePagerAdapter{
 	}
 	
 	public OffersNewsPagerAdapter(FragmentManager fm , Context context, Handler uiHandler, 
-			String audienceFilter, List<OfferPagerTabFragment> fragments) {
+			String audienceFilter, List<OfferPagerTabFragment> fragments,ArrayList<String> TITLES) {
 		super(fm);
 		ui= uiHandler;
 		this.context= context;
-		this.TITLES = SharedPreferenceFavourites.getFavouritesList(context);
+		this.TITLES = TITLES;
 		this.headerFilter= audienceFilter;
 		this.fragments	=	fragments;
 	}

@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/mall_background_view"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingRight="1dp">
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/back_image1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <ImageView
+                android:id="@+id/back_image"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:src="@drawable/endorse_card_view_background"
+                android:contentDescription="@string/accept"
+                android:layout_marginTop="-3dp"
+                android:background="@drawable/endorse_card_view_background"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/place_bar_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:background="@drawable/transparent_view"
+                >
+
+                <TextView
+                    android:id="@+id/place_name_text_view"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ellipsize="end"
+                    android:maxEms="11"
+                    android:lines="1"
+                    android:text="Place Name"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <ImageView
+                    android:id="@+id/fav_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/offer_fav"
+                    android:background="@color/transparent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/user_image_view"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/frame_layout"
+        android:layout_marginTop="-25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="bottom"
+        app:border_width="3dp"
+        app:border_color="#FFFFFFFF"
+        android:src="@drawable/placeholder"/>
+
+
+    <TextView
+        android:id="@+id/user_name_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame_layout"
+        android:layout_toRightOf="@+id/user_image_view"
+        android:lines="1"
+        android:gravity="right"
+        android:text="Sharjeel Haider"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/created_date_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_name_text_view"
+        android:layout_toRightOf="@+id/user_image_view"
+        android:lines="1"
+        android:text="1 day ago"
+        android:textColor="@color/black"
+        android:textSize="12sp" />
+
+
+    <TextView
+        android:id="@+id/place_description_text_view"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/user_image_view"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:text="Receive a $45 gift card purchase of the Per-Fekt"
+        android:textColor="@color/black2"
+        android:textSize="20sp" />
+
+
+</RelativeLayout>

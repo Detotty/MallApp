@@ -22,7 +22,7 @@ public class ApiConstants {
 
 	public static final String PROFILE_GET_URL_KEY = ACCOUNT_URL_KEY+"GetProfile/";
 
-	public static final String GET_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"/GetMalls?countryCode=PK&languageId=1";
+	public static final String GET_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"/GetMalls?countryCode=DK&languageId=1";
 
 	public static final String POST_FAV_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"SaveSubscribedMalls";
 
