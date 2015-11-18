@@ -93,12 +93,12 @@ public class CentersCacheManager {
 		return list.size();
 	}
 	
-	public static void updateCenters(Context context, FavouriteCentersModel obj) {
+	public static void updateCenters(Context context, FavouriteCentersModel obj,int pos) {
 		Log.w("update centers", "read centers list completed "+ obj.getMallPlaceId()+"......"+ obj.isIsfav());
 		ArrayList<FavouriteCentersModel> allcentersList= getAllCenters(context);
 		if (allcentersList != null) {
-//			allcentersList.set(obj.getId(), obj);
-			allcentersList.add(obj);
+			allcentersList.set(pos, obj);
+//			allcentersList.add(obj);
 			saveFavorites(context, allcentersList);
 		}
 	}

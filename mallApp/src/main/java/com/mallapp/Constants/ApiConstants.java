@@ -26,11 +26,13 @@ public class ApiConstants {
 
 	public static final String POST_FAV_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"SaveSubscribedMalls";
 
-	public static final String GET_USER_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"GetSubscribedMalls?UserId=";
+	public static final String GET_USER_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"GetSubscribedMalls/";
 
 	public static final String GET_NEWS_OFFERS_URL_KEY = ACTIVITY_SERVICE_URL_KEY +"GetMallActivities?UserId=";
 
 	public static final String POST_SELECTED_INTEREST_URL_KEY = USER_INTEREST_SERVICE_URL_KEY +"SaveUserInterests";
 
 	public static final String GET_INTEREST_URL_KEY = USER_INTEREST_SERVICE_URL_KEY +"GetUserInterest?languageId=1";
+
+	public static final String GET_SELECTED_INTEREST_URL_KEY = USER_INTEREST_SERVICE_URL_KEY +"GetSelectedInterest?UserId=";
 }

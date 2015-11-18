@@ -29,7 +29,7 @@ import com.mallapp.utils.SharedInstance;
 public class Select_Favourite_Center extends Activity implements OnClickListener, NearbyListener {
 	Button next, all, nearby ;
 	ListView list_view;
-	FavouriteCenterAdapter adapter;
+	public FavouriteCenterAdapter adapter;
 	ArrayList<FavouriteCenters> centers_list;
 	ArrayList<FavouriteCentersModel> centers_listM;
 	ArrayList<FavouriteCentersModel> nearByCenters;
@@ -47,7 +47,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		controller = new RegistrationController(this);
-		controller.GetMallList(ApiConstants.GET_MALL_URL_KEY,adapter,centers_listM,this);
+		controller.GetMallList(ApiConstants.GET_MALL_URL_KEY,adapter,centers_listM,this,list_view);
 //		SendVerificationCode.GetMallList("http://52.28.59.218:5001/api/MallService/GetMalls?countryCode=PK&languageId=1");
 //		getCenterList();
 		
@@ -141,7 +141,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 				AlertMessages.show_alert(Select_Favourite_Center.this, "The Mall App", "Please select at least one center.", "OK");
 
 		}else if(v.getId()== all.getId()){
-			
+
 			all.setBackgroundResource(R.drawable.all_fav_p);
 			nearby.setBackgroundResource(R.drawable.nearby_fav);
 			all.setTextColor(getResources().getColor(R.color.white));

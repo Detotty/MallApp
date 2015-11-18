@@ -85,6 +85,13 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 			holder.is_interest.setImageResource(R.drawable.interest);
 			holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 		}
+
+		if(interst_obj.isInterested()){
+			InterestCacheManager.updateCenters(context, interst_obj, position);
+			holder.is_interest.setImageResource(R.drawable.interest_p);
+			holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
+		}
+
 		
 		
 		holder.is_interest.setOnClickListener(new OnClickListener() {
@@ -93,12 +100,12 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 				InterestSelectionModel fav_obj= getItem(position);
 				if(fav_obj.isInterested()){
 					fav_obj.setInterested(false);
-					InterestCacheManager.updateCenters(context, fav_obj);
+					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.interest);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 				}else{
 					fav_obj.setInterested(true);
-					InterestCacheManager.updateCenters(context, fav_obj);
+					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.interest_p);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 				}
@@ -113,12 +120,12 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 				InterestSelectionModel fav_obj= getItem(position);
 				if(fav_obj.isInterested()){
 					fav_obj.setInterested(false);
-					InterestCacheManager.updateCenters(context, fav_obj);
+					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.interest);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 				}else{
 					fav_obj.setInterested(true);
-					InterestCacheManager.updateCenters(context, fav_obj);
+					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.interest_p);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 				}
@@ -128,5 +135,10 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 		
 		
 		return view;
+	}
+
+	private String selectedItem;
+	public void setSelectedItem(String position) {
+		selectedItem = position;
 	}
 }

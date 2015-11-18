@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.ListView;
 import android.widget.Toast;
 
 import com.List.Adapter.FavouriteCenterAdapter;
@@ -414,14 +415,12 @@ public class RegistrationController {
 
     //******-------Get Mall List Api Call-----*********
 
-    public void GetMallList(String url, final FavouriteCenterAdapter adapter, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList, final NearbyListener nearbyListener){
+    public void GetMallList(String url, final FavouriteCenterAdapter adapter, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList, final NearbyListener nearbyListener, final ListView listView){
         progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
 //        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
         try{
 
-
             JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
-
                 @Override
                 public void onResponse(JSONArray jsonArr) {
                     if(progressDialog!=null)
@@ -442,12 +441,154 @@ public class RegistrationController {
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
-
-
                     }
                     nearbyListener.onMallDataReceived(favouriteCentersArrayList);
                     CentersCacheManager.saveFavorites(context, favouriteCentersArrayList);
+                    String urls = ApiConstants.GET_USER_MALL_URL_KEY+SharedPreferenceUserProfile.getUserId(context);
+                    GetSubscribedMallList(urls,adapter,listView,favouriteCentersArrayList);
 //                    adapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
+
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+
+                    Log.e("", " error message ..." + message);
+
+                    if(message!=null && message!= "")
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.request_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }
+                }
+
+            }
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+
+    public void GetSubscribedMallList(String url, final FavouriteCenterAdapter adapter, final ListView listView,final ArrayList<FavouriteCentersModel> favouriteCentersArrayList){
+        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+//        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
+        try{
+            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
+
+                    Log.d(TAG, jsonArr.toString());
+
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        try {
+                            JSONObject obj = jsonArr.getJSONObject(i);
+                            FavouriteCentersModel fav = new Gson().fromJson(String.valueOf(obj), FavouriteCentersModel.class);
+                            for (FavouriteCentersModel f:  favouriteCentersArrayList ) {
+                                if (f.getMallPlaceId().equals(fav.getMallPlaceId())){
+                                    fav.setIsfav(true);
+                                    favouriteCentersArrayList.set(favouriteCentersArrayList.indexOf(f), fav);
+                                }
+                            }
+                        }catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
+
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+                    Log.e("", " error message ..." + message);
+
+                    if(message!=null && message!= "")
+                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.request_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            )
+            {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
+
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+
+
+    public void GetSelectedInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels){
+        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+//        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
+        try{
+            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    if(progressDialog!=null)
+                        progressDialog.dismiss();
+
+                    Log.d(TAG, jsonArr.toString());
+
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        try {
+                            JSONObject obj = jsonArr.getJSONObject(i);
+                            InterestSelectionModel fav = new Gson().fromJson(String.valueOf(obj), InterestSelectionModel.class);
+                            for (InterestSelectionModel f:  interestSelectionModels ) {
+                                if (f.getCategoryId().equals(fav.getCategoryId())){
+                                    fav.setInterested(true);
+                                    interestSelectionModels.set(interestSelectionModels.indexOf(f), fav);
+                                }
+                            }
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    adapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -489,8 +630,6 @@ public class RegistrationController {
             // Adding request to request queue
             MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
-
-
         }catch(Exception e){
             e.printStackTrace();
         }
@@ -518,7 +657,6 @@ public class RegistrationController {
 
                             JSONObject obj = jsonArr.getJSONObject(i);
                             InterestSelectionModel fav = new Gson().fromJson(String.valueOf(obj), InterestSelectionModel.class);
-
                             // adding movie to movies array
                             interestSelectionModels.add(fav);
 
@@ -530,6 +668,8 @@ public class RegistrationController {
                     }
                     InterestCacheManager.saveFavorites(context, interestSelectionModels);
                     adapter.notifyDataSetChanged();
+                    String urls = ApiConstants.GET_SELECTED_INTEREST_URL_KEY+SharedPreferenceUserProfile.getUserId(context)+"&LanguageId=1";
+                    GetSelectedInterestList(urls,adapter,interestSelectionModels);
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -621,9 +761,6 @@ public class RegistrationController {
                         progressDialog.dismiss();
 
                     String message = VolleyErrorHelper.getMessage(volleyError,context);
-
-
-
                     Log.e("", " error message ..." + message);
 
                     if(message!=null && message!= "")

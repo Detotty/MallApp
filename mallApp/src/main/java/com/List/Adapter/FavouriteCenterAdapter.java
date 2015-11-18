@@ -9,6 +9,8 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
+import android.widget.LinearLayout;
+import android.widget.ListView;
 import android.widget.TextView;
 
 import com.android.volley.toolbox.ImageLoader;
@@ -100,6 +102,34 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 			holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 			holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
 		}
+
+		if(fav_obj.isIsfav()){
+			holder.is_center.setImageResource(R.drawable.interest_p);
+			CentersCacheManager.updateCenters(context, fav_obj, position);
+			holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
+			holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
+		}
+
+		// set selected item
+		LinearLayout ActiveItem = (LinearLayout) view;
+		/*if (position == selectedItem)
+		{
+			ActiveItem
+					.setBackgroundResource(R.drawable.abc_btn_borderless_material);
+
+			// for focus on it
+			int top = (ActiveItem == null) ? 0 : ActiveItem.getTop();
+			((ListView) parent).setSelectionFromTop(position, top);
+			fav_obj= getItem(position);
+			if(fav_obj.isIsfav()){
+//			fav_obj= getItem(position);
+				fav_obj.setIsfav(true);
+				holder.is_center.setImageResource(R.drawable.interest_p);
+				CentersCacheManager.updateCenters(context, fav_obj,position);
+				holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
+				holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
+//			}
+		}*/
 		
 		holder.is_center.setOnClickListener(new OnClickListener() {
 			@Override
@@ -110,11 +140,11 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 					holder.is_center.setImageResource(R.drawable.interest);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
-					CentersCacheManager.updateCenters(context, fav_obj);
+					CentersCacheManager.updateCenters(context, fav_obj,position);
 				}else{
 					fav_obj.setIsfav(true);
 					holder.is_center.setImageResource(R.drawable.interest_p);
-					CentersCacheManager.updateCenters(context, fav_obj);
+					CentersCacheManager.updateCenters(context, fav_obj,position);
 					
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
@@ -132,11 +162,11 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 					holder.is_center.setImageResource(R.drawable.interest);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
-					CentersCacheManager.updateCenters(context, fav_obj);
+					CentersCacheManager.updateCenters(context, fav_obj,position);
 				}else{
 					fav_obj.setIsfav(true);
 					holder.is_center.setImageResource(R.drawable.interest_p);
-					CentersCacheManager.updateCenters(context, fav_obj);
+					CentersCacheManager.updateCenters(context, fav_obj,position);
 					
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
@@ -146,5 +176,10 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 		
 		
 		return view;
+	}
+	private int selectedItem;
+
+	public void setSelectedItem(int position) {
+		selectedItem = position;
 	}
 }

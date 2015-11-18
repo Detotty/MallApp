@@ -89,12 +89,12 @@ public class InterestCacheManager {
 	}
 
 	
-	public static void updateCenters(Context context, InterestSelectionModel obj) {
+	public static void updateCenters(Context context, InterestSelectionModel obj, int pos) {
 		
 		ArrayList<InterestSelectionModel> allcentersList= getAllCenters(context);
 		if (allcentersList != null) {
-//			allcentersList.set(obj.getId(), obj);
-			allcentersList.add(obj);
+			allcentersList.set(pos, obj);
+//			allcentersList.add(obj);
 			saveFavorites(context, allcentersList);
 		}
 	}
