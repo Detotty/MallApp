@@ -21,10 +21,9 @@
             android:visibility="visible" >
 
             <ImageView
-                android:id="@+id/back_image"
+                android:id="@+id/center_image"
                 android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:src="@drawable/endorse_card_view_background"
+                android:layout_height="215dp"
                 android:contentDescription="@string/accept"
                 android:layout_marginTop="-3dp"
                 android:background="@drawable/endorse_card_view_background"
@@ -40,7 +39,7 @@
                 >
 
                 <TextView
-                    android:id="@+id/place_name_text_view"
+                    android:id="@+id/title"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -53,7 +52,7 @@
                     android:textStyle="bold" />
 
 
-                <ImageView
+                <ImageButton
                     android:id="@+id/fav_center"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
@@ -70,7 +69,7 @@
     </FrameLayout>
 
     <de.hdodenhof.circleimageview.CircleImageView
-        android:id="@+id/user_image_view"
+        android:id="@+id/entity_logo"
         android:layout_width="70dp"
         android:layout_height="70dp"
         android:layout_below="@id/frame_layout"
@@ -83,24 +82,24 @@
 
 
     <TextView
-        android:id="@+id/user_name_text_view"
+        android:id="@+id/shop_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_below="@id/frame_layout"
-        android:layout_toRightOf="@+id/user_image_view"
+        android:layout_toRightOf="@+id/entity_logo"
         android:lines="1"
         android:gravity="right"
-        android:text="Sharjeel Haider"
+        android:text="Levis, Amager Center"
         android:textColor="@color/black"
         android:textSize="16sp" />
 
 
     <TextView
-        android:id="@+id/created_date_text_view"
+        android:id="@+id/center_name"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_name_text_view"
-        android:layout_toRightOf="@+id/user_image_view"
+        android:layout_below="@id/shop_name"
+        android:layout_toRightOf="@+id/entity_logo"
         android:lines="1"
         android:text="1 day ago"
         android:textColor="@color/black"
@@ -108,15 +107,16 @@
 
 
     <TextView
-        android:id="@+id/place_description_text_view"
+        android:id="@+id/center_city"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_below="@id/user_image_view"
+        android:layout_below="@id/entity_logo"
         android:paddingLeft="10dp"
         android:layout_marginTop="3dp"
+        android:lines="2"
         android:text="Receive a $45 gift card purchase of the Per-Fekt"
         android:textColor="@color/black2"
-        android:textSize="20sp" />
+        android:textSize="15sp" />
 
 
 </RelativeLayout>

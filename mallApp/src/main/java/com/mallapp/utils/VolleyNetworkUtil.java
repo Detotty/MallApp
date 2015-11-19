@@ -15,6 +15,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.VolleyErrorHelper;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
@@ -51,8 +52,8 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         this.context = context;
     }
 
-    public ArrayList<String> GetSubscribedMalls(String url, final MallDataListener mallDataListener) {
-        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<>();
+    public ArrayList<String> GetMallsActivities(String url, final MallDataListener mallDataListener) {
+        final ArrayList<MallActivitiesModel> mallActivitiesModels = new ArrayList<>();
         try {
             JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
 
@@ -63,13 +64,13 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     for (int i = 0; i < jsonArr.length(); i++) {
                         try {
                             JSONObject obj = jsonArr.getJSONObject(i);
-                            FavouriteCentersModel fav = new Gson().fromJson(String.valueOf(obj), FavouriteCentersModel.class);
-                            favouriteCentersArrayList.add(fav);
+                            MallActivitiesModel fav = new Gson().fromJson(String.valueOf(obj), MallActivitiesModel.class);
+                            mallActivitiesModels.add(fav);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                    mallDataListener.onDataReceived(favouriteCentersArrayList);
+                    mallDataListener.onDataReceived(mallActivitiesModels);
                 }
             }, new Response.ErrorListener() {
                 @Override

@@ -17,138 +17,122 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mallapp.Constants.Offers_News_Constants;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.View.OffersDetailActivity;
 import com.mallapp.View.R;
 import com.mallapp.cache.AppCacheManager;
 import com.mallapp.utils.GlobelOffersNews;
+import com.squareup.picasso.Picasso;
 
 
-public class Offers_News_Adapter extends ArrayAdapter<Offers_News> {
+public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 
-	//private static final String TAG = Offers_News_Adapter.class.getSimpleName();
+    private static final String TAG = Offers_News_Adapter.class.getSimpleName();
 
-	private Context 			context;
-	private Activity			activity;
-	String 						audience_type;
-	private Offers_News 		offer_obj;
-	
-	//int 							endorsement_id;
-	ArrayList<Drawable> 		endorsement_all_images_list, 
-									endorsement_contacts_images_list, 
-									endorsement_trusted_images_list,
-									endorsement_images_list;
+    private Context context;
+    private Activity activity;
+    String audience_type;
+    private MallActivitiesModel offer_obj;
 
-	ArrayList<Offers_News> 			endorsement_All,
-									endorsement_Offers,
-									endorsement_News;
-	String endorsement_clicked_type;
-	
-	public Offers_News_Adapter(Context context,Activity activti, int textViewResourceId, 
-			
-			ArrayList<Offers_News> endorsement_All,
-			ArrayList<Offers_News> endorsement_Contacts,
-			ArrayList<Offers_News> endorsement_Trusted,
-			ArrayList<Drawable> endorsement_All_images,
-			ArrayList<Drawable> endorsement_Contacts_images,
-			ArrayList<Drawable> endorsement_Trusted_images,
-			String audience_type,
-			String fav_type) {
-		
-		super(context,  textViewResourceId);
-		this.context = context;
-		this.activity= activti;
-		
-		this.endorsement_All	= endorsement_All;
-		this.endorsement_Offers	= endorsement_Contacts;
-		this.endorsement_News	= endorsement_Trusted;
-		
-		this.endorsement_all_images_list		= endorsement_All_images;
-		this.endorsement_contacts_images_list	= endorsement_Contacts_images;
-		this.endorsement_trusted_images_list	= endorsement_Trusted_images;
-		
-		this.audience_type= audience_type;
-		this.endorsement_clicked_type= fav_type;
-	}
 
-	public String getAudience_type() {
-		return audience_type;
-	}
+    ArrayList<MallActivitiesModel> mallActivities_All,
+            mallActivities_Offers,
+            mallActivities_News;
+    String mall_clicked_type;
 
-	public void setAudience_type(String audience_type) {
-		this.audience_type = audience_type;
-		
-	}
+    public Offers_News_Adapter(Context context, Activity activti, int textViewResourceId,
 
-	@Override
-	public int getCount() {
-		if(audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
-			return endorsement_All.size();
-		else if(audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
-			return endorsement_Offers.size();
-		else if(audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
-			return endorsement_News.size();
-		else 
-			return endorsement_All.size();
-	}
+                               ArrayList<MallActivitiesModel> mallActivities_All, String audience_type) {
 
-	@Override
-	public Offers_News getItem(int position) {
-		if(audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
-			return endorsement_All.get(position);
-		else if(audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
-			return endorsement_Offers.get(position);
-		else if(audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
-			return endorsement_News.get(position);
-		else 
-			return endorsement_All.get(position);
-	}
+        super(context, textViewResourceId);
+        this.context = context;
+        this.activity = activti;
 
-	@Override
-	public long getItemId(int position) {
-		return (position);
-	}
+        this.mallActivities_All = mallActivities_All;
+        this.audience_type = audience_type;
+        FilteredOffersNewsList(mallActivities_All);
+    }
 
-	@Override
-	public int getPosition(Offers_News item) {
-		return super.getPosition(item);
-	}
+    public String getAudience_type() {
+        return audience_type;
+    }
 
-	static class ViewHolder {
-		TextView title, decs, center_name, shome_name;
-		ImageButton is_fav;
-		ImageView back_image;
-		//RelativeLayout r1;
-	}
+    public void setAudience_type(String audience_type) {
+        this.audience_type = audience_type;
 
-	@SuppressLint("InflateParams")
-	@Override
-	public View getView(final int position, View convertView, ViewGroup parent) {
-		
-		final ViewHolder holder;
-		View view= convertView;
-		
-		if (convertView == null) {
-			LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-			view = mInflater.inflate(R.layout.list_item_offers,null);
-			
-			holder = new ViewHolder();
-			holder.title 		= (TextView) view.findViewById(R.id.title);
-			holder.decs 		= (TextView) view.findViewById(R.id.center_city);
-			holder.center_name 	= (TextView) view.findViewById(R.id.center_name);
-			holder.shome_name 	= (TextView) view.findViewById(R.id.shop_name);
-			holder.is_fav		= (ImageButton) view.findViewById(R.id.fav_center);
-			holder.back_image	= (ImageView) view.findViewById(R.id.center_image);
+    }
 
-			view.setTag(holder);
-		}else {
-			holder = (ViewHolder) view.getTag();
-		}
+    @Override
+    public int getCount() {
+        if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
+            return mallActivities_All.size();
+        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
+            return mallActivities_Offers.size();
+        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
+            return mallActivities_News.size();
+        else
+            return mallActivities_All.size();
+    }
+
+    @Override
+    public MallActivitiesModel getItem(int position) {
+        if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
+            return mallActivities_All.get(position);
+        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
+            return mallActivities_Offers.get(position);
+        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
+            return mallActivities_News.get(position);
+        else
+            return mallActivities_All.get(position);
+    }
+
+    @Override
+    public long getItemId(int position) {
+        return (position);
+    }
+
+    @Override
+    public int getPosition(MallActivitiesModel item) {
+        return super.getPosition(item);
+    }
+
+    static class ViewHolder {
+        TextView title, decs, center_name, shome_name;
+        ImageButton is_fav;
+        ImageView back_image, entity_logo;
+        //RelativeLayout r1;
+    }
+
+    @SuppressLint("InflateParams")
+    @Override
+    public View getView(final int position, View convertView, ViewGroup parent) {
+
+        final ViewHolder holder;
+        View view = convertView;
+
+        if (convertView == null) {
+            LayoutInflater mInflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = mInflater.inflate(R.layout.list_item_offers_new, null);
+
+            holder = new ViewHolder();
+            holder.title = (TextView) view.findViewById(R.id.title);
+            holder.decs = (TextView) view.findViewById(R.id.center_city);
+            holder.center_name = (TextView) view.findViewById(R.id.center_name);
+            holder.shome_name = (TextView) view.findViewById(R.id.shop_name);
+            holder.is_fav = (ImageButton) view.findViewById(R.id.fav_center);
+            holder.back_image = (ImageView) view.findViewById(R.id.center_image);
+            holder.entity_logo = (ImageView) view.findViewById(R.id.entity_logo);
+
+            view.setTag(holder);
+        } else {
+            holder = (ViewHolder) view.getTag();
+        }
 ///////////////////////////////////////////////////////////////////////////////////////////		
-		offer_obj= getItem(position);
-		Drawable d = null;
-		
-		if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
+        offer_obj = getItem(position);
+        Drawable d = null;
+
+		/*if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
 			endorsement_images_list= endorsement_all_images_list;
 		}else if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 			endorsement_images_list= endorsement_contacts_images_list;
@@ -161,14 +145,15 @@ public class Offers_News_Adapter extends ArrayAdapter<Offers_News> {
 		if(endorsement_images_list!=null && endorsement_images_list.size()>0){
 			d = endorsement_images_list.get(position);
 			holder.back_image.setBackground(d);
-		}
-		
-		holder.title.setText(offer_obj.getTitle());
-		holder.decs.setText(offer_obj.getDetail());
-		holder.center_name.setText(offer_obj.getCenter_name());		
-		holder.shome_name.setText(offer_obj.getShop_name());
-		
-		final boolean fav	= offer_obj.isFav();
+		}*/
+
+        holder.title.setText(offer_obj.getActivityTextTitle());
+        holder.decs.setText(offer_obj.getDetailText());
+        holder.center_name.setText(offer_obj.getMallName());
+        holder.shome_name.setText(offer_obj.getPlaceName());
+        Picasso.with(context).load(offer_obj.getImageURL()).into(holder.back_image);
+        Picasso.with(context).load(offer_obj.getEntityLogo()).into(holder.entity_logo);
+		/*final boolean fav	= offer_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
@@ -189,19 +174,19 @@ public class Offers_News_Adapter extends ArrayAdapter<Offers_News> {
 					AppCacheManager.updateOffersNews(context, offer_obj);
 				}
 			}
-		});
-		
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
+		});*/
 
-				offer_obj= getItem(position);
-				GlobelOffersNews.offer_obj= offer_obj;
-				Intent intent= new Intent(activity, OffersDetailActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);                     
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				activity.getApplication().startActivity(intent);
-				
+        view.setOnClickListener(new OnClickListener() {
+            @Override
+            public void onClick(View view) {
+
+                offer_obj = getItem(position);
+//				GlobelOffersNews.offer_obj= offer_obj;
+                Intent intent = new Intent(activity, OffersDetailActivity.class);
+                intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                activity.getApplication().startActivity(intent);
+
 //				if(endorsement_clicked_type!=null && 
 //						endorsement_clicked_type.equals(
 //								Offers_News_Constants.ENDORSEMENT_CLICK_TYPE)){
@@ -221,9 +206,24 @@ public class Offers_News_Adapter extends ArrayAdapter<Offers_News> {
 //					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 //					activity.getApplication().startActivity(intent);
 //				}
-			}
-		});
-		return view;
-	}
+            }
+        });
+        return view;
+    }
+
+
+    private void FilteredOffersNewsList(ArrayList<MallActivitiesModel> all) {
+
+        mallActivities_Offers = new ArrayList<>();
+        mallActivities_News = new ArrayList<>();
+        for (MallActivitiesModel ma : all
+                ) {
+            if (ma.getActivityName().equals("News")) {
+                mallActivities_News.add(ma);
+            } else {
+                mallActivities_Offers.add(ma);
+            }
+        }
+    }
 
 }

@@ -42,9 +42,10 @@ import com.mallapp.listeners.MallDataListener;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
 import com.mallapp.utils.VolleyNetworkUtil;
+import com.squareup.picasso.Picasso;
 
 public class OffersTabFragment extends Fragment
-        implements OnCheckedChangeListener, MallDataListener {
+        implements OnCheckedChangeListener {
 
     String TAG = getClass().getCanonicalName();
 
@@ -122,30 +123,6 @@ public class OffersTabFragment extends Fragment
     @Override
     public void onActivityCreated(Bundle savedInstanceState) {
         Log.e(TAG, "onActivityCreated");
-
-//		center_logo = (ImageView) getView().findViewById(R.id.center_logo);
-//		setCenter_logo("rest_logo8");
-//		
-//		segmentText = (SegmentedRadioGroup)  getView().findViewById(R.id.segment_text);
-//		segmentText.setOnCheckedChangeListener(this);
-//		tabs 	= (PagerSlidingTabStrip) getView().findViewById(R.id.tabs);
-//		pager 	= (ViewPager)  getView().findViewById(R.id.pager);
-//		
-//		tabs.setOnPageChangeListener(new OnPageChangeListener() {
-//			@Override
-//			public void onPageScrollStateChanged(int arg0) {
-//				// TODO Auto-generated method stub
-//				//Log.e(" offers tab fragment ", "onPageScrollStateChanged");
-//			}
-//			@Override
-//			public void onPageScrolled(int position, float arg1, int arg2) {
-//				//Log.e(" offers tab fragment ", "onPageScrolled" + position);
-//			}
-//			@Override
-//			public void onPageSelected(int position) {
-//				//Log.e(" offers tab fragment ", "onPageSelected" + position+" centers fav size = "+ TITLES.size());
-//				setCenterLogo(position);
-//			}});
         super.onActivityCreated(savedInstanceState);
     }
 
@@ -189,20 +166,6 @@ public class OffersTabFragment extends Fragment
 
     private void destoryAllInstences() {
         GlobelOffersNews.fragment_instences = null;
-//		GlobelOffersNews.all_audience= null;
-//		GlobelOffersNews.all_audience_images= null;
-//		GlobelOffersNews.endorsement_array= null;
-//		GlobelOffersNews.offers_audience= null;
-
-
-//		Globel_Endorsement.endorsement_array				= null;
-//		Globel_Endorsement.endorsement_all_audience			= null;
-//		Globel_Endorsement.endorsement_all_audience_images	= null;
-//		Globel_Endorsement.endorsement_contacts_audience	= null;
-//		Globel_Endorsement.endorsement_contacts_audience_images	= null;
-//		Globel_Endorsement.endorsement_trusted_audience_images	= null;
-//		Globel_Endorsement.endorsement_trusted_audience			= null;
-
     }
 
     @Override
@@ -232,7 +195,7 @@ public class OffersTabFragment extends Fragment
 
         OffersNewsFiltration.readOffersNews(context);
         List<OfferPagerTabFragment> fragments = getFavouriteFragments();
-        adapter = new OffersNewsPagerAdapter(getChildFragmentManager(), context, uiHandler, audienceFilter, fragments,TITLES);
+        adapter = new OffersNewsPagerAdapter(getChildFragmentManager(), context, uiHandler, audienceFilter, fragments, TITLES);
         pager.setAdapter(adapter);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
@@ -271,17 +234,7 @@ public class OffersTabFragment extends Fragment
     }
 
     public static void setCenter_logo(String center_logo) {
-
-        int mDstWidth = context.getResources().getDimensionPixelSize(R.dimen.center_logo_width);
-        int mDstHeight = context.getResources().getDimensionPixelSize(R.dimen.center_logo_height);
-
-        int imageResource = context.getResources().getIdentifier(center_logo, "drawable", context.getPackageName());
-        Drawable d = context.getResources().getDrawable(imageResource);
-        Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-
-        d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth, mDstHeight, true));
-        OffersTabFragment.center_logo.setImageDrawable(d);
-
+        Picasso.with(context).load(center_logo).into(OffersTabFragment.center_logo);
     }
 
     public static String getSelected_center_name() {
@@ -323,13 +276,5 @@ public class OffersTabFragment extends Fragment
     };
 
 
-    @Override
-    public void onDataReceived(ArrayList<FavouriteCentersModel> favouriteCentersModels) {
 
-        TITLES.add(Offers_News_Constants.AUDIENCE_FILTER_ALL);
-        for (FavouriteCentersModel fav: favouriteCentersModels ) {
-            TITLES.add(fav.getName());
-            adapter.notifyDataSetChanged();
-        }
-    }
 }
