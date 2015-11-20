@@ -10,4 +10,5 @@ import java.util.ArrayList;
  */
 public interface MallDataListener {
     public void onDataReceived(ArrayList<MallActivitiesModel> mallActivitiesModels);
+    public void OnError();
 }

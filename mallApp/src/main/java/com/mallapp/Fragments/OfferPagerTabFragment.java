@@ -84,12 +84,12 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         super();
     }
 
-    public OfferPagerTabFragment(String favouriteCenterFilter, String audienceOffersFilter) {
+    /*public OfferPagerTabFragment(String favouriteCenterFilter, String audienceOffersFilter) {
         super();
         this.favouriteCentersFilter = favouriteCenterFilter;
         this.headerFilter = audienceOffersFilter;
         navigationFilter = true;
-    }
+    }*/
 
     public String getHeaderFilter() {
         return headerFilter;
@@ -123,7 +123,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                /*if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
+               /* if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
                     swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
@@ -218,9 +218,13 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
     public void changeType_Notification(String new_audience_type) {
         Log.e("changeType_Notification", new_audience_type);
-        if (adapter != null) {
+        if(adapter!=null){
+            Log.e("changeType_Notification", new_audience_type);
             adapter.setAudience_type(new_audience_type);
+            mallActivitiesListing.clear();
             adapter.notifyDataSetChanged();
+            requestType = LOADING_MALL_ACTIVITIES;
+            pullToRefresh();
         }
     }
 
@@ -245,9 +249,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
                                     mallActivitiesListing, headerFilter
                             );
-
                             list.setAdapter(adapter);
-
                             list.setOnScrollListener(new AbsListView.OnScrollListener() {
                                 @Override
                                 public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -259,12 +261,12 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                     Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
                                     Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel) list.getItemAtPosition(position)).getName());
 
-                                    if (adapter.getCount() > 0)
+                                    /*if (adapter.getCount() > 0)
                                         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
                                             pageNo++;
                                             pullToRefresh();
-                                        }
+                                        }*/
                                 }
                             });
                         } else {
@@ -277,29 +279,31 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
                     }
                 });
-                break;
             }
-
+            break;
 
             case LAZY_LOADING: {
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
 
+                        mallActivitiesListing.clear();
                         for (MallActivitiesModel ma : mallActivitiesModels
                                 ) {
-                            if (ma.getMallName().equals(headerFilter)) {
+                            if (ma.getMallName().equals("")) {
                                 mallActivitiesListing.add(ma);
                             }
                         }
+                        mallActivitiesModels.clear();
                         adapter.notifyDataSetChanged();
                         requestType = "";
                         Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel)list.getItemAtPosition(position)).getName());
 
                     }
                 });
-                break;
+
             }
+            break;
 
             case REFRESH_MALL_ACTIVITIES: {
                 Log.d("REFRESH_MALL_ACTIVITY", "REFRESH_MALL_ACTIVITY:" + mallActivitiesModels.size());
@@ -307,12 +311,61 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
+                        if (mallActivitiesListing != null) {
+                            mallActivitiesListing.clear();
+                            mallActivitiesListing.addAll(0, mallActivitiesModels);
+                            adapter.notifyDataSetChanged();
+                        } else {
+                            mallActivitiesListing = mallActivitiesModels;
+                            adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
+                                    mallActivitiesListing, headerFilter
+                            );
+
+                            list.setAdapter(adapter);
+                            adapter.notifyDataSetChanged();
+
+                            list.setOnScrollListener(new AbsListView.OnScrollListener() {
+                                @Override
+                                public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+                                }
+
+                                @Override
+                                public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+                                    Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
+                                    if (adapter.getCount() > 0)
+                                        if ((totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                                            requestType = LAZY_LOADING;
+                                            pageNo++;
+                                            pullToRefresh();
+                                        }
+                                }
+                            });
+                        }
+//                        adapter.notifyDataSetChanged();
                         requestType = "";
                     }
                 });
-                break;
             }
+            break;
+
         }
+    }
+
+    @Override
+    public void OnError() {
+        switch (requestType){
+            case REFRESH_MALL_ACTIVITIES:{
+                swipeRefreshLayout.setRefreshing(false);
+            }
+            break;
+        }
+        uihandler.post(new Runnable() {
+            @Override
+            public void run() {
+
+            }
+        });
     }
 
 }

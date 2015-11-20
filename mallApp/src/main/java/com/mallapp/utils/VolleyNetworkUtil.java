@@ -79,6 +79,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     if (progressDialog != null)
                         progressDialog.dismiss();
 
+                    mallDataListener.OnError();
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     android.util.Log.e("", " error message ..." + message);
 

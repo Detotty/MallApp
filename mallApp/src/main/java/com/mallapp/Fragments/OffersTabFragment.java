@@ -70,7 +70,6 @@ public class OffersTabFragment extends Fragment
         context = getActivity().getApplicationContext();
         TITLES = FavouriteCentersFiltration.getFavCenterTITLES(context);
 //        volleyNetworkUtil = new VolleyNetworkUtil(context);
-//        v;olleyNetworkUtil.GetSubscribedMalls(ApiConstants.GET_USER_MALL_URL_KEY+SharedPreferenceUserProfile.getUserId(context),this);
         uihandler = MainMenuConstants.uiHandler;
         super.onCreate(savedInstanceState);
     }
@@ -130,6 +129,7 @@ public class OffersTabFragment extends Fragment
 
         String selectedCenter = TITLES.get(position).trim();
         setSelected_center_name(selectedCenter);
+        callInOnResume();
 
         if (position == 0) {
             setCenter_logo("rest_logo8");

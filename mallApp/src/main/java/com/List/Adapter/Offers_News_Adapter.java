@@ -16,6 +16,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
@@ -48,8 +49,17 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         super(context, textViewResourceId);
         this.context = context;
         this.activity = activti;
-
-        this.mallActivities_All = mallActivities_All;
+        this.mallActivities_All = new ArrayList<>();
+        if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+            this.mallActivities_All = mallActivities_All;
+        } else {
+            for (MallActivitiesModel mam : mallActivities_All
+                    ) {
+                if (mam.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                    this.mallActivities_All.add(mam);
+                }
+            }
+        }
         this.audience_type = audience_type;
         FilteredOffersNewsList(mallActivities_All);
     }
@@ -133,7 +143,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         Drawable d = null;
 
 		/*if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
-			endorsement_images_list= endorsement_all_images_list;
+            endorsement_images_list= endorsement_all_images_list;
 		}else if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 			endorsement_images_list= endorsement_contacts_images_list;
 		}else if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
@@ -216,12 +226,23 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 
         mallActivities_Offers = new ArrayList<>();
         mallActivities_News = new ArrayList<>();
-        for (MallActivitiesModel ma : all
-                ) {
+        for (MallActivitiesModel ma : all) {
             if (ma.getActivityName().equals("News")) {
-                mallActivities_News.add(ma);
+                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+                    mallActivities_News.add(ma);
+                } else {
+                    if (ma.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                        this.mallActivities_News.add(ma);
+                    }
+                }
             } else {
-                mallActivities_Offers.add(ma);
+                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+                    mallActivities_Offers.add(ma);
+                } else {
+                    if (ma.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                        mallActivities_Offers.add(ma);
+                    }
+                }
             }
         }
     }
