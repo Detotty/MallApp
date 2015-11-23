@@ -6,6 +6,7 @@ import java.util.List;
 import android.annotation.SuppressLint;
 import android.content.Context;
 import android.graphics.Bitmap;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -23,6 +24,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
+import android.widget.RelativeLayout;
 
 import com.ViewPager.Adapter.OffersNewsPagerAdapter;
 import com.astuetz.PagerSlidingTabStrip;
@@ -55,6 +57,7 @@ public class OffersTabFragment extends Fragment
     private PagerSlidingTabStrip tabs;
     public static ImageView center_logo;
     private ImageButton navigation_button;
+    RelativeLayout headerLayoutColor;
     private OffersNewsPagerAdapter adapter;
     public static String selected_center_name;
     public static String selected_center_logo;
@@ -81,7 +84,9 @@ public class OffersTabFragment extends Fragment
 
         navigation_button = (ImageButton) view.findViewById(R.id.navigation_drawer);
         center_logo = (ImageView) view.findViewById(R.id.center_logo);
-        setCenter_logo("rest_logo8");
+        headerLayoutColor = (RelativeLayout) view.findViewById(R.id.headerColor);
+        headerLayoutColor.setBackgroundColor(getResources().getColor(R.color.purple));
+        center_logo.setImageResource(R.drawable.logo);
         segmentText = (SegmentedRadioGroup) view.findViewById(R.id.segment_text);
         tabs = (PagerSlidingTabStrip) view.findViewById(R.id.tabs);
         pager = (ViewPager) view.findViewById(R.id.pager);
@@ -93,6 +98,7 @@ public class OffersTabFragment extends Fragment
             public void onPageScrollStateChanged(int arg0) {
                 // TODO Auto-generated method stub
                 //Log.e(" offers tab fragment ", "onPageScrollStateChanged");
+                callInOnResume();
             }
 
             @Override
@@ -129,10 +135,11 @@ public class OffersTabFragment extends Fragment
 
         String selectedCenter = TITLES.get(position).trim();
         setSelected_center_name(selectedCenter);
-        callInOnResume();
+
 
         if (position == 0) {
-            setCenter_logo("rest_logo8");
+            headerLayoutColor.setBackgroundColor(getResources().getColor(R.color.purple));
+            center_logo.setImageResource(R.drawable.logo);
             MainMenuConstants.SELECTED_CENTER_LOGO = null;
 
         } else {
@@ -144,6 +151,7 @@ public class OffersTabFragment extends Fragment
             for (FavouriteCentersModel center : TITLES_Centers) {
                 if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                     String center_logo_name = center.getLogoUrl();
+                    headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
                     setCenter_logo(center_logo_name);
                     setSelected_center_logo(center_logo_name);
                 }
@@ -199,7 +207,7 @@ public class OffersTabFragment extends Fragment
         pager.setAdapter(adapter);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
-        pager.setPageMargin(pageMargin);
+//        pager.setPageMargin(pageMargin);
         pager.setOffscreenPageLimit(fragments.size());
         tabs.setViewPager(pager);
         adapter.notifyDataSetChanged();
@@ -235,6 +243,8 @@ public class OffersTabFragment extends Fragment
 
     public static void setCenter_logo(String center_logo) {
         Picasso.with(context).load(center_logo).into(OffersTabFragment.center_logo);
+
+
     }
 
     public static String getSelected_center_name() {
