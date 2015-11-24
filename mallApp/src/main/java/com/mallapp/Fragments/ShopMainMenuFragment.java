@@ -232,8 +232,8 @@ public class ShopMainMenuFragment 	extends Fragment
 	private void initSectionHeaderList() {
 		list_view.setPinnedHeaderView(LayoutInflater.from(getActivity().getApplicationContext()).inflate(
 									R.layout.list_item_shop_header, list_view, false));
-		adapter	= new ShopAdapter(getActivity().getApplicationContext(), getActivity(), 
-									shops_all_audience, GlobelShops.header_section_alphabetics, audienceFilter);
+//		adapter	= new ShopAdapter(getActivity().getApplicationContext(), getActivity(),
+//									shops_all_audience, GlobelShops.header_section_alphabetics, audienceFilter);
 		list_view.setAdapter(adapter);
 	}
 
@@ -331,9 +331,9 @@ public class ShopMainMenuFragment 	extends Fragment
 		filterShops();
 		invisibleSearch();
 		if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			adapter	= new ShopAdapter(getActivity().getApplicationContext(), getActivity(), 
-					shops_all_audience, GlobelShops.header_section_alphabetics, audienceFilter);
-			
+//			adapter	= new ShopAdapter(getActivity().getApplicationContext(), getActivity(),
+//					shops_all_audience, GlobelShops.header_section_alphabetics, audienceFilter);
+
 			list_view.	setAdapter(adapter);
 			list_view1.	setVisibility(View.GONE);
 			side_index_scroll.	setVisibility(View.VISIBLE);
@@ -341,16 +341,16 @@ public class ShopMainMenuFragment 	extends Fragment
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)){
 			
 			invisibleIndexList();
-			adapter1 = new ShopExpandableAdapter(getActivity().getApplicationContext(),getActivity(),
+			/*adapter1 = new ShopExpandableAdapter(getActivity().getApplicationContext(),getActivity(),
 					shops_category_audience, GlobelShops.header_section_category);
-			list_view1.setAdapter(adapter1);
+			list_view1.setAdapter(adapter1);*/
 
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)){
 			
 			invisibleIndexList();
-			adapter1 = new ShopExpandableAdapter(getActivity().getApplicationContext(),getActivity(),
+			/*adapter1 = new ShopExpandableAdapter(getActivity().getApplicationContext(),getActivity(),
 					shops_floor_audience, GlobelShops.header_section_floor);
-			list_view1.setAdapter(adapter1);
+			list_view1.setAdapter(adapter1);*/
 			list_view1.setVisibility(View.VISIBLE);
 		}
 	}

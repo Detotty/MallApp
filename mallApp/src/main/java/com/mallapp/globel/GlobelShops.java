@@ -6,13 +6,15 @@ import android.graphics.Bitmap;
 import android.graphics.drawable.Drawable;
 
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
 
 public class GlobelShops {
 	
 	public static String SELECTED_CENTER_NAME;
 	public static ArrayList<Bitmap> bitmap_images;
 	public static Shops shop_obj;
-	
+	public static ShopsModel shopModel_obj;
+
 	public static Shops related_shop_obj;
 	public static Shops shop_obj_chat;
 //	public static String offers_click_type;

@@ -166,7 +166,7 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 		go_to_shop.setOnClickListener(this);
 		back_screen.setOnClickListener(this);
 		
-		related_offers			= (LinearLayout) findViewById(R.id.related_offers);
+//		related_offers			= (LinearLayout) findViewById(R.id.related_offers);
 		social_sharing_layout	= (LinearLayout) findViewById(R.id.social_layout);
 		
 		message		= (ImageButton) findViewById(R.id.sms);

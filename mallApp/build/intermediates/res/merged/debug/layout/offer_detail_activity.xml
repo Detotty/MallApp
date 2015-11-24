@@ -97,7 +97,7 @@
 		<include layout="@layout/offer_detail_share_tab"/>
 	</LinearLayout>
     
-    <LinearLayout
+   <!-- <LinearLayout
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:background="@color/purple"
@@ -119,6 +119,6 @@
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
         android:orientation="vertical">
-    </LinearLayout>
+    </LinearLayout>-->
 	</LinearLayout>
 </ScrollView><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/offer_detail_activity.xml -->

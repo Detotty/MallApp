@@ -44,6 +44,8 @@ public class MallActivitiesModel implements Serializable{
 
     private String EntityId;
 
+    private boolean isFav;
+
     public String getEntityLogo() {
         return EntityLogo;
     }
@@ -196,6 +198,13 @@ public class MallActivitiesModel implements Serializable{
         this.EntityId = EntityId;
     }
 
+    public boolean isFav() {
+        return isFav;
+    }
+
+    public void setFav(boolean isFav) {
+        this.isFav = isFav;
+    }
     @Override
     public String toString() {
         return "ClassPojo [EntityLogo = " + EntityLogo + ", ActivityTextTitle = " + ActivityTextTitle + ", ImageURL = " + ImageURL + ", CategoryName = " + CategoryName + ", MallName = " + MallName + ", DetailText = " + DetailText + ", ActivityId = " + ActivityId + ", EntityName = " + EntityName + ", ActivityTextName = " + ActivityTextName + ", MallPlaceId = " + MallPlaceId + ", BriefText = " + BriefText + ", EndDate = " + EndDate + ", StartDate = " + StartDate + ", EntityType = " + EntityType + ", EndTime = " + EndTime + ", PlaceName = " + PlaceName + ", StartTime = " + StartTime + ", ActivityName = " + ActivityName + ", EntityId = " + EntityId + "]";

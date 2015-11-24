@@ -17,29 +17,30 @@ import android.widget.TextView;
 import com.foound.widget.AmazingAdapter;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
+import com.squareup.picasso.Picasso;
 
 
-
-@SuppressLint("InflateParams") 
+@SuppressLint("InflateParams")
 public class ShopAdapter extends AmazingAdapter {
 	private Context context;
-	HashMap<String, ArrayList<Shops>>  shops_all_audience;
+	HashMap<String, ArrayList<ShopsModel>>  shops_all_audience;
 	private ArrayList<String> _listDataHeader;
 	private Activity	activity;
 	String 				audience_type;
-	private Shops 		shop_obj;
+	private ShopsModel 		shop_obj;
 	public ImageLoader imageLoader;
 	
 	
 	
 
 	public ShopAdapter(Context context,Activity activity, 
-			HashMap<String, ArrayList<Shops>> shops_all_audience, 
+			HashMap<String, ArrayList<ShopsModel>> shops_all_audience,
 			ArrayList<String> header, 
 			String audience_type) {
 		
@@ -77,7 +78,7 @@ public class ShopAdapter extends AmazingAdapter {
 	}
 
 	@Override
-	public Shops getItem(int position) {
+	public ShopsModel getItem(int position) {
 		//Shops shops= shops_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
 		int c = 0;
 		for (int i = 0; i < shops_all_audience.size(); i++) {
@@ -147,15 +148,14 @@ public class ShopAdapter extends AmazingAdapter {
 		}
 		
 		shop_obj = getItem(position);
-		holder.title.setText(shop_obj.getName());
-		holder.decs.setText(shop_obj.getDescription());
-		holder.floor_no.setText(shop_obj.getFloor_no());
+		holder.title.setText(shop_obj.getStoreName());
+		holder.decs.setText(shop_obj.getBriefText());
+		holder.floor_no.setText(shop_obj.getFloor());
+		Picasso.with(context).load(shop_obj.getLogoURL()).into(holder.back_image);
+
 		
-		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
 		
-		
-		
-		final boolean fav	= shop_obj.isFav();
+		/*final boolean fav	= shop_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
@@ -176,13 +176,14 @@ public class ShopAdapter extends AmazingAdapter {
 					ShopCacheManager.updateShops(context, shop_obj, "");
 				}
 			}
-		});
+		});*/
 		
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				shop_obj= getItem(position);
-				GlobelShops.shop_obj= shop_obj;
+				GlobelShops.shopModel_obj = shop_obj;
+//				GlobelShops.shop_obj= shop_obj;
 				Intent intent= new Intent(activity, ShopDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

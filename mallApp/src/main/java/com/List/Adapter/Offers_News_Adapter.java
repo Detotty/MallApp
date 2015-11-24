@@ -193,6 +193,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                 offer_obj = getItem(position);
 //				GlobelOffersNews.offer_obj= offer_obj;
                 Intent intent = new Intent(activity, OffersDetailActivity.class);
+                intent.putExtra(Offers_News_Constants.MALL_OBJECT,offer_obj);
                 intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.getApplication().startActivity(intent);

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-
-
-
     <string name="app_name">MallApp 0.0.8</string>
     <string name="app_name1">The Mall App</string>
     <string name="hello_world">Hello world!</string>

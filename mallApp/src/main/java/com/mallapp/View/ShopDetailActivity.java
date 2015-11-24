@@ -32,11 +32,13 @@ import android.widget.ViewFlipper;
 
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ScalingUtilities;
 import com.mallapp.imagecapture.ScalingUtilities.ScalingLogic;
 import com.mallapp.utils.GlobelOffersNews;
+import com.squareup.picasso.Picasso;
 
 
 @SuppressLint("InflateParams")
@@ -44,7 +46,7 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 	
 	private  GestureDetector detector ;
 	
-	Shops shop_obj;
+	ShopsModel shop_obj;
 	private ImageView 		shop_logo;
 	private TextView 		shop_name, 	 shop_detail;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
@@ -70,14 +72,14 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 
 	private void displayData() {
 		
-		shop_obj = GlobelShops.shop_obj;
-		shop_name.setText(shop_obj.getName());
-		shop_detail.setText(shop_obj.getDescription());
-		boolean fav	= shop_obj.isFav();
+		shop_obj = GlobelShops.shopModel_obj;
+		shop_name.setText(shop_obj.getStoreName());
+		shop_detail.setText(shop_obj.getBriefText());
+		/*boolean fav	= shop_obj.isFav();
 		if(fav)
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 		else
-			is_fav.setImageResource(R.drawable.ofer_detail_heart);
+			is_fav.setImageResource(R.drawable.ofer_detail_heart);*/
 		
 		setShopLogo();
 		setShopOffers();
@@ -233,8 +235,9 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 	
 
 	private void setShopLogo() {
-	
-		String image_		= shop_obj.getLogo_image();
+
+		Picasso.with(this).load(shop_obj.getLogoURL()).into(shop_logo);
+		/*String image_		= shop_obj.getLogo_image();
 		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
 		Drawable d 			= getResources().getDrawable(imageResource);
 		Bitmap bitmap 		= ((BitmapDrawable) d).getBitmap();
@@ -248,7 +251,7 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
         int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_height1);
         bitmap = ScalingUtilities.createScaledBitmap(bitmap, mDstWidth, mDstHeight, ScalingLogic.FIT);
 		d = new BitmapDrawable(getResources(), bitmap);
-		shop_logo.setBackground(d);
+		shop_logo.setBackground(d);*/
 	}
 
 	@SuppressLint("ClickableViewAccessibility")
@@ -352,14 +355,14 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 			finish();
 		}else if(v.getId() == is_fav.getId()){
 			
-			boolean fav	= shop_obj.isFav();
+			/*boolean fav	= shop_obj.isFav();
 			if(fav){
 				is_fav.setImageResource(R.drawable.ofer_detail_heart);
 				shop_obj.setFav(false);
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 				shop_obj.setFav(true);
-			}
+			}*/
 				
 			
 		}else if(v.getId() == location.getId()){

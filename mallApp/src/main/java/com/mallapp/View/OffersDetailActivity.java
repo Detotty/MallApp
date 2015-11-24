@@ -24,7 +24,9 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.ShopList;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Shops;
 import com.mallapp.SharedPreferences.SharedPreference;
@@ -32,6 +34,7 @@ import com.mallapp.globel.GlobelShops;
 import com.mallapp.socialsharing.Facebook_Login;
 import com.mallapp.socialsharing.Twitter_Integration;
 import com.mallapp.utils.GlobelOffersNews;
+import com.squareup.picasso.Picasso;
 
 @SuppressLint("InflateParams") 
 
@@ -43,7 +46,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 	private Button 		go_to_shop, social_sharing;
 	private LinearLayout related_offers, social_sharing_layout;
 	private ImageButton message, face_book, twitter, email, chat;
-	Offers_News 		offer_object;
+	MallActivitiesModel offer_object;
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -52,24 +55,23 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //UG4fewnT7&RV
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
-		
-		offer_object= GlobelOffersNews.offer_obj;
+//		offer_object= GlobelOffersNews.offer_obj;
+		offer_object = (MallActivitiesModel) getIntent().getSerializableExtra(Offers_News_Constants.MALL_OBJECT);
 		init();
 		setOfferDetail();
-		
 	}
 
 	private void setOfferDetail() {
-		offer_title.setText(offer_object.getTitle());
-		shope_name.setText(offer_object.getShop_name());
-		offer_detail.setText(offer_object.getDetail());
+		offer_title.setText(offer_object.getActivityTextTitle());
+		shope_name.setText(offer_object.getMallName());
+		offer_detail.setText(offer_object.getBriefText());
 		boolean fav	= offer_object.isFav();
 		if(fav)
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 		else
 			is_fav.setImageResource(R.drawable.ofer_detail_heart);
 		
-		String image_		= offer_object.getImage();
+		/*String image_		= offer_object.getImage();
 		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
 		Drawable d 			= getResources().getDrawable(imageResource);
 		Bitmap bitmap 		= ((BitmapDrawable) d).getBitmap();
@@ -81,8 +83,9 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 		int mDstWidth 	= size.x;;//getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
         int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.offer_detail_height);
 		d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-		offer_image.setBackground(d);
-		setRelatedOffers();
+		offer_image.setBackground(d);*/
+		Picasso.with(this).load(offer_object.getImageURL()).into(offer_image);
+//		setRelatedOffers();
 	}
 
 	private void setRelatedOffers() {
@@ -171,7 +174,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 		back_screen.setOnClickListener(this);
 		is_fav.setOnClickListener(this);
 		
-		related_offers			= (LinearLayout) findViewById(R.id.related_offers);
+//		related_offers			= (LinearLayout) findViewById(R.id.related_offers);
 		social_sharing_layout	= (LinearLayout) findViewById(R.id.social_layout);
 		
 		message		= (ImageButton) findViewById(R.id.sms);

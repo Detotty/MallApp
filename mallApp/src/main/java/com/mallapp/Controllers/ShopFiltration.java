@@ -14,7 +14,9 @@ import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.util.Pair;
 
+import com.mallapp.Model.ShopCategoriesModel;
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.View.R;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.utils.Log;
@@ -22,8 +24,7 @@ import com.mallapp.utils.Log;
 public class ShopFiltration {
 	
 	
-	public static HashMap<String, ArrayList<Shops>> filterFavouriteShopsAlphabetically(String favShopFilter, 
-														ArrayList<Shops> favourite_shop_List) {
+	public static HashMap<String, ArrayList<Shops>> filterFavouriteShopsAlphabetically(String favShopFilter, ArrayList<Shops> favourite_shop_List) {
 		//ArrayList<Shops> favourite_shop_Filter_List = new ArrayList<Shops>();
 		
 		HashMap<String, ArrayList<Shops>> mainDictionary  	= new HashMap<String, ArrayList<Shops>>();
@@ -79,11 +80,67 @@ public class ShopFiltration {
 		return mainDictionary;
 	}
 
-	
-	public static HashMap<String, ArrayList<Shops>>  filterFavouriteShopsCategory(String favShopFilter, 
+
+	public static HashMap<String, ArrayList<ShopsModel>> filterFavouriteShopsModelAlphabetically(String favShopFilter, ArrayList<ShopsModel> favourite_shop_List) {
+		//ArrayList<Shops> favourite_shop_Filter_List = new ArrayList<Shops>();
+
+		HashMap<String, ArrayList<ShopsModel>> mainDictionary  	= new HashMap<String, ArrayList<ShopsModel>>();
+		ArrayList<String> 				mainSectionArray	= new ArrayList<String>();
+		//Pair<String, ArrayList<Shops>> pair_shop_object;
+		String current_section_header= null;
+		ArrayList<ShopsModel> shop_list = null;
+
+
+		favourite_shop_List = sortShopsModelList(favourite_shop_List);
+
+		for(int i=0; i< favourite_shop_List.size() ; i++){
+			ShopsModel shop_obj = favourite_shop_List.get(i);
+
+			if(shop_obj != null){
+				String shop_name= shop_obj.getStoreName();
+
+				if(shop_name != null && shop_name.length()>0){
+					String fisrt_char = shop_name.substring(0, 1).toUpperCase(Locale.getDefault());
+
+					if(current_section_header == null || current_section_header.length()== 0)
+						current_section_header= fisrt_char;
+
+
+					if(mainSectionArray.size()>0
+							&& mainSectionArray.contains(fisrt_char)
+							&& current_section_header.equals(fisrt_char)){
+						shop_list.add(shop_obj);
+
+						if(i+1==favourite_shop_List.size() ){
+							mainDictionary.put(current_section_header, shop_list);
+						}
+					}else if(!current_section_header.equals(fisrt_char)){
+						mainDictionary.put(current_section_header, shop_list);
+
+						shop_list = new ArrayList<ShopsModel>();
+						shop_list.add(shop_obj);
+						mainSectionArray.add(fisrt_char);
+						current_section_header= fisrt_char;
+
+						if(i+1==favourite_shop_List.size() ){
+							mainDictionary.put(current_section_header, shop_list);
+						}
+					}else{
+						shop_list = new ArrayList<ShopsModel>();
+						shop_list.add(shop_obj);
+						mainSectionArray.add(fisrt_char);
+					}
+				}
+			}
+		}
+		GlobelShops.header_section_alphabetics= mainSectionArray;
+		return mainDictionary;
+	}
+
+	public static HashMap<String, ArrayList<Shops>>  filterFavouriteShopsCategory(String favShopFilter,
 				ArrayList<Shops> favourite_shop_List) {
 
-		HashMap<String, ArrayList<Shops>> mainDictionary  
+		HashMap<String, ArrayList<Shops>> mainDictionary
 											= new HashMap<String, ArrayList<Shops>>();
 		ArrayList<String> mainSectionArray 	= new ArrayList<String>();
 		String current_section_header		= null;
@@ -134,6 +191,72 @@ public class ShopFiltration {
 						mainSectionArray.add(shop_category);
 					}
 				}
+			}
+		}
+		GlobelShops.header_section_category= mainSectionArray;
+		return mainDictionary;
+	}
+
+
+
+	public static HashMap<String, ArrayList<ShopsModel>>  filterFavouriteShopsModelCategory(String favShopFilter,
+																				  ArrayList<ShopsModel> favourite_shop_List) {
+
+		HashMap<String, ArrayList<ShopsModel>> mainDictionary
+				= new HashMap<String, ArrayList<ShopsModel>>();
+		ArrayList<String> mainSectionArray 	= new ArrayList<String>();
+		String current_section_header		= null;
+		ArrayList<ShopsModel> shop_list 			= null;
+
+
+		favourite_shop_List = sortShopsModelListCategory(favourite_shop_List);
+
+		for(int i=0; i< favourite_shop_List.size() ; i++){
+			ShopsModel shop_obj 		= favourite_shop_List.get(i);
+
+			if(shop_obj != null){
+
+				ShopCategoriesModel[] shop_category= shop_obj.getShopCategories();
+
+				for (ShopCategoriesModel shopCat:
+						shop_category) {
+					if(shopCat != null && shopCat.getCategoryName().length()>0){
+
+						if(current_section_header == null || current_section_header.length()== 0)
+							current_section_header= shopCat.getCategoryName();
+
+						if(mainSectionArray.size()>0
+								&& mainSectionArray.contains(shopCat)
+								&& current_section_header.equals(shopCat)){
+
+							shop_list.add(shop_obj);
+							if(i+1==favourite_shop_List.size() ){
+								Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+								mainDictionary.put(current_section_header, shop_list);
+
+							}
+
+						}else if(!current_section_header.equals(shop_category)){
+//							Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+							mainDictionary.put(current_section_header, shop_list);
+
+							shop_list = new ArrayList<ShopsModel>();
+							shop_list.add(shop_obj);
+							mainSectionArray.add(shopCat.getCategoryName());
+							current_section_header= shopCat.getCategoryName();
+
+							if(i+1==favourite_shop_List.size() ){
+								Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+								mainDictionary.put(current_section_header, shop_list);
+							}
+						}else{
+							shop_list = new ArrayList<ShopsModel>();
+							shop_list.add(shop_obj);
+							mainSectionArray.add(shopCat.getCategoryName());
+						}
+					}
+				}
+
 			}
 		}
 		GlobelShops.header_section_category= mainSectionArray;
@@ -198,6 +321,64 @@ public class ShopFiltration {
 		GlobelShops.header_section_floor= mainSectionArray;
 		return mainDictionary;
 	}
+
+	public static HashMap<String, ArrayList<ShopsModel>>  filterFavouriteShopsModelFloor(String favShopFilter,
+			ArrayList<ShopsModel> favourite_shop_List) {
+
+		HashMap<String, ArrayList<ShopsModel>> mainDictionary	= new HashMap<String, ArrayList<ShopsModel>>();
+		ArrayList<String> mainSectionArray					= new ArrayList<String>();
+		String current_section_header= null;
+		ArrayList<ShopsModel> shop_list = null;
+
+
+		favourite_shop_List = sortShopsModelListFloor(favourite_shop_List);
+
+		for(int i=0; i< favourite_shop_List.size() ; i++){
+			ShopsModel shop_obj = favourite_shop_List.get(i);
+
+			if(shop_obj != null){
+
+				String shop_category= shop_obj.getFloor();
+
+				if(shop_category != null && shop_category.length()>0){
+					//String fisrt_char = shop_category.substring(0, 1).toUpperCase(Locale.getDefault());
+					if(current_section_header == null || current_section_header.length()== 0)
+						current_section_header= shop_category;
+
+					if(mainSectionArray.size()>0
+							&& mainSectionArray.contains(shop_category)
+							&& current_section_header.equals(shop_category)){
+
+						shop_list.add(shop_obj);
+						if(i+1==favourite_shop_List.size() ){
+							mainDictionary.put(current_section_header, shop_list);
+						}
+
+					}
+
+					else if(!current_section_header.equals(shop_category)){
+
+						mainDictionary.put(current_section_header, shop_list);
+
+						shop_list = new ArrayList<ShopsModel>();
+						shop_list.add(shop_obj);
+						mainSectionArray.add(shop_category);
+						current_section_header= shop_category;
+
+						if(i+1==favourite_shop_List.size() ){
+							mainDictionary.put(current_section_header, shop_list);
+						}
+					}else{
+						shop_list = new ArrayList<ShopsModel>();
+						shop_list.add(shop_obj);
+						mainSectionArray.add(shop_category);
+					}
+				}
+			}
+		}
+		GlobelShops.header_section_floor= mainSectionArray;
+		return mainDictionary;
+	}
 	
 	
 	
@@ -207,6 +388,16 @@ public class ShopFiltration {
 			@Override
 			public int compare(Shops lhs, Shops rhs) {
 				return lhs.getName().compareTo(rhs.getName());
+			}
+		});
+		return favourite_shop_List;
+	}
+
+	private static ArrayList<ShopsModel> sortShopsModelList(ArrayList<ShopsModel> favourite_shop_List) {
+		Collections.sort(favourite_shop_List, new Comparator<ShopsModel>() {
+			@Override
+			public int compare(ShopsModel lhs, ShopsModel rhs) {
+				return lhs.getStoreName().compareTo(rhs.getStoreName());
 			}
 		});
 		return favourite_shop_List;
@@ -221,12 +412,35 @@ public class ShopFiltration {
 		});
 		return favourite_shop_List;
 	}
+
+
+	private static ArrayList<ShopsModel> sortShopsModelListCategory(ArrayList<ShopsModel> favourite_shop_List) {
+		Collections.sort(favourite_shop_List, new Comparator<ShopsModel>() {
+			@Override
+			public int compare(ShopsModel lhs, ShopsModel rhs) {
+
+				return lhs.getStoreName().compareTo(rhs.getStoreName());
+			}
+		});
+		return favourite_shop_List;
+	}
+
 	
 	private static ArrayList<Shops> sortShopsListFloor(ArrayList<Shops> favourite_shop_List) {
 		Collections.sort(favourite_shop_List, new Comparator<Shops>() {
 			@Override
 			public int compare(Shops lhs, Shops rhs) {
 				return lhs.getFloor_no().compareTo(rhs.getFloor_no());
+			}
+		});
+		return favourite_shop_List;
+	}
+
+	private static ArrayList<ShopsModel> sortShopsModelListFloor(ArrayList<ShopsModel> favourite_shop_List) {
+		Collections.sort(favourite_shop_List, new Comparator<ShopsModel>() {
+			@Override
+			public int compare(ShopsModel lhs, ShopsModel rhs) {
+				return lhs.getFloor().compareTo(rhs.getFloor());
 			}
 		});
 		return favourite_shop_List;

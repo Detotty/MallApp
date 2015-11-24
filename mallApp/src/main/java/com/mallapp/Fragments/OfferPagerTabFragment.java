@@ -123,12 +123,12 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-               /* if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
+                if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
                     swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
                     pullToRefresh();
-                }*/
+                }
             }
         });
         /*adapter= new Offers_News_Adapter(context, getActivity(),R.layout.list_item_offers,

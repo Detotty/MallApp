@@ -17,26 +17,28 @@ import android.widget.TextView;
 
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
 import com.mallapp.utils.Log;
+import com.squareup.picasso.Picasso;
 
 public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 
 	private Context _context;
 	private Activity	activity;
-	Shops shop_obj;
+	ShopsModel shop_obj;
 	public ImageLoader imageLoader;
-	private HashMap<String, ArrayList<Shops>> shops_all_audience;
+	private HashMap<String, ArrayList<ShopsModel>> shops_all_audience;
 	private ArrayList<String> _listDataHeader;
 	
 	
 	
     public ShopExpandableAdapter(Context context, Activity	activity,
-    		HashMap<String, ArrayList<Shops>> listChildData,
+    		HashMap<String, ArrayList<ShopsModel>> listChildData,
     		ArrayList<String> header ) {
     	this._context 	= context;
     	this.activity	= activity;
@@ -49,8 +51,8 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
     
     
     @Override
-    public Shops getChild(int groupPosition, int childPosititon) {
-    	Shops shops= shops_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
+    public ShopsModel getChild(int groupPosition, int childPosititon) {
+    	ShopsModel shops= shops_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
     	if(shops!= null)
     		return shops;
     	
@@ -97,13 +99,13 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 		
         shop_obj	= getChild(groupPosition, childPosition);
 		
-        holder.title.setText(shop_obj.getName());
-		holder.decs	.setText(shop_obj.getDescription());
-		holder.floor_no.setText(shop_obj.getFloor_no());
+        holder.title.setText(shop_obj.getStoreName());
+		holder.decs	.setText(shop_obj.getBriefText());
+		holder.floor_no.setText(shop_obj.getFloor());
+		Picasso.with(_context).load(shop_obj.getLogoURL()).into(holder.back_image);
+//		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
 		
-		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
-		
-		final boolean fav	= shop_obj.isFav();
+		/*final boolean fav	= shop_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
@@ -124,13 +126,14 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 					ShopCacheManager.updateShops(_context, shop_obj, "");
 				}
 			}
-		});
+		});*/
 		
 		view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View view) {
 				shop_obj= getChild(groupPosition, childPosition);
-				GlobelShops.shop_obj= shop_obj;
+				GlobelShops.shopModel_obj= shop_obj;
+//				GlobelShops.shop_obj= shop_obj;
 				Intent intent= new Intent(activity, ShopDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
