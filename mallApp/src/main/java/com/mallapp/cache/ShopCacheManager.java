@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import android.content.Context;
 
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.utils.Log;
 
 
@@ -24,7 +25,7 @@ public class ShopCacheManager {
 	
 	
 	
-	public static void writeObjectList(Context context, ArrayList<Shops> listAccount) throws IOException {
+	public static void writeObjectList(Context context, ArrayList<ShopsModel> listAccount) throws IOException {
 		// Create FileOutputStream to write file
 		FileOutputStream fos = new FileOutputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		// Create ObjectOutputStream to write object
@@ -39,11 +40,11 @@ public class ShopCacheManager {
 		Log.w("write", "write offers list ");
 	}
 
-	public static ArrayList<Shops> readObjectList(Context context, String center_name) 
+	public static ArrayList<ShopsModel> readObjectList(Context context, String center_name)
 													throws 	ClassNotFoundException, 
 															IOException {
 		
-		ArrayList<Shops> list 	= new ArrayList<Shops>();
+		ArrayList<ShopsModel> list 	= new ArrayList<ShopsModel>();
 		FileInputStream fis 	= new FileInputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		ObjectInputStream obj 	= new ObjectInputStream(fis);
 		
@@ -52,7 +53,7 @@ public class ShopCacheManager {
 				
 				while (fis.available() != -1) {
 					// Read object from file
-					Shops acc = (Shops) obj.readObject();
+					ShopsModel acc = (ShopsModel) obj.readObject();
 					//if(acc.getCenter_name().trim().equals(center_name))
 					list.add(acc);
 				}
@@ -61,32 +62,32 @@ public class ShopCacheManager {
 			}else{
 				while (fis.available() != -1) {
 					// Read object from file
-					Shops acc = (Shops) obj.readObject();
-					if(acc.getCenter_name().trim().equals(center_name))
+					ShopsModel acc = (ShopsModel) obj.readObject();
+//					if(acc.getStoreName().trim().equals(center_name))
 						list.add(acc);
 				}
 			}
 			obj.close();
 			fis.close();
 		} catch (EOFException ex) {
-			
+			ex.printStackTrace();
 		}
 		Log.w("read", "offers list size "+ list.size());
 		return list;
 	}
 
 	
-	public static void updateShops(Context context, Shops obj, String center_name) {
-		ArrayList<Shops> all_shops= getAllShopsList(context, center_name);
-		Log.w("update centers", all_shops.size()+ "....read centers list completed "+ obj.getId()+"......"+ obj.isFav());
+	public static void updateShops(Context context, ShopsModel obj, String center_name, int pos) {
+		ArrayList<ShopsModel> all_shops= getAllShopsList(context, center_name);
+		Log.w("update centers", all_shops.size()+ "....read centers list completed "+ pos+"......"+ obj.isFav());
 		
 		if (all_shops != null) {
-			all_shops.set(obj.getId(), obj);
+			all_shops.set(pos, obj);
 			saveShops(context, all_shops);
 		}
 	}
 	
-	public static void saveShops(Context context, ArrayList<Shops> listAccount) {
+	public static void saveShops(Context context, ArrayList<ShopsModel> listAccount) {
 		try {
 			writeObjectList(context, listAccount);
 		} catch (IOException e) {
@@ -94,8 +95,8 @@ public class ShopCacheManager {
 		}
 	}
 	
-	public static ArrayList<Shops> getAllShopsList(Context context, String center_name) {
-		ArrayList<Shops> allentersList = null;
+	public static ArrayList<ShopsModel> getAllShopsList(Context context, String center_name) {
+		ArrayList<ShopsModel> allentersList = null;
 		try {
 			allentersList = readObjectList(context, center_name);
 		} catch (ClassNotFoundException e) {

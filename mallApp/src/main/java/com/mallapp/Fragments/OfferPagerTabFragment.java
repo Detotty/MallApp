@@ -264,7 +264,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                     /*if (adapter.getCount() > 0)
                                         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
-                                            pageNo++;
                                             pullToRefresh();
                                         }*/
                                 }
@@ -279,31 +278,24 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
                     }
                 });
+                break;
             }
-            break;
 
             case LAZY_LOADING: {
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
 
-                        mallActivitiesListing.clear();
-                        for (MallActivitiesModel ma : mallActivitiesModels
-                                ) {
-                            if (ma.getMallName().equals("")) {
-                                mallActivitiesListing.add(ma);
-                            }
-                        }
-                        mallActivitiesModels.clear();
+                        mallActivitiesListing.addAll(mallActivitiesModels);
                         adapter.notifyDataSetChanged();
                         requestType = "";
                         Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel)list.getItemAtPosition(position)).getName());
 
                     }
                 });
-
+                break;
             }
-            break;
+
 
             case REFRESH_MALL_ACTIVITIES: {
                 Log.d("REFRESH_MALL_ACTIVITY", "REFRESH_MALL_ACTIVITY:" + mallActivitiesModels.size());
@@ -336,7 +328,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                     if (adapter.getCount() > 0)
                                         if ((totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
-                                            pageNo++;
                                             pullToRefresh();
                                         }
                                 }
@@ -346,9 +337,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         requestType = "";
                     }
                 });
+                break;
             }
-            break;
-
         }
     }
 

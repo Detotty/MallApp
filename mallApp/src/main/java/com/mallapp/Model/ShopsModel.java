@@ -33,6 +33,8 @@ public class ShopsModel implements Serializable
 
     private String LogoURL;
 
+    private boolean IsFav;
+
     public String getBriefText ()
     {
         return BriefText;
@@ -161,6 +163,16 @@ public class ShopsModel implements Serializable
     public void setLogoURL (String LogoURL)
     {
         this.LogoURL = LogoURL;
+    }
+
+    public boolean isFav ()
+    {
+        return IsFav;
+    }
+
+    public void setFav (boolean IsFav)
+    {
+        this.IsFav = IsFav;
     }
 
     @Override

@@ -123,7 +123,7 @@ public class ShopMainMenuFragment 	extends Fragment
 
 		
 		
-		adapter_search= new ShopSearchAdapter(getActivity().getApplicationContext(),getActivity(), R.layout.list_item_shop, searchResults);
+//		adapter_search= new ShopSearchAdapter(getActivity().getApplicationContext(),getActivity(), R.layout.list_item_shop, searchResults);
 		list_view_search.setAdapter(adapter_search);
 		
 		search_feild.addTextChangedListener(new TextWatcher() {
@@ -164,7 +164,7 @@ public class ShopMainMenuFragment 	extends Fragment
 					Log.e(TAG, "search results = "+searchResults.size());
 					
 					if(searchResults!=null && searchResults.size()>0){
-						adapter_search.setShop_search(searchResults);
+//						adapter_search.setShop_search(searchResults);
 						list_view_search.setVisibility(View.VISIBLE);
 						adapter_search.notifyDataSetChanged();
 					

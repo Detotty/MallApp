@@ -416,22 +416,22 @@ public class ShopList {
 	
 	
 	public static void writeShopsList(Context context, ArrayList<Shops> offer_objects){
-		try{
+		/*try{
 			ShopCacheManager.writeObjectList(context, offer_objects);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		Log.w(MallApp_Application.TAG, "write:"+offer_objects.size());		
 	}
 	
 	public static ArrayList<Shops> readShopsList(Context context){
-		try {
+		/*try {
 			shop_objects = ShopCacheManager.readObjectList(context, MainMenuConstants.SELECTED_CENTER_NAME);
 		} catch (ClassNotFoundException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		Log.w(MallApp_Application.TAG, "read:"+shop_objects.size());
 		return shop_objects;
 	}

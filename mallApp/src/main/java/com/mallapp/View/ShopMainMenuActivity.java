@@ -1,5 +1,6 @@
 package com.mallapp.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -7,6 +8,7 @@ import java.util.Map;
 
 import android.app.ActionBar;
 import android.app.Activity;
+import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -35,8 +37,10 @@ import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Controllers.ShopFiltration;
 import com.mallapp.Controllers.ShopList;
+import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
+import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.layouts.SegmentedRadioGroup;
 import com.mallapp.listeners.ShopsDataListener;
@@ -66,11 +70,9 @@ public class ShopMainMenuActivity extends Activity
     LinearLayout side_index_scroll;
 
     String audienceFilter = MainMenuConstants.AUDIENCE_FILTER_ALL;
-    static ArrayList<Shops> shops_read_audience, searchResults, search_array;
+
     static ArrayList<ShopsModel> shopModel_read_audience, shopsearchResults, shopsearch_array;
 
-    static HashMap<String, ArrayList<Shops>> shops_all_audience;
-    static HashMap<String, ArrayList<Shops>> shops_category_audience, shops_floor_audience;
 
     static HashMap<String, ArrayList<ShopsModel>> shops_all;
     static HashMap<String, ArrayList<ShopsModel>> shops_category, shops_floor;
@@ -95,9 +97,6 @@ public class ShopMainMenuActivity extends Activity
         init();
 
 
-        adapter_search = new ShopSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, searchResults);
-        list_view_search.setAdapter(adapter_search);
-
         search_feild.addTextChangedListener(new TextWatcher() {
             @Override
             public void onTextChanged(CharSequence cs, int start, int before, int count) {
@@ -113,30 +112,30 @@ public class ShopMainMenuActivity extends Activity
                     cancel_search.setTextColor(getResources().getColor(R.color.purple));
                     list_view1.setVisibility(View.GONE);
                     side_index_scroll.setVisibility(View.GONE);
-                    search_array = GlobelShops.shop_array;
+//                    shopsearch_array = GlobelShops.shopModel_array;
 
-                    if (search_array == null || search_array.size() == 0) {
+                    if (shopsearch_array == null || shopsearch_array.size() == 0) {
                         readShopList();
                     }
-//					Log.e(TAG, "search_array = "+ GlobelShops.shop_array.size());
-//					Log.e(TAG, "search_array = "+ search_array.size());
-                    searchResults = new ArrayList<Shops>();
+//					Log.e(TAG, "shopsearch_array = "+ GlobelShops.shop_array.size());
+//					Log.e(TAG, "shopsearch_array = "+ shopsearch_array.size());
+                    shopsearchResults = new ArrayList<ShopsModel>();
 
-                    for (int i = 0; i < search_array.size(); i++) {
+                    for (int i = 0; i < shopsearch_array.size(); i++) {
                         //Log.e(TAG, "shop_name = .....get");
-                        String shop_name = search_array.get(i).getName().toString();
+                        String shop_name = shopsearch_array.get(i).getStoreName().toString();
                         //Log.e(TAG, "shop_name = ...."+ shop_name);
                         if (textLength <= shop_name.length()) {
 
                             if (searchString.equalsIgnoreCase(shop_name.substring(0, textLength)))
-                                searchResults.add(search_array.get(i));
+                                shopsearchResults.add(shopsearch_array.get(i));
                         }
                     }
-                    Log.e(TAG, "search_array = " + search_array.size());
-                    Log.e(TAG, "search results = " + searchResults.size());
+                    Log.e(TAG, "shopsearch_array = " + shopsearch_array.size());
+                    Log.e(TAG, "search results = " + shopsearchResults.size());
 
-                    if (searchResults != null && searchResults.size() > 0) {
-                        adapter_search.setShop_search(searchResults);
+                    if (shopsearchResults != null && shopsearchResults.size() > 0) {
+                        adapter_search.setShop_search(shopsearchResults);
                         list_view_search.setVisibility(View.VISIBLE);
                         adapter_search.notifyDataSetChanged();
 
@@ -194,17 +193,17 @@ public class ShopMainMenuActivity extends Activity
     }
 
     private void readShopList() {
-        shops_read_audience = GlobelShops.shop_array;
+        /*shops_read_audience = GlobelShops.shop_array;
         if (shops_read_audience == null || shops_read_audience.size() == 0) {
             ShopList.saveOffersNewsData(getApplicationContext());
             shops_read_audience = ShopList.readShopsList(getApplicationContext());
             GlobelShops.shop_array = shops_read_audience;
-            search_array = shops_read_audience;
-            searchResults = shops_read_audience;
+            shopsearch_array = shops_read_audience;
+            shopsearchResults = shops_read_audience;
         }
 
-        search_array = GlobelShops.shop_array;
-        searchResults = GlobelShops.shop_array;
+        shopsearch_array = GlobelShops.shop_array;
+        shopsearchResults = GlobelShops.shop_array;*/
         //	Log.e(TAG, "read shopp list = "+ GlobelShops.shop_array.size());
     }
 
@@ -239,13 +238,10 @@ public class ShopMainMenuActivity extends Activity
     private void filterShops() {
         initArrays();
         if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)) {
-            shops_all_audience = ShopFiltration.filterFavouriteShopsAlphabetically(audienceFilter, shops_read_audience);
             shops_all = ShopFiltration.filterFavouriteShopsModelAlphabetically(audienceFilter, shopModel_read_audience);
         } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)) {
-            shops_category_audience = ShopFiltration.filterFavouriteShopsCategory(audienceFilter, shops_read_audience);
             shops_category = ShopFiltration.filterFavouriteShopsModelCategory(audienceFilter, shopModel_read_audience);
         } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
-            shops_floor_audience = ShopFiltration.filterFavouriteShopsFloor(audienceFilter, shops_read_audience);
             shops_floor = ShopFiltration.filterFavouriteShopsModelFloor(audienceFilter, shopModel_read_audience);
         }
         //all_audience_images=ShopFiltration.getShopsImagesList(getActivity().getApplicationContext(), shops_all_audience);
@@ -253,9 +249,6 @@ public class ShopMainMenuActivity extends Activity
 
 
     private void initArrays() {
-        shops_all_audience = new HashMap<String, ArrayList<Shops>>();
-        shops_category_audience = new HashMap<String, ArrayList<Shops>>();
-        shops_floor_audience = new HashMap<String, ArrayList<Shops>>();
 
         shops_all = new HashMap<String, ArrayList<ShopsModel>>();
         shops_category = new HashMap<String, ArrayList<ShopsModel>>();
@@ -408,10 +401,29 @@ public class ShopMainMenuActivity extends Activity
 
     @Override
     public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList) {
-        shopModel_read_audience = shopsModelArrayList;
+        shopModel_read_audience = readShopsList(ShopMainMenuActivity.this);
+        if (shopModel_read_audience != null) {
+            for (ShopsModel shop : shopModel_read_audience
+                    ) {
+                for (int i = 0; i < shopsModelArrayList.size(); i++) {
+                    ShopsModel sh = shopsModelArrayList.get(i);
+                    if (sh.getMallStoreId() == shop.getMallStoreId()) {
+                        if (shop.isFav()) {
+                            sh.setFav(true);
+                            shopsModelArrayList.set(i, sh);
+                        }
+                    }
+                }
+            }
+        }
+
+        writeShopsList(ShopMainMenuActivity.this, shopsModelArrayList);
+
         shopsearchResults = shopsModelArrayList;
         shopsearch_array = shopsModelArrayList;
 
+        adapter_search = new ShopSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, shopsearchResults);
+        list_view_search.setAdapter(adapter_search);
         filterShops();
         displayIndex();
         initSectionHeaderList();
@@ -419,7 +431,33 @@ public class ShopMainMenuActivity extends Activity
     }
 
     @Override
+    public void onShopDetailReceived(ShopDetailModel shopDetail) {
+
+    }
+
+    @Override
     public void OnError() {
 
+    }
+
+    public static void writeShopsList(Context context, ArrayList<ShopsModel> offer_objects) {
+        try {
+            ShopCacheManager.writeObjectList(context, offer_objects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.w(MallApp_Application.TAG, "write:" + offer_objects.size());
+    }
+
+    public static ArrayList<ShopsModel> readShopsList(Context context) {
+        try {
+            shopModel_read_audience = ShopCacheManager.readObjectList(context, MainMenuConstants.SELECTED_CENTER_NAME);
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.w(MallApp_Application.TAG, "read:" + shopModel_read_audience.size());
+        return shopModel_read_audience;
     }
 }

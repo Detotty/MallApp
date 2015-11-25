@@ -21,6 +21,7 @@ public class GlobelShops {
 
 	public static String endorsement_favourite_title;
 
+	public static ArrayList<ShopsModel> shopModel_array;
 	public static ArrayList<Shops> shop_array;
 	public static ArrayList<Shops> alphabetic_audience;
 	public static ArrayList<Shops> category_audience;

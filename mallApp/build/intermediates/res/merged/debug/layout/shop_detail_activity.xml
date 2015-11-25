@@ -11,26 +11,26 @@
 	    android:layout_height="wrap_content"
 	    android:orientation="vertical" >
 	    <include layout="@layout/activity_detail_header" />
-    <ImageView
+    <!--<ImageView
         android:id="@+id/shop_image_logo"
         android:layout_width="wrap_content"
         android:layout_gravity="center_horizontal"
-        
+
         android:layout_marginTop="@dimen/margin_left_10"
         android:layout_marginBottom="@dimen/margin_left_10"
         android:layout_height="wrap_content"
         android:background="@drawable/shop_logo1"
-        android:contentDescription="@string/app_name"/>
+        android:contentDescription="@string/app_name"/>-->
     
-<!--     <LinearLayout -->
-<!--         android:layout_width="fill_parent" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:id="@+id/shop_image_slider"  -->
-<!--         android:orientation="vertical"> -->
+     <LinearLayout
+         android:layout_width="fill_parent"
+         android:layout_height="wrap_content"
+         android:id="@+id/shop_image_slider"
+         android:orientation="vertical">
         
-<!--     </LinearLayout> -->
+     </LinearLayout>
 	<include layout="@layout/shop_detail_image_slider"/>
-    <include layout="@layout/shop_detail_sharing_tabs" />
+    <!--<include layout="@layout/shop_detail_sharing_tabs" />-->
 
     <TextView
         android:id="@+id/offer_detail"
@@ -40,8 +40,8 @@
         android:textColor="@color/black3"
         android:textSize="@dimen/text_15"/>
 
-    <include layout="@layout/shop_detail_offers"/>
-    <include layout="@layout/shop_detail_related_shops"/>
+    <!--<include layout="@layout/shop_detail_offers"/>
+    <include layout="@layout/shop_detail_related_shops"/>-->
     
     
     

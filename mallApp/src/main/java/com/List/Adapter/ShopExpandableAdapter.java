@@ -105,7 +105,7 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 		Picasso.with(_context).load(shop_obj.getLogoURL()).into(holder.back_image);
 //		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
 		
-		/*final boolean fav	= shop_obj.isFav();
+		final boolean fav	= shop_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
@@ -119,14 +119,14 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 				if(!shop_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					shop_obj.setFav(true);
-					ShopCacheManager.updateShops(_context, shop_obj, "");
+					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					shop_obj.setFav(false);
-					ShopCacheManager.updateShops(_context, shop_obj, "");
+					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
 				}
 			}
-		});*/
+		});
 		
 		view.setOnClickListener(new OnClickListener() {
 			@Override
@@ -168,7 +168,7 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     
     	String headerTitle = (String) getGroup(groupPosition);
-    	int count_ = getGroupCount();
+    	int count_ = getChildrenCount(groupPosition);
     	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater)
             		this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);

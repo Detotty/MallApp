@@ -222,7 +222,7 @@ public class FavouritesMainMenuActivity extends Activity
 						}
 						
 						if(searchResults!=null && searchResults.size()>0) {
-							adapter_search_S= new ShopSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, searchResults);
+//							adapter_search_S= new ShopSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, searchResults);
 							list_view_search.setAdapter(adapter_search_S);
 							list_view_search.setVisibility(View.VISIBLE);
 						

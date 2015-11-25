@@ -14,6 +14,10 @@ public class ApiConstants {
 
 	public static final String ACTIVITY_SERVICE_URL_KEY = URL_KEY+"ActivityService/";
 
+	public static final String FAVOURITE_SERVICE_URL_KEY = URL_KEY+"UserFavoritesService/";
+
+
+
 	public static final String SEND_SMS_URL_KEY =  ACCOUNT_URL_KEY+"Register/";
 
 	public static final String VERIFY_SMS_URL_KEY = ACCOUNT_URL_KEY+"VerifyCode";
@@ -39,4 +43,8 @@ public class ApiConstants {
 	public static final String GET_SELECTED_INTEREST_URL_KEY = USER_INTEREST_SERVICE_URL_KEY +"GetSelectedInterest?UserId=";
 
 	public static final String GET_SHOPS_URL_KEY = SHOPS_SERVICE_URL_KEY +"GetShops/";
+
+	public static final String GET_SHOP_DETAIL_URL_KEY = SHOPS_SERVICE_URL_KEY +"GetShopDetail?MallStoreId=";
+
+	public static final String POST_FAV_SHOPS_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteOffers?UserId=%@&ActivityId=%@&IsDeleted=%d";
 }

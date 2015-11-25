@@ -1,5 +1,6 @@
 package com.mallapp.listeners;
 
+import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.ShopsModel;
 
 import java.util.ArrayList;
@@ -9,6 +10,7 @@ import java.util.ArrayList;
  */
 public interface ShopsDataListener {
     public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList);
+    public void onShopDetailReceived(ShopDetailModel shopDetail);
     public void OnError();
 
 }

@@ -1,9 +1,11 @@
 package com.mallapp.Model;
 
+import java.io.Serializable;
+
 /**
  * Created by Sharjeel on 11/24/2015.
  */
-public class ShopCategoriesModel
+public class ShopCategoriesModel implements Serializable
 {
     private String CategoryName;
 

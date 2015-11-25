@@ -30,21 +30,26 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.ViewFlipper;
 
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Model.Offers_News;
+import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ScalingUtilities;
 import com.mallapp.imagecapture.ScalingUtilities.ScalingLogic;
+import com.mallapp.listeners.ShopsDataListener;
 import com.mallapp.utils.GlobelOffersNews;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 
 @SuppressLint("InflateParams")
-public class ShopDetailActivity extends Activity implements OnClickListener {
+public class ShopDetailActivity extends Activity implements OnClickListener, ShopsDataListener {
 	
 	private  GestureDetector detector ;
+	VolleyNetworkUtil volleyNetworkUtil;
 	
 	ShopsModel shop_obj;
 	private ImageView 		shop_logo;
@@ -57,17 +62,21 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 	
 	private ViewFlipper 	mViewFlipper;	
 	private AnimationListener mAnimationListener;
+	String url;
 
 	@Override
-	protected void onCreate(Bundle savedInstanceState) {
+	 protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.shop_detail_activity);
+		url = ApiConstants.GET_SHOP_DETAIL_URL_KEY+getIntent().getStringExtra("MallPlaceId")+"&languageId=1";
+		volleyNetworkUtil = new VolleyNetworkUtil(this);
+		volleyNetworkUtil.GetShopDetail(url,this);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		detector = new GestureDetector(getApplicationContext(), new SwipeGestureDetector());
 		initActivity();
-		displayData();
+//		displayData();
 	}
 
 	private void displayData() {
@@ -410,7 +419,22 @@ public class ShopDetailActivity extends Activity implements OnClickListener {
 	
 	private static final int SWIPE_MIN_DISTANCE = 120;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
-	
+
+	@Override
+	public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList) {
+
+	}
+
+	@Override
+	public void onShopDetailReceived(ShopDetailModel shopDetail) {
+
+	}
+
+	@Override
+	public void OnError() {
+
+	}
+
 	class SwipeGestureDetector extends SimpleOnGestureListener {
 		@Override
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
