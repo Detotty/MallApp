@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.View.OffersDetailActivity;
 import com.mallapp.View.R;
@@ -25,15 +26,15 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 
 	private Context 			_context;
 	private Activity			activity;
-	private Offers_News 		offer_obj;
+	private MallActivitiesModel offer_obj;
 	//public ImageLoader 			imageLoader;
-	private HashMap<String, ArrayList<Offers_News>>  offer_all_audience;
+	private HashMap<String, ArrayList<MallActivitiesModel>>  offer_all_audience;
 	private ArrayList<String> _listDataHeader;
 	
 	
 	
     public OffersNewsExpandableAdapter(Context context, Activity	activity,
-    		HashMap<String, ArrayList<Offers_News>> listChildData,
+    		HashMap<String, ArrayList<MallActivitiesModel>> listChildData,
     		ArrayList<String> header ) {
     	this._context 	= context;
     	this.activity	= activity;
@@ -46,8 +47,8 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
     
     
     @Override
-    public Offers_News getChild(int groupPosition, int childPosititon) {
-    	Offers_News rest= offer_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
+    public MallActivitiesModel getChild(int groupPosition, int childPosititon) {
+    	MallActivitiesModel rest= offer_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
     	if(rest!= null)
     		return rest;
     	
@@ -91,10 +92,10 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 		}
         offer_obj	= getChild(groupPosition, childPosition);
         
-        holder.title.setText(offer_obj.getTitle());
-		holder.decs.setText(offer_obj.getDetail());
-		holder.center_name.setText(offer_obj.getCenter_name());		
-		holder.shome_name.setText(offer_obj.getShop_name());
+        holder.title.setText(offer_obj.getActivityName());
+		holder.decs.setText(offer_obj.getBriefText());
+		holder.center_name.setText(offer_obj.getStartDate());
+		holder.shome_name.setText(offer_obj.getMallName());
 		
 		//imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
 		
@@ -112,11 +113,11 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 				if(!offer_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					offer_obj.setFav(true);
-					AppCacheManager.updateOffersNews(_context, offer_obj);
+					AppCacheManager.updateOffersNews(_context, offer_obj,childPosition);
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					offer_obj.setFav(false);
-					AppCacheManager.updateOffersNews(_context, offer_obj);
+					AppCacheManager.updateOffersNews(_context, offer_obj,childPosition);
 				}
 			}
 		});
@@ -129,7 +130,7 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 			public void onClick(View view) {
 				
 				offer_obj= getChild(groupPosition, childPosition);
-				GlobelOffersNews.offer_obj= offer_obj;
+				GlobelOffersNews.offer_obj_mall= offer_obj;
 				Intent intent= new Intent(activity, OffersDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);                     
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

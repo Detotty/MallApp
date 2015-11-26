@@ -9,6 +9,7 @@ import android.graphics.drawable.Drawable;
 import com.mallapp.Fragments.OfferPagerTabFragment;
 import com.mallapp.Model.FavouriteCenters;
 import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 
 public class GlobelOffersNews {
@@ -16,6 +17,7 @@ public class GlobelOffersNews {
 	
 	public static ArrayList<Bitmap> bitmap_images;
 	public static Offers_News offer_obj;
+	public static MallActivitiesModel offer_obj_mall;
 	public static Offers_News related_offer_obj;
 	public static Offers_News offer_obj_chat;
 	public static String offers_click_type;

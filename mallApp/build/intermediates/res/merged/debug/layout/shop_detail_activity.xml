@@ -27,18 +27,87 @@
          android:layout_height="wrap_content"
          android:id="@+id/shop_image_slider"
          android:orientation="vertical">
-        
+         <include layout="@layout/shop_detail_image_slider"/>
+
      </LinearLayout>
-	<include layout="@layout/shop_detail_image_slider"/>
     <!--<include layout="@layout/shop_detail_sharing_tabs" />-->
+     <TextView
+         android:id="@+id/tv_about"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:layout_margin="@dimen/margin_left_15"
+         android:text="About"
+         android:textColor="@color/black3"
+         android:textSize="@dimen/text_15"/>
 
     <TextView
-        android:id="@+id/offer_detail"
+        android:id="@+id/tv_offer_detail"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_left_15"
         android:textColor="@color/black3"
+        android:text="Details"
         android:textSize="@dimen/text_15"/>
+
+        <fragment
+            android:id="@+id/mapAddress"
+            android:name="com.google.android.gms.maps.MapFragment"
+            android:layout_width="330dp"
+            android:layout_height="200dp"
+            android:layout_marginLeft="@dimen/margin_left_15"
+            android:layout_marginRight="@dimen/margin_left_15"
+            android:layout_alignParentRight="true"
+            class="com.google.android.gms.maps.SupportMapFragment" />
+
+        <TextView
+            android:id="@+id/tv_address"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_left_15"
+            android:textColor="@color/black3"
+            android:drawableLeft="@drawable/shop_detail_location_p"
+            android:text="Address"
+            android:textSize="@dimen/text_15"/>
+
+        <TextView
+            android:id="@+id/tv_phone"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_left_15"
+            android:textColor="@color/black3"
+            android:drawableLeft="@drawable/phone"
+            android:text="Phone"
+            android:textSize="@dimen/text_15"/>
+
+        <TextView
+            android:id="@+id/tv_email"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_left_15"
+            android:textColor="@color/black3"
+            android:drawableLeft="@drawable/phone"
+            android:text="Email"
+            android:textSize="@dimen/text_15"/>
+
+        <TextView
+            android:id="@+id/tv_web"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_left_15"
+            android:textColor="@color/black3"
+            android:drawableLeft="@drawable/shop_detail_clock_p"
+            android:text="Website"
+            android:textSize="@dimen/text_15"/>
+
+        <TextView
+            android:id="@+id/tv_timings"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_margin="@dimen/margin_left_15"
+            android:textColor="@color/black3"
+            android:drawableLeft="@drawable/shop_detail_clock_p"
+            android:text="Timings"
+            android:textSize="@dimen/text_15"/>
 
     <!--<include layout="@layout/shop_detail_offers"/>
     <include layout="@layout/shop_detail_related_shops"/>-->

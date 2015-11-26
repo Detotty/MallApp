@@ -346,16 +346,16 @@ public class OffersNewsList {
 	
 	
 	public static void writeOffersNews(Context context, ArrayList<Offers_News> offer_objects){
-		try{
+		/*try{
 			AppCacheManager.writeObjectList(context, offer_objects);
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		}*/
 		Log.w(MallApp_Application.TAG, "write:"+offer_objects.size());		
 	}
 	
 	public static ArrayList<Offers_News> readOffersNews(Context context){
-		try {
+		/*try {
 			offer_objects = AppCacheManager.readObjectList(context);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -363,7 +363,7 @@ public class OffersNewsList {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		//Log.w(MallApp_Application.TAG, "read:"+offer_objects.size());
 		return offer_objects;
 	}
@@ -371,7 +371,7 @@ public class OffersNewsList {
 	
 	
 	public static ArrayList<Offers_News> readOffersNewsCentered(Context context){
-		try {
+		/*try {
 			offer_objects = AppCacheManager.readObjectListCentered(context , MainMenuConstants.SELECTED_CENTER_NAME);
 		} catch (ClassNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -379,7 +379,7 @@ public class OffersNewsList {
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
-		}
+		}*/
 		//Log.w(MallApp_Application.TAG, "read:"+offer_objects.size());
 		return offer_objects;
 	}

@@ -183,6 +183,7 @@ public class ShopAdapter extends AmazingAdapter {
                 Intent intent = new Intent(activity, ShopDetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                intent.putExtra("MallStoreId", shop_obj.getMallStoreId());
                 activity.getApplication().startActivity(intent);
             }
         });

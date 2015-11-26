@@ -1,5 +1,6 @@
 package com.mallapp.Fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.content.Context;
@@ -24,7 +25,9 @@ import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.View.MallApp_Application;
 import com.mallapp.View.R;
+import com.mallapp.cache.AppCacheManager;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
@@ -124,10 +127,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             @Override
             public void onRefresh() {
                 if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
-                    swipeRefreshLayout.setRefreshing(true);
+                   /* swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
-                    pullToRefresh();
+                    pullToRefresh();*/
                 }
             }
         });
@@ -245,7 +248,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     public void run() {
 
                         if (mallActivitiesModels != null) {
-                            mallActivitiesListing = mallActivitiesModels;
+
+                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
+                            writeOffersNews(context,mallActivitiesListing);
+//                            mallActivitiesListing = mallActivitiesModels;
                             adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
                                     mallActivitiesListing, headerFilter
                             );
@@ -305,6 +311,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         swipeRefreshLayout.setRefreshing(false);
                         if (mallActivitiesListing != null) {
                             mallActivitiesListing.clear();
+                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
+                            writeOffersNews(context,mallActivitiesListing);
                             mallActivitiesListing.addAll(0, mallActivitiesModels);
                             adapter.notifyDataSetChanged();
                         } else {
@@ -357,5 +365,51 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             }
         });
     }
+
+
+
+    public static void writeOffersNews(Context context, ArrayList<MallActivitiesModel> offer_objects){
+		try{
+            AppCacheManager.writeObjectList(context, offer_objects);
+        } catch (IOException e) {
+            e.printStackTrace();
+        }
+        Log.w(MallApp_Application.TAG, "write:"+offer_objects.size());
+    }
+
+    public static ArrayList<MallActivitiesModel> readOffersNews(Context context){
+		try {
+            mallActivitiesListing = AppCacheManager.readObjectList(context);
+		} catch (ClassNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+        //Log.w(MallApp_Application.TAG, "read:"+offer_objects.size());
+        return mallActivitiesListing;
+    }
+
+    public static ArrayList<MallActivitiesModel> FavouriteSelection(Context context, ArrayList<MallActivitiesModel> mallModelArrayList){
+        mallActivitiesListing = readOffersNews(context);
+        if (mallActivitiesListing != null) {
+            for (MallActivitiesModel mall : mallActivitiesListing
+                    ) {
+                for (int i = 0; i < mallModelArrayList.size(); i++) {
+                    MallActivitiesModel sh = mallModelArrayList.get(i);
+                    if (sh.getMallPlaceId() == mall.getMallPlaceId()) {
+                        if (mall.isFav()) {
+                            sh.setFav(true);
+                            mallModelArrayList.set(i, sh);
+                        }
+                    }
+                }
+            }
+        }
+        return mallModelArrayList;
+    }
+
+
 
 }

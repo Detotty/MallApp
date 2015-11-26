@@ -87,13 +87,11 @@ public class ShopMainMenuActivity extends Activity
         setContentView(R.layout.shop_main_menu);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
-        String url = ApiConstants.GET_SHOPS_URL_KEY + "54ca598b-39a6-4c53-a303-1114e8991d33";
+        String url = ApiConstants.GET_SHOPS_URL_KEY + getIntent().getStringExtra("MallPlaceId");
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         volleyNetworkUtil.GetShops(url, this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-
         uihandler = MainMenuConstants.uiHandler;
-
         init();
 
 
@@ -401,23 +399,28 @@ public class ShopMainMenuActivity extends Activity
 
     @Override
     public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList) {
-        shopModel_read_audience = readShopsList(ShopMainMenuActivity.this);
-        if (shopModel_read_audience != null) {
-            for (ShopsModel shop : shopModel_read_audience
-                    ) {
-                for (int i = 0; i < shopsModelArrayList.size(); i++) {
-                    ShopsModel sh = shopsModelArrayList.get(i);
-                    if (sh.getMallStoreId() == shop.getMallStoreId()) {
-                        if (shop.isFav()) {
-                            sh.setFav(true);
-                            shopsModelArrayList.set(i, sh);
+        try {
+            shopModel_read_audience = readShopsList(ShopMainMenuActivity.this);
+
+            if (shopModel_read_audience != null) {
+                for (ShopsModel shop : shopModel_read_audience
+                        ) {
+                    for (int i = 0; i < shopsModelArrayList.size(); i++) {
+                        ShopsModel sh = shopsModelArrayList.get(i);
+                        if (sh.getMallStoreId() == shop.getMallStoreId()) {
+                            if (shop.isFav()) {
+                                sh.setFav(true);
+                                shopsModelArrayList.set(i, sh);
+                            }
                         }
                     }
                 }
             }
+            writeShopsList(ShopMainMenuActivity.this, shopsModelArrayList);
+        }catch (Exception ex){
+            ex.printStackTrace();
         }
 
-        writeShopsList(ShopMainMenuActivity.this, shopsModelArrayList);
 
         shopsearchResults = shopsModelArrayList;
         shopsearch_array = shopsModelArrayList;
@@ -452,12 +455,12 @@ public class ShopMainMenuActivity extends Activity
     public static ArrayList<ShopsModel> readShopsList(Context context) {
         try {
             shopModel_read_audience = ShopCacheManager.readObjectList(context, MainMenuConstants.SELECTED_CENTER_NAME);
+
         } catch (ClassNotFoundException e) {
             e.printStackTrace();
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.w(MallApp_Application.TAG, "read:" + shopModel_read_audience.size());
         return shopModel_read_audience;
     }
 }

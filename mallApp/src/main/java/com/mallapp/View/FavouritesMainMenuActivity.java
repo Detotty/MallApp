@@ -116,14 +116,14 @@ public class FavouritesMainMenuActivity extends Activity
 		
 		initExpandableList();
 		
-		adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
+//		adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
 		list_view.setAdapter(adapter_O);
 
 		
 		
 		
 		
-		adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, o_searchResults);
+//		adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, o_searchResults);
 		list_view_search.setAdapter(adapter_search_O);
 		
 		
@@ -166,7 +166,7 @@ public class FavouritesMainMenuActivity extends Activity
 						}
 						
 						if(o_searchResults!=null && o_searchResults.size()>0) {
-							adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, o_searchResults);
+//							adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, o_searchResults);
 							list_view_search.setAdapter(adapter_search_O);
 							list_view_search.setVisibility(View.VISIBLE);
 						
@@ -195,7 +195,7 @@ public class FavouritesMainMenuActivity extends Activity
 						}
 						
 						if(o_searchResults!=null && o_searchResults.size()>0) {
-							adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, o_searchResults);
+//							adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, o_searchResults);
 							list_view_search.setAdapter(adapter_search_O);
 							list_view_search.setVisibility(View.VISIBLE);
 						
@@ -465,12 +465,12 @@ public class FavouritesMainMenuActivity extends Activity
 		
 		if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 		
-			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
+//			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
 			list_view.setAdapter(adapter_O);
 			
 		}else if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
 		
-			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, news_category_audience, GlobelOffersNews.header_section_news);
+//			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, news_category_audience, GlobelOffersNews.header_section_news);
 			list_view.setAdapter(adapter_O);
 			
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){

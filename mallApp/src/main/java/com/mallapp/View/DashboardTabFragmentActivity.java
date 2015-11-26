@@ -38,6 +38,7 @@ import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Fragments.RewardsTabFragments;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.NavDrawerItem;
+import com.mallapp.cache.CentersCacheManager;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
 
@@ -177,7 +178,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				
 				MainMenuConstants.uiHandler= uiHandler;
 				Intent activity = new Intent(DashboardTabFragmentActivity.this, ShopMainMenuActivity.class);
-				for (FavouriteCentersModel fav:GlobelOffersNews.TITLES_centers
+				for (FavouriteCentersModel fav: CentersCacheManager.getAllCenters(context)
 					 ) {
 					if (fav.getName().equals(MainMenuConstants.SELECTED_CENTER_NAME)){
 						activity.putExtra("MallPlaceId",fav.getMallPlaceId());

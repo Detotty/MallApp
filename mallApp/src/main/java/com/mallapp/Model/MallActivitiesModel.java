@@ -12,7 +12,7 @@ public class MallActivitiesModel implements Serializable{
 
     private String ImageURL;
 
-    private String CategoryName;
+    private BannerImagesModel[] BannerImages;
 
     private String MallName;
 
@@ -20,17 +20,23 @@ public class MallActivitiesModel implements Serializable{
 
     private String ActivityId;
 
-    private String EntityName;
-
     private String ActivityTextName;
 
+    private String EntityName;
+
     private String MallPlaceId;
+
+    private String TotalRecords;
 
     private String BriefText;
 
     private String EndDate;
 
+    private ActivityCategoriesModel[] ActivityCategories;
+
     private String StartDate;
+
+    private String RowNumber;
 
     private String EntityType;
 
@@ -46,167 +52,239 @@ public class MallActivitiesModel implements Serializable{
 
     private boolean isFav;
 
-    public String getEntityLogo() {
+    public String getEntityLogo ()
+    {
         return EntityLogo;
     }
 
-    public void setEntityLogo(String EntityLogo) {
+    public void setEntityLogo (String EntityLogo)
+    {
         this.EntityLogo = EntityLogo;
     }
 
-    public String getActivityTextTitle() {
+    public String getActivityTextTitle ()
+    {
         return ActivityTextTitle;
     }
 
-    public void setActivityTextTitle(String ActivityTextTitle) {
+    public void setActivityTextTitle (String ActivityTextTitle)
+    {
         this.ActivityTextTitle = ActivityTextTitle;
     }
 
-    public String getImageURL() {
+    public String getImageURL ()
+    {
         return ImageURL;
     }
 
-    public void setImageURL(String ImageURL) {
+    public void setImageURL (String ImageURL)
+    {
         this.ImageURL = ImageURL;
     }
 
-    public String getCategoryName() {
-        return CategoryName;
+    public BannerImagesModel[] getBannerImages ()
+    {
+        return BannerImages;
     }
 
-    public void setCategoryName(String CategoryName) {
-        this.CategoryName = CategoryName;
+    public void setBannerImages (BannerImagesModel[] BannerImages)
+    {
+        this.BannerImages = BannerImages;
     }
 
-    public String getMallName() {
+    public String getMallName ()
+    {
         return MallName;
     }
 
-    public void setMallName(String MallName) {
+    public void setMallName (String MallName)
+    {
         this.MallName = MallName;
     }
 
-    public String getDetailText() {
+    public String getDetailText ()
+    {
         return DetailText;
     }
 
-    public void setDetailText(String DetailText) {
+    public void setDetailText (String DetailText)
+    {
         this.DetailText = DetailText;
     }
 
-    public String getActivityId() {
+    public String getActivityId ()
+    {
         return ActivityId;
     }
 
-    public void setActivityId(String ActivityId) {
+    public void setActivityId (String ActivityId)
+    {
         this.ActivityId = ActivityId;
     }
 
-    public String getEntityName() {
-        return EntityName;
-    }
-
-    public void setEntityName(String EntityName) {
-        this.EntityName = EntityName;
-    }
-
-    public String getActivityTextName() {
+    public String getActivityTextName ()
+    {
         return ActivityTextName;
     }
 
-    public void setActivityTextName(String ActivityTextName) {
+    public void setActivityTextName (String ActivityTextName)
+    {
         this.ActivityTextName = ActivityTextName;
     }
 
-    public String getMallPlaceId() {
+    public String getEntityName ()
+    {
+        return EntityName;
+    }
+
+    public void setEntityName (String EntityName)
+    {
+        this.EntityName = EntityName;
+    }
+
+    public String getMallPlaceId ()
+    {
         return MallPlaceId;
     }
 
-    public void setMallPlaceId(String MallPlaceId) {
+    public void setMallPlaceId (String MallPlaceId)
+    {
         this.MallPlaceId = MallPlaceId;
     }
 
-    public String getBriefText() {
+    public String getTotalRecords ()
+    {
+        return TotalRecords;
+    }
+
+    public void setTotalRecords (String TotalRecords)
+    {
+        this.TotalRecords = TotalRecords;
+    }
+
+    public String getBriefText ()
+    {
         return BriefText;
     }
 
-    public void setBriefText(String BriefText) {
+    public void setBriefText (String BriefText)
+    {
         this.BriefText = BriefText;
     }
 
-    public String getEndDate() {
+    public String getEndDate ()
+    {
         return EndDate;
     }
 
-    public void setEndDate(String EndDate) {
+    public void setEndDate (String EndDate)
+    {
         this.EndDate = EndDate;
     }
 
-    public String getStartDate() {
+    public ActivityCategoriesModel[] getActivityCategories ()
+    {
+        return ActivityCategories;
+    }
+
+    public void setActivityCategories (ActivityCategoriesModel[] ActivityCategories)
+    {
+        this.ActivityCategories = ActivityCategories;
+    }
+
+    public String getStartDate ()
+    {
         return StartDate;
     }
 
-    public void setStartDate(String StartDate) {
+    public void setStartDate (String StartDate)
+    {
         this.StartDate = StartDate;
     }
 
-    public String getEntityType() {
+    public String getRowNumber ()
+    {
+        return RowNumber;
+    }
+
+    public void setRowNumber (String RowNumber)
+    {
+        this.RowNumber = RowNumber;
+    }
+
+    public String getEntityType ()
+    {
         return EntityType;
     }
 
-    public void setEntityType(String EntityType) {
+    public void setEntityType (String EntityType)
+    {
         this.EntityType = EntityType;
     }
 
-    public String getEndTime() {
+    public String getEndTime ()
+    {
         return EndTime;
     }
 
-    public void setEndTime(String EndTime) {
+    public void setEndTime (String EndTime)
+    {
         this.EndTime = EndTime;
     }
 
-    public String getPlaceName() {
+    public String getPlaceName ()
+    {
         return PlaceName;
     }
 
-    public void setPlaceName(String PlaceName) {
+    public void setPlaceName (String PlaceName)
+    {
         this.PlaceName = PlaceName;
     }
 
-    public String getStartTime() {
+    public String getStartTime ()
+    {
         return StartTime;
     }
 
-    public void setStartTime(String StartTime) {
+    public void setStartTime (String StartTime)
+    {
         this.StartTime = StartTime;
     }
 
-    public String getActivityName() {
+    public String getActivityName ()
+    {
         return ActivityName;
     }
 
-    public void setActivityName(String ActivityName) {
+    public void setActivityName (String ActivityName)
+    {
         this.ActivityName = ActivityName;
     }
 
-    public String getEntityId() {
+    public String getEntityId ()
+    {
         return EntityId;
     }
 
-    public void setEntityId(String EntityId) {
+    public void setEntityId (String EntityId)
+    {
         this.EntityId = EntityId;
     }
 
-    public boolean isFav() {
+    public boolean isFav ()
+    {
         return isFav;
     }
 
-    public void setFav(boolean isFav) {
+    public void setFav (boolean isFav)
+    {
         this.isFav = isFav;
     }
+
     @Override
-    public String toString() {
-        return "ClassPojo [EntityLogo = " + EntityLogo + ", ActivityTextTitle = " + ActivityTextTitle + ", ImageURL = " + ImageURL + ", CategoryName = " + CategoryName + ", MallName = " + MallName + ", DetailText = " + DetailText + ", ActivityId = " + ActivityId + ", EntityName = " + EntityName + ", ActivityTextName = " + ActivityTextName + ", MallPlaceId = " + MallPlaceId + ", BriefText = " + BriefText + ", EndDate = " + EndDate + ", StartDate = " + StartDate + ", EntityType = " + EntityType + ", EndTime = " + EndTime + ", PlaceName = " + PlaceName + ", StartTime = " + StartTime + ", ActivityName = " + ActivityName + ", EntityId = " + EntityId + "]";
+    public String toString()
+    {
+        return "ClassPojo [EntityLogo = "+EntityLogo+", ActivityTextTitle = "+ActivityTextTitle+", ImageURL = "+ImageURL+", BannerImages = "+BannerImages+", MallName = "+MallName+", DetailText = "+DetailText+", ActivityId = "+ActivityId+", ActivityTextName = "+ActivityTextName+", EntityName = "+EntityName+", MallPlaceId = "+MallPlaceId+", TotalRecords = "+TotalRecords+", BriefText = "+BriefText+", EndDate = "+EndDate+", ActivityCategories = "+ActivityCategories+", StartDate = "+StartDate+", RowNumber = "+RowNumber+", EntityType = "+EntityType+", EndTime = "+EndTime+", PlaceName = "+PlaceName+", StartTime = "+StartTime+", ActivityName = "+ActivityName+", EntityId = "+EntityId+"]";
     }
 }

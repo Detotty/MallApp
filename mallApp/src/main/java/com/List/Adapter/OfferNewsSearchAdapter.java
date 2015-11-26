@@ -16,6 +16,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mallapp.Constants.AppConstants;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.View.OffersDetailActivity;
 import com.mallapp.View.R;
@@ -23,20 +24,20 @@ import com.mallapp.cache.AppCacheManager;
 import com.mallapp.imagecapture.ImageLoader;
 import com.mallapp.utils.GlobelOffersNews;
 
-public class OfferNewsSearchAdapter extends ArrayAdapter<Offers_News> {
+public class OfferNewsSearchAdapter extends ArrayAdapter<MallActivitiesModel> {
 
 	//private static final String TAG = Offers_News_Adapter.class.getSimpleName();
 
 	private Context 			context;
 	private Activity			activity;
 	String 						audience_type;
-	private Offers_News 		offer_obj;
+	private MallActivitiesModel offer_obj;
 	
-	ArrayList<Offers_News> 			offer_news_search;
+	ArrayList<MallActivitiesModel> 			offer_news_search;
 	String endorsement_clicked_type;
 	public ImageLoader imageLoader;
 	
-	public OfferNewsSearchAdapter(Context context, Activity activti, int textViewResourceId, ArrayList<Offers_News> array) {
+	public OfferNewsSearchAdapter(Context context, Activity activti, int textViewResourceId, ArrayList<MallActivitiesModel> array) {
 		
 		super(context,  textViewResourceId);
 		this.context = context;
@@ -60,7 +61,7 @@ public class OfferNewsSearchAdapter extends ArrayAdapter<Offers_News> {
 	}
 
 	@Override
-	public Offers_News getItem(int position) {
+	public MallActivitiesModel getItem(int position) {
 		return offer_news_search.get(position);
 	}
 
@@ -70,7 +71,7 @@ public class OfferNewsSearchAdapter extends ArrayAdapter<Offers_News> {
 	}
 
 	@Override
-	public int getPosition(Offers_News item) {
+	public int getPosition(MallActivitiesModel item) {
 		return super.getPosition(item);
 	}
 
@@ -109,10 +110,10 @@ public class OfferNewsSearchAdapter extends ArrayAdapter<Offers_News> {
 		offer_obj= getItem(position);
 		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
 		
-		holder.title.setText(offer_obj.getTitle());
-		holder.decs.setText(offer_obj.getDetail());
-		holder.center_name.setText(offer_obj.getCenter_name());		
-		holder.shome_name.setText(offer_obj.getShop_name());
+		holder.title.setText(offer_obj.getActivityName());
+		holder.decs.setText(offer_obj.getBriefText());
+		holder.center_name.setText(offer_obj.getStartDate());
+		holder.shome_name.setText(offer_obj.getMallName());
 		
 		final boolean fav	= offer_obj.isFav();
 		if(fav)
@@ -128,11 +129,11 @@ public class OfferNewsSearchAdapter extends ArrayAdapter<Offers_News> {
 				if(!offer_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					offer_obj.setFav(true);
-					AppCacheManager.updateOffersNews(context, offer_obj);
+					AppCacheManager.updateOffersNews(context, offer_obj,position);
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					offer_obj.setFav(false);
-					AppCacheManager.updateOffersNews(context, offer_obj);
+					AppCacheManager.updateOffersNews(context, offer_obj, position);
 				}
 			}
 		});
@@ -142,7 +143,7 @@ public class OfferNewsSearchAdapter extends ArrayAdapter<Offers_News> {
 			public void onClick(View view) {
 
 				offer_obj= getItem(position);
-				GlobelOffersNews.offer_obj= offer_obj;
+				GlobelOffersNews.offer_obj_mall= offer_obj;
 				Intent intent= new Intent(activity, OffersDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);                     
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);

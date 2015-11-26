@@ -12,6 +12,7 @@ import java.util.ArrayList;
 import android.content.Context;
 import android.util.Log;
 
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 
 
@@ -24,7 +25,7 @@ public class AppCacheManager {
 	
 	
 	
-	public static void writeObjectList(Context context, ArrayList<Offers_News> listAccount) throws IOException {
+	public static void writeObjectList(Context context, ArrayList<MallActivitiesModel> listAccount) throws IOException {
 		// Create FileOutputStream to write file
 		FileOutputStream fos = new FileOutputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		// Create ObjectOutputStream to write object
@@ -39,8 +40,8 @@ public class AppCacheManager {
 		Log.w("write", "write offers list ");
 	}
 
-	public static ArrayList<Offers_News> readObjectList(Context context) throws ClassNotFoundException, IOException {
-		ArrayList<Offers_News> list = new ArrayList<Offers_News>();
+	public static ArrayList<MallActivitiesModel> readObjectList(Context context) throws ClassNotFoundException, IOException {
+		ArrayList<MallActivitiesModel> list = new ArrayList<MallActivitiesModel>();
 		// Create new FileInputStream object to read file
 		FileInputStream fis = new FileInputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		// Create new ObjectInputStream object to read object from file
@@ -48,7 +49,7 @@ public class AppCacheManager {
 		try {
 			while (fis.available() != -1) {
 				// Read object from file
-				Offers_News acc = (Offers_News) obj.readObject();
+				MallActivitiesModel acc = (MallActivitiesModel) obj.readObject();
 				list.add(acc);
 			}
 			obj.close();
@@ -66,10 +67,10 @@ public class AppCacheManager {
 	
 	
 	
-	public static ArrayList<Offers_News> readObjectListCentered(Context context, String center_name) 
+	public static ArrayList<MallActivitiesModel> readObjectListCentered(Context context, String center_name)
 															throws ClassNotFoundException, IOException {
 	
-		ArrayList<Offers_News> list = new ArrayList<Offers_News>();
+		ArrayList<MallActivitiesModel> list = new ArrayList<MallActivitiesModel>();
 		// Create new FileInputStream object to read file
 		FileInputStream fis = new FileInputStream(context.getCacheDir() + File.separator + CACHE_FILE_NAME);
 		// Create new ObjectInputStream object to read object from file
@@ -79,15 +80,15 @@ public class AppCacheManager {
 			if(center_name ==null || center_name.length()==0){
 				while (fis.available() != -1) {
 					// Read object from file
-					Offers_News acc = (Offers_News) obj.readObject();
+					MallActivitiesModel acc = (MallActivitiesModel) obj.readObject();
 					//if(acc.getCenter_name().trim().equals(center_name))
 					list.add(acc);
 				}
 			}else{
 				while (fis.available() != -1) {
 					// Read object from file
-					Offers_News acc = (Offers_News) obj.readObject();
-					if(acc.getCenter_name().trim().equals(center_name))
+					MallActivitiesModel acc = (MallActivitiesModel) obj.readObject();
+					if(acc.getMallName().trim().equals(center_name))
 						list.add(acc);
 				}
 			}
@@ -101,16 +102,16 @@ public class AppCacheManager {
 	}
 
 	
-	public static void updateOffersNews(Context context, Offers_News obj) {
-		Log.w("update centers", "read centers list completed "+ obj.getId()+"......"+ obj.isFav());
-		ArrayList<Offers_News> allcentersList= getAllOffersNews(context);
+	public static void updateOffersNews(Context context, MallActivitiesModel obj, int pos) {
+		Log.w("update centers", "read centers list completed "+ pos+"......"+ obj.isFav());
+		ArrayList<MallActivitiesModel> allcentersList= getAllOffersNews(context);
 		if (allcentersList != null) {
-			allcentersList.set(obj.getId(), obj);
+			allcentersList.set(pos, obj);
 			saveOffersNews(context, allcentersList);
 		}
 	}
 	
-	public static void saveOffersNews(Context context, ArrayList<Offers_News> listAccount) {
+	public static void saveOffersNews(Context context, ArrayList<MallActivitiesModel> listAccount) {
 		try {
 			writeObjectList(context, listAccount);
 		} catch (IOException e) {
@@ -118,8 +119,8 @@ public class AppCacheManager {
 		}
 	}
 	
-	public static ArrayList<Offers_News> getAllOffersNews(Context context) {
-		ArrayList<Offers_News> allentersList = null;
+	public static ArrayList<MallActivitiesModel> getAllOffersNews(Context context) {
+		ArrayList<MallActivitiesModel> allentersList = null;
 		try {
 			allentersList = readObjectList(context);
 		} catch (ClassNotFoundException e) {

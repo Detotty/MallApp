@@ -34,8 +34,8 @@ public class MallApp_Application extends Application implements Serializable{
         // The following line triggers the initialization of ACRA
         ACRA.init(this);
 
-        readOffersNews();
-        readShops();
+//        readOffersNews();
+//        readShops();
         readRetuarant();
         readServices();
         
@@ -56,7 +56,7 @@ public class MallApp_Application extends Application implements Serializable{
 		// TODO Auto-generated method stub
 	}
 
-	public void readOffersNews() {
+	/*public void readOffersNews() {
 		try {
 			offer_objects = AppCacheManager.readObjectList(getApplicationContext());
 			if(offer_objects== null || offer_objects.size()==0){
@@ -73,5 +73,5 @@ public class MallApp_Application extends Application implements Serializable{
 			OffersNewsList.saveOffersNewsData(getApplicationContext());
 			e.printStackTrace();
 		}
-	}
+	}*/
 }
