@@ -349,7 +349,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 							
 						drawer_text.setVisibility(View.GONE);
 						drawer_logo.setVisibility(View.VISIBLE);
-						setCenter_logo(MainMenuConstants.SELECTED_CENTER_LOGO, context);
+//						setCenter_logo(MainMenuConstants.SELECTED_CENTER_LOGO, context);
 							
 						} else{
 							drawer_text.setVisibility(View.VISIBLE);

@@ -46,6 +46,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private Context context;
     private ProgressDialog progressDialog;
     private String TAG = VolleyNetworkUtil.class.getSimpleName();
+    MallDataListener mallDataListener;
     ShopsDataListener shopsDataListener;
     private String requestType;
 
@@ -189,8 +190,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
     /*<--------------SHOPS DETAILS DATA ---------------->*/
 
-    public void GetShopDetail(String url,final ShopsDataListener shopsDataListener) {
-        this.shopsDataListener = shopsDataListener;
+    public void GetShopDetail(String url,final ShopsDataListener mallDataListener) {
         requestType = GET_SHOP_DETAIL;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
             @Override
@@ -255,8 +255,6 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                 }
                 break;
             }
-
-
         }
     }
 }

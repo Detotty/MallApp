@@ -57,6 +57,8 @@ public class ShopDetailModel implements Serializable
 
     private String[] StorePhones;
 
+    private boolean isFav;
+
     public String getPhone ()
     {
         return Phone;
@@ -305,6 +307,16 @@ public class ShopDetailModel implements Serializable
     public void setStorePhones (String[] StorePhones)
     {
         this.StorePhones = StorePhones;
+    }
+
+    public boolean isFav ()
+    {
+        return isFav;
+    }
+
+    public void setFav (boolean isFav)
+    {
+        this.isFav = isFav;
     }
 
     @Override

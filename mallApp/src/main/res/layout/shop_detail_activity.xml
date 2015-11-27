@@ -66,7 +66,7 @@
             android:layout_margin="@dimen/margin_left_15"
             android:textColor="@color/black3"
             android:drawableLeft="@drawable/shop_detail_location_p"
-            android:text="Address"
+            android:drawablePadding="10dp"
             android:textSize="@dimen/text_15"/>
 
         <TextView
@@ -76,7 +76,7 @@
             android:layout_margin="@dimen/margin_left_15"
             android:textColor="@color/black3"
             android:drawableLeft="@drawable/phone"
-            android:text="Phone"
+            android:drawablePadding="10dp"
             android:textSize="@dimen/text_15"/>
 
         <TextView
@@ -86,7 +86,7 @@
             android:layout_margin="@dimen/margin_left_15"
             android:textColor="@color/black3"
             android:drawableLeft="@drawable/phone"
-            android:text="Email"
+            android:drawablePadding="10dp"
             android:textSize="@dimen/text_15"/>
 
         <TextView
@@ -96,18 +96,48 @@
             android:layout_margin="@dimen/margin_left_15"
             android:textColor="@color/black3"
             android:drawableLeft="@drawable/shop_detail_clock_p"
-            android:text="Website"
+            android:drawablePadding="10dp"
             android:textSize="@dimen/text_15"/>
 
-        <TextView
-            android:id="@+id/tv_timings"
+        <LinearLayout
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_margin="@dimen/margin_left_15"
-            android:textColor="@color/black3"
-            android:drawableLeft="@drawable/shop_detail_clock_p"
-            android:text="Timings"
-            android:textSize="@dimen/text_15"/>
+            android:orientation="horizontal"
+            >
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="7dp"
+                android:src="@drawable/shop_detail_clock_p"/>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="10dp"
+                android:orientation="vertical">
+
+                <TextView
+                    android:id="@+id/tv_timing1"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black3"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/text_15"/>
+
+                <TextView
+                    android:id="@+id/tv_timing2"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black3"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/text_15"/>
+
+            </LinearLayout>
+
+        </LinearLayout>
+
+
 
     <!--<include layout="@layout/shop_detail_offers"/>
     <include layout="@layout/shop_detail_related_shops"/>-->

@@ -221,7 +221,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
     public void changeType_Notification(String new_audience_type) {
         Log.e("changeType_Notification", new_audience_type);
-        if(adapter!=null){
+        if (adapter != null) {
             Log.e("changeType_Notification", new_audience_type);
             adapter.setAudience_type(new_audience_type);
             mallActivitiesListing.clear();
@@ -250,7 +250,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         if (mallActivitiesModels != null) {
 
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
-                            writeOffersNews(context,mallActivitiesListing);
+                            writeOffersNews(context, mallActivitiesListing);
 //                            mallActivitiesListing = mallActivitiesModels;
                             adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
                                     mallActivitiesListing, headerFilter
@@ -312,7 +312,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         if (mallActivitiesListing != null) {
                             mallActivitiesListing.clear();
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
-                            writeOffersNews(context,mallActivitiesListing);
+                            writeOffersNews(context, mallActivitiesListing);
                             mallActivitiesListing.addAll(0, mallActivitiesModels);
                             adapter.notifyDataSetChanged();
                         } else {
@@ -352,8 +352,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
     @Override
     public void OnError() {
-        switch (requestType){
-            case REFRESH_MALL_ACTIVITIES:{
+        switch (requestType) {
+            case REFRESH_MALL_ACTIVITIES: {
                 swipeRefreshLayout.setRefreshing(false);
             }
             break;
@@ -367,31 +367,30 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     }
 
 
-
-    public static void writeOffersNews(Context context, ArrayList<MallActivitiesModel> offer_objects){
-		try{
+    public static void writeOffersNews(Context context, ArrayList<MallActivitiesModel> offer_objects) {
+        try {
             AppCacheManager.writeObjectList(context, offer_objects);
         } catch (IOException e) {
             e.printStackTrace();
         }
-        Log.w(MallApp_Application.TAG, "write:"+offer_objects.size());
+        Log.w(MallApp_Application.TAG, "write:" + offer_objects.size());
     }
 
-    public static ArrayList<MallActivitiesModel> readOffersNews(Context context){
-		try {
+    public static ArrayList<MallActivitiesModel> readOffersNews(Context context) {
+        try {
             mallActivitiesListing = AppCacheManager.readObjectList(context);
-		} catch (ClassNotFoundException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
-		}
+        } catch (ClassNotFoundException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        } catch (IOException e) {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
         //Log.w(MallApp_Application.TAG, "read:"+offer_objects.size());
         return mallActivitiesListing;
     }
 
-    public static ArrayList<MallActivitiesModel> FavouriteSelection(Context context, ArrayList<MallActivitiesModel> mallModelArrayList){
+    public static ArrayList<MallActivitiesModel> FavouriteSelection(Context context, ArrayList<MallActivitiesModel> mallModelArrayList) {
         mallActivitiesListing = readOffersNews(context);
         if (mallActivitiesListing != null) {
             for (MallActivitiesModel mall : mallActivitiesListing
@@ -409,7 +408,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         }
         return mallModelArrayList;
     }
-
 
 
 }

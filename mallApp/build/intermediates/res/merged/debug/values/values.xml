@@ -777,6 +777,11 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="go_to_shop">Go to Shop</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/debug/res/values/google_maps_api.xml -->
+    <eat-comment/>
+    <string name="google_maps_key" templateMergeStrategy="preserve" translatable="false">
+        AIzaSyASsdkZ3WMSJ_2CNRz4nIeOjiOFGmNthBw
+    </string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/mainmenu_strings.xml -->
     <eat-comment/>
     <string name="heading_directions"> Directions &amp; Parking</string>
@@ -905,6 +910,7 @@
     <string name="timing_m2">From clock 9 to clock 18, From Sat to Sun.</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="title_activity_maps">Map</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="updating_profile_data_message">Updating Profile</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->

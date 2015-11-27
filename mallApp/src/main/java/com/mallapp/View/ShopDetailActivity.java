@@ -45,6 +45,7 @@ import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
+import com.mallapp.Model.StoreTimingsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ScalingUtilities;
@@ -69,7 +70,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	ShopsModel shop_obj;
 	private ImageView 		shop_logo;
 	private TextView 		tv_about, tv_Detail, shop_name, 	 shop_detail;
-	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing;
+	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
 	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout;
 	//HorizontalScrollView 	shops_offers1;
@@ -100,22 +101,21 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		/*shop_obj = GlobelShops.shopModel_obj;
 		shop_name.setText(shop_obj.getStoreName());
 		shop_detail.setText(shop_obj.getBriefText());*/
+		shop_name 	= (TextView) findViewById(R.id.offer_title);
+		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		tv_about 		= (TextView) findViewById(R.id.tv_about);
 		tv_Detail 		= (TextView) findViewById(R.id.tv_offer_detail);
 		tv_address 		= (TextView) findViewById(R.id.tv_address);
 		tv_Phone 		= (TextView) findViewById(R.id.tv_phone);
 		tv_Email 		= (TextView) findViewById(R.id.tv_email);
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
-		tv_Timing 		= (TextView) findViewById(R.id.tv_timings);
+		tv_Timing1 		= (TextView) findViewById(R.id.tv_timing1);
+		tv_Timing2 		= (TextView) findViewById(R.id.tv_timing2);
 		back_screen = (ImageButton) findViewById(R.id.back);
-
+		is_fav		.setOnClickListener(this);
 		back_screen	.setOnClickListener(this);
 
-		/*boolean fav	= shop_obj.isFav();
-		if(fav)
-			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
-		else
-			is_fav.setImageResource(R.drawable.ofer_detail_heart);*/
+
 		
 		/*setShopLogo();
 		setShopOffers();
@@ -293,10 +293,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	@SuppressLint("ClickableViewAccessibility")
 	private void initActivity() {
 
-		shop_name 	= (TextView) findViewById(R.id.offer_title);
-		shop_detail	= (TextView) findViewById(R.id.offer_detail);
-		
-		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
+
 		shop_logo	= (ImageView)	findViewById(R.id.shop_image_logo);
 		
 		related_shops	= (LinearLayout) findViewById(R.id.related_shops);
@@ -307,7 +304,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		//shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		
 		location	= (ImageButton) findViewById(R.id.location);
-		timing		= (ImageButton) findViewById(R.id.timing);
+		timing = (ImageButton) findViewById(R.id.timing);
 		social_sharing = (ImageButton) findViewById(R.id.social_sharing);
 		
 		
@@ -349,7 +346,6 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		location	.setOnClickListener(this);
 		timing		.setOnClickListener(this);
 		social_sharing	.setOnClickListener(this);
-		is_fav		.setOnClickListener(this);
 		message		.setOnClickListener(this);
 		face_book	.setOnClickListener(this); 
 		twitter 	.setOnClickListener(this);
@@ -454,12 +450,23 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	public void onShopDetailReceived(ShopDetailModel shopDetail) {
 
 		initilizeMap();
+		shop_name.setText(shopDetail.getName());
 		tv_about.setText(shopDetail.getAboutText());
 		tv_Detail.setText(shopDetail.getBriefText());
 		tv_address.setText(shopDetail.getAddress());
 		tv_Phone.setText(shopDetail.getPhone());
 		tv_Email.setText(shopDetail.getEmail());
 		tv_Web.setText(shopDetail.getWebURL());
+		StoreTimingsModel[] timinigs = shopDetail.getStoreTimings();
+		String t1 = timinigs[0].getFromDay()+"-"+timinigs[0].getToDay()+"\t\t  "+timinigs[0].getOpeningTiming()+"-"+timinigs[0].getClosingTiming();
+		String t2 = timinigs[1].getFromDay()+"-"+timinigs[1].getToDay()+"\t\t"+timinigs[1].getOpeningTiming()+"-"+timinigs[1].getClosingTiming();
+		tv_Timing1.setText(t1);
+		tv_Timing2.setText(t2);
+		boolean fav	= shopDetail.isFav();
+		if(fav)
+			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+		else
+			is_fav.setImageResource(R.drawable.ofer_detail_heart);
 		lat = Double.parseDouble(shopDetail.getLatitude());
 		lng = Double.parseDouble(shopDetail.getLongitude());
 		locationName = shopDetail.getAddress();

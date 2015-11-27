@@ -612,21 +612,21 @@ public final class R {
 		public static final int abc_search_view = 0x7f030016;
 		public static final int abc_select_dialog_material = 0x7f030017;
 		public static final int abc_simple_dropdown_hint = 0x7f030018;
-		public static final int mr_media_route_chooser_dialog = 0x7f030042;
-		public static final int mr_media_route_controller_material_dialog_b = 0x7f030043;
-		public static final int mr_media_route_list_item = 0x7f030044;
-		public static final int notification_media_action = 0x7f030046;
-		public static final int notification_media_cancel_action = 0x7f030047;
-		public static final int notification_template_big_media = 0x7f030048;
-		public static final int notification_template_big_media_narrow = 0x7f030049;
-		public static final int notification_template_lines = 0x7f03004a;
-		public static final int notification_template_media = 0x7f03004b;
-		public static final int notification_template_part_chronometer = 0x7f03004c;
-		public static final int notification_template_part_time = 0x7f03004d;
-		public static final int select_dialog_item_material = 0x7f03005a;
-		public static final int select_dialog_multichoice_material = 0x7f03005b;
-		public static final int select_dialog_singlechoice_material = 0x7f03005c;
-		public static final int support_simple_spinner_dropdown_item = 0x7f030069;
+		public static final int mr_media_route_chooser_dialog = 0x7f030043;
+		public static final int mr_media_route_controller_material_dialog_b = 0x7f030044;
+		public static final int mr_media_route_list_item = 0x7f030045;
+		public static final int notification_media_action = 0x7f030047;
+		public static final int notification_media_cancel_action = 0x7f030048;
+		public static final int notification_template_big_media = 0x7f030049;
+		public static final int notification_template_big_media_narrow = 0x7f03004a;
+		public static final int notification_template_lines = 0x7f03004b;
+		public static final int notification_template_media = 0x7f03004c;
+		public static final int notification_template_part_chronometer = 0x7f03004d;
+		public static final int notification_template_part_time = 0x7f03004e;
+		public static final int select_dialog_item_material = 0x7f03005b;
+		public static final int select_dialog_multichoice_material = 0x7f03005c;
+		public static final int select_dialog_singlechoice_material = 0x7f03005d;
+		public static final int support_simple_spinner_dropdown_item = 0x7f03006a;
 	}
 	public static final class string {
 		public static final int abc_action_bar_home_description = 0x7f060000;
@@ -650,13 +650,13 @@ public final class R {
 		public static final int mr_media_route_chooser_searching = 0x7f06002c;
 		public static final int mr_media_route_chooser_title = 0x7f06002d;
 		public static final int mr_media_route_controller_disconnect = 0x7f06002e;
-		public static final int mr_media_route_controller_pause = 0x7f060077;
-		public static final int mr_media_route_controller_play = 0x7f060078;
-		public static final int mr_media_route_controller_settings_description = 0x7f060079;
-		public static final int mr_media_route_controller_stop = 0x7f06007a;
+		public static final int mr_media_route_controller_pause = 0x7f060078;
+		public static final int mr_media_route_controller_play = 0x7f060079;
+		public static final int mr_media_route_controller_settings_description = 0x7f06007a;
+		public static final int mr_media_route_controller_stop = 0x7f06007b;
 		public static final int mr_system_route_name = 0x7f06002f;
 		public static final int mr_user_route_category_name = 0x7f060030;
-		public static final int status_bar_notification_info_overflow = 0x7f0600ab;
+		public static final int status_bar_notification_info_overflow = 0x7f0600ac;
 	}
 	public static final class style {
 		public static final int AlertDialog_AppCompat = 0x7f080074;

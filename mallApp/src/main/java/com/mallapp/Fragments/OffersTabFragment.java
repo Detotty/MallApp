@@ -200,15 +200,14 @@ public class OffersTabFragment extends Fragment
     }
 
     private void createPagerIntence() {
-
         OffersNewsFiltration.readOffersNews(context);
         List<OfferPagerTabFragment> fragments = getFavouriteFragments();
         adapter = new OffersNewsPagerAdapter(getChildFragmentManager(), context, uiHandler, audienceFilter, fragments, TITLES);
         pager.setAdapter(adapter);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
-//        pager.setPageMargin(pageMargin);
-        pager.setOffscreenPageLimit(fragments.size());
+        pager.setPageMargin(pageMargin);
+        pager.setOffscreenPageLimit(0);
         tabs.setViewPager(pager);
         adapter.notifyDataSetChanged();
     }
