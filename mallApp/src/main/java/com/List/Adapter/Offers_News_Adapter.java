@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -16,14 +17,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
+import com.mallapp.Model.ShopsModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.OffersDetailActivity;
 import com.mallapp.View.R;
 import com.mallapp.cache.AppCacheManager;
 import com.mallapp.utils.GlobelOffersNews;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 
@@ -34,7 +40,14 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
     private Context context;
     private Activity activity;
     String audience_type;
+    String UserId;
+    String ActivityId;
+    String isDeleted;
+    String url;
     private MallActivitiesModel offer_obj;
+    Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
+    VolleyNetworkUtil volleyNetworkUtil;
+
 
 
     ArrayList<MallActivitiesModel> mallActivities_All,
@@ -44,12 +57,15 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 
     public Offers_News_Adapter(Context context, Activity activti, int textViewResourceId,
 
-                               ArrayList<MallActivitiesModel> mallActivities_All, String audience_type) {
+                               ArrayList<MallActivitiesModel> mallActivities_All, String audience_type,    Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol
+    ) {
 
         super(context, textViewResourceId);
         this.context = context;
         this.activity = activti;
         this.mallActivities_All = new ArrayList<>();
+        this.mallActivitiesModelIntegerDaol = mallActivitiesModelIntegerDaol;
+        volleyNetworkUtil = new VolleyNetworkUtil(context);
         if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
             this.mallActivities_All = mallActivities_All;
         } else {
@@ -62,6 +78,8 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         }
         this.audience_type = audience_type;
         FilteredOffersNewsList(mallActivities_All);
+        UserId = SharedPreferenceUserProfile.getUserId(context);
+        url = ApiConstants.POST_FAV_OFFERS_URL_KEY;
     }
 
     public String getAudience_type() {
@@ -171,20 +189,26 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 		
 		
 		holder.is_fav.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View view) {
-				offer_obj= getItem(position);
-				if(!offer_obj.isFav()){
-					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
-					offer_obj.setFav(true);
-					AppCacheManager.updateOffersNews(context, offer_obj,position);
-				}else{
-					holder.is_fav.setImageResource(R.drawable.offer_fav);
-					offer_obj.setFav(false);
-					AppCacheManager.updateOffersNews(context, offer_obj,position);
-				}
-			}
-		});
+            @Override
+            public void onClick(View view) {
+                offer_obj = getItem(position);
+                if (!offer_obj.isFav()) {
+                    holder.is_fav.setImageResource(R.drawable.offer_fav_p);
+                    offer_obj.setFav(true);
+                    url = url+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=false";
+                    updateMalls(offer_obj);
+                    volleyNetworkUtil.PostFavNnO(url);
+//                    AppCacheManager.updateOffersNews(context, offer_obj, position);
+                } else {
+                    holder.is_fav.setImageResource(R.drawable.offer_fav);
+                    offer_obj.setFav(false);
+                    url = url+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=true";
+                    updateMalls(offer_obj);
+                    volleyNetworkUtil.PostFavNnO(url);
+//                    AppCacheManager.updateOffersNews(context, offer_obj, position);
+                }
+            }
+        });
 
         view.setOnClickListener(new OnClickListener() {
             @Override
@@ -245,6 +269,14 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                     }
                 }
             }
+        }
+    }
+
+    public void updateMalls(MallActivitiesModel fav){
+        try {
+            mallActivitiesModelIntegerDaol.createOrUpdate(fav);
+        } catch (SQLException e) {
+            e.printStackTrace();
         }
     }
 

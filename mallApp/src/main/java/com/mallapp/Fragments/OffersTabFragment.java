@@ -151,6 +151,7 @@ public class OffersTabFragment extends Fragment
             for (FavouriteCentersModel center : TITLES_Centers) {
                 if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                     String center_logo_name = center.getLogoUrl();
+                    if (center.getCorporateColor()!=null)
                     headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
                     setCenter_logo(center_logo_name);
                     setSelected_center_logo(center_logo_name);

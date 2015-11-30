@@ -1,7 +1,9 @@
 package com.mallapp.Fragments;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.content.Context;
 import android.graphics.drawable.BitmapDrawable;
@@ -18,16 +20,22 @@ import android.widget.ListView;
 import android.widget.Toast;
 
 import com.List.Adapter.Offers_News_Adapter;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.OffersNewsFiltration;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.MallApp_Application;
 import com.mallapp.View.R;
 import com.mallapp.cache.AppCacheManager;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
@@ -42,6 +50,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
     static ArrayList<Offers_News> endorsement_list_filter;
     static ArrayList<MallActivitiesModel> mallActivitiesListing;
+    static ArrayList<MallActivitiesModel> dbList = new ArrayList<>();
     static ArrayList<Offers_News> all_audience;
     static ArrayList<Offers_News> offers_audience;
     static ArrayList<Offers_News> news_audience;
@@ -67,6 +76,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     Offers_News_Adapter adapter;
     VolleyNetworkUtil volleyNetworkUtil;
     private SwipeRefreshLayout swipeRefreshLayout;
+    Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
+    private DatabaseHelper databaseHelper = null;
+
 
     public static OfferPagerTabFragment newInstance(
             int position, Handler handler, Context c,
@@ -114,6 +126,13 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 headerFilter = getArguments().getString(ARG_AUDIENCE);
         }
         Log.e("OfferPagerTabFragment", "onCreate");
+        try {
+            // This is how, a reference of DAO object can be done
+            mallActivitiesModelIntegerDaol =  getHelper().getMallActivitiesDao();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
     @Override
@@ -235,6 +254,16 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     public void onDestroyView() {
         navigationFilter = false;
         super.onDestroyView();
+        if (databaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            databaseHelper = null;
+        }
+    }
+    private DatabaseHelper getHelper() {
+        if (databaseHelper == null) {
+            databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
+        }
+        return databaseHelper;
     }
 
     @Override
@@ -250,10 +279,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         if (mallActivitiesModels != null) {
 
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
-                            writeOffersNews(context, mallActivitiesListing);
 //                            mallActivitiesListing = mallActivitiesModels;
                             adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
-                                    mallActivitiesListing, headerFilter
+                                    mallActivitiesListing, headerFilter,mallActivitiesModelIntegerDaol
                             );
                             list.setAdapter(adapter);
                             list.setOnScrollListener(new AbsListView.OnScrollListener() {
@@ -318,7 +346,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         } else {
                             mallActivitiesListing = mallActivitiesModels;
                             adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
-                                    mallActivitiesListing, headerFilter
+                                    mallActivitiesListing, headerFilter,mallActivitiesModelIntegerDaol
                             );
 
                             list.setAdapter(adapter);
@@ -390,15 +418,15 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         return mallActivitiesListing;
     }
 
-    public static ArrayList<MallActivitiesModel> FavouriteSelection(Context context, ArrayList<MallActivitiesModel> mallModelArrayList) {
-        mallActivitiesListing = readOffersNews(context);
-        if (mallActivitiesListing != null) {
-            for (MallActivitiesModel mall : mallActivitiesListing
+    public ArrayList<MallActivitiesModel> FavouriteSelection(Context context, ArrayList<MallActivitiesModel> mallModelArrayList) {
+        getDBMalls();
+        if (dbList != null) {
+            for (MallActivitiesModel shop : dbList
                     ) {
                 for (int i = 0; i < mallModelArrayList.size(); i++) {
                     MallActivitiesModel sh = mallModelArrayList.get(i);
-                    if (sh.getMallPlaceId() == mall.getMallPlaceId()) {
-                        if (mall.isFav()) {
+                    if (sh.getActivityId().equals(shop.getActivityId())) {
+                        if (shop.isFav()) {
                             sh.setFav(true);
                             mallModelArrayList.set(i, sh);
                         }
@@ -407,6 +435,27 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             }
         }
         return mallModelArrayList;
+    }
+
+    public void getDBMalls(){
+        try {
+            // This is how, a reference of DAO object can be done
+            Dao<MallActivitiesModel, Integer> studentDao =  getHelper().getMallActivitiesDao();
+            // Get our query builder from the DAO
+            final QueryBuilder<MallActivitiesModel, Integer> queryBuilder = studentDao.queryBuilder();
+            // We need only Students who are associated with the selected Teacher, so build the query by "Where" clause
+            // Prepare our SQL statement
+            final PreparedQuery<MallActivitiesModel> preparedQuery = queryBuilder.prepare();
+            // Fetch the list from Database by queryingit
+            final Iterator<MallActivitiesModel> studentsIt = studentDao.queryForAll().iterator();
+            // Iterate through the StudentDetails object iterator and populate the comma separated String
+            while (studentsIt.hasNext()) {
+                final MallActivitiesModel sDetails = studentsIt.next();
+                dbList.add(sDetails);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 
 

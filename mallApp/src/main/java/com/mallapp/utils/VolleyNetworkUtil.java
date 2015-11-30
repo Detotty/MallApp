@@ -14,6 +14,8 @@ import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.FavouriteCentersModel;
@@ -23,6 +25,7 @@ import com.mallapp.Model.ShopsModel;
 import com.mallapp.Model.VolleyErrorHelper;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.listeners.ShopsDataListener;
 import com.mallapp.listeners.VolleyDataReceivedListener;
@@ -33,6 +36,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -50,7 +54,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     ShopsDataListener shopsDataListener;
     private String requestType;
 
-    private final String GET_SUBSCRIBED_MALLS = "GET_SUBSCRIBED_MALLS";
+    private final String POST_FAV_NnO = "POST_FAV_NnO";
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
     private final String IMAGE_UPLOADING = "IMAGE_UPLOADING";
     private final String BOOKMARK_ENDORSEMENT = "BOOKMARK_ENDORSEMENT";
@@ -59,6 +63,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     public VolleyNetworkUtil(Context context) {
         this.context = context;
     }
+
 
 
     /*<---------------MALLS ACTVITY DATA ---------------->*/
@@ -106,6 +111,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<String, String>();
                     String token = SharedPreferenceUserProfile.getUserToken(context);
+
                     Log.e("", " token:" + token);
                     //headers.put("Content-Type", "application/json");
                     headers.put("Auth-Token", token);
@@ -206,7 +212,23 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+    /*<--------------NEWS AND OFFERS FAVORITE SELECTION ---------------->*/
 
+    public void PostFavNnO(String url) {
+        requestType = POST_FAV_NnO;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         Log.d(TAG, volleyError.toString());
@@ -250,6 +272,20 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     Log.d(TAG, "Shop Detail:" + String.valueOf(response));
                         if (model != null)
                             shopsDataListener.onShopDetailReceived(model);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case POST_FAV_NnO: {
+                try {
+                    boolean success = response.getBoolean("Success");
+                    if (success) {
+
+                    }
+                    else{
+
+                    }
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

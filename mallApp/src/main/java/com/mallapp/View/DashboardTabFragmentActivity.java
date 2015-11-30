@@ -156,16 +156,16 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-				
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				//finish();
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, DashboardTabFragmentActivity.class);
-				//Bundle b = new Bundle();
-				//b.putString("favourite", subcatagory);
-				//activity.putExtras(b);
-				startActivity(activity);
-			} else
+
+			MainMenuConstants.uiHandler= uiHandler;
+			DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+			//finish();
+			Intent activity= new Intent(DashboardTabFragmentActivity.this, DashboardTabFragmentActivity.class);
+			//Bundle b = new Bundle();
+			//b.putString("favourite", subcatagory);
+			//activity.putExtras(b);
+			startActivity(activity);
+		} else
 				showdailog();
 			break;
 			
@@ -340,8 +340,8 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				Log.e("", "	MainMenuConstants.SELECTED_CENTER_NAME = "+	MainMenuConstants.SELECTED_CENTER_NAME);
 				if(mDrawerLayout.isDrawerOpen(GravityCompat.START)) {
 					mDrawerLayout.closeDrawer(mDrawerList);
-				}else{
-					
+				} else {
+
 					if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
 							&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 							&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")

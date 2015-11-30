@@ -46,5 +46,5 @@ public class ApiConstants {
 
 	public static final String GET_SHOP_DETAIL_URL_KEY = SHOPS_SERVICE_URL_KEY +"GetShopDetail?MallStoreId=";
 
-	public static final String POST_FAV_SHOPS_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteOffers?UserId=%@&ActivityId=%@&IsDeleted=%d";
+	public static final String POST_FAV_OFFERS_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteOffers?UserId=";
 }

@@ -1,5 +1,7 @@
 package com.mallapp.Model;
 
+import com.j256.ormlite.field.DatabaseField;
+
 import java.io.Serializable;
 
 /**
@@ -7,32 +9,45 @@ import java.io.Serializable;
  */
 public class ShopsModel implements Serializable
 {
+    @DatabaseField(columnName = "BriefText")
     private String BriefText;
 
+    @DatabaseField(columnName = "WebURL")
     private String WebURL;
 
+    @DatabaseField(columnName = "ContactPerson")
     private String ContactPerson;
 
+    @DatabaseField(columnName = "StoreId")
     private String StoreId;
 
+    @DatabaseField(columnName = "Address")
     private String Address;
 
+    @DatabaseField(columnName = "StoreName")
     private String StoreName;
 
+    @DatabaseField(columnName = "FaceBookURL")
     private String FaceBookURL;
 
+    @DatabaseField(columnName = "TwitterURL")
     private String TwitterURL;
 
+    @DatabaseField(columnName = "LinkedInURL")
     private String LinkedInURL;
 
+    @DatabaseField(columnName = "Floor")
     private String Floor;
 
+    @DatabaseField(id = true ,columnName = "MallStoreId")
     private String MallStoreId;
 
     private ShopCategoriesModel[] ShopCategories;
 
+    @DatabaseField(columnName = "LogoURL")
     private String LogoURL;
 
+    @DatabaseField(columnName = "IsFav")
     private boolean IsFav;
 
     public String getBriefText ()

@@ -1,8 +1,10 @@
 package com.mallapp.View;
 
 import java.io.IOException;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -33,6 +35,10 @@ import com.List.Adapter.ShopAdapter;
 import com.List.Adapter.ShopExpandableAdapter;
 import com.List.Adapter.ShopSearchAdapter;
 import com.foound.widget.AmazingListView;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Controllers.ShopFiltration;
@@ -41,6 +47,7 @@ import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.cache.ShopCacheManager;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.layouts.SegmentedRadioGroup;
 import com.mallapp.listeners.ShopsDataListener;
@@ -70,24 +77,29 @@ public class ShopMainMenuActivity extends Activity
     LinearLayout side_index_scroll;
 
     String audienceFilter = MainMenuConstants.AUDIENCE_FILTER_ALL;
+    public static String mallPlaceId;
 
     static ArrayList<ShopsModel> shopModel_read_audience, shopsearchResults, shopsearch_array;
-
+    ArrayList<ShopsModel> dbList = new ArrayList<>();
 
     static HashMap<String, ArrayList<ShopsModel>> shops_all;
     static HashMap<String, ArrayList<ShopsModel>> shops_category, shops_floor;
 
     VolleyNetworkUtil volleyNetworkUtil;
+    // Reference of DatabaseHelper class to access its DAOs and other components
+    private DatabaseHelper databaseHelper = null;
+    Dao<ShopsModel, Integer> shopsDao;
 
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        readShopList();
         setContentView(R.layout.shop_main_menu);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
-        String url = ApiConstants.GET_SHOPS_URL_KEY + getIntent().getStringExtra("MallPlaceId");
+        shopModel_read_audience = new ArrayList<ShopsModel>();
+        mallPlaceId = getIntent().getStringExtra("MallPlaceId");
+        String url = ApiConstants.GET_SHOPS_URL_KEY + mallPlaceId;
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         volleyNetworkUtil.GetShops(url, this);
         getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
@@ -188,6 +200,22 @@ public class ShopMainMenuActivity extends Activity
         side_index_layout = (LinearLayout) findViewById(R.id.side_index);
         side_index_scroll = (LinearLayout) findViewById(R.id.scroll_side_index);
         list_view1 = (ExpandableListView) findViewById(R.id.expandableListView);
+
+        try {
+            // This is how, a reference of DAO object can be done
+            shopsDao = getHelper().getShopsDao();
+
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    // This is how, DatabaseHelper can be initialized for future use
+    private DatabaseHelper getHelper() {
+        if (databaseHelper == null) {
+            databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+        }
+        return databaseHelper;
     }
 
     private void readShopList() {
@@ -228,7 +256,7 @@ public class ShopMainMenuActivity extends Activity
 
     private void initSectionHeaderList() {
         list_view.setPinnedHeaderView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_item_shop_header, list_view, false));
-        adapter = new ShopAdapter(getApplicationContext(), ShopMainMenuActivity.this, shops_all, GlobelShops.header_section_alphabetics, audienceFilter);
+        adapter = new ShopAdapter(getApplicationContext(), ShopMainMenuActivity.this, shops_all, GlobelShops.header_section_alphabetics, audienceFilter, shopsDao);
         list_view.setAdapter(adapter);
     }
 
@@ -247,10 +275,10 @@ public class ShopMainMenuActivity extends Activity
 
 
     private void initArrays() {
-
         shops_all = new HashMap<String, ArrayList<ShopsModel>>();
         shops_category = new HashMap<String, ArrayList<ShopsModel>>();
         shops_floor = new HashMap<String, ArrayList<ShopsModel>>();
+
     }
 
     Map<String, Integer> mapIndex;
@@ -282,7 +310,14 @@ public class ShopMainMenuActivity extends Activity
     @Override
     public void onDestroy() {
         // TODO Auto-generated method stub
+        /*
+         * You'll need this in your class to release the helper when done.
+		 */
         super.onDestroy();
+        if (databaseHelper != null) {
+            OpenHelperManager.releaseHelper();
+            databaseHelper = null;
+        }
     }
 
 
@@ -335,7 +370,7 @@ public class ShopMainMenuActivity extends Activity
         invisibleSearch();
         if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)) {
             adapter = new ShopAdapter(getApplicationContext(), this,
-                    shops_all, GlobelShops.header_section_alphabetics, audienceFilter);
+                    shops_all, GlobelShops.header_section_alphabetics, audienceFilter, shopsDao);
 
             list_view.setAdapter(adapter);
             list_view1.setVisibility(View.GONE);
@@ -400,14 +435,18 @@ public class ShopMainMenuActivity extends Activity
     @Override
     public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList) {
         try {
+            /*if (shopsModelArrayList.size()>0)
             shopModel_read_audience = readShopsList(ShopMainMenuActivity.this);
+            else*/
+            getDBShops();
+//            shopModel_read_audience = shopsModelArrayList;
 
-            if (shopModel_read_audience != null) {
-                for (ShopsModel shop : shopModel_read_audience
+            if (dbList != null) {
+                for (ShopsModel shop : dbList
                         ) {
                     for (int i = 0; i < shopsModelArrayList.size(); i++) {
                         ShopsModel sh = shopsModelArrayList.get(i);
-                        if (sh.getMallStoreId() == shop.getMallStoreId()) {
+                        if (sh.getMallStoreId().equals(shop.getMallStoreId())) {
                             if (shop.isFav()) {
                                 sh.setFav(true);
                                 shopsModelArrayList.set(i, sh);
@@ -416,8 +455,8 @@ public class ShopMainMenuActivity extends Activity
                     }
                 }
             }
-            writeShopsList(ShopMainMenuActivity.this, shopsModelArrayList);
-        }catch (Exception ex){
+            shopModel_read_audience = shopsModelArrayList;
+        } catch (Exception ex) {
             ex.printStackTrace();
         }
 
@@ -443,7 +482,7 @@ public class ShopMainMenuActivity extends Activity
 
     }
 
-    public static void writeShopsList(Context context, ArrayList<ShopsModel> offer_objects) {
+    /*public static void writeShopsList(Context context, ArrayList<ShopsModel> offer_objects) {
         try {
             ShopCacheManager.writeObjectList(context, offer_objects);
         } catch (IOException e) {
@@ -462,5 +501,26 @@ public class ShopMainMenuActivity extends Activity
             e.printStackTrace();
         }
         return shopModel_read_audience;
+    }*/
+
+    public void getDBShops() {
+        try {
+            // This is how, a reference of DAO object can be done
+            Dao<ShopsModel, Integer> studentDao = getHelper().getShopsDao();
+            // Get our query builder from the DAO
+            final QueryBuilder<ShopsModel, Integer> queryBuilder = studentDao.queryBuilder();
+            // We need only Students who are associated with the selected Teacher, so build the query by "Where" clause
+            // Prepare our SQL statement
+            final PreparedQuery<ShopsModel> preparedQuery = queryBuilder.prepare();
+            // Fetch the list from Database by queryingit
+            final Iterator<ShopsModel> studentsIt = studentDao.queryForAll().iterator();
+            // Iterate through the StudentDetails object iterator and populate the comma separated String
+            while (studentsIt.hasNext()) {
+                final ShopsModel sDetails = studentsIt.next();
+                dbList.add(sDetails);
+            }
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

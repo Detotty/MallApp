@@ -2,11 +2,18 @@
 <items version="2" >
 
     <item
-        jar="C:\Users\hpp\.gradle\caches\modules-2\files-2.1\com.squareup.picasso\picasso\2.5.2\7446d06ec8d4f7ffcc53f1da37c95f200dcb9387\picasso-2.5.2.jar"
+        jar="J:\Android\Raw\MallApp\mallApp\libs\ormlite-core-4.48.jar"
         jumboMode="false"
         revision="22.0.1"
-        sha1="7446d06ec8d4f7ffcc53f1da37c95f200dcb9387">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\picasso-2.5.2-281e9b4be15d55b0a03b1343134d52f81a1500bb.jar" />
+        sha1="00b3081e1074bf380cc1d09d6ef4f8e5415311f2">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\ormlite-core-4.48-ce480bab6395af86abfc33c2b64cf0c20be6c984.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\libs\ormlite-android-4.48.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="afa06f539a4026c10b247386312aa67404b80a16">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\ormlite-android-4.48-9efb769e96411d39f7bde9429045bfaab80033aa.jar" />
     </item>
 
 </items>

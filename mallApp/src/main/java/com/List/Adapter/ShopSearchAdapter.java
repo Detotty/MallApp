@@ -19,6 +19,7 @@ import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
+import com.mallapp.View.ShopMainMenuActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;

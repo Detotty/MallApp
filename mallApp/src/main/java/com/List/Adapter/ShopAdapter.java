@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,11 +16,13 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.foound.widget.AmazingAdapter;
+import com.j256.ormlite.dao.Dao;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
+import com.mallapp.View.ShopMainMenuActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
@@ -35,12 +38,13 @@ public class ShopAdapter extends AmazingAdapter {
     String audience_type;
     private ShopsModel shop_obj;
     public ImageLoader imageLoader;
+    Dao<ShopsModel, Integer> shopsDao;
 
 
     public ShopAdapter(Context context, Activity activity,
                        HashMap<String, ArrayList<ShopsModel>> shops_all_audience,
                        ArrayList<String> header,
-                       String audience_type) {
+                       String audience_type,Dao<ShopsModel, Integer> shopsDao) {
 
         super();
         this.context = context;
@@ -49,6 +53,7 @@ public class ShopAdapter extends AmazingAdapter {
         this.activity = activity;
         this.audience_type = audience_type;
         imageLoader = new ImageLoader(activity.getApplicationContext());
+        this.shopsDao = shopsDao;
     }
 
     public String getAudience_type() {
@@ -165,11 +170,13 @@ public class ShopAdapter extends AmazingAdapter {
                 if (!shop_obj.isFav()) {
                     holder.is_fav.setImageResource(R.drawable.offer_fav_p);
                     shop_obj.setFav(true);
-                    ShopCacheManager.updateShops(context, shop_obj, "", position);
+                    updateShops(shop_obj);
+//                    ShopCacheManager.updateShops(context, shop_obj, "", position);
                 } else {
                     holder.is_fav.setImageResource(R.drawable.offer_fav);
                     shop_obj.setFav(false);
-                    ShopCacheManager.updateShops(context, shop_obj, "", position);
+                    updateShops(shop_obj);
+//                    ShopCacheManager.updateShops(context, shop_obj, "", position);
                 }
             }
         });
@@ -234,5 +241,12 @@ public class ShopAdapter extends AmazingAdapter {
             res[i] = this._listDataHeader.get(i);
         }
         return res;
+    }
+    public void updateShops(ShopsModel fav){
+        try {
+            shopsDao.createOrUpdate(fav);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
     }
 }

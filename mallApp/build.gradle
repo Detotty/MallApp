@@ -30,4 +30,6 @@ dependencies {
     compile 'com.google.android.gms:play-services:8.1.0'
     compile 'com.squareup.picasso:picasso:2.5.2'
     compile 'com.mcxiaoke.volley:library-aar:1.0.0'
+    compile files('libs/ormlite-android-4.48.jar')
+    compile files('libs/ormlite-core-4.48.jar')
 }

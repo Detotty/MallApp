@@ -1,55 +1,78 @@
 package com.mallapp.Model;
 
+import com.j256.ormlite.field.DatabaseField;
+
 import java.io.Serializable;
 
 /**
  * Created by Sharjeel Haider on 11/18/2015.
  */
 public class MallActivitiesModel implements Serializable{
+    @DatabaseField(columnName = "EntityLogo")
     private String EntityLogo;
 
+    @DatabaseField(columnName = "ActivityTextTitle")
     private String ActivityTextTitle;
 
+    @DatabaseField(columnName = "ImageURL")
     private String ImageURL;
 
     private BannerImagesModel[] BannerImages;
 
+    @DatabaseField(columnName = "MallName")
     private String MallName;
 
+    @DatabaseField(columnName = "DetailText")
     private String DetailText;
 
+    @DatabaseField( id = true, columnName = "ActivityId")
     private String ActivityId;
 
+    @DatabaseField(columnName = "ActivityTextName")
     private String ActivityTextName;
 
+    @DatabaseField(columnName = "EntityName")
     private String EntityName;
 
+    @DatabaseField(columnName = "MallPlaceId")
     private String MallPlaceId;
 
+    @DatabaseField(columnName = "TotalRecords")
     private String TotalRecords;
 
+    @DatabaseField(columnName = "BriefText")
     private String BriefText;
 
+    @DatabaseField(columnName = "EndDate")
     private String EndDate;
 
     private ActivityCategoriesModel[] ActivityCategories;
 
+    @DatabaseField(columnName = "StartDate")
     private String StartDate;
 
+    @DatabaseField(columnName = "RowNumber")
     private String RowNumber;
 
+    @DatabaseField(columnName = "EntityType")
     private String EntityType;
 
+    @DatabaseField(columnName = "EndTime")
     private String EndTime;
 
+    @DatabaseField(columnName = "PlaceName")
     private String PlaceName;
 
+    @DatabaseField(columnName = "StartTime")
     private String StartTime;
 
+    @DatabaseField(columnName = "ActivityName")
     private String ActivityName;
 
+    @DatabaseField(columnName = "EntityId")
     private String EntityId;
 
+    @DatabaseField(columnName = "isFav")
     private boolean isFav;
 
     public String getEntityLogo ()

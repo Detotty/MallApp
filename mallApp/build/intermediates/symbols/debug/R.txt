@@ -1251,6 +1251,7 @@ int layout tweet_dialog 0x7f030071
 int menu main 0x7f0e0000
 int raw countries_code 0x7f050000
 int raw gtm_analytics 0x7f050001
+int raw ormlite_config 0x7f050002
 int string Parking 0x7f060032
 int string abc_action_bar_home_description 0x7f060000
 int string abc_action_bar_home_description_format 0x7f060033
