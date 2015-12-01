@@ -1,5 +1,6 @@
 package com.mallapp.View;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -24,34 +25,53 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.ShopList;
+import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Shops;
 import com.mallapp.SharedPreferences.SharedPreference;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.socialsharing.Facebook_Login;
 import com.mallapp.socialsharing.Twitter_Integration;
 import com.mallapp.utils.GlobelOffersNews;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 @SuppressLint("InflateParams") 
 
-public class OffersDetailActivity extends Activity implements OnClickListener{
+public class OffersDetailActivity extends Activity implements OnClickListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 	
 	private ImageView 	offer_image;
 	private TextView 	offer_title, shope_name, offer_detail;
 	private ImageButton back_screen, is_fav;
 	private Button 		go_to_shop, social_sharing;
 	private LinearLayout related_offers, social_sharing_layout;
-	private ImageButton message, face_book, twitter, email, chat;
+	private ImageButton message, face_book, twitter, email;
 	MallActivitiesModel offer_object;
+	private SliderLayout mDemoSlider;
+	String url = ApiConstants.POST_FAV_OFFERS_URL_KEY;
+	Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
+	VolleyNetworkUtil volleyNetworkUtil;
+	private DatabaseHelper databaseHelper = null;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.offer_detail_activity);
+		volleyNetworkUtil = new VolleyNetworkUtil(this);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //UG4fewnT7&RV
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
@@ -70,7 +90,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 		else
 			is_fav.setImageResource(R.drawable.ofer_detail_heart);
-		
+		ImageSlider(offer_object.getBannerImages());
 		/*String image_		= offer_object.getImage();
 		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
 		Drawable d 			= getResources().getDrawable(imageResource);
@@ -84,7 +104,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
         int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.offer_detail_height);
 		d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
 		offer_image.setBackground(d);*/
-		Picasso.with(this).load(offer_object.getImageURL()).into(offer_image);
+//		Picasso.with(this).load(offer_object.getImageURL()).into(offer_image);
 //		setRelatedOffers();
 	}
 
@@ -168,8 +188,8 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 		go_to_shop	= (Button) 	findViewById(R.id.go_to_shop);
 		social_sharing=(Button) findViewById(R.id.share_detail_popup);
 		social_sharing.setOnClickListener(this);
-		offer_image= (ImageView)findViewById(R.id.offer_image);
-		
+		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
+
 		go_to_shop.setOnClickListener(this);
 		back_screen.setOnClickListener(this);
 		is_fav.setOnClickListener(this);
@@ -181,13 +201,19 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 		face_book	= (ImageButton) findViewById(R.id.fb); 
 		twitter 	= (ImageButton) findViewById(R.id.twiter);
 		email		= (ImageButton) findViewById(R.id.email);
-		chat		= (ImageButton) findViewById(R.id.chat);
-		
+
 		message		.setOnClickListener(this);
 		face_book	.setOnClickListener(this); 
 		twitter 	.setOnClickListener(this);
 		email		.setOnClickListener(this);
-		chat		.setOnClickListener(this);
+
+		try {
+			// This is how, a reference of DAO object can be done
+			mallActivitiesModelIntegerDaol =  getHelper().getMallActivitiesDao();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	private Shops readShopList() {
@@ -213,11 +239,15 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 			boolean fav	= offer_object.isFav();
 			if(fav){
 				is_fav.setImageResource(R.drawable.ofer_detail_heart);
-				offer_object.setFav(false);
+				volleyNetworkUtil.PostFavNnO(url + SharedPreferenceUserProfile.getUserId(this) + "&ActivityId=" + offer_object.getActivityId() + "&isDeleted=true");
+						offer_object.setFav(false);
+				updateMalls(offer_object);
 				
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+				volleyNetworkUtil.PostFavNnO(url + SharedPreferenceUserProfile.getUserId(this) + "&ActivityId=" + offer_object.getActivityId() + "&isDeleted=false");
 				offer_object.setFav(true);
+				updateMalls(offer_object);
 			}
 		}else if(v.getId() == go_to_shop.getId()){
 		
@@ -243,22 +273,16 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 			twitter.post_twitter();
 			
 		}else if(v.getId()== email.getId()){
-		
 			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);  
 			emailIntent.setType("plain/text");  
 			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share with friends");
 			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,"This mail from endorsement" );
 			startActivity(emailIntent);
-			
 		}else if(v.getId()== message.getId()){
-		
 			Intent sendIntent = new Intent(Intent.ACTION_VIEW);
 	        sendIntent.putExtra("sms_body", "Content of the SMS goes here..."); 
 	        sendIntent.setType("vnd.android-dir/mms-sms");
 	        startActivity(sendIntent);
-		
-		}else if(v.getId()== chat.getId()){
-			
 		}
 	}
 
@@ -280,5 +304,69 @@ public class OffersDetailActivity extends Activity implements OnClickListener{
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+		if (databaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			databaseHelper = null;
+		}
+	}
+	private DatabaseHelper getHelper() {
+		if (databaseHelper == null) {
+			databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+		}
+		return databaseHelper;
+	}
+
+	public void ImageSlider(BannerImagesModel bImages[]){
+		for(BannerImagesModel name : bImages){
+			TextSliderView textSliderView = new TextSliderView(this);
+			// initialize a SliderLayout
+			textSliderView
+					.error(R.drawable.placeholder)
+					.empty(R.drawable.placeholder)
+					.errorDisappear(false)
+					.image(name.getBannerImageURL())
+					.setScaleType(BaseSliderView.ScaleType.Fit)
+					.setOnSliderClickListener(this);
+
+			//add your extra information
+			textSliderView.bundle(new Bundle());
+			textSliderView.getBundle()
+					.putString("extra",name.getBannerImageURL());
+
+			mDemoSlider.addSlider(textSliderView);
+		}
+		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+		mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+		mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+		mDemoSlider.setDuration(2800);
+		mDemoSlider.addOnPageChangeListener(this);
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+
+	}
+
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
+
+	}
+
+	public void updateMalls(MallActivitiesModel fav){
+		try {
+			mallActivitiesModelIntegerDaol.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 }

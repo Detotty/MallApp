@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.View.R;
@@ -25,10 +26,11 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      ************************************************/
 
     private static final String DATABASE_NAME = "favorites.db";
-    private static final int DATABASE_VERSION = 2;
+    private static final int DATABASE_VERSION = 3;
 
     private Dao<ShopsModel, Integer> shopsDao;
     private Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDao;
+    private Dao<ShopDetailModel, Integer> shopDetailModelIntegerDao;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -45,6 +47,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             // Create tables. This onCreate() method will be invoked only once of the application life time i.e. the first time when the application starts.
             TableUtils.createTableIfNotExists(connectionSource, ShopsModel.class);
             TableUtils.createTableIfNotExists(connectionSource, MallActivitiesModel.class);
+            TableUtils.createTableIfNotExists(connectionSource, ShopDetailModel.class);
 
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Unable to create datbases", e);
@@ -59,6 +62,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             // existing database etc.
             TableUtils.dropTable(connectionSource, ShopsModel.class, true);
             TableUtils.dropTable(connectionSource, MallActivitiesModel.class, true);
+            TableUtils.dropTable(connectionSource, ShopDetailModel.class, true);
             onCreate(sqliteDatabase, connectionSource);
 
         } catch (SQLException e) {
@@ -81,6 +85,13 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             mallActivitiesModelIntegerDao = getDao(MallActivitiesModel.class);
         }
         return mallActivitiesModelIntegerDao;
+    }
+
+    public Dao<ShopDetailModel, Integer> getShopDetailDao() throws SQLException {
+        if (shopDetailModelIntegerDao == null) {
+            shopDetailModelIntegerDao = getDao(ShopDetailModel.class);
+        }
+        return shopDetailModelIntegerDao;
     }
 
 }

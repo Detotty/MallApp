@@ -59,83 +59,92 @@
             android:layout_alignParentRight="true"
             class="com.google.android.gms.maps.SupportMapFragment" />
 
-        <TextView
-            android:id="@+id/tv_address"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_left_15"
-            android:textColor="@color/black3"
-            android:drawableLeft="@drawable/shop_detail_location_p"
-            android:drawablePadding="10dp"
-            android:textSize="@dimen/text_15"/>
-
-        <TextView
-            android:id="@+id/tv_phone"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_left_15"
-            android:textColor="@color/black3"
-            android:drawableLeft="@drawable/phone"
-            android:drawablePadding="10dp"
-            android:textSize="@dimen/text_15"/>
-
-        <TextView
-            android:id="@+id/tv_email"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_left_15"
-            android:textColor="@color/black3"
-            android:drawableLeft="@drawable/phone"
-            android:drawablePadding="10dp"
-            android:textSize="@dimen/text_15"/>
-
-        <TextView
-            android:id="@+id/tv_web"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_left_15"
-            android:textColor="@color/black3"
-            android:drawableLeft="@drawable/shop_detail_clock_p"
-            android:drawablePadding="10dp"
-            android:textSize="@dimen/text_15"/>
-
         <LinearLayout
-            android:layout_width="wrap_content"
+            android:layout_width="fill_parent"
             android:layout_height="wrap_content"
-            android:layout_margin="@dimen/margin_left_15"
-            android:orientation="horizontal"
+            android:layout_marginLeft="@dimen/margin_left_15"
+            android:orientation="vertical"
             >
-            <ImageView
+            <TextView
+                android:id="@+id/tv_address"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:paddingTop="7dp"
-                android:src="@drawable/shop_detail_clock_p"/>
+                android:textColor="@color/black3"
+                android:layout_marginTop="5dp"
+                android:drawableLeft="@drawable/shop_detail_location_p"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/text_15"/>
+
+            <TextView
+                android:id="@+id/tv_phone"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black3"
+                android:drawableLeft="@drawable/phone"
+                android:layout_marginTop="10dp"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/text_15"/>
+
+            <TextView
+                android:id="@+id/tv_email"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black3"
+                android:layout_marginTop="10dp"
+                android:drawableLeft="@drawable/email"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/text_15"/>
+
+            <TextView
+                android:id="@+id/tv_web"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:textColor="@color/black3"
+                android:layout_marginTop="10dp"
+
+                android:drawableLeft="@drawable/web"
+                android:drawablePadding="10dp"
+                android:textSize="@dimen/text_15"/>
 
             <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginLeft="10dp"
-                android:orientation="vertical">
-
-                <TextView
-                    android:id="@+id/tv_timing1"
+                android:orientation="horizontal"
+                >
+                <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black3"
-                    android:drawablePadding="10dp"
-                    android:textSize="@dimen/text_15"/>
+                    android:paddingTop="10dp"
+                    android:src="@drawable/shop_detail_clock_p"/>
 
-                <TextView
-                    android:id="@+id/tv_timing2"
+                <LinearLayout
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:textColor="@color/black3"
-                    android:drawablePadding="10dp"
-                    android:textSize="@dimen/text_15"/>
+                    android:layout_marginLeft="10dp"
+                    android:layout_marginTop="10dp"
+                    android:orientation="vertical">
+
+                    <TextView
+                        android:id="@+id/tv_timing1"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black3"
+                        android:drawablePadding="10dp"
+                        android:textSize="@dimen/text_15"/>
+
+                    <TextView
+                        android:id="@+id/tv_timing2"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:textColor="@color/black3"
+                        android:drawablePadding="10dp"
+                        android:textSize="@dimen/text_15"/>
+
+                </LinearLayout>
 
             </LinearLayout>
-
         </LinearLayout>
+
 
 
 

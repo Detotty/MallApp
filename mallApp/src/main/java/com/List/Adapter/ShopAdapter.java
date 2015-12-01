@@ -17,9 +17,11 @@ import android.widget.TextView;
 
 import com.foound.widget.AmazingAdapter;
 import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
 import com.mallapp.View.ShopMainMenuActivity;
@@ -39,6 +41,10 @@ public class ShopAdapter extends AmazingAdapter {
     private ShopsModel shop_obj;
     public ImageLoader imageLoader;
     Dao<ShopsModel, Integer> shopsDao;
+    String url;
+    String UserId;
+
+
 
 
     public ShopAdapter(Context context, Activity activity,
@@ -54,6 +60,9 @@ public class ShopAdapter extends AmazingAdapter {
         this.audience_type = audience_type;
         imageLoader = new ImageLoader(activity.getApplicationContext());
         this.shopsDao = shopsDao;
+        url = ApiConstants.POST_FAV_SHOP_URL_KEY;
+        UserId = SharedPreferenceUserProfile.getUserId(context);
+
     }
 
     public String getAudience_type() {

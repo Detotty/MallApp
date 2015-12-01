@@ -16,6 +16,7 @@ public class ApiConstants {
 
 	public static final String FAVOURITE_SERVICE_URL_KEY = URL_KEY+"UserFavoritesService/";
 
+	public static final String RESTAURANT_SERVICE_URL_KEY = URL_KEY+"RestaurantService/";
 
 
 	public static final String SEND_SMS_URL_KEY =  ACCOUNT_URL_KEY+"Register/";
@@ -47,4 +48,8 @@ public class ApiConstants {
 	public static final String GET_SHOP_DETAIL_URL_KEY = SHOPS_SERVICE_URL_KEY +"GetShopDetail?MallStoreId=";
 
 	public static final String POST_FAV_OFFERS_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteOffers?UserId=";
+
+	public static final String POST_FAV_SHOP_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteShops?UserId=";
+	//http://52.28.59.218:5001/api/UserFavoritesService/SaveFavoriteShops?UserId=%7bUserId%7d&EntityId=%7bEntityId%7d&d={EntityId}&IsShop=true?IsDeleted={IsDeleted}
+	public static final String GET_RESTAURANT_URL_KEY = RESTAURANT_SERVICE_URL_KEY +"GetRestaurants/";
 }

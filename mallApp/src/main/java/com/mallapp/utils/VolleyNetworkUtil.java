@@ -55,8 +55,9 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private String requestType;
 
     private final String POST_FAV_NnO = "POST_FAV_NnO";
+    private final String POST_FAV_SHOP = "POST_FAV_SHOP";
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
-    private final String IMAGE_UPLOADING = "IMAGE_UPLOADING";
+    private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
     private final String BOOKMARK_ENDORSEMENT = "BOOKMARK_ENDORSEMENT";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
 
@@ -196,8 +197,9 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
     /*<--------------SHOPS DETAILS DATA ---------------->*/
 
-    public void GetShopDetail(String url,final ShopsDataListener mallDataListener) {
+    public void GetShopDetail(String url,final ShopsDataListener shopsDataListener) {
         requestType = GET_SHOP_DETAIL;
+        this.shopsDataListener = shopsDataListener;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -223,6 +225,41 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                 String token = SharedPreferenceUserProfile.getUserToken(context);
                 Log.e("", " token" + token);
                 headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
+
+    /*<--------------NEWS AND OFFERS FAVORITE SELECTION ---------------->*/
+    public void PostFavShop(String url) {
+        requestType = POST_FAV_SHOP;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
+
+    /*<--------------MALL NEWS AND OFFER ---------------->*/
+    public void GetMallNewsnOffers(String url,final MallDataListener mallDataListener) {
+        requestType = GET_MALL_NEWSnOFFERS;
+        this.mallDataListener = mallDataListener;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+//                headers.put("Content-Type", "application/json");
                 headers.put("Auth-Token", token);
                 return headers;
             }
@@ -286,6 +323,34 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     else{
 
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case POST_FAV_SHOP: {
+                try {
+                    boolean success = response.getBoolean("Success");
+                    if (success) {
+
+                    }
+                    else{
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            case GET_MALL_NEWSnOFFERS: {
+                try {
+                    Gson gson = new Gson();
+                    String data = response.getJSONArray("MallActivities").toString();
+                    Type listType = new TypeToken<List<MallActivitiesModel>>() {
+                    }.getType();
+
+                    ArrayList<MallActivitiesModel> model = gson.fromJson(data, listType);
+                    mallDataListener.onDataReceived(model);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

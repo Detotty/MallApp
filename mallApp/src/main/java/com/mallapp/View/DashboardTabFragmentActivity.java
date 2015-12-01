@@ -199,6 +199,12 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, RestaurantMainMenuActivity.class);
+				for (FavouriteCentersModel fav: CentersCacheManager.getAllCenters(context)
+						) {
+					if (fav.getName().equals(MainMenuConstants.SELECTED_CENTER_NAME)){
+						activity.putExtra("MallPlaceId",fav.getMallPlaceId());
+					}
+				}
 				startActivity(activity);
 			} else
 				showdailog();

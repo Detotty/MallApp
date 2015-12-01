@@ -1,5 +1,6 @@
 package com.mallapp.View;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -33,6 +34,11 @@ import android.widget.TextView;
 import android.widget.Toast;
 import android.widget.ViewFlipper;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -40,13 +46,18 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
 import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.Model.StoreTimingsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ScalingUtilities;
 import com.mallapp.imagecapture.ScalingUtilities.ScalingLogic;
@@ -57,7 +68,7 @@ import com.squareup.picasso.Picasso;
 
 
 @SuppressLint("InflateParams")
-public class ShopDetailActivity extends FragmentActivity implements OnClickListener, ShopsDataListener {
+public class ShopDetailActivity extends FragmentActivity implements OnClickListener, ShopsDataListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 	
 	private  GestureDetector detector ;
 	VolleyNetworkUtil volleyNetworkUtil;
@@ -65,9 +76,13 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	public static final int DEFAULT_MAP_ZOOM_LEVEL = 12;
 	Double lat,lng;
 	String locationName;
+	private DatabaseHelper databaseHelper = null;
+	Dao<ShopDetailModel, Integer> shopsDao;
+
 
 
 	ShopsModel shop_obj;
+	ShopDetailModel shop_detail_obj;
 	private ImageView 		shop_logo;
 	private TextView 		tv_about, tv_Detail, shop_name, 	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
@@ -77,9 +92,9 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	RelativeLayout 			timing_layout;
 	private ImageButton 	message, face_book, twitter, email, chat;
 	
-	private ViewFlipper 	mViewFlipper;	
 	private AnimationListener mAnimationListener;
 	String url;
+	private SliderLayout mDemoSlider;
 
 	@Override
 	 protected void onCreate(Bundle savedInstanceState) {
@@ -91,7 +106,6 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		detector = new GestureDetector(getApplicationContext(), new SwipeGestureDetector());
 //		initActivity();
 		displayData();
 	}
@@ -113,9 +127,16 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		tv_Timing2 		= (TextView) findViewById(R.id.tv_timing2);
 		back_screen = (ImageButton) findViewById(R.id.back);
 		is_fav		.setOnClickListener(this);
+		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
 
+		try {
+			// This is how, a reference of DAO object can be done
+			shopsDao = getHelper().getShopDetailDao();
 
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 		
 		/*setShopLogo();
 		setShopOffers();
@@ -308,7 +329,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		social_sharing = (ImageButton) findViewById(R.id.social_sharing);
 		
 		
-		mViewFlipper = (ViewFlipper) this.findViewById(R.id.view_flipper);
+		/*mViewFlipper = (ViewFlipper) this.findViewById(R.id.view_flipper);
 		mViewFlipper.setAutoStart(true);
 		mViewFlipper.setFlipInterval(4000);
 		mViewFlipper.startFlipping();
@@ -319,7 +340,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 				return true;
 			}
 		});
-		
+		*/
 		
 		
 		//animation listener
@@ -376,6 +397,17 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	protected void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		if (databaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			databaseHelper = null;
+		}
+	}
+
+	private DatabaseHelper getHelper() {
+		if (databaseHelper == null) {
+			databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+		}
+		return databaseHelper;
 	}
 
 	@Override
@@ -385,14 +417,15 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			finish();
 		}else if(v.getId() == is_fav.getId()){
 			
-			/*boolean fav	= shop_obj.isFav();
+			boolean fav	= shop_detail_obj.isFav();
 			if(fav){
 				is_fav.setImageResource(R.drawable.ofer_detail_heart);
-				shop_obj.setFav(false);
+				shop_detail_obj.setFav(false);
+				updateShops(shop_detail_obj);
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
-				shop_obj.setFav(true);
-			}*/
+				shop_detail_obj.setFav(true);
+			}
 				
 			
 		}else if(v.getId() == location.getId()){
@@ -425,7 +458,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		}
 		
 	}
-	
+
 	private void setInVisibility_tabs() {
 
 		social_sharing.	setImageResource(R.drawable.shop_detail_share);
@@ -448,7 +481,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
 	@Override
 	public void onShopDetailReceived(ShopDetailModel shopDetail) {
-
+		shop_detail_obj = shopDetail;
 		initilizeMap();
 		shop_name.setText(shopDetail.getName());
 		tv_about.setText(shopDetail.getAboutText());
@@ -471,7 +504,8 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		lng = Double.parseDouble(shopDetail.getLongitude());
 		locationName = shopDetail.getAddress();
 		drawMarkerandZoom(lat, lng, locationName);
-
+		BannerImagesModel bImage[] = shopDetail.getBannerImages();
+		ImageSlider(bImage);
 	}
 
 	@Override
@@ -479,32 +513,26 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
 	}
 
-	class SwipeGestureDetector extends SimpleOnGestureListener {
-		@Override
-		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
-			try {
-				// right to left swipe
-				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_in));
-					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_out));
-					// controlling animation
-					mViewFlipper.getInAnimation().setAnimationListener(mAnimationListener);
-					mViewFlipper.showNext();
-					return true;
-				} else if (e2.getX() - e1.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
-					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.right_in));
-					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(),R.anim.right_out));
-					// controlling animation
-					mViewFlipper.getInAnimation().setAnimationListener(mAnimationListener);
-					mViewFlipper.showPrevious();
-					return true;
-				}
-			} catch (Exception e) {
-				e.printStackTrace();
-			}
-			return false;
-		}
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
 	}
+
+	@Override
+	public void onPageSelected(int position) {
+
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+
+	}
+
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
+
+	}
+
 
 	/**
 	 * function to load map If map is not created it will create it for you
@@ -572,6 +600,40 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		CameraPosition cameraPosition = new CameraPosition.Builder().target(thisPosition).zoom(DEFAULT_MAP_ZOOM_LEVEL).build();
 		map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+	}
+
+	public void ImageSlider(BannerImagesModel bImages[]){
+		for(BannerImagesModel name : bImages){
+			TextSliderView textSliderView = new TextSliderView(this);
+			// initialize a SliderLayout
+			textSliderView
+					.error(R.drawable.placeholder)
+					.empty(R.drawable.placeholder)
+					.errorDisappear(false)
+					.image(name.getBannerImageURL())
+					.setScaleType(BaseSliderView.ScaleType.Fit)
+					.setOnSliderClickListener(this);
+
+			//add your extra information
+			textSliderView.bundle(new Bundle());
+			textSliderView.getBundle()
+					.putString("extra",name.getBannerImageURL());
+
+			mDemoSlider.addSlider(textSliderView);
+		}
+		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+		mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+		mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+		mDemoSlider.setDuration(2800);
+		mDemoSlider.addOnPageChangeListener(this);
+	}
+
+	public void updateShops(ShopDetailModel fav){
+		try {
+			shopsDao.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
 	}
 
 }

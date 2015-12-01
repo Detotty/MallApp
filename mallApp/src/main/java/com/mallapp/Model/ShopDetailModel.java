@@ -1,5 +1,7 @@
 package com.mallapp.Model;
 
+import com.j256.ormlite.field.DatabaseField;
+
 import java.io.Serializable;
 
 /**
@@ -7,56 +9,77 @@ import java.io.Serializable;
  */
 public class ShopDetailModel implements Serializable
 {
+    @DatabaseField(columnName = "Phone")
     private String Phone;
 
     private BannerImagesModel[] BannerImages;
 
+    @DatabaseField(columnName = "WebURL")
     private String WebURL;
 
+    @DatabaseField(columnName = "TwitterURL")
     private String TwitterURL;
 
+    @DatabaseField(columnName = "LogoURL")
     private String LogoURL;
 
+    @DatabaseField(columnName = "FacebookURL")
     private String FacebookURL;
 
+    @DatabaseField(id = true, columnName = "StoreId")
     private String StoreId;
 
+    @DatabaseField(columnName = "Latitude")
     private String Latitude;
-
-    private String[] StoreOffers;
 
     private StoreCategoriesModel[] StoreCategories;
 
     private StoreTimingsModel[] StoreTimings;
 
+    @DatabaseField(columnName = "ContactPerson")
     private String ContactPerson;
 
+    @DatabaseField(columnName = "SiteMapURL")
     private String SiteMapURL;
 
+    @DatabaseField(columnName = "ExternalShopId")
     private String ExternalShopId;
 
+    @DatabaseField(columnName = "ZipCode")
     private String ZipCode;
 
+    @DatabaseField(columnName = "Floor")
     private String Floor;
 
+    @DatabaseField(columnName = "Name")
     private String Name;
 
+    @DatabaseField(columnName = "BriefText")
     private String BriefText;
 
+    @DatabaseField(columnName = "AboutText")
     private String AboutText;
 
+    @DatabaseField(columnName = "Email")
     private String Email;
 
+    @DatabaseField(columnName = "SiteMapActive")
     private String SiteMapActive;
 
+    @DatabaseField(columnName = "Address")
     private String Address;
 
+    @DatabaseField(columnName = "Longitude")
     private String Longitude;
 
+    @DatabaseField(columnName = "LinkedInURL")
     private String LinkedInURL;
 
     private String[] StorePhones;
 
+    private StoreOffersModel[] StoreOffers;
+
+    @DatabaseField(columnName = "isFav")
     private boolean isFav;
 
     public String getPhone ()
@@ -137,16 +160,6 @@ public class ShopDetailModel implements Serializable
     public void setLatitude (String Latitude)
     {
         this.Latitude = Latitude;
-    }
-
-    public String[] getStoreOffers ()
-    {
-        return StoreOffers;
-    }
-
-    public void setStoreOffers (String[] StoreOffers)
-    {
-        this.StoreOffers = StoreOffers;
     }
 
     public StoreCategoriesModel[] getStoreCategories ()
@@ -308,6 +321,18 @@ public class ShopDetailModel implements Serializable
     {
         this.StorePhones = StorePhones;
     }
+
+
+    public void setStoreOffers (StoreOffersModel[] StoreOffers)
+    {
+        this.StoreOffers = StoreOffers;
+    }
+
+    public StoreOffersModel[] getStoreOffers ()
+    {
+        return StoreOffers;
+    }
+
 
     public boolean isFav ()
     {

@@ -156,6 +156,7 @@ MERGED from [com.google.android.gms:play-services-base:8.1.0] J:\Android\Raw\Mal
 MERGED from [com.google.android.gms:play-services-basement:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.1.0\AndroidManifest.xml:18:5-42
 MERGED from [com.android.support:support-v4:22.2.1] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\AndroidManifest.xml:20:5-43
 MERGED from [com.mcxiaoke.volley:library-aar:1.0.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.mcxiaoke.volley\library-aar\1.0.0\AndroidManifest.xml:3:5-72
+MERGED from [com.daimajia.slider:library:1.1.5] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.daimajia.slider\library\1.1.5\AndroidManifest.xml:7:5-9:41
 	android:targetSdkVersion
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:10:9-38
 		INJECTED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml
@@ -179,6 +180,7 @@ MERGED from [com.google.android.gms:play-services-analytics:8.1.0] J:\Android\Ra
 MERGED from [com.google.android.gms:play-services-ads:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\AndroidManifest.xml:20:5-66
 MERGED from [com.google.android.gms:play-services-wallet:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-wallet\8.1.0\AndroidManifest.xml:20:5-66
 MERGED from [com.google.android.gms:play-services-maps:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\AndroidManifest.xml:21:5-66
+MERGED from [com.daimajia.slider:library:1.1.5] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.daimajia.slider\library\1.1.5\AndroidManifest.xml:11:5-67
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:13:22-64
 uses-permission#android.permission.CAMERA
@@ -232,6 +234,7 @@ MERGED from [com.google.android.gms:play-services-maps:8.1.0] J:\Android\Raw\Mal
 MERGED from [com.google.android.gms:play-services-maps:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\AndroidManifest.xml:22:5-80
 MERGED from [com.google.android.gms:play-services-maps:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\AndroidManifest.xml:22:5-80
 MERGED from [com.google.android.gms:play-services-maps:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-maps\8.1.0\AndroidManifest.xml:22:5-80
+MERGED from [com.daimajia.slider:library:1.1.5] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.daimajia.slider\library\1.1.5\AndroidManifest.xml:12:5-81
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:30:22-78
 uses-permission#android.permission.READ_CONTACTS

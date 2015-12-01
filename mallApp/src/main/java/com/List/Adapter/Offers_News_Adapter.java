@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.io.Serializable;
 import java.sql.SQLException;
 import java.util.ArrayList;
 
@@ -174,10 +175,15 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 			d = endorsement_images_list.get(position);
 			holder.back_image.setBackground(d);
 		}*/
-
+        String offerTime;
+        if (offer_obj.getActivityName().equals("Offer")){
+            offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
+        }else {
+            offerTime  = offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"));
+        }
         holder.title.setText(offer_obj.getActivityTextTitle());
         holder.decs.setText(offer_obj.getDetailText());
-        holder.center_name.setText(offer_obj.getStartDate());
+        holder.center_name.setText(offerTime);
         holder.shome_name.setText(offer_obj.getPlaceName());
         Picasso.with(context).load(offer_obj.getImageURL()).into(holder.back_image);
         Picasso.with(context).load(offer_obj.getEntityLogo()).into(holder.entity_logo);
@@ -221,26 +227,6 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                 intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 activity.getApplication().startActivity(intent);
-
-//				if(endorsement_clicked_type!=null && 
-//						endorsement_clicked_type.equals(
-//								Offers_News_Constants.ENDORSEMENT_CLICK_TYPE)){
-//					end_obj= getItem(position);
-//					Globel_Endorsement.end_obj_chat= end_obj;
-//					Globel_Endorsement.endorsement_click_type= null;
-//					Intent resultIntent = new Intent();
-//					resultIntent.putExtra("result","some result");
-//					activity.setResult(Endorsement_Detail_Chat.REQUEST_CODE_FOR_ENDORSEMENT, resultIntent);
-//					activity.finish();
-//					
-//				}else{
-//					end_obj= getItem(position);//endorsement_filter.get(position);
-//					Globel_Endorsement.end_obj= end_obj;
-//					Intent intent= new Intent(activity, Endorsement_Overview_Detail.class);
-//					intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);                     
-//					intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-//					activity.getApplication().startActivity(intent);
-//				}
             }
         });
         return view;

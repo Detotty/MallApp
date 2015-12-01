@@ -2,18 +2,32 @@
 <items version="2" >
 
     <item
-        jar="J:\Android\Raw\MallApp\mallApp\libs\ormlite-core-4.48.jar"
-        jumboMode="false"
-        revision="22.0.1"
-        sha1="00b3081e1074bf380cc1d09d6ef4f8e5415311f2">
-        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\ormlite-core-4.48-ce480bab6395af86abfc33c2b64cf0c20be6c984.jar" />
-    </item>
-    <item
         jar="J:\Android\Raw\MallApp\mallApp\libs\ormlite-android-4.48.jar"
         jumboMode="false"
         revision="22.0.1"
         sha1="afa06f539a4026c10b247386312aa67404b80a16">
         <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\ormlite-android-4.48-9efb769e96411d39f7bde9429045bfaab80033aa.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.daimajia.slider\library\1.1.5\jars\classes.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="08962e03b6a954c65d4944e092879b7f5ee1208d">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\classes-c852c84fc0b79bec950c6f2c33ebd2294350a62f.jar" />
+    </item>
+    <item
+        jar="C:\Users\hpp\.gradle\caches\modules-2\files-2.1\com.nineoldandroids\library\2.4.0\e9b63380f3a242dbdbf103a2355ad7e43bad17cb\library-2.4.0.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="e9b63380f3a242dbdbf103a2355ad7e43bad17cb">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\library-2.4.0-c6ae62ea32ab22aaca5986beede5b4197ed94fa7.jar" />
+    </item>
+    <item
+        jar="J:\Android\Raw\MallApp\mallApp\libs\ormlite-core-4.48.jar"
+        jumboMode="false"
+        revision="22.0.1"
+        sha1="00b3081e1074bf380cc1d09d6ef4f8e5415311f2">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\debug\ormlite-core-4.48-ce480bab6395af86abfc33c2b64cf0c20be6c984.jar" />
     </item>
 
 </items>

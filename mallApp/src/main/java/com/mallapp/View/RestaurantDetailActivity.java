@@ -47,7 +47,7 @@ public class RestaurantDetailActivity extends Activity implements OnClickListene
 	private LinearLayout 	related_restaurants, 	rest_offers,  social_sharing_layout, location_layout;
 	RelativeLayout 			timing_layout;
 	private ImageButton 	message, face_book, twitter, email, chat;
-	private ViewFlipper 	mViewFlipper;	
+//	private ViewFlipper 	mViewFlipper;
 	private AnimationListener mAnimationListener;
 
 	
@@ -278,7 +278,7 @@ public class RestaurantDetailActivity extends Activity implements OnClickListene
 		social_sharing= (ImageButton) findViewById(R.id.social_sharing);
 		
 		
-		mViewFlipper = (ViewFlipper) this.findViewById(R.id.view_flipper);
+		/*mViewFlipper = (ViewFlipper) this.findViewById(R.id.view_flipper);
 		mViewFlipper.setAutoStart(true);
 		mViewFlipper.setFlipInterval(4000);
 		mViewFlipper.startFlipping();
@@ -289,7 +289,7 @@ public class RestaurantDetailActivity extends Activity implements OnClickListene
 				detector.onTouchEvent(event);
 				return true;
 			}
-		});
+		});*/
 		
 		//animation listener
 		mAnimationListener = new Animation.AnimationListener() {
@@ -416,7 +416,7 @@ public class RestaurantDetailActivity extends Activity implements OnClickListene
 		public boolean onFling(MotionEvent e1, MotionEvent e2, float velocityX, float velocityY) {
 			try {
 				// right to left swipe
-				if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
+				/*if (e1.getX() - e2.getX() > SWIPE_MIN_DISTANCE && Math.abs(velocityX) > SWIPE_THRESHOLD_VELOCITY) {
 					mViewFlipper.setInAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_in));
 					mViewFlipper.setOutAnimation(AnimationUtils.loadAnimation(getApplicationContext(), R.anim.left_out));
 					// controlling animation
@@ -430,7 +430,7 @@ public class RestaurantDetailActivity extends Activity implements OnClickListene
 					mViewFlipper.getInAnimation().setAnimationListener(mAnimationListener);
 					mViewFlipper.showPrevious();
 					return true;
-				}
+				}*/
 			} catch (Exception e) {
 				e.printStackTrace();
 			}

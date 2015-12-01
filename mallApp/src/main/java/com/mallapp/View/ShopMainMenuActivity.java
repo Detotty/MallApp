@@ -523,4 +523,6 @@ public class ShopMainMenuActivity extends Activity
             e.printStackTrace();
         }
     }
+
+
 }

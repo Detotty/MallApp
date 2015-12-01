@@ -65,6 +65,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     private final String REFRESH_MALL_ACTIVITIES = "REFRESH_MALL_ACTIVITIES";
     private final String LOADING_MALL_ACTIVITIES = "LOADING_MALL_ACTIVITIES";
     private int pageNo = 1;
+    boolean lastPage = false;
+    boolean isPaused = false;
+
+
 
     private ListView list;
     private int position;
@@ -146,10 +150,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             @Override
             public void onRefresh() {
                 if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
-                   /* swipeRefreshLayout.setRefreshing(true);
+                    swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
-                    pullToRefresh();*/
+                    pullToRefresh();
                 }
             }
         });
@@ -170,19 +174,26 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     @Override
     public void onResume() {
         super.onResume();
+        if(!isPaused)
+            pageNo = 1;
         getLatestListing();
+    }
+    @Override
+    public void onPause() {
+        super.onPause();
+        isPaused = true;
     }
 
     public void getLatestListing() {
 
         requestType = LOADING_MALL_ACTIVITIES;
-        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1";
-        volleyNetworkUtil.GetMallsActivities(url, this);
+        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1"+"&MallPlaceId="+"&PageIndex="+pageNo+"&PageSize=10";
+        volleyNetworkUtil.GetMallNewsnOffers(url, this);
     }
 
     public void pullToRefresh() {
-        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1";
-        volleyNetworkUtil.GetMallsActivities(url, this);
+        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1"+"&MallPlaceId="+"&PageIndex="+pageNo+"&PageSize=10";
+        volleyNetworkUtil.GetMallNewsnOffers(url, this);
     }
 
     private void filterData() {
@@ -276,7 +287,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     @Override
                     public void run() {
 
-                        if (mallActivitiesModels != null) {
+                        if (mallActivitiesModels != null && mallActivitiesModels.size()>0) {
 
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
 //                            mallActivitiesListing = mallActivitiesModels;
@@ -295,11 +306,12 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                     Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
                                     Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel) list.getItemAtPosition(position)).getName());
 
-                                    /*if (adapter.getCount() > 0)
-                                        if ((totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                                    if (adapter.getCount() > 0)
+                                        if (! lastPage &&(totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
+                                            pageNo++;
                                             pullToRefresh();
-                                        }*/
+                                        }
                                 }
                             });
                         } else {
@@ -320,10 +332,14 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     @Override
                     public void run() {
 
-                        mallActivitiesListing.addAll(mallActivitiesModels);
-                        adapter.notifyDataSetChanged();
-                        requestType = "";
-                        Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel)list.getItemAtPosition(position)).getName());
+                        if (mallActivitiesModels!=null && mallActivitiesModels.size()>0 ){
+                            mallActivitiesListing.addAll(mallActivitiesModels);
+                            adapter.notifyDataSetChanged();
+                            requestType = "";
+                            Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel)list.getItemAtPosition(position)).getName());
+                        }else{
+                            lastPage = true;
+                        }
 
                     }
                 });
@@ -337,11 +353,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        if (mallActivitiesListing != null) {
+                        if (mallActivitiesListing != null && mallActivitiesListing.size()>0) {
                             mallActivitiesListing.clear();
-                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
-                            writeOffersNews(context, mallActivitiesListing);
-                            mallActivitiesListing.addAll(0, mallActivitiesModels);
+                            ArrayList<MallActivitiesModel> news = FavouriteSelection(context, mallActivitiesModels);
+                            mallActivitiesListing.addAll(0, news);
                             adapter.notifyDataSetChanged();
                         } else {
                             mallActivitiesListing = mallActivitiesModels;
@@ -362,14 +377,15 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                                     Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
                                     if (adapter.getCount() > 0)
-                                        if ((totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                                        if (!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
+                                            pageNo++;
                                             pullToRefresh();
                                         }
                                 }
                             });
                         }
-//                        adapter.notifyDataSetChanged();
+                        adapter.notifyDataSetChanged();
                         requestType = "";
                     }
                 });
