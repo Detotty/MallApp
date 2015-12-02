@@ -25,6 +25,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.OffersNewsFiltration;
 import com.mallapp.Model.FavouriteCentersModel;
@@ -69,7 +70,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     boolean isPaused = false;
 
 
-
     private ListView list;
     private int position;
     public static Handler uihandler;
@@ -82,6 +82,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     private SwipeRefreshLayout swipeRefreshLayout;
     Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
     private DatabaseHelper databaseHelper = null;
+    ArrayList<MallActivitiesModel> mallActivities_All,
+            mallActivities_Offers,
+            mallActivities_News;
 
 
     public static OfferPagerTabFragment newInstance(
@@ -132,7 +135,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         Log.e("OfferPagerTabFragment", "onCreate");
         try {
             // This is how, a reference of DAO object can be done
-            mallActivitiesModelIntegerDaol =  getHelper().getMallActivitiesDao();
+            mallActivitiesModelIntegerDaol = getHelper().getMallActivitiesDao();
 
         } catch (SQLException e) {
             e.printStackTrace();
@@ -149,7 +152,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
-                if (!requestType.equals(REFRESH_MALL_ACTIVITIES)) {
+                if (!requestType.equals(REFRESH_MALL_ACTIVITIES) && headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)) {
                     swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
@@ -174,10 +177,14 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     @Override
     public void onResume() {
         super.onResume();
-        if(!isPaused)
+        if (!isPaused)
             pageNo = 1;
-        getLatestListing();
+        if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
+            lastPage = false;
+            getLatestListing();
+        }
     }
+
     @Override
     public void onPause() {
         super.onPause();
@@ -187,12 +194,11 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     public void getLatestListing() {
 
         requestType = LOADING_MALL_ACTIVITIES;
-        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1"+"&MallPlaceId="+"&PageIndex="+pageNo+"&PageSize=10";
-        volleyNetworkUtil.GetMallNewsnOffers(url, this);
+        pullToRefresh();
     }
 
     public void pullToRefresh() {
-        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1"+"&MallPlaceId="+"&PageIndex="+pageNo+"&PageSize=10";
+        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1" + "&MallPlaceId=" + "&PageIndex=" + pageNo + "&PageSize=10";
         volleyNetworkUtil.GetMallNewsnOffers(url, this);
     }
 
@@ -251,13 +257,16 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
     public void changeType_Notification(String new_audience_type) {
         Log.e("changeType_Notification", new_audience_type);
+
         if (adapter != null) {
             Log.e("changeType_Notification", new_audience_type);
             adapter.setAudience_type(new_audience_type);
-            mallActivitiesListing.clear();
-            adapter.notifyDataSetChanged();
+            /*if (mallActivitiesListing != null && mallActivitiesListing.size() > 0)
+                mallActivitiesListing.clear();*/
+//            adapter.notifyDataSetChanged();
             requestType = LOADING_MALL_ACTIVITIES;
-            pullToRefresh();
+            pageNo = 1;
+            callAddapter();
         }
     }
 
@@ -270,6 +279,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             databaseHelper = null;
         }
     }
+
     private DatabaseHelper getHelper() {
         if (databaseHelper == null) {
             databaseHelper = OpenHelperManager.getHelper(context, DatabaseHelper.class);
@@ -283,18 +293,16 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         switch (requestType) {
 
             case LOADING_MALL_ACTIVITIES: {
+                requestType = "";
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
 
-                        if (mallActivitiesModels != null && mallActivitiesModels.size()>0) {
+                        if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
 
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
 //                            mallActivitiesListing = mallActivitiesModels;
-                            adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
-                                    mallActivitiesListing, headerFilter,mallActivitiesModelIntegerDaol
-                            );
-                            list.setAdapter(adapter);
+                            callAddapter();
                             list.setOnScrollListener(new AbsListView.OnScrollListener() {
                                 @Override
                                 public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -307,7 +315,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                     Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel) list.getItemAtPosition(position)).getName());
 
                                     if (adapter.getCount() > 0)
-                                        if (! lastPage &&(totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                                        if (!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
                                             pageNo++;
                                             pullToRefresh();
@@ -319,9 +327,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             mallActivitiesListing = null;
                             Toast.makeText(context, "No Mall Activity Found!", Toast.LENGTH_SHORT).show();
                         }
-                        requestType = "";
                         adapter.notifyDataSetChanged();
-
                     }
                 });
                 break;
@@ -332,41 +338,39 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     @Override
                     public void run() {
 
-                        if (mallActivitiesModels!=null && mallActivitiesModels.size()>0 ){
-                            mallActivitiesListing.addAll(mallActivitiesModels);
-                            adapter.notifyDataSetChanged();
+                        if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
+                            mallActivitiesListing.addAll(FavouriteSelection(context, mallActivitiesModels));
+                            callAddapter();
                             requestType = "";
+                            if (mallActivitiesModels.size() < 10)
+                                lastPage = true;
                             Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel)list.getItemAtPosition(position)).getName());
-                        }else{
+                        } else {
                             lastPage = true;
                         }
-
                     }
                 });
                 break;
             }
 
-
             case REFRESH_MALL_ACTIVITIES: {
                 Log.d("REFRESH_MALL_ACTIVITY", "REFRESH_MALL_ACTIVITY:" + mallActivitiesModels.size());
+                requestType = "";
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
                         swipeRefreshLayout.setRefreshing(false);
-                        if (mallActivitiesListing != null && mallActivitiesListing.size()>0) {
+                        lastPage = false;
+                        if (mallActivitiesListing != null && mallActivitiesListing.size() > 0) {
                             mallActivitiesListing.clear();
                             ArrayList<MallActivitiesModel> news = FavouriteSelection(context, mallActivitiesModels);
                             mallActivitiesListing.addAll(0, news);
-                            adapter.notifyDataSetChanged();
+                            callAddapter();
                         } else {
-                            mallActivitiesListing = mallActivitiesModels;
-                            adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
-                                    mallActivitiesListing, headerFilter,mallActivitiesModelIntegerDaol
-                            );
-
-                            list.setAdapter(adapter);
-                            adapter.notifyDataSetChanged();
-
+                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
+                            FilteredOffersNewsList(mallActivitiesListing);
+                            callAddapter();
+//                            adapter.notifyDataSetChanged();
                             list.setOnScrollListener(new AbsListView.OnScrollListener() {
                                 @Override
                                 public void onScrollStateChanged(AbsListView view, int scrollState) {
@@ -386,7 +390,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             });
                         }
                         adapter.notifyDataSetChanged();
-                        requestType = "";
                     }
                 });
                 break;
@@ -453,10 +456,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         return mallModelArrayList;
     }
 
-    public void getDBMalls(){
+    public void getDBMalls() {
         try {
             // This is how, a reference of DAO object can be done
-            Dao<MallActivitiesModel, Integer> studentDao =  getHelper().getMallActivitiesDao();
+            Dao<MallActivitiesModel, Integer> studentDao = getHelper().getMallActivitiesDao();
             // Get our query builder from the DAO
             final QueryBuilder<MallActivitiesModel, Integer> queryBuilder = studentDao.queryBuilder();
             // We need only Students who are associated with the selected Teacher, so build the query by "Where" clause
@@ -474,5 +477,79 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         }
     }
 
+    private void FilteredOffersNewsList(ArrayList<MallActivitiesModel> all) {
 
+        mallActivities_All = new ArrayList<>();
+        mallActivities_Offers = new ArrayList<>();
+        mallActivities_News = new ArrayList<>();
+        for (MallActivitiesModel ma : all) {
+
+            if (ma.getActivityName().equals("Offer")) {
+                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+                    mallActivities_Offers.add(ma);
+                } else {
+                    if (ma.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                        mallActivities_Offers.add(ma);
+                    }
+                }
+            }
+
+            else if (ma.getActivityName().equals("News")) {
+                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+                    mallActivities_News.add(ma);
+                } else {
+                    if (ma.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                        this.mallActivities_News.add(ma);
+                    }
+                }
+            } else {
+                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+                    mallActivities_All = all;
+                } else {
+                    for (MallActivitiesModel mam : mallActivities_All
+                            ) {
+                        if (mam.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                            this.mallActivities_All.add(mam);
+                        }
+                    }
+                }
+            }
+        }
+    }
+
+    private void callAddapter(){
+        if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
+            if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
+                mallActivities_All = mallActivitiesListing;
+            } else {
+                for (MallActivitiesModel mam : mallActivitiesListing
+                        ) {
+                    if (mam.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
+                        this.mallActivities_All.add(mam);
+                    }
+                }
+            }
+            adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
+                    mallActivities_All, headerFilter, mallActivitiesModelIntegerDaol
+            );
+        }
+        else if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
+            FilteredOffersNewsList(mallActivitiesListing);
+            adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
+                    mallActivities_Offers, headerFilter, mallActivitiesModelIntegerDaol
+            );
+        }
+        else {
+            FilteredOffersNewsList(mallActivitiesListing);
+            adapter = new Offers_News_Adapter(context, getActivity(), R.layout.list_item_offers_new,
+                    mallActivities_News, headerFilter, mallActivitiesModelIntegerDaol
+            );
+        }
+
+        int index = list.getFirstVisiblePosition();
+        View v = list.getChildAt(0);
+        int top = (v == null) ? -1 : v.getTop();
+        list.setAdapter(adapter);
+        list.setSelectionFromTop(index, top);
+    }
 }

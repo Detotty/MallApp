@@ -338,7 +338,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
 		mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
 		mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-		mDemoSlider.setDuration(2800);
+		mDemoSlider.setDuration(3500);
 		mDemoSlider.addOnPageChangeListener(this);
 	}
 

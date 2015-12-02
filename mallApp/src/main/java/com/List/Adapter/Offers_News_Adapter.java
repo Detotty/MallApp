@@ -67,8 +67,9 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         this.mallActivities_All = new ArrayList<>();
         this.mallActivitiesModelIntegerDaol = mallActivitiesModelIntegerDaol;
         volleyNetworkUtil = new VolleyNetworkUtil(context);
-        if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
-            this.mallActivities_All = mallActivities_All;
+        this.mallActivities_All = mallActivities_All;
+
+        /*if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
         } else {
             for (MallActivitiesModel mam : mallActivities_All
                     ) {
@@ -76,9 +77,9 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                     this.mallActivities_All.add(mam);
                 }
             }
-        }
+        }*/
         this.audience_type = audience_type;
-        FilteredOffersNewsList(mallActivities_All);
+//        FilteredOffersNewsList(mallActivities_All);
         UserId = SharedPreferenceUserProfile.getUserId(context);
         url = ApiConstants.POST_FAV_OFFERS_URL_KEY;
     }
@@ -94,25 +95,25 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 
     @Override
     public int getCount() {
-        if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
+        /*if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
             return mallActivities_All.size();
         else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
             return mallActivities_Offers.size();
         else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
             return mallActivities_News.size();
-        else
+        else*/
             return mallActivities_All.size();
     }
 
     @Override
     public MallActivitiesModel getItem(int position) {
-        if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
+        /*if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
             return mallActivities_All.get(position);
         else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
             return mallActivities_Offers.get(position);
         else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
             return mallActivities_News.get(position);
-        else
+        else*/
             return mallActivities_All.get(position);
     }
 

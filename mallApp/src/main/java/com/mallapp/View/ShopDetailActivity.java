@@ -624,7 +624,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
 		mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
 		mDemoSlider.setCustomAnimation(new DescriptionAnimation());
-		mDemoSlider.setDuration(2800);
+		mDemoSlider.setDuration(3500);
 		mDemoSlider.addOnPageChangeListener(this);
 	}
 
