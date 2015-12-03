@@ -1,0 +1,122 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:background="@drawable/mall_background_view"
+    android:orientation="vertical"
+    android:paddingBottom="5dp"
+    android:paddingRight="1dp">
+
+    <FrameLayout
+        android:id="@+id/frame_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content">
+
+        <RelativeLayout
+            android:id="@+id/back_image1"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical"
+            android:visibility="visible" >
+
+            <ImageView
+                android:id="@+id/center_image"
+                android:layout_width="match_parent"
+                android:layout_height="215dp"
+                android:contentDescription="@string/accept"
+                android:layout_marginTop="-3dp"
+                android:background="@drawable/endorse_card_view_background"
+                android:visibility="visible" />
+
+            <RelativeLayout
+                android:id="@+id/place_bar_info"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:orientation="horizontal"
+                android:padding="10dp"
+                android:background="@drawable/transparent_view"
+                >
+
+                <TextView
+                    android:id="@+id/title"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:ellipsize="end"
+                    android:maxEms="11"
+                    android:lines="1"
+                    android:text="Place Name"
+                    android:textColor="@color/white"
+                    android:textSize="18sp"
+                    android:textStyle="bold" />
+
+
+                <ImageButton
+                    android:id="@+id/fav_center"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:src="@drawable/offer_fav"
+                    android:background="@color/transparent"
+                    android:layout_centerVertical="true"
+                    android:layout_alignParentRight="true"/>
+            </RelativeLayout>
+
+
+
+        </RelativeLayout>
+
+    </FrameLayout>
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/entity_logo"
+        android:layout_width="70dp"
+        android:layout_height="70dp"
+        android:layout_below="@id/frame_layout"
+        android:layout_marginTop="-25dp"
+        android:layout_marginLeft="10dp"
+        android:layout_gravity="bottom"
+        app:border_width="3dp"
+        app:border_color="#FFFFFFFF"
+        android:src="@drawable/placeholder"/>
+
+
+    <TextView
+        android:id="@+id/shop_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame_layout"
+        android:layout_toRightOf="@+id/entity_logo"
+        android:lines="1"
+        android:gravity="right"
+        android:text="Levis, Amager Center"
+        android:textColor="@color/black"
+        android:textSize="16sp" />
+
+
+    <TextView
+        android:id="@+id/center_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/shop_name"
+        android:layout_toRightOf="@+id/entity_logo"
+        android:lines="1"
+        android:text="1 day ago"
+        android:textColor="@color/black"
+        android:textSize="10sp" />
+
+
+    <TextView
+        android:id="@+id/center_city"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/entity_logo"
+        android:paddingLeft="10dp"
+        android:layout_marginTop="3dp"
+        android:lines="2"
+        android:text="Receive a $45 gift card purchase of the Per-Fekt"
+        android:textColor="@color/black2"
+        android:textSize="15sp" />
+
+
+</RelativeLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/list_item_offers_new.xml -->
