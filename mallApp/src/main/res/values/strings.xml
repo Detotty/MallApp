@@ -115,6 +115,7 @@
 
 	<!-- Error Messages -->
 	<string name="request_error_message">Something went wrong. Please try again later</string>
+	<string name="shop_error_message">No shops found for this mall</string>
 	<string name="add_new_place_error_message">Please enter place name</string>
 
 

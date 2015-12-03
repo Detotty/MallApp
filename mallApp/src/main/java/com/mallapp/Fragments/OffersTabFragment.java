@@ -98,7 +98,6 @@ public class OffersTabFragment extends Fragment
             public void onPageScrollStateChanged(int arg0) {
                 // TODO Auto-generated method stub
                 //Log.e(" offers tab fragment ", "onPageScrollStateChanged");
-                callInOnResume();
             }
 
             @Override
@@ -110,6 +109,8 @@ public class OffersTabFragment extends Fragment
             public void onPageSelected(int position) {
                 //Log.e(" offers tab fragment ", "onPageSelected" + position+" centers fav size = "+ TITLES.size());
                 setCenterLogo(position);
+                callInOnResume();
+
             }
         });
 
@@ -141,6 +142,7 @@ public class OffersTabFragment extends Fragment
             headerLayoutColor.setBackgroundColor(getResources().getColor(R.color.purple));
             center_logo.setImageResource(R.drawable.logo);
             MainMenuConstants.SELECTED_CENTER_LOGO = null;
+            MainMenuConstants.SELECTED_MALL_PLACE_ID = "";
 
         } else {
             ArrayList<FavouriteCentersModel> TITLES_Centers = GlobelOffersNews.TITLES_centers;
@@ -151,6 +153,7 @@ public class OffersTabFragment extends Fragment
             for (FavouriteCentersModel center : TITLES_Centers) {
                 if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                     String center_logo_name = center.getLogoUrl();
+                    MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
                     if (center.getCorporateColor()!=null)
                     headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
                     setCenter_logo(center_logo_name);

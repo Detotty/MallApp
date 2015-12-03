@@ -887,6 +887,11 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="shop_1">Type Shop Name</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="shop_error_message">No shops found for this mall</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
+    <eat-comment/>
     <string name="shop_offers">The Shop Offers</string>
     <string name="shops_">Shops</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->

@@ -166,9 +166,9 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     android.util.Log.e("", " error message ..." + message);
 
                     if (message != null && message != "")
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                        Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
                     else {
-                        String serverError = context.getResources().getString(R.string.request_error_message);
+                        String serverError = context.getResources().getString(R.string.shop_error_message);
                         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
                     }
                 }
@@ -278,20 +278,20 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         String message = VolleyErrorHelper.getMessage(volleyError, context);
 
         switch (requestType) {
-            case BOOKMARK_ENDORSEMENT: {
-//                listener.OnDataReceived(null,0,false);
+            case GET_MALL_NEWSnOFFERS: {
+                mallDataListener.OnError();
             }
         }
 
 
         Log.e("", " error message ..." + message);
 
-        if (message != null && message != "")
+        /*if (message != null && message != "")
             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
         else {
             String serverError = context.getResources().getString(R.string.request_error_message);
             Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-        }
+        }*/
     }
 
     @Override
@@ -352,6 +352,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     ArrayList<MallActivitiesModel> model = gson.fromJson(data, listType);
                     mallDataListener.onDataReceived(model);
                 } catch (Exception e) {
+                    mallDataListener.OnError();
                     e.printStackTrace();
                 }
                 break;
