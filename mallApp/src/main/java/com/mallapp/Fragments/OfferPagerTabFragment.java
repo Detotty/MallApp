@@ -415,6 +415,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     public void OnError() {
         switch (requestType) {
             case REFRESH_MALL_ACTIVITIES: {
+                if (adapter!= null)
                  adapter.clear();
 
 //                mallActivities_All.clear();

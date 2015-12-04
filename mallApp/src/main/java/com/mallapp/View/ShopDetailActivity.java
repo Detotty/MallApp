@@ -90,6 +90,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout;
 	//HorizontalScrollView 	shops_offers1;
 	RelativeLayout 			timing_layout;
+	LinearLayout 			linear_timing_layout;
 	private ImageButton 	message, face_book, twitter, email, chat;
 	
 	private AnimationListener mAnimationListener;
@@ -123,9 +124,8 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		tv_Phone 		= (TextView) findViewById(R.id.tv_phone);
 		tv_Email 		= (TextView) findViewById(R.id.tv_email);
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
-		tv_Timing1 		= (TextView) findViewById(R.id.tv_timing1);
-		tv_Timing2 		= (TextView) findViewById(R.id.tv_timing2);
 		back_screen = (ImageButton) findViewById(R.id.back);
+		linear_timing_layout	= (LinearLayout) findViewById(R.id.layout_timings);
 		is_fav		.setOnClickListener(this);
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
@@ -491,10 +491,16 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		tv_Email.setText(shopDetail.getEmail());
 		tv_Web.setText(shopDetail.getWebURL());
 		StoreTimingsModel[] timinigs = shopDetail.getStoreTimings();
-		String t1 = timinigs[0].getFromDay()+"-"+timinigs[0].getToDay()+"\t\t  "+timinigs[0].getOpeningTiming()+"-"+timinigs[0].getClosingTiming();
-		String t2 = timinigs[1].getFromDay()+"-"+timinigs[1].getToDay()+"\t\t"+timinigs[1].getOpeningTiming()+"-"+timinigs[1].getClosingTiming();
-		tv_Timing1.setText(t1);
-		tv_Timing2.setText(t2);
+		for (StoreTimingsModel st:timinigs
+			 ) {
+			String t1 = st.getFromDay()+"-"+st.getToDay()+"\t\t  "+st.getOpeningTiming()+"-"+st.getClosingTiming();
+			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
+					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
+			TextView tv=new TextView(this);
+			tv.setLayoutParams(lparams);
+			tv.setText(t1);
+			this.linear_timing_layout.addView(tv);
+		}
 		boolean fav	= shopDetail.isFav();
 		if(fav)
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);

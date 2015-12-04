@@ -162,7 +162,7 @@ public class ShopAdapter extends AmazingAdapter {
         holder.title.setText(shop_obj.getStoreName());
         holder.decs.setText(shop_obj.getBriefText());
         holder.floor_no.setText(shop_obj.getFloor());
-        Picasso.with(context).load(shop_obj.getLogoURL()).into(holder.back_image);
+        Picasso.with(context).load(shop_obj.getLogoURL()).resize(150,75).into(holder.back_image);
 
 
         final boolean fav = shop_obj.isFav();

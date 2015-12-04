@@ -89,8 +89,8 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 		FavouriteCentersModel fav_obj= getItem(position);
 		holder.center_title.setText(fav_obj.getName());
 		holder.center_city.setText(fav_obj.getCityName());
-//		thumbNail.setImageUrl(fav_obj.getLogoUrl(), imageLoader);
-		Picasso.with(context).load(fav_obj.getLogoUrl()).into(thumbNail);
+		thumbNail.setImageUrl(fav_obj.getLogoUrl(), imageLoader);
+//		Picasso.with(context).load(fav_obj.getLogoUrl()).into(thumbNail);
 //		int res = context.getResources().getIdentifier(image_nam, "drawable", context.getPackageName());
 //		holder.center_image.setImageResource(res);
 		

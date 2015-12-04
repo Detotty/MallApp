@@ -122,23 +122,9 @@
                     android:layout_height="wrap_content"
                     android:layout_marginLeft="10dp"
                     android:layout_marginTop="10dp"
+                    android:id="@+id/layout_timings"
                     android:orientation="vertical">
 
-                    <TextView
-                        android:id="@+id/tv_timing1"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black3"
-                        android:drawablePadding="10dp"
-                        android:textSize="@dimen/text_15"/>
-
-                    <TextView
-                        android:id="@+id/tv_timing2"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
-                        android:textColor="@color/black3"
-                        android:drawablePadding="10dp"
-                        android:textSize="@dimen/text_15"/>
 
                 </LinearLayout>
 

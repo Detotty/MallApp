@@ -158,8 +158,8 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 		back_screen = (ImageButton) findViewById(R.id.back);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		go_to_shop	= (Button) 	findViewById(R.id.go_to_shop);
-		social_sharing=(Button) findViewById(R.id.share_detail_popup);
-		social_sharing.setOnClickListener(this);
+//		social_sharing=(Button) findViewById(R.id.share_detail_popup);
+//		social_sharing.setOnClickListener(this);
 
 		is_fav.setOnClickListener(this);
 		go_to_shop.setOnClickListener(this);

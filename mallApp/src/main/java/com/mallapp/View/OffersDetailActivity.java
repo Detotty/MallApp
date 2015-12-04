@@ -23,6 +23,7 @@ import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
+import android.widget.RelativeLayout;
 import android.widget.TextView;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
@@ -57,7 +58,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 	private TextView 	offer_title, shope_name, offer_detail;
 	private ImageButton back_screen, is_fav;
 	private Button 		go_to_shop, social_sharing;
-	private LinearLayout related_offers, social_sharing_layout;
+	private RelativeLayout related_offers, social_sharing_layout;
 	private ImageButton message, face_book, twitter, email;
 	MallActivitiesModel offer_object;
 	private SliderLayout mDemoSlider;
@@ -186,8 +187,8 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		back_screen = (ImageButton) findViewById(R.id.back);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		go_to_shop	= (Button) 	findViewById(R.id.go_to_shop);
-		social_sharing=(Button) findViewById(R.id.share_detail_popup);
-		social_sharing.setOnClickListener(this);
+//		social_sharing=(Button) findViewById(R.id.share_detail_popup);
+//		social_sharing.setOnClickListener(this);
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 
 		go_to_shop.setOnClickListener(this);
@@ -195,7 +196,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		is_fav.setOnClickListener(this);
 		
 //		related_offers			= (LinearLayout) findViewById(R.id.related_offers);
-		social_sharing_layout	= (LinearLayout) findViewById(R.id.social_layout);
+		social_sharing_layout	= (RelativeLayout) findViewById(R.id.social_layout);
 		
 		message		= (ImageButton) findViewById(R.id.sms);
 		face_book	= (ImageButton) findViewById(R.id.fb); 
