@@ -85,7 +85,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 	private void setOfferDetail() {
 		offer_title.setText(offer_object.getActivityTextTitle());
 		shope_name.setText(offer_object.getMallName());
-		offer_detail.setText(offer_object.getBriefText());
+		offer_detail.setText(offer_object.getDetailText());
 		boolean fav	= offer_object.isFav();
 		if(fav)
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);

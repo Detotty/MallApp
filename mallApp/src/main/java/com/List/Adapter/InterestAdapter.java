@@ -23,12 +23,14 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 	//private static final String TAG = PhoneContactsArrayAdapter.class.getSimpleName();
 	private ArrayList<InterestSelectionModel> interst_;
 	Context context;
+	private ImageView is_interest_select_all;
 	
 	public InterestAdapter(Context context, int textViewResourceId, 
-						ArrayList<InterestSelectionModel> objects) {
+						ArrayList<InterestSelectionModel> objects,ImageView is_interest_select_all) {
 		super(context, textViewResourceId, objects);
 		interst_= objects;
 		this.context= context;
+		this.is_interest_select_all = is_interest_select_all;
 		// TODO Auto-generated constructor stub
 	}
 	
@@ -102,6 +104,7 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 					fav_obj.setInterested(false);
 					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.interest);
+					is_interest_select_all.setImageResource(R.drawable.interest);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 				}else{
 					fav_obj.setInterested(true);
@@ -140,5 +143,9 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 	private String selectedItem;
 	public void setSelectedItem(String position) {
 		selectedItem = position;
+	}
+
+	public interface OnDataChangeListener{
+		public void onDataChanged(int size);
 	}
 }

@@ -2,6 +2,7 @@ package com.mallapp.View;
 
 import java.sql.SQLException;
 import java.util.ArrayList;
+import java.util.Iterator;
 
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
@@ -48,6 +49,8 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.Offers_News;
@@ -77,7 +80,8 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	Double lat,lng;
 	String locationName;
 	private DatabaseHelper databaseHelper = null;
-	Dao<ShopDetailModel, Integer> shopsDao;
+	Dao<ShopsModel, Integer> shopsDao;
+	ArrayList<ShopsModel> dbList = new ArrayList<>();
 
 
 
@@ -95,13 +99,15 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	
 	private AnimationListener mAnimationListener;
 	String url;
+	String mallStoreId;
 	private SliderLayout mDemoSlider;
 
 	@Override
 	 protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.shop_detail_activity);
-		url = ApiConstants.GET_SHOP_DETAIL_URL_KEY+getIntent().getStringExtra("MallStoreId")+"&languageId=1";
+		mallStoreId = getIntent().getStringExtra("MallStoreId");
+		url = ApiConstants.GET_SHOP_DETAIL_URL_KEY+mallStoreId+"&languageId=1";
 		volleyNetworkUtil = new VolleyNetworkUtil(this);
 		volleyNetworkUtil.GetShopDetail(url,this);
 //		ActionBar actionBar = getActionBar();
@@ -116,6 +122,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		/*shop_obj = GlobelShops.shopModel_obj;
 		shop_name.setText(shop_obj.getStoreName());
 		shop_detail.setText(shop_obj.getBriefText());*/
+		shop_obj = new ShopsModel();
 		shop_name 	= (TextView) findViewById(R.id.offer_title);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		tv_about 		= (TextView) findViewById(R.id.tv_about);
@@ -132,7 +139,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
 		try {
 			// This is how, a reference of DAO object can be done
-			shopsDao = getHelper().getShopDetailDao();
+			shopsDao = getHelper().getShopsDao();
 
 		} catch (SQLException e) {
 			e.printStackTrace();
@@ -420,11 +427,23 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			boolean fav	= shop_detail_obj.isFav();
 			if(fav){
 				is_fav.setImageResource(R.drawable.ofer_detail_heart);
+				url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=true"+"&IsDeleted=true";
+				volleyNetworkUtil.PostFavShop(url);
 				shop_detail_obj.setFav(false);
-				updateShops(shop_detail_obj);
+
+				shop_obj.setMallStoreId(mallStoreId);
+				shop_obj.setFav(false);
+				updateShops(shop_obj);
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+				url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=true"+"&IsDeleted=false";
+				volleyNetworkUtil.PostFavShop(url);
 				shop_detail_obj.setFav(true);
+
+				shop_obj.setMallStoreId(mallStoreId);
+				shop_obj.setFav(true);
+				updateShops(shop_obj);
+
 			}
 				
 			
@@ -481,6 +500,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
 	@Override
 	public void onShopDetailReceived(ShopDetailModel shopDetail) {
+		getDBShops();
 		shop_detail_obj = shopDetail;
 		initilizeMap();
 		shop_name.setText(shopDetail.getName());
@@ -501,11 +521,18 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			tv.setText(t1);
 			this.linear_timing_layout.addView(tv);
 		}
-		boolean fav	= shopDetail.isFav();
-		if(fav)
-			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
-		else
-			is_fav.setImageResource(R.drawable.ofer_detail_heart);
+		for (ShopsModel shopsModel:dbList
+			 ) {
+			if (shopsModel.getMallStoreId().equals(mallStoreId)){
+				if (shopsModel.isFav()){
+					is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+				}
+				else {
+					is_fav.setImageResource(R.drawable.ofer_detail_heart);
+
+				}
+			}
+		}
 		lat = Double.parseDouble(shopDetail.getLatitude());
 		lng = Double.parseDouble(shopDetail.getLongitude());
 		locationName = shopDetail.getAddress();
@@ -634,9 +661,30 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		mDemoSlider.addOnPageChangeListener(this);
 	}
 
-	public void updateShops(ShopDetailModel fav){
+	public void updateShops(ShopsModel fav){
 		try {
 			shopsDao.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	public void getDBShops() {
+		try {
+			// This is how, a reference of DAO object can be done
+			Dao<ShopsModel, Integer> studentDao = getHelper().getShopsDao();
+			// Get our query builder from the DAO
+			final QueryBuilder<ShopsModel, Integer> queryBuilder = studentDao.queryBuilder();
+			// We need only Students who are associated with the selected Teacher, so build the query by "Where" clause
+			// Prepare our SQL statement
+			final PreparedQuery<ShopsModel> preparedQuery = queryBuilder.prepare();
+			// Fetch the list from Database by queryingit
+			final Iterator<ShopsModel> studentsIt = studentDao.queryForAll().iterator();
+			// Iterate through the StudentDetails object iterator and populate the comma separated String
+			while (studentsIt.hasNext()) {
+				final ShopsModel sDetails = studentsIt.next();
+				dbList.add(sDetails);
+			}
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}

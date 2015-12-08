@@ -222,37 +222,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 				//bitmapSelectedImage = Image_Scaling.getImageOrintation(bitmapSelectedImage, picturePath);
 				Image_Scaling.setRoundedImgeToImageView(getApplicationContext(), profileImageView, bitmapSelectedImage);
 
-				//profile_image_bitmap = mImageImportHelper.handleCameraPhoto(profileImageView, true);
 
-//                try{
-//
-//                    //MediaStore.EXTRA_OUTPUT
-//                    Uri selectedImageUri = Uri.parse(data.getExtras().getString(MediaStore.EXTRA_OUTPUT));
-//                    String picturePath 	= getPath(selectedImageUri);
-//                //String picturePath 	=  mImageImportHelper.handleCameraPhoto(profileImageView, true);
-//                //profile_image_array = picturePath;
-//
-//                Log.e("", "image from gallery path " + picturePath);
-//                //SharedPreferenceManager.saveString(RegistrationProfileActivity.this, GlobelProfile.profile_image, profile_image_array);
-//                Bitmap bitmapSelectedImage = BitmapFactory.decodeFile(picturePath);
-//
-//                if (bitmapSelectedImage == null) {
-//                    selectProfileImage("Re-Select Picture");
-//                    return;
-//                }
-//                Log.e("", "image from gallery not null");
-//                profile_image_bitmap = bitmapSelectedImage;
-//                bitmapSelectedImage = Image_Scaling.getImageOrintation(bitmapSelectedImage, picturePath);
-//                Image_Scaling.setRoundedImgeToImageView(getApplicationContext(), profileImageView, bitmapSelectedImage);
-//
-//            } catch (Exception e) {
-//                e.printStackTrace();
-//            }
-
-
-//				profile_image_array = SharedPreferenceManager.getString(getApplicationContext(), GlobelProfile.profile_image);
-//				if(GlobelRegistration.profile_bitmap != null)
-//					profile_image_bitmap = GlobelRegistration.profile_bitmap;
 			}
 
 		} else if (requestCode == ImageImportHelper.ACTION_TAKE_PHOTO_FROM_GALLERY) {
@@ -262,81 +232,6 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 			if (resultCode == RESULT_OK) {
 
 
-//                Uri selectedImage = data.getData();
-//                String[] filePathColumn = { MediaStore.Images.Media.DATA };
-//
-//                // Get the cursor
-//                Cursor cursor = getContentResolver().query(selectedImage,
-//                        filePathColumn, null, null, null);
-//                // Move to first row
-//                cursor.moveToFirst();
-//
-//                int columnIndex = cursor.getColumnIndex(filePathColumn[0]);
-//                String imgDecodableString = cursor.getString(columnIndex);
-//                cursor.close();
-//
-//                int targetW = circularImageView.getWidth();
-//                int targetH = circularImageView.getHeight();
-//
-//                final BitmapFactory.Options options = new BitmapFactory.Options();
-//                options.inJustDecodeBounds = true;
-//                BitmapFactory.decodeFile(imgDecodableString, options);
-//
-//                // Calculate inSampleSize
-//                options.inSampleSize = Utils.calculateInSampleSize(options, targetW , targetH);
-//
-//                // Decode bitmap with inSampleSize set
-//                options.inJustDecodeBounds = false;
-//
-//                Bitmap bitmap = BitmapFactory.decodeFile(imgDecodableString, options);
-//
-//                try
-//                {
-//                    // Determine Orientation
-//                    ExifInterface exif = new ExifInterface(imgDecodableString);
-//                    int orientation = exif.getAttributeInt(ExifInterface.TAG_ORIENTATION, 1);
-//
-//                    // Determine Rotation
-//                    int rotation = 0;
-//
-//                    if (orientation == ExifInterface.ORIENTATION_ROTATE_90)
-//                    {
-//                        rotation = 90;
-//                    }
-//                    else if (orientation == ExifInterface.ORIENTATION_ROTATE_180)
-//                    {
-//                        rotation = 180;
-//                    }
-//                    else if (orientation == ExifInterface.ORIENTATION_ROTATE_270)
-//                    {
-//                        rotation = 270;
-//                    }
-//
-//                    Bitmap rotated;
-//                    Log.d("response","rotation:"+rotation);
-//
-//                    //int pixel = MyTeamController.dpToPx(1);
-//
-//                    // Rotate Image if Necessary
-//                    if (rotation != 0)
-//                    {
-//                        // Create Matrix
-//                        Matrix matrix = new Matrix();
-//                        matrix.postRotate(rotation);
-//                        rotated = Bitmap.createBitmap(bitmap, 0, 0, bitmap.getWidth(), bitmap.getHeight(), matrix, true);
-//
-//                        bitmap.recycle();
-//                        bitmap = Bitmap.createScaledBitmap(rotated, targetW,targetH, true);
-//                        rotated.recycle();
-//
-//                    }
-//                    else
-//                    {
-//                        rotated = Bitmap.createScaledBitmap(bitmap, targetW,targetH, true);
-//                        bitmap.recycle();
-//                        bitmap = rotated;
-//                        rotated = null;
-//                    }
 				try {
 
 					Uri selectedImageUri = data.getData();
@@ -567,6 +462,14 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 				else {
 					emailEditText.setText(userProfile.getEmail());
 					userProfile.setEmail(userProfile.getEmail());
+				}
+
+				if (userProfile.getDOB() == null || userProfile.getDOB() == "null")
+					DOBEditText.setText("");
+				else {
+					String dob[] = userProfile.getDOB().split("T");
+					DOBEditText.setText(dob[0]);
+					userProfile.setDOB(dob[0]);
 				}
 
 				if (userProfile.getImageURL() == null || userProfile.getImageURL()== "null")

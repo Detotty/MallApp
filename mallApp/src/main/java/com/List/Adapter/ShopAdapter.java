@@ -28,6 +28,7 @@ import com.mallapp.View.ShopMainMenuActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 
@@ -43,6 +44,7 @@ public class ShopAdapter extends AmazingAdapter {
     Dao<ShopsModel, Integer> shopsDao;
     String url;
     String UserId;
+    VolleyNetworkUtil volleyNetworkUtil;
 
 
 
@@ -60,8 +62,8 @@ public class ShopAdapter extends AmazingAdapter {
         this.audience_type = audience_type;
         imageLoader = new ImageLoader(activity.getApplicationContext());
         this.shopsDao = shopsDao;
-        url = ApiConstants.POST_FAV_SHOP_URL_KEY;
         UserId = SharedPreferenceUserProfile.getUserId(context);
+        volleyNetworkUtil = new VolleyNetworkUtil(context);
 
     }
 
@@ -162,7 +164,7 @@ public class ShopAdapter extends AmazingAdapter {
         holder.title.setText(shop_obj.getStoreName());
         holder.decs.setText(shop_obj.getBriefText());
         holder.floor_no.setText(shop_obj.getFloor());
-        Picasso.with(context).load(shop_obj.getLogoURL()).resize(150,75).into(holder.back_image);
+        Picasso.with(context).load(shop_obj.getLogoURL()).into(holder.back_image);
 
 
         final boolean fav = shop_obj.isFav();
@@ -180,11 +182,17 @@ public class ShopAdapter extends AmazingAdapter {
                     holder.is_fav.setImageResource(R.drawable.offer_fav_p);
                     shop_obj.setFav(true);
                     updateShops(shop_obj);
+                    url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=false";
+                    volleyNetworkUtil.PostFavShop(url);
+
 //                    ShopCacheManager.updateShops(context, shop_obj, "", position);
                 } else {
                     holder.is_fav.setImageResource(R.drawable.offer_fav);
                     shop_obj.setFav(false);
                     updateShops(shop_obj);
+                    url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=true";
+                    volleyNetworkUtil.PostFavShop(url);
+
 //                    ShopCacheManager.updateShops(context, shop_obj, "", position);
                 }
             }

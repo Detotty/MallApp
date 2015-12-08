@@ -98,7 +98,7 @@
         android:layout_height="match_parent"
         android:background="@drawable/background"
         android:gravity="center_horizontal"
-        android:visibility="visible">
+		android:visibility="visible">
         
         <ListView
             android:id="@+id/search_list"

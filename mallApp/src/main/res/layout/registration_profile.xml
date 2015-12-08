@@ -174,7 +174,7 @@
 		<Button
 			android:id="@+id/continue_save"
 			android:layout_width="wrap_content"
-			android:layout_height="30dp"
+			android:layout_height="40dp"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@+id/radioGroup1"
 			android:layout_marginTop="15dp"
@@ -188,7 +188,7 @@
 		<Button
 			android:id="@+id/synce_facebook"
 			android:layout_width="wrap_content"
-			android:layout_height="wrap_content"
+			android:layout_height="30dp"
 			android:layout_centerHorizontal="true"
 			android:layout_below="@+id/continue_save"
 			android:layout_marginTop="15dp"

@@ -47,7 +47,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		controller = new RegistrationController(this);
-		controller.GetMallList(ApiConstants.GET_MALL_URL_KEY,adapter,centers_listM,this,list_view);
+			controller.GetMallList(ApiConstants.GET_MALL_URL_KEY,adapter,centers_listM,this,list_view);
 //		SendVerificationCode.GetMallList("http://52.28.59.218:5001/api/MallService/GetMalls?countryCode=PK&languageId=1");
 //		getCenterList();
 		
@@ -184,8 +184,10 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
 			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
 			if (model!=null){
-				locationA.setLatitude(model.getLatitude());
-				locationA.setLongitude(model.getLongitude());
+//				locationA.setLatitude(model.getLatitude());
+//				locationA.setLongitude(model.getLongitude());
+				locationA.setLatitude(55.6759400);
+				locationA.setLongitude(12.5655300);
 			}
 		}
 		for (FavouriteCentersModel fv:nearByCenters) {

@@ -55,12 +55,22 @@
 	    android:textColor="@color/white"/>
 
      <TextView
-         android:id="@+id/code_not_receive_text"
+         android:id="@+id/code_not_receive_text1"
          android:layout_width="wrap_content"
          android:layout_height="wrap_content"
          android:text="@string/access_code_country_3"
          android:layout_marginTop="25dp"
          android:textColor="@android:color/white"
          android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/code_not_receive_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/access_code_country_5"
+        android:layout_marginTop="25dp"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
 
 </LinearLayout>

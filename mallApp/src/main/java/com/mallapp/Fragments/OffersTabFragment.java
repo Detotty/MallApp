@@ -109,7 +109,7 @@ public class OffersTabFragment extends Fragment
             public void onPageSelected(int position) {
                 //Log.e(" offers tab fragment ", "onPageSelected" + position+" centers fav size = "+ TITLES.size());
                 setCenterLogo(position);
-                callInOnResume();
+//                callInOnResume();
 
             }
         });
@@ -121,6 +121,7 @@ public class OffersTabFragment extends Fragment
 
             }
         });
+        callInOnResume();
 
         //	return inflater.inflate(R.layout.fragment_parent_tab_offer, container, false);
         return view;
@@ -146,14 +147,13 @@ public class OffersTabFragment extends Fragment
 
         } else {
             ArrayList<FavouriteCentersModel> TITLES_Centers = GlobelOffersNews.TITLES_centers;
-
             if (TITLES_Centers == null || TITLES_Centers.size() == 0) {
                 TITLES_Centers = CentersCacheManager.getAllCenters(context);
             }
             for (FavouriteCentersModel center : TITLES_Centers) {
                 if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                     String center_logo_name = center.getLogoUrl();
-                    MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
+//                    MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
                     if (center.getCorporateColor()!=null)
                     headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
                     setCenter_logo(center_logo_name);
@@ -165,7 +165,7 @@ public class OffersTabFragment extends Fragment
 
     @Override
     public void onResume() {
-        callInOnResume();
+//        callInOnResume();
         super.onResume();
     }
 
@@ -199,21 +199,21 @@ public class OffersTabFragment extends Fragment
         if (GlobelOffersNews.fragment_instences == null) {
             createPagerIntence();
         } else {
-            changeInstanceType();
+//            changeInstanceType();
         }
     }
 
     private void createPagerIntence() {
         OffersNewsFiltration.readOffersNews(context);
-        List<OfferPagerTabFragment> fragments = getFavouriteFragments();
-        adapter = new OffersNewsPagerAdapter(getChildFragmentManager(), context, uiHandler, audienceFilter, fragments, TITLES);
+//        List<OfferPagerTabFragment> fragments = getFavouriteFragments();
+        adapter = new OffersNewsPagerAdapter(getChildFragmentManager(), context, uiHandler, audienceFilter, TITLES);
         pager.setAdapter(adapter);
+        tabs.setViewPager(pager);
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
         pager.setPageMargin(pageMargin);
-        pager.setOffscreenPageLimit(0);
-        tabs.setViewPager(pager);
-        adapter.notifyDataSetChanged();
+        pager.setCurrentItem(0);
+//        adapter.notifyDataSetChanged();
     }
 
     private List<OfferPagerTabFragment> changeInstanceType() {

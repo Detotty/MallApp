@@ -45,11 +45,14 @@ public class Select_Interest extends Activity implements OnClickListener {
 //		actionBar.hide();
 		interst_list= new ArrayList<InterestSelectionModel>();
 		list_view	= (ListView) findViewById(R.id.search_list);
-		adapter		= new InterestAdapter(getApplicationContext(),R.layout.list_item_interest, interst_list);
-		list_view.setAdapter(adapter);
+
 		controller = new RegistrationController(this);
-		interst_list_this = controller.GetInterestList(ApiConstants.GET_INTEREST_URL_KEY,adapter,interst_list);
 		is_interest_select_all= (ImageView) findViewById(R.id.is_select_all_interst);
+
+		adapter		= new InterestAdapter(getApplicationContext(),R.layout.list_item_interest, interst_list,is_interest_select_all);
+		list_view.setAdapter(adapter);
+		interst_list_this = controller.GetInterestList(ApiConstants.GET_INTEREST_URL_KEY,adapter,interst_list);
+
 		next 	= (Button) findViewById(R.id.next_screen);
 		back	= (ImageButton) findViewById(R.id.back_screen);
 		next.setOnClickListener(this);

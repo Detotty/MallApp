@@ -27,6 +27,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
+import com.mallapp.Controllers.FavouriteCentersFiltration;
 import com.mallapp.Controllers.OffersNewsFiltration;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
@@ -36,6 +37,7 @@ import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.MallApp_Application;
 import com.mallapp.View.R;
 import com.mallapp.cache.AppCacheManager;
+import com.mallapp.cache.CentersCacheManager;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.utils.GlobelOffersNews;
@@ -147,7 +149,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 //		filterData();
         View rootView = inflater.inflate(R.layout.endorsement_view_pager_list, container, false);
         list = (ListView) rootView.findViewById(R.id.mallapp_listview);
-        volleyNetworkUtil = new VolleyNetworkUtil(context);
+        volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
+        requestType = LOADING_MALL_ACTIVITIES;
+        getLatestListing();
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -156,9 +160,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
-                    pullToRefresh();
-                }
-                else {
+                    getLatestListing();
+                } else {
                     swipeRefreshLayout.setRefreshing(false);
                 }
             }
@@ -182,10 +185,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         super.onResume();
         if (!isPaused)
             pageNo = 1;
-        if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
+       /* if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
             lastPage = false;
             getLatestListing();
-        }
+        }*/
     }
 
     @Override
@@ -196,8 +199,21 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     }
 
     public void getLatestListing() {
+        ArrayList<FavouriteCentersModel> TITLES_Centers = GlobelOffersNews.TITLES_centers;
+        if (TITLES_Centers == null || TITLES_Centers.size() == 0) {
+            TITLES_Centers = CentersCacheManager.getAllCenters(context);
+        }
+        String selectedCenter = GlobelOffersNews.TITLES.get(position).trim();
+        if (selectedCenter.equals("All")){
+            MainMenuConstants.SELECTED_MALL_PLACE_ID = "";
+        }
+        for (FavouriteCentersModel center : TITLES_Centers) {
+            if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
+                    MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
+            }
 
-        requestType = LOADING_MALL_ACTIVITIES;
+        }
+
         pullToRefresh();
     }
 

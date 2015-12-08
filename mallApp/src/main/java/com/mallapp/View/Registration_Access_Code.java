@@ -39,7 +39,7 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 		continue_next 	= (Button) findViewById(R.id.v_continue);
 		code 			= (EditText) findViewById(R.id.verify_code);
 		code_not_receive= (TextView) findViewById(R.id.code_not_receive_text);
-		setCodeMessage();
+//		setCodeMessage();
 		back_screen		= (ImageButton) findViewById(R.id.back_screen);
         back_screen.setOnClickListener(this);
 		code_not_receive.setOnClickListener(this);
@@ -117,7 +117,7 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 			new Thread() {
 				@Override
 				public void run() {
-					SendVerificationCode.sendVerificationCode(getApplicationContext(), userProfile.getPhone(),
+					SendVerificationCode.sendVerificationCode(getApplicationContext(), userProfile.getMobilePhone(),
 							userProfile.isPush_notification(), null,
 							userProfile.getCountryCode());
 				}

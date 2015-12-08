@@ -25,14 +25,14 @@ public class OffersNewsPagerAdapter extends FragmentStatePagerAdapter{
 		// TODO Auto-generated constructor stub
 	}
 	
-	public OffersNewsPagerAdapter(FragmentManager fm , Context context, Handler uiHandler, 
-			String audienceFilter, List<OfferPagerTabFragment> fragments,ArrayList<String> TITLES) {
+	public OffersNewsPagerAdapter(FragmentManager fm , Context context, Handler uiHandler,
+			String audienceFilter,ArrayList<String> TITLES) {
 		super(fm);
 		ui= uiHandler;
 		this.context= context;
 		this.TITLES = TITLES;
 		this.headerFilter= audienceFilter;
-		this.fragments	=	fragments;
+//		this.fragments	=	fragments;
 	}
 	
 	@Override
@@ -48,8 +48,9 @@ public class OffersNewsPagerAdapter extends FragmentStatePagerAdapter{
 	
 	@Override
 	public Fragment getItem(int position) {
-		OfferPagerTabFragment  f= this.fragments.get(position);
-		return f;
+		return OfferPagerTabFragment.newInstance(position,ui,context,headerFilter);
+//		OfferPagerTabFragment  f= this.fragments.get(position);
+
 	}
 
 	

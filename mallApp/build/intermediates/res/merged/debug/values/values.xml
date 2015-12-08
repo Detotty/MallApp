@@ -671,9 +671,9 @@
     <string name="access_code_country">Sent SMS successfully</string>
     <string name="access_code_country_1">Please enter the verification code</string>
     <string name="access_code_country_2">Access code</string>
-    <string name="access_code_country_3">If you do not receive your access code with in 60 second. Press</string>
+    <string name="access_code_country_3">If you do not receive your access code with in 60 second. Let us...</string>
     <string name="access_code_country_4">Please enter code.</string>
-    <string name="access_code_country_5">No Code</string>
+    <string name="access_code_country_5"><u>Resend code</u></string>
     <string name="action_settings">Settings</string>
     <string name="add_date">Add Date</string>
     <string name="add_new_place_error_message">Please enter place name</string>

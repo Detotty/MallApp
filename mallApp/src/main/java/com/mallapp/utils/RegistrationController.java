@@ -589,6 +589,9 @@ public class RegistrationController {
                         }
                     }
                     adapter.notifyDataSetChanged();
+                    if (areAllTrue(interestSelectionModels)){
+
+                    }
                 }
             }, new Response.ErrorListener() {
                 @Override
@@ -789,5 +792,11 @@ public class RegistrationController {
         }
 
 
+
+    public static boolean areAllTrue(ArrayList<InterestSelectionModel> array)
+    {
+        for(InterestSelectionModel b : array) if(!b.isInterested()) return false;
+        return true;
+    }
 }
 
