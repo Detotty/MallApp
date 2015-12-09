@@ -9,12 +9,14 @@ import android.graphics.drawable.Drawable;
 import com.mallapp.Fragments.RestaurantPagerFragment;
 import com.mallapp.Model.Restaurant;
 import com.mallapp.Model.RestaurantMenu;
+import com.mallapp.Model.RestaurantModel;
 
 public class GlobelRestaurants {
 
 	public static ArrayList<Bitmap> bitmap_images;
 	public static Restaurant rest_obj;
-	
+	public static RestaurantModel rest_obj_model;
+
 	public static Restaurant related_rest_obj;
 	public static Restaurant rest_obj_chat;
 

@@ -9,6 +9,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.RestaurantModel;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
@@ -26,9 +27,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      ************************************************/
 
     private static final String DATABASE_NAME = "favorites.db";
-    private static final int DATABASE_VERSION = 3;
+    private static final int DATABASE_VERSION = 4;
 
     private Dao<ShopsModel, Integer> shopsDao;
+    private Dao<RestaurantModel, Integer> restaurantsDao;
     private Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDao;
     private Dao<ShopDetailModel, Integer> shopDetailModelIntegerDao;
 
@@ -48,6 +50,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, ShopsModel.class);
             TableUtils.createTableIfNotExists(connectionSource, MallActivitiesModel.class);
             TableUtils.createTableIfNotExists(connectionSource, ShopDetailModel.class);
+            TableUtils.createTableIfNotExists(connectionSource, RestaurantModel.class);
 
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Unable to create datbases", e);
@@ -63,6 +66,7 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, ShopsModel.class, true);
             TableUtils.dropTable(connectionSource, MallActivitiesModel.class, true);
             TableUtils.dropTable(connectionSource, ShopDetailModel.class, true);
+            TableUtils.dropTable(connectionSource, RestaurantModel.class, true);
             onCreate(sqliteDatabase, connectionSource);
 
         } catch (SQLException e) {
@@ -79,6 +83,12 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             shopsDao = getDao(ShopsModel.class);
         }
         return shopsDao;
+    }
+    public Dao<RestaurantModel, Integer> getRestaurantsDao() throws SQLException {
+        if (restaurantsDao == null) {
+            restaurantsDao = getDao(RestaurantModel.class);
+        }
+        return restaurantsDao;
     }
     public Dao<MallActivitiesModel, Integer> getMallActivitiesDao() throws SQLException {
         if (mallActivitiesModelIntegerDao == null) {

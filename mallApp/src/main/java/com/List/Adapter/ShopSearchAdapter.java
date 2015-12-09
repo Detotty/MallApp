@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -14,15 +15,19 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
 import com.mallapp.View.ShopMainMenuActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 public class ShopSearchAdapter extends ArrayAdapter<ShopsModel>{
@@ -32,13 +37,20 @@ public class ShopSearchAdapter extends ArrayAdapter<ShopsModel>{
 	Context context;
 	Activity activity;
 	public ImageLoader imageLoader;
+	Dao<ShopsModel, Integer> shopsDao;
+	String url;
+	String UserId;
+	VolleyNetworkUtil volleyNetworkUtil;
 	
-	public ShopSearchAdapter(Context context, Activity act, int textViewResourceId, ArrayList<ShopsModel> objects) {
+	public ShopSearchAdapter(Context context, Activity act, int textViewResourceId, ArrayList<ShopsModel> objects,Dao<ShopsModel, Integer> shopsDao) {
 		super(context, textViewResourceId, objects);
 		shop_search= objects;
 		this.context= context;
 		this.activity= act;
 		imageLoader	= new ImageLoader(context);
+		this.shopsDao = shopsDao;
+		UserId = SharedPreferenceUserProfile.getUserId(context);
+		volleyNetworkUtil = new VolleyNetworkUtil(context);
 	}
 	
 	public ArrayList<ShopsModel> getShop_search() {
@@ -123,11 +135,15 @@ public class ShopSearchAdapter extends ArrayAdapter<ShopsModel>{
 				if(!shop_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					shop_obj.setFav(true);
-					ShopCacheManager.updateShops(context, shop_obj, "", position);
+					updateShops(shop_obj);
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=false";
+					volleyNetworkUtil.PostFavShop(url);
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					shop_obj.setFav(false);
-					ShopCacheManager.updateShops(context, shop_obj, "", position);
+					updateShops(shop_obj);
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=true";
+					volleyNetworkUtil.PostFavShop(url);
 				}
 			}
 		});
@@ -147,4 +163,12 @@ public class ShopSearchAdapter extends ArrayAdapter<ShopsModel>{
 		});
         return view;
     }
+
+	public void updateShops(ShopsModel fav){
+		try {
+			shopsDao.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

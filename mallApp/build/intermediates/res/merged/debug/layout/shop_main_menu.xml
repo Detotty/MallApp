@@ -24,7 +24,7 @@
 	    <LinearLayout 
 		    android:id="@+id/scroll_side_index"
 		    android:layout_width="fill_parent"
-		    android:layout_height="wrap_content"
+		    android:layout_height="fill_parent"
 		    android:baselineAligned="false"
 		    android:orientation="horizontal"
 		    android:weightSum="1">

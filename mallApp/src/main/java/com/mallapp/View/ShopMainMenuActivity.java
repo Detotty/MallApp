@@ -244,10 +244,10 @@ public class ShopMainMenuActivity extends Activity
         list_view1.setOnGroupExpandListener(new OnGroupExpandListener() {
             @Override
             public void onGroupExpand(int groupPosition) {
-                if (prev != -1) {
+               /* if (prev != -1) {
                     list_view1.collapseGroup(prev);
                 }
-                prev = groupPosition;
+                prev = groupPosition;*/
             }
         });
 
@@ -380,14 +380,14 @@ public class ShopMainMenuActivity extends Activity
 
             invisibleIndexList();
             adapter1 = new ShopExpandableAdapter(getApplicationContext(), this,
-                    shops_category, GlobelShops.header_section_category);
+                    shops_category, GlobelShops.header_section_category,shopsDao);
             list_view1.setAdapter(adapter1);
 
         } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
 
             invisibleIndexList();
             adapter1 = new ShopExpandableAdapter(getApplicationContext(), this,
-                    shops_floor, GlobelShops.header_section_floor);
+                    shops_floor, GlobelShops.header_section_floor,shopsDao);
             list_view1.setAdapter(adapter1);
             list_view1.setVisibility(View.VISIBLE);
         }
@@ -464,7 +464,7 @@ public class ShopMainMenuActivity extends Activity
         shopsearchResults = shopsModelArrayList;
         shopsearch_array = shopsModelArrayList;
 
-        adapter_search = new ShopSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, shopsearchResults);
+        adapter_search = new ShopSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, shopsearchResults,shopsDao);
         list_view_search.setAdapter(adapter_search);
         filterShops();
         displayIndex();

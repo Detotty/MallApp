@@ -246,7 +246,7 @@ public class FavouritesMainMenuActivity extends Activity
 							}
 						}
 						if(r_searchResults!=null && r_searchResults.size()>0){
-							adapter_search_R= new RestaurantSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, r_searchResults);
+//							adapter_search_R= new RestaurantSearchAdapter(getApplicationContext(),FavouritesMainMenuActivity.this, R.layout.list_item_shop, r_searchResults);
 							list_view_search.setAdapter(adapter_search_R);
 							list_view_search.setVisibility(View.VISIBLE);
 							
@@ -379,7 +379,7 @@ public class FavouritesMainMenuActivity extends Activity
 	}
 
 	private void filterRestaurants() {
-		r_category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, restaurant_read_audience);
+//		r_category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, restaurant_read_audience);
 	}
 	
 	private void filterOffers() {
@@ -480,7 +480,7 @@ public class FavouritesMainMenuActivity extends Activity
 			
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
 		
-			adapter_R = new RestaurantExpandableAdapter(getApplicationContext(),this, r_category_audience, GlobelRestaurants.header_section_category);
+//			adapter_R = new RestaurantExpandableAdapter(getApplicationContext(),this, r_category_audience, GlobelRestaurants.header_section_category);
 			list_view.setAdapter(adapter_R);
 			
 		}

@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,42 +16,55 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Restaurant;
+import com.mallapp.Model.RestaurantModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.View.RestaurantDetailActivity;
 import com.mallapp.cache.RestaurantCacheManager;
 import com.mallapp.globel.GlobelRestaurants;
 import com.mallapp.imagecapture.ImageLoader;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.VolleyNetworkUtil;
+import com.squareup.picasso.Picasso;
 
 public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
 
 	private Context _context;
 	private Activity	activity;
-	Restaurant rest_obj;
+	RestaurantModel rest_obj;
 	public ImageLoader imageLoader;
-	private HashMap<String, ArrayList<Restaurant>> rest_all_audience;
+	private HashMap<String, ArrayList<RestaurantModel>> rest_all_audience;
 	private ArrayList<String> _listDataHeader;
+	Dao<RestaurantModel, Integer> restaurantsDao;
+	String url;
+	String UserId;
+	VolleyNetworkUtil volleyNetworkUtil;
 	
 	
 	
     public RestaurantExpandableAdapter(Context context, Activity	activity,
-    		HashMap<String, ArrayList<Restaurant>> listChildData,
-    		ArrayList<String> header ) {
+    		HashMap<String, ArrayList<RestaurantModel>> listChildData,
+    		ArrayList<String> header,Dao<RestaurantModel, Integer> restaurantsDao ) {
     	this._context 	= context;
     	this.activity	= activity;
     	this.rest_all_audience	= listChildData;
     	this._listDataHeader	= header;
     	imageLoader				= new ImageLoader(activity.getApplicationContext());
+		this.restaurantsDao = restaurantsDao;
+		UserId = SharedPreferenceUserProfile.getUserId(context);
+		volleyNetworkUtil = new VolleyNetworkUtil(context);
     }
 
     
     
     
     @Override
-    public Restaurant getChild(int groupPosition, int childPosititon) {
-    	Restaurant rest= rest_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
+    public RestaurantModel getChild(int groupPosition, int childPosititon) {
+    	RestaurantModel rest= rest_all_audience.get(_listDataHeader.get(groupPosition)).get(childPosititon);
     	if(rest!= null)
     		return rest;
     	
@@ -95,12 +109,13 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
 		
         rest_obj	= getChild(groupPosition, childPosition);
 		
-        holder.title.setText(rest_obj.getName());
-		holder.decs	.setText(rest_obj.getDescription());
-		holder.floor_no.setText(rest_obj.getFloor_no());
-		
-		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
-		
+        holder.title.setText(rest_obj.getRestaurantName());
+		holder.decs	.setText(rest_obj.getBriefText());
+		holder.floor_no.setText(rest_obj.getFloor());
+
+		Picasso.with(_context).load(rest_obj.getLogoURL()).into(holder.back_image);
+
+
 		final boolean fav	= rest_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
@@ -115,11 +130,17 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
 				if(!rest_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					rest_obj.setFav(true);
-					RestaurantCacheManager.updateRestaurant(_context, rest_obj, "");
+					updateRestaurants(rest_obj);
+					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=false";
+					volleyNetworkUtil.PostFavRestaurant(url);
+//					RestaurantCacheManager.updateRestaurant(_context, rest_obj, "");
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					rest_obj.setFav(false);
-					RestaurantCacheManager.updateRestaurant(_context, rest_obj, "");
+					updateRestaurants(rest_obj);
+					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=true";
+					volleyNetworkUtil.PostFavRestaurant(url);
+//					RestaurantCacheManager.updateRestaurant(_context, rest_obj, "");
 				}
 			}
 		});
@@ -128,10 +149,11 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
 			@Override
 			public void onClick(View view) {
 				rest_obj= getChild(groupPosition, childPosition);
-				GlobelRestaurants.rest_obj= rest_obj;
+				GlobelRestaurants.rest_obj_model= rest_obj;
 				Intent intent= new Intent(activity, RestaurantDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				intent.putExtra("MallStoreId", rest_obj.getMallResturantId());
 				activity.getApplication().startActivity(intent);
 			}
 		});
@@ -142,7 +164,7 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
  
     @Override
     public int getChildrenCount(int groupPosition) {
-    	Log.e("", "shops_all_audience   = " +groupPosition);
+    	Log.e("", "restaurants_all_audience   = " +groupPosition);
         return this.rest_all_audience.get(_listDataHeader.get(groupPosition)).size();//(this._listDataHeader.get(groupPosition).getTitle()).size();
     }
  
@@ -165,7 +187,7 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
     
     	String headerTitle = (String) getGroup(groupPosition);
-    	int count_ = getGroupCount();
+    	int count_ = getChildrenCount(groupPosition);
     	if (convertView == null) {
             LayoutInflater infalInflater = (LayoutInflater)
             		this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
@@ -176,7 +198,7 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
     	TextView count 	= (TextView) convertView.findViewById(R.id.count);
     	//lblListHeader.setTypeface(null, Typeface.BOLD);
     	header.setText(headerTitle);
-    	count.setText(count_+" Shops");
+    	count.setText(count_+" Restaurants");
     	
     	return convertView;
     }
@@ -190,4 +212,12 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+	public void updateRestaurants(RestaurantModel fav){
+		try {
+			restaurantsDao.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

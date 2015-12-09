@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.app.Activity;
@@ -14,38 +15,51 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Restaurant;
+import com.mallapp.Model.RestaurantModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.View.RestaurantDetailActivity;
 import com.mallapp.cache.RestaurantCacheManager;
 import com.mallapp.globel.GlobelRestaurants;
 import com.mallapp.imagecapture.ImageLoader;
+import com.mallapp.utils.VolleyNetworkUtil;
+import com.squareup.picasso.Picasso;
 
-public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
+public class RestaurantSearchAdapter extends ArrayAdapter<RestaurantModel>{
 
 	//private static final String TAG = PhoneContactsArrayAdapter.class.getSimpleName();
-	private ArrayList<Restaurant> rest_search;
+	private ArrayList<RestaurantModel> rest_search;
 	Context context;
 	Activity activity;
 	public ImageLoader imageLoader;
+	Dao<RestaurantModel, Integer> restaurantsDao;
+	String url;
+	String UserId;
+	VolleyNetworkUtil volleyNetworkUtil;
 	
-	public RestaurantSearchAdapter(Context context, Activity act, int textViewResourceId, ArrayList<Restaurant> objects) {
+	public RestaurantSearchAdapter(Context context, Activity act, int textViewResourceId, ArrayList<RestaurantModel> objects,Dao<RestaurantModel, Integer> restaurantsDao) {
 		super(context, textViewResourceId, objects);
 		rest_search= objects;
 		this.context= context;
 		this.activity= act;
 		imageLoader	= new ImageLoader(context);
+		this.restaurantsDao = restaurantsDao;
+		UserId = SharedPreferenceUserProfile.getUserId(context);
+		volleyNetworkUtil = new VolleyNetworkUtil(context);
 	}
 	
 	
 	
 	
-	public ArrayList<Restaurant> getRest_search() {
+	public ArrayList<RestaurantModel> getRest_search() {
 		return rest_search;
 	}
 
-	public void setRest_search(ArrayList<Restaurant> rest_search) {
+	public void setRest_search(ArrayList<RestaurantModel> rest_search) {
 		this.rest_search = rest_search;
 		//Log.e("", rest_search.size()+" setrest_search = rest_search");
 	}
@@ -56,7 +70,7 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 	}
 
 	@Override
-	public Restaurant getItem(int position) {
+	public RestaurantModel getItem(int position) {
 		return this.rest_search.get(position);
 	}
 	
@@ -66,7 +80,7 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 	}
 
 	@Override
-	public int getPosition(Restaurant item) {
+	public int getPosition(RestaurantModel item) {
 		return super.getPosition(item);
 	}
 	
@@ -77,7 +91,7 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 		//RelativeLayout r1;
 	}
 
-	Restaurant rest_obj;
+	RestaurantModel rest_obj;
 	
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
@@ -101,12 +115,12 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 		}
 		
         rest_obj	= getItem(position);
-        holder.title.setText(rest_obj.getName());
-		holder.decs	.setText(rest_obj.getDescription());
-		holder.floor_no.setText(rest_obj.getFloor_no());
-		
-		imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, holder.back_image);
-		
+        holder.title.setText(rest_obj.getRestaurantName());
+		holder.decs	.setText(rest_obj.getBriefText());
+		holder.floor_no.setText(rest_obj.getFloor());
+		Picasso.with(context).load(rest_obj.getLogoURL()).into(holder.back_image);
+
+
 		final boolean fav	= rest_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
@@ -122,11 +136,18 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 				if(!rest_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					rest_obj.setFav(true);
-					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");
+					updateRestaurants(rest_obj);
+					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=false";
+					volleyNetworkUtil.PostFavRestaurant(url);
+
+//					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					rest_obj.setFav(false);
-					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");
+					updateRestaurants(rest_obj);
+					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=true";
+					volleyNetworkUtil.PostFavRestaurant(url);
+//					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");
 				}
 			}
 		});
@@ -136,7 +157,7 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 			public void onClick(View view) {
 
 				rest_obj= getItem(position);
-				GlobelRestaurants.rest_obj= rest_obj;
+				GlobelRestaurants.rest_obj_model= rest_obj;
 				Intent intent= new Intent(activity, RestaurantDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -146,4 +167,12 @@ public class RestaurantSearchAdapter extends ArrayAdapter<Restaurant>{
 		});
         return view;
     }
+	public void updateRestaurants(RestaurantModel fav){
+		try {
+			restaurantsDao.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
 }

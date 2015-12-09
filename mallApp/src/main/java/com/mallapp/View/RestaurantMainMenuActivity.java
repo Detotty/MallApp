@@ -1,7 +1,9 @@
 package com.mallapp.View;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -30,18 +32,28 @@ import com.List.Adapter.RestaurantAdapter;
 import com.List.Adapter.RestaurantExpandableAdapter;
 import com.List.Adapter.RestaurantSearchAdapter;
 import com.foound.widget.AmazingListView;
+import com.j256.ormlite.android.apptools.OpenHelperManager;
+import com.j256.ormlite.dao.Dao;
+import com.j256.ormlite.stmt.PreparedQuery;
+import com.j256.ormlite.stmt.QueryBuilder;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Controllers.RestaurantFiltration;
 import com.mallapp.Controllers.RestaurantList;
 import com.mallapp.Controllers.ShopFiltration;
 import com.mallapp.Model.Restaurant;
+import com.mallapp.Model.RestaurantModel;
+import com.mallapp.Model.ShopsModel;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelRestaurants;
 import com.mallapp.layouts.SegmentedRadioGroup;
+import com.mallapp.listeners.RestaurantDataListener;
 import com.mallapp.utils.InputHandler;
+import com.mallapp.utils.VolleyNetworkUtil;
 
 
 public class RestaurantMainMenuActivity extends Activity 
-										implements 	OnCheckedChangeListener,
+										implements 	OnCheckedChangeListener,RestaurantDataListener,
 													OnClickListener {
 	
 	String TAG = getClass().getCanonicalName();
@@ -66,29 +78,38 @@ public class RestaurantMainMenuActivity extends Activity
 	private LinearLayout 	side_index_scroll;
 	
 	String audienceFilter = MainMenuConstants.AUDIENCE_FILTER_ALL;
-	static ArrayList <Restaurant>  restaurant_read_audience, searchResults,search_array;
-	static HashMap<String, ArrayList<Restaurant>>  all_audience ;
-	static HashMap<String, ArrayList<Restaurant>> category_audience,  floor_audience;
-	
+	static ArrayList <RestaurantModel>  restaurant_read_audience, searchResults,search_array;
+	static HashMap<String, ArrayList<RestaurantModel>>  all_audience ;
+	static HashMap<String, ArrayList<RestaurantModel>> category_audience,  floor_audience;
+
+	public static String mallPlaceId;
+	VolleyNetworkUtil volleyNetworkUtil;
+	private DatabaseHelper databaseHelper = null;
+	Dao<RestaurantModel, Integer> restaurantDao;
+	ArrayList<RestaurantModel> dbList = new ArrayList<>();
 
 
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
-		readRestaurantsList();
+//		readRestaurantsList();
 		setContentView(R.layout.shop_main_menu);
+		mallPlaceId = getIntent().getStringExtra("MallPlaceId");
+		String url = ApiConstants.GET_RESTAURANT_URL_KEY + mallPlaceId;
+		volleyNetworkUtil = new VolleyNetworkUtil(this);
+		volleyNetworkUtil.GetRestaurant(url, this);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		
 		init();
-		filterRestaurants();
+		/*filterRestaurants();
 		displayIndex();
 		initSectionHeaderList();
-		initExpandableList();
+		initExpandableList();*/
 		
-		adapter_search= new RestaurantSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, searchResults);
-		list_view_search.setAdapter(adapter_search);
+		/*adapter_search= new RestaurantSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, searchResults);
+		list_view_search.setAdapter(adapter_search);*/
 		
 		search_feild.addTextChangedListener(new TextWatcher() {
 			@Override
@@ -102,15 +123,15 @@ public class RestaurantMainMenuActivity extends Activity
 					cancel_search.setTextColor(getResources().getColor(R.color.purple));
 					list_view1.setVisibility(View.GONE);
 					side_index_scroll.setVisibility(View.GONE);
-					search_array = GlobelRestaurants.restaurant_array;
+//					search_array = GlobelRestaurants.restaurant_array;
 					if(search_array== null || search_array.size()==0){
 						readRestaurantsList();
 					}
-					searchResults = new ArrayList<Restaurant>();
+					searchResults = new ArrayList<RestaurantModel>();
 					
 					for(int i= 0; i< search_array.size(); i++){
 						
-						String rest_name=search_array.get(i).getName().toString();
+						String rest_name=search_array.get(i).getRestaurantName().toString();
 						if(textLength <= rest_name.length()){
 							if(searchString.equalsIgnoreCase(rest_name.substring(0,textLength)))
 								searchResults.add(search_array.get(i));
@@ -161,6 +182,7 @@ public class RestaurantMainMenuActivity extends Activity
 		open_navigation		= (ImageButton) 		findViewById(R.id.navigation);
 		segmentText 		= (SegmentedRadioGroup) findViewById(R.id.segment_text);
 		search_feild		= (EditText) 			findViewById(R.id.search_feild);
+		search_feild.setHint(R.string.restaurant_search_hint);
 		heading				= (TextView) 			findViewById(R.id.heading);
 		cancel_search		= (Button) 				findViewById(R.id.cancel_search);
 		list_view			= (AmazingListView) 	findViewById(R.id.shop_list);
@@ -169,10 +191,25 @@ public class RestaurantMainMenuActivity extends Activity
 		side_index_scroll 	= (LinearLayout) 		findViewById(R.id.scroll_side_index);
 		list_view1 			= (ExpandableListView) 	findViewById(R.id.expandableListView);
 		heading.setText("RESTAURANTS");
+
+		try {
+			// This is how, a reference of DAO object can be done
+			restaurantDao = getHelper().getRestaurantsDao();
+
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
+
+	private DatabaseHelper getHelper() {
+		if (databaseHelper == null) {
+			databaseHelper = OpenHelperManager.getHelper(this, DatabaseHelper.class);
+		}
+		return databaseHelper;
 	}
 
 	private void readRestaurantsList() {
-		restaurant_read_audience= GlobelRestaurants.restaurant_array;
+		/*restaurant_read_audience= GlobelRestaurants.restaurant_array;
 		
 		if(restaurant_read_audience == null || restaurant_read_audience.size() == 0){
 			RestaurantList.saveRestaurantData(getApplicationContext());
@@ -183,7 +220,7 @@ public class RestaurantMainMenuActivity extends Activity
 			searchResults= restaurant_read_audience;
 		}
 		search_array	=  GlobelRestaurants.restaurant_array;
-		searchResults	=  GlobelRestaurants.restaurant_array;
+		searchResults	=  GlobelRestaurants.restaurant_array;*/
 	}
 
 	
@@ -197,10 +234,10 @@ public class RestaurantMainMenuActivity extends Activity
 		list_view1.setOnGroupExpandListener(new OnGroupExpandListener() {
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				if(prev!=-1){
+				/*if(prev!=-1){
 					list_view1.collapseGroup(prev);    
 				}
-				prev=groupPosition;
+				prev=groupPosition;*/
 			}
 		});
 		
@@ -212,7 +249,7 @@ public class RestaurantMainMenuActivity extends Activity
 		list_view.setPinnedHeaderView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_item_shop_header, list_view, false));
 		
 		adapter	= new RestaurantAdapter(getApplicationContext(), RestaurantMainMenuActivity.this, all_audience, 
-							GlobelRestaurants.header_section_alphabetics, audienceFilter);
+							GlobelRestaurants.header_section_alphabetics, audienceFilter,restaurantDao);
 		
 		list_view.setAdapter(adapter);
 	}
@@ -231,9 +268,9 @@ public class RestaurantMainMenuActivity extends Activity
 
 	
 	private void initArrays() {
-		all_audience 		= new HashMap<String, ArrayList<Restaurant>>();
-		category_audience	= new HashMap<String, ArrayList<Restaurant>>();
-		floor_audience		= new HashMap<String, ArrayList<Restaurant>>();
+		all_audience 		= new HashMap<String, ArrayList<RestaurantModel>>();
+		category_audience	= new HashMap<String, ArrayList<RestaurantModel>>();
+		floor_audience		= new HashMap<String, ArrayList<RestaurantModel>>();
 	}
 	
 	Map<String, Integer> mapIndex;
@@ -267,6 +304,10 @@ public class RestaurantMainMenuActivity extends Activity
 	public void onDestroy() {
 		// TODO Auto-generated method stub
 		super.onDestroy();
+		if (databaseHelper != null) {
+			OpenHelperManager.releaseHelper();
+			databaseHelper = null;
+		}
 	}
 
 	
@@ -320,7 +361,7 @@ public class RestaurantMainMenuActivity extends Activity
 		
 		if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 			
-			adapter	= new RestaurantAdapter(getApplicationContext(), this, all_audience, GlobelRestaurants.header_section_alphabetics, audienceFilter);
+			adapter	= new RestaurantAdapter(getApplicationContext(), this, all_audience, GlobelRestaurants.header_section_alphabetics, audienceFilter,restaurantDao);
 			list_view.	setAdapter(adapter);
 			list_view1.	setVisibility(View.GONE);
 			side_index_scroll.	setVisibility(View.VISIBLE);
@@ -328,13 +369,13 @@ public class RestaurantMainMenuActivity extends Activity
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)){
 			
 			invisibleIndexList();
-			adapter1 = new RestaurantExpandableAdapter(getApplicationContext(),this, category_audience, GlobelRestaurants.header_section_category);
+			adapter1 = new RestaurantExpandableAdapter(getApplicationContext(),this, category_audience, GlobelRestaurants.header_section_category,restaurantDao);
 			list_view1.setAdapter(adapter1);
 			
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)){
 			
 			invisibleIndexList();
-			adapter1 = new RestaurantExpandableAdapter(getApplicationContext(),this, floor_audience, GlobelRestaurants.header_section_floor);
+			adapter1 = new RestaurantExpandableAdapter(getApplicationContext(),this, floor_audience, GlobelRestaurants.header_section_floor,restaurantDao);
 			list_view1.setAdapter(adapter1);
 			list_view1.setVisibility(View.VISIBLE);
 		}
@@ -376,5 +417,71 @@ public class RestaurantMainMenuActivity extends Activity
 				
 			}
 		}
-	}	
+	}
+
+	@Override
+	public void onDataReceived(ArrayList<RestaurantModel> restaurantModelArrayList) {
+		try {
+            /*if (shopsModelArrayList.size()>0)
+            shopModel_read_audience = readShopsList(ShopMainMenuActivity.this);
+            else*/
+			getDBRestaurants();
+//            shopModel_read_audience = shopsModelArrayList;
+
+			if (dbList != null) {
+				for (RestaurantModel rest : dbList
+						) {
+					for (int i = 0; i < restaurantModelArrayList.size(); i++) {
+						RestaurantModel sh = restaurantModelArrayList.get(i);
+						if (sh.getMallResturantId().equals(rest.getMallResturantId())) {
+							if (rest.isFav()) {
+								sh.setFav(true);
+								restaurantModelArrayList.set(i, sh);
+							}
+						}
+					}
+				}
+			}
+			restaurant_read_audience = restaurantModelArrayList;
+		} catch (Exception ex) {
+			ex.printStackTrace();
+		}
+
+
+		searchResults = restaurantModelArrayList;
+		search_array = restaurantModelArrayList;
+
+		adapter_search = new RestaurantSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, searchResults,restaurantDao);
+		list_view_search.setAdapter(adapter_search);
+		filterRestaurants();
+		displayIndex();
+		initSectionHeaderList();
+		initExpandableList();
+	}
+
+	@Override
+	public void OnError() {
+
+	}
+
+	public void getDBRestaurants() {
+		try {
+			// This is how, a reference of DAO object can be done
+			Dao<RestaurantModel, Integer> studentDao = getHelper().getRestaurantsDao();
+			// Get our query builder from the DAO
+			final QueryBuilder<RestaurantModel, Integer> queryBuilder = studentDao.queryBuilder();
+			// We need only Students who are associated with the selected Teacher, so build the query by "Where" clause
+			// Prepare our SQL statement
+			final PreparedQuery<RestaurantModel> preparedQuery = queryBuilder.prepare();
+			// Fetch the list from Database by queryingit
+			final Iterator<RestaurantModel> studentsIt = studentDao.queryForAll().iterator();
+			// Iterate through the StudentDetails object iterator and populate the comma separated String
+			while (studentsIt.hasNext()) {
+				final RestaurantModel sDetails = studentsIt.next();
+				dbList.add(sDetails);
+			}
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

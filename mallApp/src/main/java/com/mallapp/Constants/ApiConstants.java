@@ -50,6 +50,8 @@ public class ApiConstants {
 	public static final String POST_FAV_OFFERS_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteOffers?UserId=";
 
 	public static final String POST_FAV_SHOP_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteShops?UserId=";
+
+	public static final String POST_FAV_RESTAURANT_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"SaveFavoriteRestaurants?UserId=";
 	//http://52.28.59.218:5001/api/UserFavoritesService/SaveFavoriteShops?UserId=%7bUserId%7d&EntityId=%7bEntityId%7d&d={EntityId}&IsShop=true?IsDeleted={IsDeleted}
 	public static final String GET_RESTAURANT_URL_KEY = RESTAURANT_SERVICE_URL_KEY +"GetRestaurants/";
 }

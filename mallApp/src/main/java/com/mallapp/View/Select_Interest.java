@@ -51,7 +51,7 @@ public class Select_Interest extends Activity implements OnClickListener {
 
 		adapter		= new InterestAdapter(getApplicationContext(),R.layout.list_item_interest, interst_list,is_interest_select_all);
 		list_view.setAdapter(adapter);
-		interst_list_this = controller.GetInterestList(ApiConstants.GET_INTEREST_URL_KEY,adapter,interst_list);
+		interst_list_this = controller.GetInterestList(ApiConstants.GET_INTEREST_URL_KEY,adapter,interst_list,is_interest_select_all);
 
 		next 	= (Button) findViewById(R.id.next_screen);
 		back	= (ImageButton) findViewById(R.id.back_screen);

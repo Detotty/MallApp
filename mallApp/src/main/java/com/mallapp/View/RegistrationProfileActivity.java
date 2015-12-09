@@ -435,7 +435,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 			//SharedPreferenceUserProfile.SaveUserProfile(userProfile, getApplicationContext());
 			SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
 
-			Toast.makeText(getApplicationContext(), "Registration Successfully!", Toast.LENGTH_LONG).show();
+			Toast.makeText(getApplicationContext(), "Registration Successful!", Toast.LENGTH_LONG).show();
 
 //			Intent tabIntent = new Intent(RegistrationProfileActivity.this, DashBoardCrowedEye.class);
 

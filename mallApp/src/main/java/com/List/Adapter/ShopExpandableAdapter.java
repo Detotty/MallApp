@@ -1,5 +1,6 @@
 package com.List.Adapter;
 
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
 
@@ -15,9 +16,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.View.ShopDetailActivity;
 import com.mallapp.View.ShopMainMenuActivity;
@@ -25,6 +29,7 @@ import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 public class ShopExpandableAdapter extends BaseExpandableListAdapter {
@@ -35,17 +40,23 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 	public ImageLoader imageLoader;
 	private HashMap<String, ArrayList<ShopsModel>> shops_all_audience;
 	private ArrayList<String> _listDataHeader;
-	
-	
-	
-    public ShopExpandableAdapter(Context context, Activity	activity,
+	Dao<ShopsModel, Integer> shopsDao;
+	String url;
+	String UserId;
+	VolleyNetworkUtil volleyNetworkUtil;
+
+
+	public ShopExpandableAdapter(Context context, Activity	activity,
     		HashMap<String, ArrayList<ShopsModel>> listChildData,
-    		ArrayList<String> header ) {
+    		ArrayList<String> header,Dao<ShopsModel, Integer> shopsDao ) {
     	this._context 	= context;
     	this.activity	= activity;
     	this.shops_all_audience= listChildData;
     	this._listDataHeader= header;
     	imageLoader		= new ImageLoader(activity.getApplicationContext());
+		this.shopsDao = shopsDao;
+		UserId = SharedPreferenceUserProfile.getUserId(context);
+		volleyNetworkUtil = new VolleyNetworkUtil(context);
     }
 
     
@@ -120,11 +131,17 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 				if(!shop_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					shop_obj.setFav(true);
-					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
+					updateShops(shop_obj);
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=false";
+					volleyNetworkUtil.PostFavShop(url);
+//					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					shop_obj.setFav(false);
-					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
+					updateShops(shop_obj);
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=true";
+					volleyNetworkUtil.PostFavShop(url);
+//					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
 				}
 			}
 		});
@@ -195,4 +212,12 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
     public boolean isChildSelectable(int groupPosition, int childPosition) {
         return true;
     }
+
+	public void updateShops(ShopsModel fav){
+		try {
+			shopsDao.createOrUpdate(fav);
+		} catch (SQLException e) {
+			e.printStackTrace();
+		}
+	}
 }

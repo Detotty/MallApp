@@ -877,6 +877,7 @@
     <string name="request_error_message">Something went wrong. Please try again later</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
+    <string name="restaurant_search_hint">Type Restaurant Name</string>
     <string name="restaurants_">Restaurants</string>
     <string name="s_price">STARTING PRICE</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->

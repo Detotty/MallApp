@@ -513,13 +513,15 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		StoreTimingsModel[] timinigs = shopDetail.getStoreTimings();
 		for (StoreTimingsModel st:timinigs
 			 ) {
-			String t1 = st.getFromDay()+"-"+st.getToDay()+"\t\t  "+st.getOpeningTiming()+"-"+st.getClosingTiming();
-			LinearLayout.LayoutParams lparams = new LinearLayout.LayoutParams(
-					LinearLayout.LayoutParams.WRAP_CONTENT, LinearLayout.LayoutParams.WRAP_CONTENT);
-			TextView tv=new TextView(this);
-			tv.setLayoutParams(lparams);
+			final RelativeLayout newView = (RelativeLayout) getLayoutInflater().inflate(R.layout.timing_layout, null);
+			String t1 = st.getFromDay()+"-"+st.getToDay();
+			String t2 = st.getOpeningTiming()+"-"+st.getClosingTiming();
+
+			TextView tv=(TextView) newView.findViewById(R.id.tv_d);
 			tv.setText(t1);
-			this.linear_timing_layout.addView(tv);
+			TextView tv1=(TextView) newView.findViewById(R.id.tv_t);
+			tv1.setText(t2);
+			this.linear_timing_layout.addView(newView);
 		}
 		for (ShopsModel shopsModel:dbList
 			 ) {

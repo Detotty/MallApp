@@ -199,7 +199,7 @@ public class OffersTabFragment extends Fragment
         if (GlobelOffersNews.fragment_instences == null) {
             createPagerIntence();
         } else {
-//            changeInstanceType();
+            changeInstanceType();
         }
     }
 

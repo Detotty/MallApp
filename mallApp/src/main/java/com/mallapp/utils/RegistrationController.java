@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -53,7 +54,7 @@ public class RegistrationController {
 
     private Context context;
     private RegistrationUserListener listener;
-
+    ImageView is_interest_select_all;
 
     private String TAG = RegistrationController.class.getSimpleName();
 
@@ -590,7 +591,7 @@ public class RegistrationController {
                     }
                     adapter.notifyDataSetChanged();
                     if (areAllTrue(interestSelectionModels)){
-
+                        is_interest_select_all.setImageResource(R.drawable.interest_p);
                     }
                 }
             }, new Response.ErrorListener() {
@@ -640,8 +641,10 @@ public class RegistrationController {
 
     //******-------Get Interest List Api Call-----*********
 
-    public ArrayList<InterestSelectionModel> GetInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels){
+    public ArrayList<InterestSelectionModel> GetInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels,ImageView is_interest_select_all){
         progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+        this.is_interest_select_all = is_interest_select_all;
+
 //        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
         try{
 
@@ -672,7 +675,7 @@ public class RegistrationController {
                     InterestCacheManager.saveFavorites(context, interestSelectionModels);
                     adapter.notifyDataSetChanged();
                     String urls = ApiConstants.GET_SELECTED_INTEREST_URL_KEY+SharedPreferenceUserProfile.getUserId(context)+"&LanguageId=1";
-                    GetSelectedInterestList(urls,adapter,interestSelectionModels);
+                    GetSelectedInterestList(urls, adapter, interestSelectionModels);
                 }
             }, new Response.ErrorListener() {
                 @Override
