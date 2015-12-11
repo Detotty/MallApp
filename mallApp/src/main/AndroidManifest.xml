@@ -211,6 +211,10 @@
             android:name=".RegistrationActivity"
             android:label="@string/title_activity_registration" >
         </activity>
+        <activity
+            android:name=".WebViewActivity"
+            android:label="@string/title_activity_webview" >
+        </activity>
     </application>
 
 </manifest>

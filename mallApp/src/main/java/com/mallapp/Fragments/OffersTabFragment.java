@@ -66,6 +66,7 @@ public class OffersTabFragment extends Fragment
     String audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_ALL;
     VolleyNetworkUtil volleyNetworkUtil;
     public static Handler uihandler;
+    int tabPos = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -109,6 +110,7 @@ public class OffersTabFragment extends Fragment
             public void onPageSelected(int position) {
                 //Log.e(" offers tab fragment ", "onPageSelected" + position+" centers fav size = "+ TITLES.size());
                 setCenterLogo(position);
+                tabPos = position;
 //                callInOnResume();
 
             }
@@ -154,8 +156,8 @@ public class OffersTabFragment extends Fragment
                 if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                     String center_logo_name = center.getLogoUrl();
 //                    MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
-                    if (center.getCorporateColor()!=null)
-                    headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
+                    if (center.getCorporateColor() != null)
+                        headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
                     setCenter_logo(center_logo_name);
                     setSelected_center_logo(center_logo_name);
                 }
@@ -212,7 +214,7 @@ public class OffersTabFragment extends Fragment
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
         pager.setPageMargin(pageMargin);
-        pager.setCurrentItem(0);
+        pager.setCurrentItem(tabPos);
 //        adapter.notifyDataSetChanged();
     }
 
@@ -287,7 +289,6 @@ public class OffersTabFragment extends Fragment
 
         ;
     };
-
 
 
 }

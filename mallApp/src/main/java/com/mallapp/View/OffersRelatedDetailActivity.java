@@ -21,16 +21,29 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.j256.ormlite.dao.Dao;
+import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.ShopList;
+import com.mallapp.Model.BannerImagesModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.StoreOffersModel;
 import com.mallapp.SharedPreferences.SharedPreference;
+import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.socialsharing.Facebook_Login;
 import com.mallapp.socialsharing.Twitter_Integration;
 import com.mallapp.utils.GlobelOffersNews;
+import com.mallapp.utils.VolleyNetworkUtil;
 
-public class OffersRelatedDetailActivity extends Activity implements OnClickListener{
+public class OffersRelatedDetailActivity extends Activity implements OnClickListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 	
 	private ImageView offer_image;
 	private TextView offer_title, shope_name, offer_detail;
@@ -38,7 +51,12 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 	private Button go_to_shop, social_sharing;
 	private LinearLayout related_offers, social_sharing_layout;
 	private ImageButton message, face_book, twitter, email, chat;
-	Offers_News offer_object;
+	MallActivitiesModel offer_object;
+	private SliderLayout mDemoSlider;
+	String url = ApiConstants.POST_FAV_OFFERS_URL_KEY;
+	Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
+	VolleyNetworkUtil volleyNetworkUtil;
+	private DatabaseHelper databaseHelper = null;
 	
 
 	@Override
@@ -48,36 +66,26 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //UG4fewnT7&RV
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
-		offer_object= GlobelOffersNews.related_offer_obj;
+		offer_object = (MallActivitiesModel) getIntent().getSerializableExtra(Offers_News_Constants.MALL_OBJECT);
+
 		init();
 		setOfferDetail();
 		
 	}
 
 	private void setOfferDetail() {	
-		offer_title.setText(offer_object.getTitle());
-		shope_name.setText(offer_object.getShop_name());
-		offer_detail.setText(offer_object.getDetail());
+		offer_title.setText(offer_object.getActivityTextTitle());
+		shope_name.setText(offer_object.getMallName());
+		offer_detail.setText(offer_object.getDetailText());
+		if (offer_object.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_SHOP)){
+			go_to_shop.setVisibility(View.VISIBLE);
+		}
 		boolean fav	= offer_object.isFav();
 		if(fav)
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 		else
 			is_fav.setImageResource(R.drawable.ofer_detail_heart);
-		
-		String image_= offer_object.getImage();
-		int imageResource = getResources().getIdentifier(image_, "drawable", getPackageName());
-		Drawable d = getResources().getDrawable(imageResource);
-		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-		
-		Display display = getWindowManager().getDefaultDisplay();
-		Point size = new Point();
-		display.getSize(size);
-		//int width = size.x;
-		int mDstWidth 	= size.x;;//getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-        int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.offer_detail_height);
-		d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-		offer_image.setBackground(d);
-		setRelatedOffers();
+//		setRelatedOffers();
 	}
 
 	private void setRelatedOffers() {
@@ -158,6 +166,7 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 		back_screen = (ImageButton) findViewById(R.id.back);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		go_to_shop	= (Button) 	findViewById(R.id.go_to_shop);
+		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 //		social_sharing=(Button) findViewById(R.id.share_detail_popup);
 //		social_sharing.setOnClickListener(this);
 
@@ -272,5 +281,51 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 	@Override
 	protected void onDestroy() {
 		super.onDestroy();
+	}
+
+	public void ImageSlider(BannerImagesModel bImages[]){
+		for(BannerImagesModel name : bImages){
+			TextSliderView textSliderView = new TextSliderView(this);
+			// initialize a SliderLayout
+			textSliderView
+					.error(R.drawable.placeholder)
+					.empty(R.drawable.placeholder)
+					.errorDisappear(false)
+					.image(name.getBannerImageURL())
+					.setScaleType(BaseSliderView.ScaleType.Fit)
+					.setOnSliderClickListener(this);
+
+			//add your extra information
+			textSliderView.bundle(new Bundle());
+			textSliderView.getBundle()
+					.putString("extra",name.getBannerImageURL());
+
+			mDemoSlider.addSlider(textSliderView);
+		}
+		mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+		mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+		mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+		mDemoSlider.setDuration(3500);
+		mDemoSlider.addOnPageChangeListener(this);
+	}
+
+	@Override
+	public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+	}
+
+	@Override
+	public void onPageSelected(int position) {
+
+	}
+
+	@Override
+	public void onPageScrollStateChanged(int state) {
+
+	}
+
+	@Override
+	public void onSliderClick(BaseSliderView slider) {
+
 	}
 }

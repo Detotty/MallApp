@@ -86,6 +86,10 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		offer_title.setText(offer_object.getActivityTextTitle());
 		shope_name.setText(offer_object.getMallName());
 		offer_detail.setText(offer_object.getDetailText());
+
+		if (offer_object.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_SHOP)){
+			go_to_shop.setVisibility(View.VISIBLE);
+		}
 		boolean fav	= offer_object.isFav();
 		if(fav)
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
@@ -252,9 +256,10 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			}
 		}else if(v.getId() == go_to_shop.getId()){
 		
-			Shops shop_obj= readShopList();
-			GlobelShops.shop_obj= shop_obj;
+			/*Shops rest_obj= readShopList();
+			GlobelShops.rest_obj= rest_obj;*/
 			Intent activity= new Intent(OffersDetailActivity.this, ShopDetailActivity.class);
+			activity.putExtra("MallStoreId", offer_object.getEntityId());
 			startActivity(activity);
 		
 		}else if(v.getId() == social_sharing.getId()){
@@ -332,7 +337,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			//add your extra information
 			textSliderView.bundle(new Bundle());
 			textSliderView.getBundle()
-					.putString("extra",name.getBannerImageURL());
+					.putString("extra", name.getBannerImageURL());
 
 			mDemoSlider.addSlider(textSliderView);
 		}

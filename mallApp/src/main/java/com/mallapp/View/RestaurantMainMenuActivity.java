@@ -42,6 +42,7 @@ import com.mallapp.Controllers.RestaurantFiltration;
 import com.mallapp.Controllers.RestaurantList;
 import com.mallapp.Controllers.ShopFiltration;
 import com.mallapp.Model.Restaurant;
+import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.RestaurantModel;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.db.DatabaseHelper;
@@ -457,6 +458,11 @@ public class RestaurantMainMenuActivity extends Activity
 		displayIndex();
 		initSectionHeaderList();
 		initExpandableList();
+	}
+
+	@Override
+	public void onRestaurantDetailReceived(RestaurantDetailModel restaurantDetailModel) {
+
 	}
 
 	@Override

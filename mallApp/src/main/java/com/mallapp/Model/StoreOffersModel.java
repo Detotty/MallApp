@@ -45,6 +45,8 @@ public class StoreOffersModel implements Serializable
 
     private String EntityId;
 
+    private boolean isFav;
+
     public String getEntityLogo ()
 {
     return EntityLogo;
@@ -235,6 +237,15 @@ public class StoreOffersModel implements Serializable
         this.EntityId = EntityId;
     }
 
+    public boolean isFav ()
+    {
+        return isFav;
+    }
+
+    public void setFav (boolean isFav)
+    {
+        this.isFav = isFav;
+    }
     @Override
     public String toString()
     {

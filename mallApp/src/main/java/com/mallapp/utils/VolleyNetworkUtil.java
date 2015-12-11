@@ -23,6 +23,7 @@ import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Restaurant;
+import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.RestaurantModel;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.ShopsModel;
@@ -58,12 +59,14 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private String TAG = VolleyNetworkUtil.class.getSimpleName();
     MallDataListener mallDataListener;
     ShopsDataListener shopsDataListener;
+    RestaurantDataListener restaurantDataListener;
     private String requestType;
 
     private final String POST_FAV_NnO = "POST_FAV_NnO";
     private final String POST_FAV_SHOP = "POST_FAV_SHOP";
     private final String POST_FAV_REST = "REST";
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
+    private final String GET_REST_DETAIL = "GET_REST_DETAIL";
     private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
     private final String SAVE_FAV_SHOP = "SAVE_FAV_SHOP";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
@@ -290,6 +293,26 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+
+     /*<--------------SHOPS DETAILS DATA ---------------->*/
+
+    public void GetRestaurantDetail(String url,final RestaurantDataListener restaurantDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = GET_REST_DETAIL;
+        this.restaurantDataListener = restaurantDataListener;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
     /*<--------------NEWS AND OFFERS FAVORITE SELECTION ---------------->*/
 
     public void PostFavNnO(String url) {
@@ -355,8 +378,8 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 String token = SharedPreferenceUserProfile.getUserToken(context);
-                Log.e("", " token" + token);
-                headers.put("Content-Type", "application/json");
+                Log.e("Token", token);
+//                headers.put("Content-Type", "application/json");
                 headers.put("Auth-Token", token);
                 return headers;
             }
@@ -409,6 +432,19 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     Log.d(TAG, "Shop Detail:" + String.valueOf(response));
                         if (model != null)
                             shopsDataListener.onShopDetailReceived(model);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+
+            case GET_REST_DETAIL: {
+                try {
+                    Gson gson = new Gson();
+                    RestaurantDetailModel model = gson.fromJson(String.valueOf(response), RestaurantDetailModel.class);
+                    Log.d(TAG, "Shop Detail:" + String.valueOf(response));
+                        if (model != null)
+                            restaurantDataListener.onRestaurantDetailReceived(model);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

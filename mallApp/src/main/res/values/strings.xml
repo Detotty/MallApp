@@ -118,7 +118,8 @@
 	<string name="shop_error_message">No shops found for this mall</string>
 	<string name="add_new_place_error_message">Please enter place name</string>
 
-
+	<!--Shops Strings-->
+	<string name="home_page">Go to Homepage</string>
 
 
 
@@ -343,5 +344,6 @@
 		<item>263,ZW</item>
 	</string-array>
     <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_webview">WebviewActivity</string>
     <string name="title_activity_maps">Map</string>
 </resources>

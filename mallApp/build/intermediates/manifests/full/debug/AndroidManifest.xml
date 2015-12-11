@@ -216,6 +216,10 @@
             android:name="com.mallapp.View.RegistrationActivity"
             android:label="@string/title_activity_registration" >
         </activity>
+        <activity
+            android:name="com.mallapp.View.WebViewActivity"
+            android:label="@string/title_activity_webview" >
+        </activity>
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

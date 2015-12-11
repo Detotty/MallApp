@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-216:12
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-220:12
 	package
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:4:5-31
 		INJECTED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml
@@ -250,7 +250,7 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:36:5-88
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:36:30-85
 application
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:38:5-214:19
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:38:5-218:19
 MERGED from [MallApp:parallax:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\AndroidManifest.xml:11:5-16:19
 MERGED from [com.android.support:support-v4:22.2.1] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\AndroidManifest.xml:22:5-20
 MERGED from [MallApp:libraryviewpager:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\AndroidManifest.xml:5:5-20
@@ -702,6 +702,12 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:210:9-213
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:212:13-64
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:211:13-49
+activity#com.mallapp.View.WebViewActivity
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:214:9-217:20
+	android:label
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:216:13-59
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:215:13-44
 activity#com.google.android.gms.ads.AdActivity
 ADDED from [com.google.android.gms:play-services-ads:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\AndroidManifest.xml:26:9-29:64
 MERGED from [com.google.android.gms:play-services-ads:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\AndroidManifest.xml:26:9-29:64

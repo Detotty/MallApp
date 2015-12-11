@@ -27,6 +27,8 @@ import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.view.animation.AnimationUtils;
+import android.webkit.WebView;
+import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -52,11 +54,13 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
+import com.mallapp.Model.StoreOffersModel;
 import com.mallapp.Model.StoreTimingsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
@@ -92,7 +96,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
 	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout;
-	//HorizontalScrollView 	shops_offers1;
+	HorizontalScrollView shops_offers1;
 	RelativeLayout 			timing_layout;
 	LinearLayout 			linear_timing_layout;
 	private ImageButton 	message, face_book, twitter, email, chat;
@@ -119,9 +123,11 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
 	private void displayData() {
 		
-		/*shop_obj = GlobelShops.shopModel_obj;
-		shop_name.setText(shop_obj.getStoreName());
-		shop_detail.setText(shop_obj.getBriefText());*/
+		/*rest_obj = GlobelShops.shopModel_obj;
+		shop_name.setText(rest_obj.getStoreName());
+		shop_detail.setText(rest_obj.getBriefText());*/
+		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
+		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		shop_obj = new ShopsModel();
 		shop_name 	= (TextView) findViewById(R.id.offer_title);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
@@ -136,7 +142,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		is_fav		.setOnClickListener(this);
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
-
+		tv_Web.setOnClickListener(this);
 		try {
 			// This is how, a reference of DAO object can be done
 			shopsDao = getHelper().getShopsDao();
@@ -150,77 +156,50 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		setRelatedShop();*/
 	}
 
-	private void setShopOffers() {
+	private void setShopOffers(StoreOffersModel[] storeOffers) {
 	
 		shop_offers.removeAllViews();
 		SharedPreference sharedPreference 	= new SharedPreference();
 		ArrayList <Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
-		
-		if(offers_list!=null){
+		for (StoreOffersModel storeOffersModel:storeOffers
+			 ) {
+			View view =add_layoutOffers(storeOffersModel);
+			shop_offers.addView(view);
+		}
+		/*if(offers_list!=null){
 			for(int i=0; i<4; i++){
 				Offers_News object= offers_list.get(i);
 				View view =add_layoutOffers(object, i);
 				shop_offers.addView(view);
 			}
-		}
+		}*/
 	}
 	
 	
 	
 	@SuppressLint("InflateParams")
-	private View add_layoutOffers(final Offers_News offer_obj , int index) {
+	private View add_layoutOffers(final StoreOffersModel offer_obj) {
 		String image_nam = null, offer_name = null;
 		
 		final View view 	= getLayoutInflater().inflate(R.layout.list_item_shop_offers, null);
         TextView title 		= (TextView) view.findViewById(R.id.shop_offer_title);
         TextView shop_offer = (TextView) view.findViewById(R.id.shop_offer);
         ImageView shop_logo	= (ImageView) view.findViewById(R.id.shop_ofer_image);
-        //Log.e("related offer...", "related offer..."+ index);
-        if(index==0){
-        	image_nam	= "offer_logo1";
-        	offer_name= "Rough n Tough";
-        	title.setText(offer_name);
-        	shop_offer.setText("10% off");
-        }else if(index==1){
-        	
-        	image_nam	= "offer_logo2";
-        	offer_name= "soldier boots";
-        	title.setText(offer_name);
-        	shop_offer.setText("80% off");
-        	
-        }else if(index==2){
-        	
-        	image_nam	= "offer_logo3";
-        	offer_name= "jeans & jeans";
-        	title.setText(offer_name);
-        	shop_offer.setText("40% off");
-        	
-        }else if(index==3){
-        	
-        	image_nam	= "offer_logo4";
-        	offer_name= "Amazing offer";
-        	title.setText(offer_name);
-        	shop_offer.setText("10% off");
-        }
-		
-		int imageResource 	= getResources().getIdentifier(image_nam, "drawable", getPackageName());
-		Drawable d 			= getResources().getDrawable(imageResource);
-		Bitmap bitmap 	= ((BitmapDrawable) d).getBitmap();
-		int mDstWidth 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_width1);
-        int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-        bitmap= ScalingUtilities.createScaledBitmap(bitmap, mDstWidth, mDstHeight, ScalingLogic.FIT);
-		d = new BitmapDrawable(getResources(), bitmap);
-		//back_image.setBackground(d);
-		shop_logo.setImageDrawable(d);
-		//title.setCompoundDrawablesWithIntrinsicBounds(null, d, null, null);
+
+		title.setText(offer_obj.getActivityTextTitle());
+		shop_offer.setText(offer_obj.getBriefText());
+		Picasso.with(this).load(offer_obj.getImageURL()).into(shop_logo);
+
+
 		
         view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
-				GlobelOffersNews.related_offer_obj= offer_obj;
-				Intent intent= new Intent(ShopDetailActivity.this, OffersRelatedDetailActivity.class);
+//				GlobelOffersNews.related_offer_obj= offer_obj;
+				/*Intent intent= new Intent(ShopDetailActivity.this, OffersRelatedDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
+				intent.putExtra(Offers_News_Constants.MALL_OBJECT, offer_obj);
+				startActivity(intent);*/
 			}
 		});
 		return view;
@@ -301,7 +280,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	private void setShopLogo() {
 
 		Picasso.with(this).load(shop_obj.getLogoURL()).into(shop_logo);
-		/*String image_		= shop_obj.getLogo_image();
+		/*String image_		= rest_obj.getLogo_image();
 		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
 		Drawable d 			= getResources().getDrawable(imageResource);
 		Bitmap bitmap 		= ((BitmapDrawable) d).getBitmap();
@@ -329,7 +308,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		location_layout = (LinearLayout) findViewById(R.id.location_layout);
 		timing_layout	= (RelativeLayout) findViewById(R.id.timing_layout);
 		social_sharing_layout= (LinearLayout) findViewById(R.id.social_layout);
-		//shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
+		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		
 		location	= (ImageButton) findViewById(R.id.location);
 		timing = (ImageButton) findViewById(R.id.timing);
@@ -447,7 +426,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			}
 				
 			
-		}else if(v.getId() == location.getId()){
+		}/*else if(v.getId() == location.getId()){
 			if(location_layout.getVisibility()== View.GONE){
 				setInVisibility_tabs();
 				location.setImageResource(R.drawable.shop_detail_location_p);
@@ -474,6 +453,12 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			}else{
 				setInVisibility_tabs();
 			}
+		}*/
+		else if (v.getId() == tv_Web.getId()){
+			Intent intent= new Intent(ShopDetailActivity.this, WebViewActivity.class);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			intent.putExtra("url",shop_detail_obj.getWebURL());
+			startActivity(intent);
 		}
 		
 	}
@@ -509,8 +494,9 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		tv_address.setText(shopDetail.getAddress());
 		tv_Phone.setText(shopDetail.getPhone());
 		tv_Email.setText(shopDetail.getEmail());
-		tv_Web.setText(shopDetail.getWebURL());
 		StoreTimingsModel[] timinigs = shopDetail.getStoreTimings();
+		StoreOffersModel[] storeOffers = shopDetail.getStoreOffers();
+		setShopOffers(storeOffers);
 		for (StoreTimingsModel st:timinigs
 			 ) {
 			final RelativeLayout newView = (RelativeLayout) getLayoutInflater().inflate(R.layout.timing_layout, null);
