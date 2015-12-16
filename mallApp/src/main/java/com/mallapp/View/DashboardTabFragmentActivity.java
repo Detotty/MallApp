@@ -31,6 +31,7 @@ import android.widget.TextView;
 
 import com.List.Adapter.NavDrawerListAdapter;
 import com.mallapp.Constants.MainMenuConstants;
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Fragments.CardTabFragments;
 import com.mallapp.Fragments.MessagesTabFragments;
 import com.mallapp.Fragments.OffersTabFragment;
@@ -39,8 +40,10 @@ import com.mallapp.Fragments.RewardsTabFragments;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.NavDrawerItem;
 import com.mallapp.cache.CentersCacheManager;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
+import com.squareup.picasso.Picasso;
 
 @SuppressLint("InflateParams")
 public class DashboardTabFragmentActivity extends FragmentActivity implements OnItemClickListener {
@@ -178,12 +181,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				
 				MainMenuConstants.uiHandler= uiHandler;
 				Intent activity = new Intent(DashboardTabFragmentActivity.this, ShopMainMenuActivity.class);
-				for (FavouriteCentersModel fav: CentersCacheManager.getAllCenters(context)
-					 ) {
-					if (fav.getName().equals(MainMenuConstants.SELECTED_CENTER_NAME)){
-						activity.putExtra("MallPlaceId",fav.getMallPlaceId());
-					}
-				}
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
 				startActivity(activity);
 			} else
 				showdailog();
@@ -199,12 +197,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, RestaurantMainMenuActivity.class);
-				for (FavouriteCentersModel fav: CentersCacheManager.getAllCenters(context)
-						) {
-					if (fav.getName().equals(MainMenuConstants.SELECTED_CENTER_NAME)){
-						activity.putExtra("MallPlaceId",fav.getMallPlaceId());
-					}
-				}
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
 				startActivity(activity);
 			} else
 				showdailog();
@@ -220,6 +213,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, ServicesMainMenuActivity.class);
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
 				startActivity(activity);
 			} else
 				showdailog();
@@ -238,23 +232,9 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 			} else
 				showdailog();
 			break;
+
 			
 		case 6:
-			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, DirectionsNParking.class);
-				startActivity(activity);
-			} else
-				showdailog();
-			break;
-			
-		case 8:
 			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
 			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
@@ -269,7 +249,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 			break;
 			
 			
-		case 9:
+		case 7:
 			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
 			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
@@ -355,7 +335,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 							
 						drawer_text.setVisibility(View.GONE);
 						drawer_logo.setVisibility(View.VISIBLE);
-//						setCenter_logo(MainMenuConstants.SELECTED_CENTER_LOGO, context);
+						setCenter_logo(MainMenuConstants.SELECTED_CENTER_LOGO, context);
 							
 						} else{
 							drawer_text.setVisibility(View.VISIBLE);
@@ -377,7 +357,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 	
 	public static void setCenter_logo(String center_logo, Context context) {
 		
-		int mDstWidth 	= context.getResources().getDimensionPixelSize(R.dimen.center_logo_width);
+		/*int mDstWidth 	= context.getResources().getDimensionPixelSize(R.dimen.center_logo_width);
         int mDstHeight 	= context.getResources().getDimensionPixelSize(R.dimen.center_logo_height);
 		
 		int imageResource 	= context.getResources().getIdentifier(center_logo, "drawable", context.getPackageName());
@@ -385,9 +365,12 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		Bitmap bitmap 		= ((BitmapDrawable) d).getBitmap();
 		
 		d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-		drawer_logo.setImageDrawable(d);
+		drawer_logo.setImageDrawable(d);*/
+		Picasso.with(context).load(center_logo).into(drawer_logo);
 	
 	}
+
+
 
 
 }

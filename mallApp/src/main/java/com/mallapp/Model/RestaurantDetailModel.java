@@ -41,7 +41,7 @@ public class RestaurantDetailModel implements Serializable
 
     private String Email;
 
-    private String SiteMapActive;
+    private boolean SiteMapActive;
 
     private String Address;
 
@@ -223,12 +223,12 @@ public class RestaurantDetailModel implements Serializable
         this.Email = Email;
     }
 
-    public String getSiteMapActive ()
+    public boolean getSiteMapActive ()
     {
         return SiteMapActive;
     }
 
-    public void setSiteMapActive (String SiteMapActive)
+    public void setSiteMapActive (boolean SiteMapActive)
     {
         this.SiteMapActive = SiteMapActive;
     }

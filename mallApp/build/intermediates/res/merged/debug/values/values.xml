@@ -3,7 +3,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string-array name="CountryCodes">
-	    <item>93,AF</item>
+		<item>93,AF</item>
 		<item>355,AL</item>
 		<item>213,DZ</item>
 		<item>376,AD</item>
@@ -279,6 +279,7 @@
         <item>shop</item>
         <item>restaurant</item>
         <item>services</item>
+        <item>opening</item>
         <item>offer</item>
         <item>fav</item>
 
@@ -286,9 +287,10 @@
     <string-array name="nav_drawer_items">
         <item>Home</item>
         <item>Shops</item>
-        <item>Restuarants</item>
+        <item>Restaurants</item>
         <item>Services</item>
-        <item>Dicount Calculator</item>
+        <item>Mall Information</item>
+        <item>Discount Calculator</item>
         <item>Favourite</item>
 	</string-array>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
@@ -701,6 +703,11 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="calculaor">CALCULATOR</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="call_alert">Are you sure to make call </string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
+    <eat-comment/>
     <string name="cancel">Cancel</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
@@ -753,6 +760,7 @@
     <string name="common_signin_button_text_long">Sign in with Google</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="confirmation">Confirmation </string>
     <string name="continue_">Continue</string>
     <string name="country">Country</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/res/values/admob_strings.xml -->
@@ -876,6 +884,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="request_error_message">Something went wrong. Please try again later</string>
+    <string name="rest_offer_title">The Restaurant Offers</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="restaurant_search_hint">Type Restaurant Name</string>

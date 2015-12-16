@@ -3,6 +3,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:orientation="vertical"
+    android:id="@+id/shop_rel_offers"
     android:background="@color/transparent"
     android:padding="@dimen/margin_left_10" >
     
@@ -17,7 +18,7 @@
             android:layout_centerHorizontal="true"
             android:text="@string/shop_offers"
             android:textColor="@color/black3"
-            android:textSize="@dimen/text_22" />
+            android:textSize="@dimen/text_20" />
         <View 
             android:id="@+id/v"
             android:layout_width="fill_parent"

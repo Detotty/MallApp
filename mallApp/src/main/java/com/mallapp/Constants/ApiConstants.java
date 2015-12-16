@@ -56,4 +56,7 @@ public class ApiConstants {
 	public static final String GET_RESTAURANT_URL_KEY = RESTAURANT_SERVICE_URL_KEY +"GetRestaurants/";
 
 	public static final String GET_RESTAURANT_DETAIL_URL_KEY = RESTAURANT_SERVICE_URL_KEY +"GetRestaurantDetail?MallResturantId=";
+
+	public static final String GET_MALL_SERVICES_URL_KEY = MALL_SERVICE_URL_KEY +"GetMallServices?MallPlaceId=";
+
 }

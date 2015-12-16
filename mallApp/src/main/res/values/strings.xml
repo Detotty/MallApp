@@ -118,25 +118,25 @@
 	<string name="shop_error_message">No shops found for this mall</string>
 	<string name="add_new_place_error_message">Please enter place name</string>
 
-	<!--Shops Strings-->
+	<!--Shops and Restaurant Strings-->
 	<string name="home_page">Go to Homepage</string>
+	<string name="rest_offer_title">The Restaurant Offers</string>
+
+
+    <string name="title_activity_registration">RegistrationActivity</string>
+    <string name="title_activity_webview">WebviewActivity</string>
+    <string name="title_activity_maps">Map</string>
+
+
+	<!-- Alert Strings-->
+	<string name="call_alert">Are you sure to make call </string>
+	<string name="confirmation">Confirmation </string>
 
 
 
-
-
-
-
-
-
-
-
-
-
-
-
+	<!-- Country Strings-->
 	<string-array name="CountryCodes" >
-	    <item>93,AF</item>
+		<item>93,AF</item>
 		<item>355,AL</item>
 		<item>213,DZ</item>
 		<item>376,AD</item>
@@ -343,7 +343,5 @@
 		<item>260,ZM</item>
 		<item>263,ZW</item>
 	</string-array>
-    <string name="title_activity_registration">RegistrationActivity</string>
-    <string name="title_activity_webview">WebviewActivity</string>
-    <string name="title_activity_maps">Map</string>
+
 </resources>

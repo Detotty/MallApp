@@ -4,6 +4,8 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
+import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,19 +14,22 @@ import android.widget.ImageView;
 import android.widget.TextView;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.Services;
+import com.mallapp.Model.ServicesModel;
 import com.mallapp.View.R;
 import com.mallapp.imagecapture.ImageLoader;
+import com.mallapp.utils.AppUtils;
+import com.squareup.picasso.Picasso;
 
 
-public class ServiceAdapter extends ArrayAdapter<Services>{
+public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 
-	private ArrayList<Services> service_search;
+	private ArrayList<ServicesModel> service_search;
 	Context context;
 	Activity activity;
 	public ImageLoader imageLoader;
 	
 	public ServiceAdapter(Context context, Activity act, int textViewResourceId, 
-								ArrayList<Services> objects) {
+								ArrayList<ServicesModel> objects) {
 		super(context, textViewResourceId, objects);
 		service_search= objects;
 		this.context= context;
@@ -35,11 +40,11 @@ public class ServiceAdapter extends ArrayAdapter<Services>{
 	
 	
 	
-	public ArrayList<Services> getService_search() {
+	public ArrayList<ServicesModel> getService_search() {
 		return service_search;
 	}
 
-	public void setService_search(ArrayList<Services> service_search) {
+	public void setService_search(ArrayList<ServicesModel> service_search) {
 		this.service_search = service_search;
 	}
 
@@ -49,7 +54,7 @@ public class ServiceAdapter extends ArrayAdapter<Services>{
 	}
 
 	@Override
-	public Services getItem(int position) {
+	public ServicesModel getItem(int position) {
 		return this.service_search.get(position);
 	}
 	
@@ -59,7 +64,7 @@ public class ServiceAdapter extends ArrayAdapter<Services>{
 	}
 
 	@Override
-	public int getPosition(Services item) {
+	public int getPosition(ServicesModel item) {
 		return super.getPosition(item);
 	}
 	
@@ -81,7 +86,7 @@ public class ServiceAdapter extends ArrayAdapter<Services>{
 		//return super.getViewTypeCount();
 	}
 
-	Services service_obj;
+	ServicesModel service_obj;
 
 	@Override
 	public View getView(int position, View convertView, ViewGroup parent) {
@@ -102,22 +107,33 @@ public class ServiceAdapter extends ArrayAdapter<Services>{
 		TextView title 		= (TextView) v.findViewById(R.id.title);
 		TextView decs 		= (TextView) v.findViewById(R.id.detail);
 		TextView floor_no 	= (TextView) v.findViewById(R.id.floor_no);
-		
+
 		if (type == 0) {
 			ImageView back_image= (ImageView) v.findViewById(R.id.service_image);
-			imageLoader.DisplayImage(AppConstants.PREF_URI_KEY, back_image);
-			
+			Picasso.with(context).load(service_obj.getFacilityImageURL()).into(back_image);
+
 			//ImageView img = (ImageView) v.findViewById(R.id.img);
 			//img.setImageResource(c.imageId);
 		}else{
+			ImageView back_image= (ImageView) v.findViewById(R.id.service_image);
 			TextView address 	= (TextView) v.findViewById(R.id.address);
-			TextView phone_no 	= (TextView) v.findViewById(R.id.phone_no);
+			final TextView phone_no 	= (TextView) v.findViewById(R.id.phone_no);
 			address.setText(service_obj.getAddress());
-			phone_no.setText(service_obj.getPhone_no());
+			phone_no.setText(service_obj.getPhone());
+			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.placeholder).fit().into(back_image);
+
+			phone_no.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					AppUtils.displayCallDialog(v.getRootView().getContext(), service_obj.getPhone());
+				}
+			});
 		}
-		title.setText(service_obj.getTitle());
-		decs.setText(service_obj.getDescription());
-		floor_no.setText(service_obj.getFloor_no());
+		title.setText(service_obj.getFacilityType());
+		decs.setText(service_obj.getBriefText());
+		floor_no.setText(service_obj.getFloor());
+
+
 		return v;
 	}
 }

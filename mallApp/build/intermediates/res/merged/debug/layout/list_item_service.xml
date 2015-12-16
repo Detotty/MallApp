@@ -22,6 +22,7 @@
                 android:id="@+id/service_image"
                 android:layout_width="fill_parent"
                 android:layout_height="fill_parent"
+				android:padding="@dimen/margin_left_5"
                	android:layout_marginLeft="4dp"
                 android:layout_marginTop="2dp"
                 android:layout_marginBottom="5dp"

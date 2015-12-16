@@ -7,6 +7,7 @@ import java.util.Iterator;
 import android.annotation.SuppressLint;
 import android.app.ActionBar;
 import android.app.Activity;
+import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -91,11 +92,12 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
 	ShopsModel shop_obj;
 	ShopDetailModel shop_detail_obj;
-	private ImageView 		shop_logo;
+	Fragment fragment_Map;
+	private ImageView 		shop_logo,shop_map;
 	private TextView 		tv_about, tv_Detail, shop_name, 	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
-	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout;
+	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout,rel_shop_offers_layout;
 	HorizontalScrollView shops_offers1;
 	RelativeLayout 			timing_layout;
 	LinearLayout 			linear_timing_layout;
@@ -126,7 +128,9 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		/*rest_obj = GlobelShops.shopModel_obj;
 		shop_name.setText(rest_obj.getStoreName());
 		shop_detail.setText(rest_obj.getBriefText());*/
+		shop_map	= (ImageView)	findViewById(R.id.ivMap);
 		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
+		rel_shop_offers_layout		= (LinearLayout) findViewById(R.id.shop_rel_offers);
 		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		shop_obj = new ShopsModel();
 		shop_name 	= (TextView) findViewById(R.id.offer_title);
@@ -161,10 +165,15 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		shop_offers.removeAllViews();
 		SharedPreference sharedPreference 	= new SharedPreference();
 		ArrayList <Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
-		for (StoreOffersModel storeOffersModel:storeOffers
-			 ) {
-			View view =add_layoutOffers(storeOffersModel);
-			shop_offers.addView(view);
+		if (storeOffers.length>0){
+			for (StoreOffersModel storeOffersModel:storeOffers
+					) {
+				View view =add_layoutOffers(storeOffersModel);
+				shop_offers.addView(view);
+			}
+		}
+		else {
+			rel_shop_offers_layout.setVisibility(View.GONE);
 		}
 		/*if(offers_list!=null){
 			for(int i=0; i<4; i++){
@@ -524,7 +533,16 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		lat = Double.parseDouble(shopDetail.getLatitude());
 		lng = Double.parseDouble(shopDetail.getLongitude());
 		locationName = shopDetail.getAddress();
-		drawMarkerandZoom(lat, lng, locationName);
+		if(shopDetail.getSiteMapActive()){
+			View frag = findViewById(R.id.mapAddress);
+			frag.setVisibility(View.GONE);
+			shop_map.setVisibility(View.VISIBLE);
+			Picasso.with(this).load(shopDetail.getSiteMapURL()).into(shop_map);
+		}
+		else {
+			shop_map.setVisibility(View.GONE);
+			drawMarkerandZoom(lat, lng, locationName);
+		}
 		BannerImagesModel bImage[] = shopDetail.getBannerImages();
 		ImageSlider(bImage);
 	}

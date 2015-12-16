@@ -64,7 +64,7 @@ public class ShopDetailModel implements Serializable
     private String Email;
 
     @DatabaseField(columnName = "SiteMapActive")
-    private String SiteMapActive;
+    private boolean SiteMapActive;
 
     @DatabaseField(columnName = "Address")
     private String Address;
@@ -272,12 +272,12 @@ public class ShopDetailModel implements Serializable
         this.Email = Email;
     }
 
-    public String getSiteMapActive ()
+    public boolean getSiteMapActive ()
     {
         return SiteMapActive;
     }
 
-    public void setSiteMapActive (String SiteMapActive)
+    public void setSiteMapActive (boolean SiteMapActive)
     {
         this.SiteMapActive = SiteMapActive;
     }

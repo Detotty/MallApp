@@ -18,7 +18,6 @@
             android:id="@+id/service_image"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:background="@drawable/shop_logo21"
             android:contentDescription="@string/app_name" />
         
         <RelativeLayout
@@ -54,6 +53,7 @@
                 android:layout_alignParentRight="true"
                 android:contentDescription="@string/app_name"
                 android:layout_marginRight="@dimen/margin_left_15"
+                android:visibility="gone"
                 android:src="@drawable/shop_detail_location_p" />
             
         </RelativeLayout>

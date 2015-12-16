@@ -13,6 +13,11 @@ public class MainMenuConstants {
     public static final String AUDIENCE_FILTER_CATEGORY = "Category";
     public static final String AUDIENCE_FILTER_FLOOR = "Floor";
 
+
+    //  SERVICES CONSTANTS
+    public static final String NO_SERVICES_ERROR = "No services found for this mall";
+
+
     public static Handler uiHandler;
 
 }

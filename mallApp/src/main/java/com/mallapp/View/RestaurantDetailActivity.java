@@ -27,31 +27,22 @@ import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.RestaurantModel;
 import com.mallapp.Model.RestaurantOffersModel;
 import com.mallapp.Model.RestaurantTimingsModel;
-import com.mallapp.Model.StoreOffersModel;
-import com.mallapp.Model.StoreTimingsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.RestaurantDataListener;
-import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 import android.annotation.SuppressLint;
-import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.GestureDetector;
-import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
 import android.view.View.OnClickListener;
-import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
@@ -63,6 +54,7 @@ import android.widget.Toast;
 
 public class RestaurantDetailActivity extends FragmentActivity implements OnClickListener, RestaurantDataListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
+	//region Data Members
 	private  GestureDetector detector ;
 	VolleyNetworkUtil volleyNetworkUtil;
 	GoogleMap map;
@@ -73,15 +65,13 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	Dao<RestaurantModel, Integer> restDao;
 	ArrayList<RestaurantModel> dbList = new ArrayList<>();
 
-
-
 	RestaurantModel rest_obj;
 	RestaurantDetailModel rest_detail_obj;
-	private ImageView 		shop_logo;
-	private TextView 		tv_about, tv_Detail, shop_name, 	 shop_detail;
+	private ImageView 		shop_logo,rest_map;
+	private TextView 		tv_about, tv_Detail, shop_name, rel_offer_title,	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
-	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout;
+	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout, rel_shop_offers_layout;
 	HorizontalScrollView shops_offers1;
 	RelativeLayout 			timing_layout;
 	LinearLayout 			linear_timing_layout;
@@ -91,6 +81,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	String url;
 	String mallStoreId;
 	private SliderLayout mDemoSlider;
+	//endregion
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
@@ -103,25 +94,25 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-//		initActivity();
-		displayData();
+		init();
 	}
 
-	private void displayData() {
+	//region Data Initialization
+	private void init() {
 
-		/*rest_obj = GlobelShops.shopModel_obj;
-		shop_name.setText(rest_obj.getStoreName());
-		shop_detail.setText(rest_obj.getBriefText());*/
 		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
+		rel_shop_offers_layout		= (LinearLayout) findViewById(R.id.shop_rel_offers);
 		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		rest_obj = new RestaurantModel();
 		shop_name 	= (TextView) findViewById(R.id.offer_title);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
+		rest_map		= (ImageView) findViewById(R.id.ivMap);
 		tv_about 		= (TextView) findViewById(R.id.tv_about);
 		tv_Detail 		= (TextView) findViewById(R.id.tv_offer_detail);
 		tv_address 		= (TextView) findViewById(R.id.tv_address);
 		tv_Phone 		= (TextView) findViewById(R.id.tv_phone);
 		tv_Email 		= (TextView) findViewById(R.id.tv_email);
+		rel_offer_title 		= (TextView) findViewById(R.id.textView4);
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
 		back_screen = (ImageButton) findViewById(R.id.back);
 		linear_timing_layout	= (LinearLayout) findViewById(R.id.layout_timings);
@@ -137,21 +128,27 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			e.printStackTrace();
 		}
 
-		/*setShopLogo();
-		setShopOffers();
-		setRelatedShop();*/
 	}
+	//endregion
 
+	//region Restaurant Offers
 	private void getRestaurantOffers(RestaurantOffersModel[] storeOffers) {
 
+		rel_offer_title.setText(R.string.rest_offer_title);
 		shop_offers.removeAllViews();
 		SharedPreference sharedPreference 	= new SharedPreference();
 		ArrayList <Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
-		for (RestaurantOffersModel restaurantOffersModel:storeOffers
-				) {
-			View view =add_layoutOffers(restaurantOffersModel);
-			shop_offers.addView(view);
+		if (storeOffers.length>0){
+			for (RestaurantOffersModel restaurantOffersModel:storeOffers
+					) {
+				View view =add_layoutOffers(restaurantOffersModel);
+				shop_offers.addView(view);
+			}
 		}
+		else {
+			rel_shop_offers_layout.setVisibility(View.GONE);
+		}
+
 		/*if(offers_list!=null){
 			for(int i=0; i<4; i++){
 				Offers_News object= offers_list.get(i);
@@ -160,8 +157,6 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			}
 		}*/
 	}
-
-
 
 	@SuppressLint("InflateParams")
 	private View add_layoutOffers(final RestaurantOffersModel offer_obj) {
@@ -190,164 +185,9 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		});
 		return view;
 	}
+	//endregion
 
-	private void setRelatedShop() {
-		related_shops.removeAllViews();
-		SharedPreference sharedPreference = new SharedPreference();
-		ArrayList <Offers_News> endorsement_list_filter = sharedPreference.getOffersNews(getApplicationContext());
-		if(endorsement_list_filter!=null){
-			for(int i=0; i<3; i++){
-				Offers_News object= endorsement_list_filter.get(i);
-				View view =add_layout(object);
-				related_shops.addView(view);
-			}
-		}
-	}
-
-	private View add_layout(final Offers_News offer_obj) {
-
-		LayoutInflater layoutInflater 	= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-		final View view 				= layoutInflater.inflate(R.layout.list_item_offers, null);
-
-		TextView title 		= (TextView) view.findViewById(R.id.title);
-		TextView decs 		= (TextView) view.findViewById(R.id.center_city);
-		TextView center_name= (TextView) view.findViewById(R.id.center_name);
-		TextView shop_name 	= (TextView) view.findViewById(R.id.shop_name);
-		final ImageButton is_fav	= (ImageButton) view.findViewById(R.id.fav_center);
-		ImageView back_image= (ImageView) view.findViewById(R.id.center_image);
-
-		title.setText(offer_obj.getTitle());
-		decs.setText(offer_obj.getDetail());
-		center_name.setText(offer_obj.getCenter_name());
-		shop_name.setText(offer_obj.getShop_name());
-
-		final boolean fav	= offer_obj.isFav();
-		if(fav)
-			is_fav.setImageResource(R.drawable.offer_fav_p);
-		else
-			is_fav.setImageResource(R.drawable.offer_fav);
-
-		String image_nam	= offer_obj.getImage();
-		int imageResource 	= getResources().getIdentifier(image_nam, "drawable", getPackageName());
-		Drawable d 			= getResources().getDrawable(imageResource);
-		Bitmap bitmap 	= ((BitmapDrawable) d).getBitmap();
-		int mDstWidth 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-		int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_height);
-		d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-		back_image.setBackground(d);
-
-		is_fav.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!offer_obj.isFav()){
-					is_fav.setImageResource(R.drawable.offer_fav_p);
-					offer_obj.setFav(true);
-				}else{
-					is_fav.setImageResource(R.drawable.offer_fav);
-					offer_obj.setFav(false);
-				}
-			}
-		});
-
-		view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				android.util.Log.e("related offer...", "related offer...");
-				GlobelOffersNews.related_offer_obj= offer_obj;
-				Intent intent= new Intent(RestaurantDetailActivity.this, ShopDetailActivity.class);
-				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-				startActivity(intent);
-			}
-		});
-		return view;
-	}
-
-
-	private void setShopLogo() {
-
-		Picasso.with(this).load(rest_obj.getLogoURL()).into(shop_logo);
-		/*String image_		= rest_obj.getLogo_image();
-		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
-		Drawable d 			= getResources().getDrawable(imageResource);
-		Bitmap bitmap 		= ((BitmapDrawable) d).getBitmap();
-
-//		Display display = getWindowManager().getDefaultDisplay();
-//		Point size 		= new Point();
-//		display.getSize(size);
-
-		//int mDstWidth 	= size.x;
-		int mDstWidth = getResources().getDimensionPixelSize(R.dimen.createview_destination_width1);
-        int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_height1);
-        bitmap = ScalingUtilities.createScaledBitmap(bitmap, mDstWidth, mDstHeight, ScalingLogic.FIT);
-		d = new BitmapDrawable(getResources(), bitmap);
-		shop_logo.setBackground(d);*/
-	}
-
-	@SuppressLint("ClickableViewAccessibility")
-	private void initActivity() {
-
-
-		shop_logo	= (ImageView)	findViewById(R.id.shop_image_logo);
-
-		related_shops	= (LinearLayout) findViewById(R.id.related_shops);
-		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
-		location_layout = (LinearLayout) findViewById(R.id.location_layout);
-		timing_layout	= (RelativeLayout) findViewById(R.id.timing_layout);
-		social_sharing_layout= (LinearLayout) findViewById(R.id.social_layout);
-		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
-
-		location	= (ImageButton) findViewById(R.id.location);
-		timing = (ImageButton) findViewById(R.id.timing);
-		social_sharing = (ImageButton) findViewById(R.id.social_sharing);
-
-
-		/*mViewFlipper = (ViewFlipper) this.findViewById(R.id.view_flipper);
-		mViewFlipper.setAutoStart(true);
-		mViewFlipper.setFlipInterval(4000);
-		mViewFlipper.startFlipping();
-		mViewFlipper.setOnTouchListener(new OnTouchListener() {
-			@Override
-			public boolean onTouch(final View view, final MotionEvent event) {
-				detector.onTouchEvent(event);
-				return true;
-			}
-		});
-		*/
-
-
-		//animation listener
-		mAnimationListener = new Animation.AnimationListener() {
-			public void onAnimationStart(Animation animation) {
-				//animation started event
-			}
-
-			public void onAnimationRepeat(Animation animation) {
-			}
-
-			public void onAnimationEnd(Animation animation) {
-				//TODO animation stopped event
-			}
-		};
-
-		message		= (ImageButton) findViewById(R.id.sms);
-		face_book	= (ImageButton) findViewById(R.id.fb);
-		twitter 	= (ImageButton) findViewById(R.id.twiter);
-		email		= (ImageButton) findViewById(R.id.email);
-		chat		= (ImageButton) findViewById(R.id.chat);
-
-
-		location	.setOnClickListener(this);
-		timing		.setOnClickListener(this);
-		social_sharing	.setOnClickListener(this);
-		message		.setOnClickListener(this);
-		face_book	.setOnClickListener(this);
-		twitter 	.setOnClickListener(this);
-		email		.setOnClickListener(this);
-		chat		.setOnClickListener(this);
-
-
-	}
-
+	//region LifeCycle Methods and DB Helper
 	@Override
 	public void onBackPressed() {
 		super.onBackPressed();
@@ -381,7 +221,9 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		}
 		return databaseHelper;
 	}
+	//endregion
 
+	//region Click Events
 	@Override
 	public void onClick(View v) {
 
@@ -412,34 +254,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			}
 
 
-		}/*else if(v.getId() == location.getId()){
-			if(location_layout.getVisibility()== View.GONE){
-				setInVisibility_tabs();
-				location.setImageResource(R.drawable.shop_detail_location_p);
-				location_layout.setVisibility(View.VISIBLE);
-			}else{
-				setInVisibility_tabs();
-			}
-		}else if(v.getId() == timing.getId()){
-			if(timing_layout.getVisibility()== View.GONE){
-				setInVisibility_tabs();
-				timing.setImageResource(R.drawable.shop_detail_clock_p);
-				timing_layout.setVisibility(View.VISIBLE);
-
-			}else{
-				setInVisibility_tabs();
-			}
-
-		}else if(v.getId() == social_sharing.getId()){
-
-			if(social_sharing_layout.getVisibility()== View.GONE){
-				setInVisibility_tabs();
-				social_sharing.setImageResource(R.drawable.shop_detail_share_p);
-				social_sharing_layout.setVisibility(View.VISIBLE);
-			}else{
-				setInVisibility_tabs();
-			}
-		}*/
+		}
 		else if (v.getId() == tv_Web.getId()){
 			Intent intent= new Intent(RestaurantDetailActivity.this, WebViewActivity.class);
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
@@ -448,18 +263,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		}
 
 	}
-
-	private void setInVisibility_tabs() {
-
-		social_sharing.	setImageResource(R.drawable.shop_detail_share);
-		location.		setImageResource(R.drawable.shop_detail_location);
-		timing.			setImageResource(R.drawable.shop_detail_clock);
-
-		timing_layout.setVisibility(View.GONE);
-		social_sharing_layout.setVisibility(View.GONE);
-		location_layout.setVisibility(View.GONE);
-	}
-
+	//endregion
 
 	private static final int SWIPE_MIN_DISTANCE = 120;
 	private static final int SWIPE_THRESHOLD_VELOCITY = 200;
@@ -510,7 +314,16 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		lat = Double.parseDouble(restaurantDetailModel.getLatitude());
 		lng = Double.parseDouble(restaurantDetailModel.getLongitude());
 		locationName = restaurantDetailModel.getAddress();
-		drawMarkerandZoom(lat, lng, locationName);
+		if(restaurantDetailModel.getSiteMapActive()){
+			View frag = findViewById(R.id.mapAddress);
+			frag.setVisibility(View.GONE);
+			rest_map.setVisibility(View.VISIBLE);
+			Picasso.with(this).load(restaurantDetailModel.getSiteMapURL()).into(rest_map);
+		}
+		else {
+			rest_map.setVisibility(View.GONE);
+			drawMarkerandZoom(lat, lng, locationName);
+		}
 		BannerImagesModel bImage[] = restaurantDetailModel.getBannerImages();
 		ImageSlider(bImage);
 	}

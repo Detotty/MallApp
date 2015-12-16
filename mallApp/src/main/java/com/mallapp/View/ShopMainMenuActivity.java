@@ -41,6 +41,7 @@ import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.ShopFiltration;
 import com.mallapp.Controllers.ShopList;
 import com.mallapp.Model.ShopDetailModel;
@@ -98,7 +99,7 @@ public class ShopMainMenuActivity extends Activity
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
         shopModel_read_audience = new ArrayList<ShopsModel>();
-        mallPlaceId = getIntent().getStringExtra("MallPlaceId");
+        mallPlaceId = getIntent().getStringExtra(Offers_News_Constants.MALL_PLACE_ID);
         String url = ApiConstants.GET_SHOPS_URL_KEY + mallPlaceId;
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         volleyNetworkUtil.GetShops(url, this);
