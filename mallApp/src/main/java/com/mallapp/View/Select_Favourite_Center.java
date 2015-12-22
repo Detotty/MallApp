@@ -34,12 +34,17 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 	ArrayList<FavouriteCentersModel> centers_listM;
 	ArrayList<FavouriteCentersModel> nearByCenters;
 	private RegistrationController controller;
+	UserLocationModel model = null;
+
 
 	@Override
 	protected void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_favourite_center);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
+		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION))
+			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+
 		centers_listM= new ArrayList<FavouriteCentersModel>();
 		list_view= (ListView) findViewById(R.id.search_list);
 		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers_listM);
@@ -47,7 +52,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		controller = new RegistrationController(this);
-			controller.GetMallList(ApiConstants.GET_MALL_URL_KEY,adapter,centers_listM,this,list_view);
+			controller.GetMallList(ApiConstants.GET_MALL_URL_KEY+model.getCountryCode()+"&languageId=1",adapter,centers_listM,this,list_view);
 //		SendVerificationCode.GetMallList("http://52.28.59.218:5001/api/MallService/GetMalls?countryCode=PK&languageId=1");
 //		getCenterList();
 		
@@ -68,30 +73,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 	
 	}
 
-	private void getCenterList() {
-		String [] interest_images= {"img_01", "img_02", "img_03", 
-									"img_04", "img_05", "img_06",
-									"img_07", "img_08"};
-		
-		String [] interest_logos= {"rest_logo1", "rest_logo2", "rest_logo3", 
-				"rest_logo4", "rest_logo5", "rest_logo6",
-				"rest_logo7", "rest_logo8"};
-		
-		String [] interest= getResources().getStringArray(R.array.centers_list);
-		centers_listM= new ArrayList<FavouriteCentersModel>();
 
-		for(int i=0; i<interest.length; i++){
-			FavouriteCenters i_s= new FavouriteCenters();
-			i_s.setId(i);
-			i_s.setCenter_title(interest[i]);
-			i_s.setCenter_city("Copenhagen");
-			i_s.setCenter_image(interest_images[i]);
-			i_s.setCenter_logo(interest_logos[i]);
-			i_s.setIsfav(false);
-			centers_list.add(i_s);
-		}
-		saveCenters();
-	}
 
 	@Override
 	protected void onResume() {
@@ -162,11 +144,6 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		}
 	}
 
-	private void saveCenters() {
-		Log.e("save center list ", "size = " + centers_list.size());
-//		CentersCacheManager.saveFavorites(getApplicationContext(), centers_list);
-//		CentersCacheManager.getAllCenters(this);
-	}
 
 
 	@Override
@@ -176,20 +153,18 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 	}
 
 	void CalculateNearByCenters(){
-		UserLocationModel model = null;
 		Location locationA = new Location("point A");
 		Location locationB = new Location("point B");
 		ArrayList<FavouriteCentersModel> centers = new ArrayList<>();
 
-		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
-			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+
 			if (model!=null){
-//				locationA.setLatitude(model.getLatitude());
-//				locationA.setLongitude(model.getLongitude());
-				locationA.setLatitude(55.6759400);
-				locationA.setLongitude(12.5655300);
+				locationA.setLatitude(model.getLatitude());
+				locationA.setLongitude(model.getLongitude());
+//				locationA.setLatitude(55.6759400);
+//				locationA.setLongitude(12.5655300);
 			}
-		}
+
 		for (FavouriteCentersModel fv:nearByCenters) {
 			locationB.setLatitude(Double.parseDouble(fv.getLatitude()));
 			locationB.setLongitude(Double.parseDouble(fv.getLongitude()));

@@ -152,7 +152,7 @@
             android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
-            android:name=".OpeningHourInformation"
+            android:name=".MallDetailActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
             android:screenOrientation="portrait"

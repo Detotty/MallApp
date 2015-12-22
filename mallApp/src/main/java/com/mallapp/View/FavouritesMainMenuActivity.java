@@ -30,6 +30,7 @@ import com.List.Adapter.RestaurantExpandableAdapter;
 import com.List.Adapter.RestaurantSearchAdapter;
 import com.List.Adapter.ShopExpandableAdapter;
 import com.List.Adapter.ShopSearchAdapter;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.FavouriteCentersFiltration;
@@ -38,17 +39,26 @@ import com.mallapp.Controllers.RestaurantFiltration;
 import com.mallapp.Controllers.RestaurantList;
 import com.mallapp.Controllers.ShopFiltration;
 import com.mallapp.Controllers.ShopList;
+import com.mallapp.Model.FavoritesModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Restaurant;
+import com.mallapp.Model.RestaurantModel;
 import com.mallapp.Model.Shops;
+import com.mallapp.Model.ShopsModel;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.globel.GlobelRestaurants;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.layouts.SegmentedRadioGroup;
+import com.mallapp.listeners.FavoritesDataListener;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.VolleyNetworkUtil;
+
+import twitter4j.User;
 
 public class FavouritesMainMenuActivity extends Activity  
-										implements 	OnCheckedChangeListener, OnClickListener {
+										implements 	OnCheckedChangeListener, OnClickListener, FavoritesDataListener {
 
 	
 	String TAG = getClass().getCanonicalName();
@@ -79,52 +89,47 @@ public class FavouritesMainMenuActivity extends Activity
 	//LinearLayout 		side_index_scroll;
 
 	String audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_OFFERS;
-	static ArrayList <Shops>  shops_read_audience, searchResults, search_array;
+	static ArrayList <ShopsModel>  shops_read_audience, searchResults, search_array;
 	//static HashMap<String, ArrayList<Shops>>  shops_all_audience ;
 	//static HashMap<String, ArrayList<Shops>> shops_category_audience,  shops_floor_audience;
 	
-	static ArrayList <Restaurant>  restaurant_read_audience, r_searchResults,r_search_array;
+	static ArrayList <RestaurantModel>  restaurant_read_audience, r_searchResults,r_search_array;
 	
-	static ArrayList <Offers_News> offers_read_audience,  o_searchResults,o_search_array;
+	static ArrayList <MallActivitiesModel> offers_read_audience,  o_searchResults,o_search_array;
 	
-	static HashMap<String, ArrayList<Restaurant>> 	r_category_audience ;
-	static HashMap<String, ArrayList<Shops>> 		shops_category_audience;
-	static HashMap<String, ArrayList<Offers_News>> 	offer_category_audience, news_category_audience ;
+	static HashMap<String, ArrayList<RestaurantModel>> 	r_category_audience ;
+	static HashMap<String, ArrayList<ShopsModel>> 		shops_category_audience;
+	static HashMap<String, ArrayList<MallActivitiesModel>> 	offer_category_audience, news_category_audience ;
+
+	VolleyNetworkUtil volleyNetworkUtil;
+	String UserID, URL;
 	
 	
 	@Override
 	public void onCreate(Bundle savedInstanceState) {
 		super.onCreate(savedInstanceState);
 		
-		readOffersNewsList();
-		readShopList();
-		readRestaurantsList();
+
 		
 		setContentView(R.layout.favourite_main_menu);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		uihandler= MainMenuConstants.uiHandler;
-		
+		UserID  = SharedPreferenceUserProfile.getUserId(this);
+		URL = ApiConstants.GET_USER_FAV_URL_KEY+ UserID;
+		volleyNetworkUtil = new VolleyNetworkUtil(this);
+		volleyNetworkUtil.GetUserFav(URL, this);
 		init();
 		initArrays();
 		
-		filterShops();
-		filterRestaurants();
-		filterOffers();
-		filterNews();
-		
-		initExpandableList();
-		
-//		adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
-		list_view.setAdapter(adapter_O);
+
 
 		
 		
 		
 		
-//		adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, o_searchResults);
-		list_view_search.setAdapter(adapter_search_O);
+
 		
 		
 		search_feild.addTextChangedListener(new TextWatcher() {
@@ -147,16 +152,16 @@ public class FavouritesMainMenuActivity extends Activity
 					
 					if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 						
-						o_search_array = GlobelOffersNews.centered_filter_array;
-						o_searchResults= GlobelOffersNews.centered_filter_array;
+						/*o_search_array = GlobelOffersNews.centered_filter_array;
+						o_searchResults= GlobelOffersNews.centered_filter_array;*/
 						
 						if(o_search_array== null || o_search_array.size()==0)
 							readOffersNewsList();
-						o_searchResults = new ArrayList<Offers_News>();
+						o_searchResults = new ArrayList<MallActivitiesModel>();
 						
 						for(int i= 0; i< o_search_array.size(); i++){
-							if(o_search_array.get(i).getType().toString().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
-								String name=o_search_array.get(i).getTitle().toString();
+							if(o_search_array.get(i).getEntityType().toString().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
+								String name=o_search_array.get(i).getActivityTextTitle().toString();
 								
 								if(textLength <= name.length()){
 									if(searchString.equalsIgnoreCase(name.substring(0,textLength)))
@@ -176,16 +181,16 @@ public class FavouritesMainMenuActivity extends Activity
 						
 					}else if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
 						
-						o_search_array = GlobelOffersNews.centered_filter_array;
-						o_searchResults= GlobelOffersNews.centered_filter_array;
+						/*o_search_array = GlobelOffersNews.centered_filter_array;
+						o_searchResults= GlobelOffersNews.centered_filter_array;*/
 						
 						if(o_search_array== null || o_search_array.size()==0)
 							readOffersNewsList();
-						o_searchResults = new ArrayList<Offers_News>();
+						o_searchResults = new ArrayList<MallActivitiesModel>();
 						
 						for(int i= 0; i< o_search_array.size(); i++){
-							if(o_search_array.get(i).getType().toString().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
-								String name=o_search_array.get(i).getTitle().toString();
+							if(o_search_array.get(i).getEntityType().toString().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
+								String name=o_search_array.get(i).getActivityTextTitle().toString();
 								
 								if(textLength <= name.length()){
 									if(searchString.equalsIgnoreCase(name.substring(0,textLength)))
@@ -205,15 +210,15 @@ public class FavouritesMainMenuActivity extends Activity
 						
 					}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){
 					
-						search_array= GlobelShops.shop_array;
+						/*search_array= GlobelShops.shop_array;
 						if(search_array== null || search_array.size()==0){
 							readShopList();
-						}
-						searchResults = new ArrayList<Shops>();
+						}*/
+						searchResults = new ArrayList<ShopsModel>();
 						
 						for(int i= 0; i< search_array.size(); i++){
 							//Log.e(TAG, "shop_name = .....get");
-							String shop_name=search_array.get(i).getName().toString();
+							String shop_name=search_array.get(i).getStoreName().toString();
 							//Log.e(TAG, "shop_name = ...."+ shop_name);
 							if(textLength <= shop_name.length()){
 								if(searchString.equalsIgnoreCase(shop_name.substring(0,textLength)))
@@ -231,15 +236,15 @@ public class FavouritesMainMenuActivity extends Activity
 						}
 					}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
 						
-						r_search_array = GlobelRestaurants.restaurant_array;
+						/*r_search_array = GlobelRestaurants.restaurant_array;
 						if(r_search_array== null || r_search_array.size()==0){
 							readRestaurantsList();
-						}
-						r_search_array = new ArrayList<Restaurant>();
+						}*/
+						r_search_array = new ArrayList<RestaurantModel>();
 						
 						for(int i= 0; i< r_search_array.size(); i++){
 								
-							String rest_name = r_search_array.get(i).getName().toString();
+							String rest_name = r_search_array.get(i).getRestaurantName().toString();
 							if(textLength <= rest_name.length()){
 								if(searchString.equalsIgnoreCase(rest_name.substring(0,textLength)))
 									r_searchResults.add(r_search_array.get(i));
@@ -310,7 +315,7 @@ public class FavouritesMainMenuActivity extends Activity
 	}
 
 	private void readShopList() {
-		shops_read_audience= GlobelShops.shop_array;
+		/*shops_read_audience= GlobelShops.shop_array;
 		
 		if(shops_read_audience == null || shops_read_audience.size() == 0){
 			ShopList.saveOffersNewsData(getApplicationContext());
@@ -320,11 +325,11 @@ public class FavouritesMainMenuActivity extends Activity
 			searchResults= shops_read_audience;
 		}
 		search_array	=  GlobelShops.shop_array;
-		searchResults	=  GlobelShops.shop_array;
+		searchResults	=  GlobelShops.shop_array;*/
 	}
 	
 	private void readRestaurantsList() {
-		restaurant_read_audience= GlobelRestaurants.restaurant_array;
+		/*restaurant_read_audience= GlobelRestaurants.restaurant_array;
 		
 		if(restaurant_read_audience == null || restaurant_read_audience.size() == 0){
 			RestaurantList.saveRestaurantData(getApplicationContext());
@@ -335,13 +340,13 @@ public class FavouritesMainMenuActivity extends Activity
 			r_searchResults= restaurant_read_audience;
 		}
 		r_search_array	=  GlobelRestaurants.restaurant_array;
-		r_searchResults	=  GlobelRestaurants.restaurant_array;
+		r_searchResults	=  GlobelRestaurants.restaurant_array;*/
 	}
 
 	
 	private void readOffersNewsList() {
 		
-		offers_read_audience = GlobelOffersNews.centered_filter_array;
+		/*offers_read_audience = GlobelOffersNews.centered_filter_array;
 		if( offers_read_audience == null 
 				||  offers_read_audience.size() == 0){
 			
@@ -349,7 +354,7 @@ public class FavouritesMainMenuActivity extends Activity
 			GlobelOffersNews.centered_filter_array= offers_read_audience;
 		}
 		o_search_array = GlobelOffersNews.centered_filter_array;
-		o_searchResults= GlobelOffersNews.centered_filter_array;
+		o_searchResults= GlobelOffersNews.centered_filter_array;*/
 		//Log.e("offers_read_audience ,...", "offers_read_audience ......"+ offers_read_audience.size());
 	}
 
@@ -375,11 +380,11 @@ public class FavouritesMainMenuActivity extends Activity
 
 
 	private void filterShops() {
-		shops_category_audience= ShopFiltration.filterFavouriteShopsCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, shops_read_audience);
+		shops_category_audience= ShopFiltration.filterFavouriteShopsModelCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, shops_read_audience);
 	}
 
 	private void filterRestaurants() {
-//		r_category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, restaurant_read_audience);
+		r_category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, restaurant_read_audience);
 	}
 	
 	private void filterOffers() {
@@ -394,10 +399,10 @@ public class FavouritesMainMenuActivity extends Activity
 	
 
 	private void initArrays() {
-		r_category_audience 	= new HashMap<String, ArrayList<Restaurant>>();
-		shops_category_audience	= new HashMap<String, ArrayList<Shops>>();
-		offer_category_audience	= new HashMap<String, ArrayList<Offers_News>>();
-		news_category_audience	= new HashMap<String, ArrayList<Offers_News>>();
+		r_category_audience 	= new HashMap<String, ArrayList<RestaurantModel>>();
+		shops_category_audience	= new HashMap<String, ArrayList<ShopsModel>>();
+		offer_category_audience	= new HashMap<String, ArrayList<MallActivitiesModel>>();
+		news_category_audience	= new HashMap<String, ArrayList<MallActivitiesModel>>();
 	}
 
 	Map<String, Integer> mapIndex;
@@ -465,22 +470,22 @@ public class FavouritesMainMenuActivity extends Activity
 		
 		if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 		
-//			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
+			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
 			list_view.setAdapter(adapter_O);
 			
 		}else if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
 		
-//			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, news_category_audience, GlobelOffersNews.header_section_news);
+			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, news_category_audience, GlobelOffersNews.header_section_news);
 			list_view.setAdapter(adapter_O);
 			
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){
 		
-//			adapter_S = new ShopExpandableAdapter(getApplicationContext(),this, shops_category_audience, GlobelShops.header_section_category);
+			adapter_S = new ShopExpandableAdapter(getApplicationContext(),this, shops_category_audience, GlobelShops.header_section_category,null);
 			list_view.setAdapter(adapter_S);
 			
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
 		
-//			adapter_R = new RestaurantExpandableAdapter(getApplicationContext(),this, r_category_audience, GlobelRestaurants.header_section_category);
+			adapter_R = new RestaurantExpandableAdapter(getApplicationContext(),this, r_category_audience, GlobelRestaurants.header_section_category,null);
 			list_view.setAdapter(adapter_R);
 			
 		}
@@ -527,4 +532,46 @@ public class FavouritesMainMenuActivity extends Activity
 	}
 
 
+	@Override
+	public void onDataReceived(ArrayList<FavoritesModel> favoritesModels) {
+		/*readOffersNewsList();
+		readShopList();
+		readRestaurantsList();
+
+		filterShops();
+		filterRestaurants();
+		filterOffers();
+		filterNews();*/
+
+		for (FavoritesModel fav: favoritesModels
+			 ) {
+			ShopsModel myObject = ShopsModel.class.cast(fav);
+			shops_read_audience.add(myObject);
+			if (fav.getEntityType().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
+
+			}else if (fav.getEntityType().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
+
+			}else if (fav.getEntityType().equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){
+
+			}else if (fav.getEntityType().equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
+
+			}else {
+
+			}
+		}
+
+
+		initExpandableList();
+
+
+		adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
+		list_view.setAdapter(adapter_O);
+		adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, o_searchResults);
+		list_view_search.setAdapter(adapter_search_O);
+	}
+
+	@Override
+	public void OnError() {
+
+	}
 }

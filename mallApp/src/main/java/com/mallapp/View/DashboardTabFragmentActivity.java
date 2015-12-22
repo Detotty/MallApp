@@ -3,14 +3,10 @@ package com.mallapp.View;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.graphics.drawable.BitmapDrawable;
-import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -37,11 +33,8 @@ import com.mallapp.Fragments.MessagesTabFragments;
 import com.mallapp.Fragments.OffersTabFragment;
 import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Fragments.RewardsTabFragments;
-import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.NavDrawerItem;
-import com.mallapp.cache.CentersCacheManager;
 import com.mallapp.utils.AppUtils;
-import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
 import com.squareup.picasso.Picasso;
 
@@ -227,7 +220,8 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 			
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, OpeningHourInformation.class);
+				Intent activity = new Intent(DashboardTabFragmentActivity.this, MallDetailActivity.class);
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
 				startActivity(activity);
 			} else
 				showdailog();

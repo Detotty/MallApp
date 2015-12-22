@@ -569,7 +569,7 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:147:9-153
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:149:13-74
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:148:13-51
-activity#com.mallapp.View.OpeningHourInformation
+activity#com.mallapp.View.MallDetailActivity
 ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:154:9-160:20
 	android:screenOrientation
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:158:13-49
@@ -580,7 +580,7 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:154:9-160
 	android:configChanges
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:156:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:155:13-51
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:155:13-47
 activity#com.mallapp.View.DiscountCalculatorActivity
 ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:161:9-167:20
 	android:screenOrientation

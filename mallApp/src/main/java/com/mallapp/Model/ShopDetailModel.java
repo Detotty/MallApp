@@ -77,7 +77,7 @@ public class ShopDetailModel implements Serializable
 
     private String[] StorePhones;
 
-    private StoreOffersModel[] StoreOffers;
+    private MallActivitiesModel[] StoreOffers;
 
     @DatabaseField(columnName = "isFav")
     private boolean isFav;
@@ -323,12 +323,12 @@ public class ShopDetailModel implements Serializable
     }
 
 
-    public void setStoreOffers (StoreOffersModel[] StoreOffers)
+    public void setStoreOffers (MallActivitiesModel[] StoreOffers)
     {
         this.StoreOffers = StoreOffers;
     }
 
-    public StoreOffersModel[] getStoreOffers ()
+    public MallActivitiesModel[] getStoreOffers ()
     {
         return StoreOffers;
     }

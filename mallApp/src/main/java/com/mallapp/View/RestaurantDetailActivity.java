@@ -116,7 +116,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
 		back_screen = (ImageButton) findViewById(R.id.back);
 		linear_timing_layout	= (LinearLayout) findViewById(R.id.layout_timings);
-		is_fav		.setOnClickListener(this);
+		is_fav.setOnClickListener(this);
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
 		tv_Web.setOnClickListener(this);

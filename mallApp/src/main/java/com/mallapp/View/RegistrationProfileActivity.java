@@ -50,6 +50,7 @@ import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelProfile;
 import com.mallapp.Constants.SocialSharingConstants;
 import com.mallapp.Model.UserProfileModel;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FacebookProfileModel;
 import com.mallapp.Model.PlaceAutoCompleteModel;
@@ -571,6 +572,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 			public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
 				PlaceAutoCompleteModel item = (PlaceAutoCompleteModel) parent.getItemAtPosition(position);
 				locationTextView.setText("" + item.getDescription());
+				AppUtils.CityLatLong(RegistrationProfileActivity.this,item.getDescription());
 				location_dialog.dismiss();
 			}
 		});

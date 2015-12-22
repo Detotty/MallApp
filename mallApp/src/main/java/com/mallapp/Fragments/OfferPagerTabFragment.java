@@ -31,6 +31,7 @@ import com.mallapp.Controllers.FavouriteCentersFiltration;
 import com.mallapp.Controllers.OffersNewsFiltration;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
@@ -51,17 +52,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     private static final String ARG_AUDIENCE = "audience";
     private ArrayList<String> TITLES;
 
-    static ArrayList<Offers_News> endorsement_list_filter;
     static ArrayList<MallActivitiesModel> mallActivitiesListing;
     static ArrayList<MallActivitiesModel> dbList = new ArrayList<>();
-    static ArrayList<Offers_News> all_audience;
-    static ArrayList<Offers_News> offers_audience;
-    static ArrayList<Offers_News> news_audience;
-
-    static ArrayList<Drawable> endorsement_list_filter_images;
-    static ArrayList<Drawable> all_audience_images;
-    static ArrayList<Drawable> offers_audience_images;
-    static ArrayList<Drawable> news_audience_images;
 
     private String requestType = "";
     private final String LAZY_LOADING = "LAZY_LOADING";
@@ -212,58 +204,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         volleyNetworkUtil.GetMallNewsnOffers(url, this);
     }
 
-    private void filterData() {
-        initArrays();
-        // read array once and save in temporarily in class level
-        getEndorsementArray();
-        if (endorsement_list_filter != null)
-            resetData();
-    }
-
-    private void getEndorsementArray() {
-        if (GlobelOffersNews.endorsement_array != null && GlobelOffersNews.endorsement_array.size() > 0) {
-            endorsement_list_filter = GlobelOffersNews.endorsement_array;
-        }
-//		else{
-//			SharedPreference s_p= new SharedPreference();
-//			endorsement_list_filter= s_p.getOffersNews( );
-//			GlobelOffersNews.endorsement_array= endorsement_list_filter;
-//		}
-    }
-
-    private void resetData() {
-        if (!navigationFilter) {
-            TITLES = GlobelOffersNews.TITLES;//SharedPreferenceFavourites.getFavouritesList(context);
-            favouriteCentersFilter = TITLES.get(position).trim();
-        }
-        ArrayList<Offers_News> favouriteList = OffersNewsFiltration.filterFavouriteCenters(
-                favouriteCentersFilter, endorsement_list_filter);
-
-        all_audience = OffersNewsFiltration.getAllAudience(favouriteList);
-        all_audience_images = OffersNewsFiltration.getOffersImagesList(context, all_audience);
-
-        for (Offers_News obj : favouriteList) {
-            if (obj.getType().trim().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)) {
-                offers_audience.add(obj);
-            } else if (obj.getType().trim().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)) {
-                news_audience.add(obj);
-            }
-        }
-        offers_audience_images = OffersNewsFiltration.getOffersImagesList(context, offers_audience);
-        news_audience_images = OffersNewsFiltration.getOffersImagesList(context, news_audience);
-    }
-
-    private void initArrays() {
-
-        endorsement_list_filter = new ArrayList<Offers_News>();
-        all_audience = new ArrayList<Offers_News>();
-        offers_audience = new ArrayList<Offers_News>();
-        news_audience = new ArrayList<Offers_News>();
-
-        all_audience_images = new ArrayList<Drawable>();
-        offers_audience_images = new ArrayList<Drawable>();
-        news_audience_images = new ArrayList<Drawable>();
-    }
 
     public void changeType_Notification(String new_audience_type) {
         Log.e("changeType_Notification", new_audience_type);
@@ -419,6 +359,11 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 break;
             }
         }
+    }
+
+    @Override
+    public void onMallDetailReceived(MallDetailModel mallDetailModel) {
+
     }
 
     @Override

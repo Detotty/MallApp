@@ -4,6 +4,7 @@ public class ApiConstants {
 
 	public static final String URL_KEY = "http://52.28.59.218:5001/api/";
 
+
 	public static final String ACCOUNT_URL_KEY = URL_KEY+"Account/";
 
 	public static final String MALL_SERVICE_URL_KEY = URL_KEY+"MallService/";
@@ -29,9 +30,11 @@ public class ApiConstants {
 
 	public static final String PROFILE_GET_URL_KEY = ACCOUNT_URL_KEY+"GetProfile/";
 
-	public static final String GET_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"/GetMalls?countryCode=DK&languageId=1";
+	public static final String GET_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"/GetMalls?countryCode=";
 
 	public static final String POST_FAV_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"SaveSubscribedMalls";
+
+	public static final String GET_MALL_DETAIL_URL_KEY = MALL_SERVICE_URL_KEY +"GetMallDetail?MallPlaceId=";
 
 	public static final String GET_USER_MALL_URL_KEY = MALL_SERVICE_URL_KEY +"GetSubscribedMalls/";
 
@@ -58,5 +61,7 @@ public class ApiConstants {
 	public static final String GET_RESTAURANT_DETAIL_URL_KEY = RESTAURANT_SERVICE_URL_KEY +"GetRestaurantDetail?MallResturantId=";
 
 	public static final String GET_MALL_SERVICES_URL_KEY = MALL_SERVICE_URL_KEY +"GetMallServices?MallPlaceId=";
+
+	public static final String GET_USER_FAV_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"GetUserFavorite?UserId=";
 
 }

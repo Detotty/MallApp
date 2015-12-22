@@ -10,6 +10,7 @@ import android.content.Context;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.FavouriteCenters;
 import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.SharedPreferences.SharedPreferenceFavourites;
 import com.mallapp.cache.CentersCacheManager;
@@ -40,22 +41,22 @@ public class FavouriteCentersFiltration {
     }
 
 
-    public static HashMap<String, ArrayList<Offers_News>> filterFavouriteOffersCategory(ArrayList<Offers_News> favourite_shop_List) {
+    public static HashMap<String, ArrayList<MallActivitiesModel>> filterFavouriteOffersCategory(ArrayList<MallActivitiesModel> favourite_shop_List) {
 
-        HashMap<String, ArrayList<Offers_News>> mainDictionary = new HashMap<String, ArrayList<Offers_News>>();
+        HashMap<String, ArrayList<MallActivitiesModel>> mainDictionary = new HashMap<String, ArrayList<MallActivitiesModel>>();
         ArrayList<String> mainSectionArray = new ArrayList<String>();
         String current_section_header = null;
-        ArrayList<Offers_News> shop_list = null;
+        ArrayList<MallActivitiesModel> shop_list = null;
 
         favourite_shop_List = sortOffersListCategory(favourite_shop_List);
 
         for (int i = 0; i < favourite_shop_List.size(); i++) {
-            Offers_News rest_obj = favourite_shop_List.get(i);
+            MallActivitiesModel rest_obj = favourite_shop_List.get(i);
 
             if (rest_obj != null
-                    && rest_obj.getType().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)) {
+                    && rest_obj.getEntityType().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)) {
 
-                String shop_category = rest_obj.getShop_catagory();
+                String shop_category = rest_obj.getMallName();
                 if (shop_category != null && shop_category.length() > 0) {
 
                     if (current_section_header == null || current_section_header.length() == 0)
@@ -77,7 +78,7 @@ public class FavouriteCentersFiltration {
                         Log.e("", "shop_list of " + current_section_header + " = " + shop_list.size());
                         mainDictionary.put(current_section_header, shop_list);
 
-                        shop_list = new ArrayList<Offers_News>();
+                        shop_list = new ArrayList<MallActivitiesModel>();
                         shop_list.add(rest_obj);
                         mainSectionArray.add(shop_category);
                         current_section_header = shop_category;
@@ -87,7 +88,7 @@ public class FavouriteCentersFiltration {
                             mainDictionary.put(current_section_header, shop_list);
                         }
                     } else {
-                        shop_list = new ArrayList<Offers_News>();
+                        shop_list = new ArrayList<MallActivitiesModel>();
                         shop_list.add(rest_obj);
                         mainSectionArray.add(shop_category);
                         if (i + 1 == favourite_shop_List.size()) {
@@ -105,25 +106,25 @@ public class FavouriteCentersFiltration {
     }
 
 
-    public static HashMap<String, ArrayList<Offers_News>> filterFavouriteNewsCategory(ArrayList<Offers_News> favourite_shop_List) {
+    public static HashMap<String, ArrayList<MallActivitiesModel>> filterFavouriteNewsCategory(ArrayList<MallActivitiesModel> favourite_shop_List) {
 
-        HashMap<String, ArrayList<Offers_News>> mainDictionary
-                = new HashMap<String, ArrayList<Offers_News>>();
+        HashMap<String, ArrayList<MallActivitiesModel>> mainDictionary
+                = new HashMap<String, ArrayList<MallActivitiesModel>>();
 
         ArrayList<String> mainSectionArray = new ArrayList<String>();
         String current_section_header = null;
-        ArrayList<Offers_News> shop_list = null;
+        ArrayList<MallActivitiesModel> shop_list = null;
 
         favourite_shop_List = sortOffersListCategory(favourite_shop_List);
         for (int i = 0; i < favourite_shop_List.size(); i++) {
-            Offers_News rest_obj = favourite_shop_List.get(i);
+            MallActivitiesModel rest_obj = favourite_shop_List.get(i);
 
             if (rest_obj != null
-                    && rest_obj.getType().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)) {
+                    && rest_obj.getEntityType().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)) {
 
-                Log.e("", "offer shop category   ......." + rest_obj.getShop_catagory() + " .. rest_obj.getType()...." + rest_obj.getType());
+                Log.e("", "offer shop category   ......." + rest_obj.getMallName() + " .. rest_obj.getType()...." + rest_obj.getEntityType());
 
-                String shop_category = rest_obj.getShop_catagory();
+                String shop_category = rest_obj.getMallName();
 
                 if (shop_category != null && shop_category.length() > 0) {
                     if (current_section_header == null || current_section_header.length() == 0)
@@ -144,7 +145,7 @@ public class FavouriteCentersFiltration {
                         Log.e("", "shop_list of 2 ..." + current_section_header + " = " + shop_list.size());
                         mainDictionary.put(current_section_header, shop_list);
 
-                        shop_list = new ArrayList<Offers_News>();
+                        shop_list = new ArrayList<MallActivitiesModel>();
                         shop_list.add(rest_obj);
                         mainSectionArray.add(shop_category);
                         current_section_header = shop_category;
@@ -154,7 +155,7 @@ public class FavouriteCentersFiltration {
                             mainDictionary.put(current_section_header, shop_list);
                         }
                     } else {
-                        shop_list = new ArrayList<Offers_News>();
+                        shop_list = new ArrayList<MallActivitiesModel>();
                         Log.e("", "shop_list of 4...");
                         shop_list.add(rest_obj);
                         mainSectionArray.add(shop_category);
@@ -178,12 +179,13 @@ public class FavouriteCentersFiltration {
     }
 
 
-    private static ArrayList<Offers_News> sortOffersListCategory(ArrayList<Offers_News> favourite_shop_List) {
+    private static ArrayList<MallActivitiesModel> sortOffersListCategory(ArrayList<MallActivitiesModel> favourite_shop_List) {
 
-        Collections.sort(favourite_shop_List, new Comparator<Offers_News>() {
+        Collections.sort(favourite_shop_List, new Comparator<MallActivitiesModel>() {
             @Override
-            public int compare(Offers_News lhs, Offers_News rhs) {
-                return lhs.getShop_catagory().compareTo(rhs.getShop_catagory());
+            public int compare(MallActivitiesModel lhs, MallActivitiesModel rhs) {
+                return lhs.getMallName().compareTo(rhs.getMallName());
+//                return lhs.getShop_catagory().compareTo(rhs.getShop_catagory());
             }
         });
         return favourite_shop_List;

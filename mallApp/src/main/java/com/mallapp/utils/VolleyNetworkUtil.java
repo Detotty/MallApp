@@ -21,8 +21,10 @@ import com.j256.ormlite.dao.Dao;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
+import com.mallapp.Model.FavoritesModel;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.Restaurant;
 import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.RestaurantModel;
@@ -33,6 +35,7 @@ import com.mallapp.Model.VolleyErrorHelper;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.db.DatabaseHelper;
+import com.mallapp.listeners.FavoritesDataListener;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.listeners.RestaurantDataListener;
 import com.mallapp.listeners.ServicesDataListener;
@@ -71,6 +74,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private final String POST_FAV_REST = "POST_FAV_REST";
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
     private final String GET_REST_DETAIL = "GET_REST_DETAIL";
+    private final String GET_MALL_DETAIL = "GET_MALL_DETAIL";
     private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
     private final String GET_MALL_SERVICES = "GET_MALL_SERVICES";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
@@ -83,7 +87,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
 
 
-    /*<--------------MALL NEWS AND OFFER ---------------->*/
+    /*<--------------GET MALL NEWS AND OFFER ---------------->*/
     public void GetMallNewsnOffers(String url,final MallDataListener mallDataListener) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
         requestType = GET_MALL_NEWSnOFFERS;
@@ -101,7 +105,6 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         };
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
-
 
     /*<---------------GET MALL SHOPS ---------------->*/
 
@@ -230,6 +233,67 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         return null;
     }
 
+    /*<---------------GET USER FAVORITE ---------------->*/
+
+    public ArrayList<String> GetUserFav(String url, final FavoritesDataListener favoritesDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        try {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    android.util.Log.d(TAG, jsonArr.toString());
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                    Gson gson = new Gson();
+                    String data = jsonArr.toString();
+                    Type listType = new TypeToken<List<FavoritesModel>>() {
+                    }.getType();
+
+                    ArrayList<FavoritesModel> model = gson.fromJson(data, listType);
+                    favoritesDataListener.onDataReceived(model);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+
+                    favoritesDataListener.OnError();
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+                    android.util.Log.e("", " error message ..." + message);
+
+                    if (message != null && message != "")
+                        Toast.makeText(context, MainMenuConstants.NO_SERVICES_ERROR, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.shop_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }
+                }
+            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, url);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /*<---------------GET MALL RESTAURANTS ---------------->*/
 
     public ArrayList<String> GetRestaurant(String url, final RestaurantDataListener restaurantDataListener) {
@@ -316,7 +380,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
-    /*<--------------GET RESTAURANT DATA ---------------->*/
+    /*<--------------GET RESTAURANT DETAIL ---------------->*/
 
     public void GetRestaurantDetail(String url,final RestaurantDataListener restaurantDataListener) {
         progressDialog = ProgressDialog.show(context,"","Loading");
@@ -336,6 +400,25 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+    /*<--------------GET MALL DETAIL ---------------->*/
+
+    public void GetMallDetail(String url,final MallDataListener mallDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = GET_MALL_DETAIL;
+        this.mallDataListener = mallDataListener;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
     /*<--------------NEWS AND OFFERS FAVORITE SELECTION ---------------->*/
 
     public void PostFavNnO(String url) {
@@ -454,6 +537,21 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     Log.d(TAG, "Shop Detail:" + String.valueOf(response));
                         if (model != null)
                             restaurantDataListener.onRestaurantDetailReceived(model);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //endregion
+
+            //region GET_MALL_DETAIL
+            case GET_MALL_DETAIL: {
+                try {
+                    Gson gson = new Gson();
+                    MallDetailModel model = gson.fromJson(String.valueOf(response), MallDetailModel.class);
+                    Log.d(TAG, "Mall Detail:" + String.valueOf(response));
+                        if (model != null)
+                            mallDataListener.onMallDetailReceived(model);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

@@ -6,7 +6,7 @@
     
     <LinearLayout
          android:layout_width="100dp"
-    	android:layout_height="130dp"
+    	android:layout_height="110dp"
         android:background="@drawable/related_shops"
     	android:padding="5dp"
     	android:gravity="center_horizontal"

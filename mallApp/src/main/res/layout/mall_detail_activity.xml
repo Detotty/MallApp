@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+
+    <LinearLayout
+        xmlns:android="http://schemas.android.com/apk/res/android"
+        android:background="@drawable/background"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical" >
+        <!--<ImageView
+            android:id="@+id/shop_image_logo"
+            android:layout_width="wrap_content"
+            android:layout_gravity="center_horizontal"
+
+            android:layout_marginTop="@dimen/margin_left_10"
+            android:layout_marginBottom="@dimen/margin_left_10"
+            android:layout_height="wrap_content"
+            android:background="@drawable/shop_logo1"
+            android:contentDescription="@string/app_name"/>-->
+        <include layout="@layout/activity_detail_header" />
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none"
+        android:fillViewport="false">
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:orientation="vertical">
+
+        <ImageView
+            android:id="@+id/iv_background"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:background="@drawable/placeholder"/>
+            <!--<include layout="@layout/shop_detail_sharing_tabs" />-->
+            <TextView
+                android:id="@+id/tv_about"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_left_15"
+                android:text="About"
+                android:textColor="@color/black3"
+                android:textSize="@dimen/text_15"/>
+
+            <TextView
+                android:id="@+id/tv_offer_detail"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_margin="@dimen/margin_left_15"
+                android:textColor="@color/black3"
+                android:text="Details"
+                android:textSize="@dimen/text_15"/>
+
+            <ImageView
+                android:id="@+id/ivMap"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/margin_left_15"
+                android:layout_marginRight="@dimen/margin_left_15"
+                android:layout_alignParentRight="true"
+                android:visibility="gone"/>
+            <fragment
+                android:id="@+id/mapAddress"
+                android:name="com.google.android.gms.maps.MapFragment"
+                android:layout_width="match_parent"
+                android:layout_height="200dp"
+                android:layout_marginLeft="@dimen/margin_left_15"
+                android:layout_marginRight="@dimen/margin_left_15"
+                android:layout_alignParentRight="true"
+                class="com.google.android.gms.maps.SupportMapFragment" />
+
+            <LinearLayout
+                android:layout_width="fill_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginLeft="@dimen/margin_left_15"
+                android:orientation="vertical"
+                >
+                <TextView
+                    android:id="@+id/tv_address"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black3"
+                    android:layout_marginTop="5dp"
+                    android:drawableLeft="@drawable/shop_detail_location_p"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/text_15"/>
+
+                <TextView
+                    android:id="@+id/tv_phone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black3"
+                    android:drawableLeft="@drawable/phone"
+                    android:layout_marginTop="10dp"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/text_15"/>
+
+                <TextView
+                    android:id="@+id/tv_email"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black3"
+                    android:layout_marginTop="10dp"
+                    android:drawableLeft="@drawable/email_p"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/text_15"/>
+
+                <TextView
+                    android:id="@+id/tv_web"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:textColor="@color/black3"
+                    android:layout_marginTop="10dp"
+                    android:text="@string/home_page"
+                    android:drawableLeft="@drawable/web_p"
+                    android:drawablePadding="10dp"
+                    android:textSize="@dimen/text_15"/>
+
+                <LinearLayout
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:orientation="horizontal"
+                    >
+                    <ImageView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:paddingTop="10dp"
+                        android:src="@drawable/shop_detail_clock_p"/>
+
+                    <LinearLayout
+                        android:layout_width="220dp"
+                        android:layout_height="wrap_content"
+                        android:layout_marginLeft="10dp"
+                        android:layout_marginTop="10dp"
+                        android:id="@+id/layout_timings"
+                        android:orientation="vertical">
+
+
+                    </LinearLayout>
+
+                </LinearLayout>
+            </LinearLayout>
+
+
+        </LinearLayout>
+
+
+    </ScrollView>
+
+
+    </LinearLayout>

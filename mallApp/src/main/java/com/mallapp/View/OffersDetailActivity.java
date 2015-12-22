@@ -95,7 +95,14 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 		else
 			is_fav.setImageResource(R.drawable.ofer_detail_heart);
-		ImageSlider(offer_object.getBannerImages());
+		try {
+			ImageSlider(offer_object.getBannerImages());
+		}catch (Exception e){
+
+			mDemoSlider.setVisibility(View.GONE);
+			offer_image.setVisibility(View.VISIBLE);
+			Picasso.with(this).load(offer_object.getImageURL()).into(offer_image);
+		}
 		/*String image_		= offer_object.getImage();
 		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
 		Drawable d 			= getResources().getDrawable(imageResource);
@@ -190,6 +197,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		offer_detail= (TextView) findViewById(R.id.offer_detail);
 		back_screen = (ImageButton) findViewById(R.id.back);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
+		offer_image		= (ImageView) findViewById(R.id.iv_background);
 		go_to_shop	= (Button) 	findViewById(R.id.go_to_shop);
 //		social_sharing=(Button) findViewById(R.id.share_detail_popup);
 //		social_sharing.setOnClickListener(this);

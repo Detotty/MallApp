@@ -57,6 +57,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.BannerImagesModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.Shops;
@@ -160,13 +161,13 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		setRelatedShop();*/
 	}
 
-	private void setShopOffers(StoreOffersModel[] storeOffers) {
+	private void setShopOffers(MallActivitiesModel[] storeOffers) {
 	
 		shop_offers.removeAllViews();
 		SharedPreference sharedPreference 	= new SharedPreference();
 		ArrayList <Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
 		if (storeOffers.length>0){
-			for (StoreOffersModel storeOffersModel:storeOffers
+			for (MallActivitiesModel storeOffersModel:storeOffers
 					) {
 				View view =add_layoutOffers(storeOffersModel);
 				shop_offers.addView(view);
@@ -187,7 +188,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	
 	
 	@SuppressLint("InflateParams")
-	private View add_layoutOffers(final StoreOffersModel offer_obj) {
+	private View add_layoutOffers(final MallActivitiesModel offer_obj) {
 		String image_nam = null, offer_name = null;
 		
 		final View view 	= getLayoutInflater().inflate(R.layout.list_item_shop_offers, null);
@@ -200,15 +201,14 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		Picasso.with(this).load(offer_obj.getImageURL()).into(shop_logo);
 
 
-		
         view.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 //				GlobelOffersNews.related_offer_obj= offer_obj;
-				/*Intent intent= new Intent(ShopDetailActivity.this, OffersRelatedDetailActivity.class);
+				Intent intent= new Intent(ShopDetailActivity.this, OffersDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra(Offers_News_Constants.MALL_OBJECT, offer_obj);
-				startActivity(intent);*/
+				startActivity(intent);
 			}
 		});
 		return view;
@@ -504,7 +504,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		tv_Phone.setText(shopDetail.getPhone());
 		tv_Email.setText(shopDetail.getEmail());
 		StoreTimingsModel[] timinigs = shopDetail.getStoreTimings();
-		StoreOffersModel[] storeOffers = shopDetail.getStoreOffers();
+		MallActivitiesModel[] storeOffers = shopDetail.getStoreOffers();
 		setShopOffers(storeOffers);
 		for (StoreTimingsModel st:timinigs
 			 ) {
