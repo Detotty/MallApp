@@ -4,17 +4,14 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -22,7 +19,6 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
-import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 
@@ -101,7 +97,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 
 			mDemoSlider.setVisibility(View.GONE);
 			offer_image.setVisibility(View.VISIBLE);
-			Picasso.with(this).load(offer_object.getImageURL()).into(offer_image);
+			Picasso.with(this).load(offer_object.getImageURL()).placeholder(R.drawable.mallapp_placeholder).into(offer_image);
 		}
 		/*String image_		= offer_object.getImage();
 		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
@@ -335,8 +331,8 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			TextSliderView textSliderView = new TextSliderView(this);
 			// initialize a SliderLayout
 			textSliderView
-					.error(R.drawable.placeholder)
-					.empty(R.drawable.placeholder)
+					.error(R.drawable.mallapp_placeholder)
+					.empty(R.drawable.mallapp_placeholder)
 					.errorDisappear(false)
 					.image(name.getBannerImageURL())
 					.setScaleType(BaseSliderView.ScaleType.Fit)

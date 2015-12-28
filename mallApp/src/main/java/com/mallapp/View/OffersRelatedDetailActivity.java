@@ -2,16 +2,13 @@ package com.mallapp.View;
 
 import java.util.ArrayList;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.graphics.Point;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.util.Log;
-import android.view.Display;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -34,7 +31,6 @@ import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Shops;
-import com.mallapp.Model.StoreOffersModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
@@ -288,8 +284,8 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 			TextSliderView textSliderView = new TextSliderView(this);
 			// initialize a SliderLayout
 			textSliderView
-					.error(R.drawable.placeholder)
-					.empty(R.drawable.placeholder)
+					.error(R.drawable.profile_image_placeholder)
+					.empty(R.drawable.profile_image_placeholder)
 					.errorDisappear(false)
 					.image(name.getBannerImageURL())
 					.setScaleType(BaseSliderView.ScaleType.Fit)

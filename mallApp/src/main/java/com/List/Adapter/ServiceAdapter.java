@@ -4,16 +4,13 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
-import android.content.Intent;
-import android.net.Uri;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
-import com.mallapp.Constants.AppConstants;
-import com.mallapp.Model.Services;
+
 import com.mallapp.Model.ServicesModel;
 import com.mallapp.View.R;
 import com.mallapp.imagecapture.ImageLoader;
@@ -120,7 +117,7 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 			final TextView phone_no 	= (TextView) v.findViewById(R.id.phone_no);
 			address.setText(service_obj.getAddress());
 			phone_no.setText(service_obj.getPhone());
-			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.placeholder).fit().into(back_image);
+			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.profile_image_placeholder).fit().into(back_image);
 
 			phone_no.setOnClickListener(new View.OnClickListener() {
 				@Override

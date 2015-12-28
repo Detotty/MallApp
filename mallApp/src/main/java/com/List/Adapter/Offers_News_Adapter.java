@@ -186,8 +186,8 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         holder.decs.setText(offer_obj.getBriefText());
         holder.center_name.setText(offerTime);
         holder.shome_name.setText(offer_obj.getEntityName());
-        Picasso.with(context).load(offer_obj.getImageURL()).into(holder.back_image);
-        Picasso.with(context).load(offer_obj.getEntityLogo()).into(holder.entity_logo);
+        Picasso.with(context).load(offer_obj.getImageURL()).fit().into(holder.back_image);
+        Picasso.with(context).load(offer_obj.getEntityLogo()).fit().into(holder.entity_logo);
 		final boolean fav	= offer_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);

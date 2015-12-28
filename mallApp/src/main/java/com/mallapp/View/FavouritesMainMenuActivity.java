@@ -560,9 +560,7 @@ public class FavouritesMainMenuActivity extends Activity
 			}
 		}
 
-
 		initExpandableList();
-
 
 		adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
 		list_view.setAdapter(adapter_O);
