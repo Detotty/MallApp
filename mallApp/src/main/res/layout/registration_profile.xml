@@ -22,7 +22,7 @@
 				android:id="@+id/profile_image_edit"
 				android:layout_width="150dp"
 				android:layout_height="150dp"
-				android:src="@drawable/placeholder"
+				android:src="@drawable/profile_image_placeholder"
 				android:layout_centerHorizontal="true"
 				android:padding="2dp"
 				app:border_width="3dp"

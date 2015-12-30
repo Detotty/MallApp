@@ -84,9 +84,6 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         this.context = context;
     }
 
-
-
-
     /*<--------------GET MALL NEWS AND OFFER ---------------->*/
     public void GetMallNewsnOffers(String url,final MallDataListener mallDataListener) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
@@ -475,7 +472,6 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     }
 
 
-
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         Log.d(TAG, volleyError.toString());
@@ -529,7 +525,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             }
             //endregion
 
-            //region GET_REST_DETAIL
+            //region GET_RESTAURANT_DETAIL
             case GET_REST_DETAIL: {
                 try {
                     Gson gson = new Gson();
@@ -559,7 +555,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             }
             //endregion
 
-            //region POST_FAV_NnO
+            //region POST_FAV_NEWSnOFFERS
             case POST_FAV_NnO: {
                 try {
                     boolean success = response.getBoolean("Success");

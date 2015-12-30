@@ -427,8 +427,8 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			TextSliderView textSliderView = new TextSliderView(this);
 			// initialize a SliderLayout
 			textSliderView
-					.error(R.drawable.placeholder)
-					.empty(R.drawable.placeholder)
+					.error(R.drawable.profile_image_placeholder)
+					.empty(R.drawable.profile_image_placeholder)
 					.errorDisappear(false)
 					.image(name.getBannerImageURL())
 					.setScaleType(BaseSliderView.ScaleType.Fit)

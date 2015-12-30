@@ -5,8 +5,6 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.annotation.SuppressLint;
-import android.app.ActionBar;
-import android.app.Activity;
 import android.app.Fragment;
 import android.content.Context;
 import android.content.Intent;
@@ -18,17 +16,12 @@ import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.util.Log;
 import android.view.GestureDetector;
-import android.view.GestureDetector.SimpleOnGestureListener;
 import android.view.LayoutInflater;
-import android.view.MotionEvent;
 import android.view.View;
 import android.view.View.OnClickListener;
-import android.view.View.OnTouchListener;
 import android.view.WindowManager;
 import android.view.animation.Animation;
 import android.view.animation.Animation.AnimationListener;
-import android.view.animation.AnimationUtils;
-import android.webkit.WebView;
 import android.widget.HorizontalScrollView;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -36,7 +29,6 @@ import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
-import android.widget.ViewFlipper;
 
 import com.daimajia.slider.library.Animations.DescriptionAnimation;
 import com.daimajia.slider.library.SliderLayout;
@@ -60,16 +52,11 @@ import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.ShopDetailModel;
-import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
-import com.mallapp.Model.StoreOffersModel;
 import com.mallapp.Model.StoreTimingsModel;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.db.DatabaseHelper;
-import com.mallapp.globel.GlobelShops;
-import com.mallapp.imagecapture.ScalingUtilities;
-import com.mallapp.imagecapture.ScalingUtilities.ScalingLogic;
 import com.mallapp.listeners.ShopsDataListener;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.VolleyNetworkUtil;
@@ -646,8 +633,8 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			TextSliderView textSliderView = new TextSliderView(this);
 			// initialize a SliderLayout
 			textSliderView
-					.error(R.drawable.placeholder)
-					.empty(R.drawable.placeholder)
+					.error(R.drawable.mallapp_placeholder)
+					.empty(R.drawable.mallapp_placeholder)
 					.errorDisappear(false)
 					.image(name.getBannerImageURL())
 					.setScaleType(BaseSliderView.ScaleType.Fit)
