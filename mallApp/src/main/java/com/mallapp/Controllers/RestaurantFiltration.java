@@ -74,6 +74,9 @@ public class RestaurantFiltration {
 						rest_list = new ArrayList<RestaurantModel>();
 						rest_list.add(rest_obj);
 						mainSectionArray.add(fisrt_char);
+						if(i+1==favourite_shop_List.size() ){
+							mainDictionary.put(current_section_header, rest_list);
+						}
 					}
 				}
 			}
@@ -136,6 +139,11 @@ public class RestaurantFiltration {
 							shop_list = new ArrayList<RestaurantModel>();
 							shop_list.add(rest_obj);
 							mainSectionArray.add(shopCat.getCategoryName());
+							if(i+1==favourite_shop_List.size() ){
+								Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+								mainDictionary.put(current_section_header, shop_list);
+
+							}
 						}
 					}
 
@@ -196,7 +204,9 @@ public class RestaurantFiltration {
 					}else{
 						shop_list = new ArrayList<RestaurantModel>();
 						shop_list.add(rest_obj);
-						mainSectionArray.add(shop_category);
+						if(i+1==favourite_shop_List.size() ){
+							mainDictionary.put(current_section_header, shop_list);
+						}
 					}
 				}
 			}
@@ -304,6 +314,10 @@ public class RestaurantFiltration {
 						shop_list = new ArrayList<RestaurantModel>();
 						shop_list.add(rest_obj);
 						mainSectionArray.add(shop_category);
+						if(i+1==favourite_shop_List.size() ){
+							Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+							mainDictionary.put(current_section_header, shop_list);
+						}
 					}
 				}
 			}

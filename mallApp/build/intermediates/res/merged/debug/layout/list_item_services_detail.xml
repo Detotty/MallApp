@@ -18,6 +18,7 @@
             android:id="@+id/service_image"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
+            android:background="@drawable/mallapp_placeholder"
             android:contentDescription="@string/app_name" />
         
         <RelativeLayout

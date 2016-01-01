@@ -148,10 +148,6 @@ public class FavouritesMainMenuActivity extends Activity
 					cancel_search.setTextColor(getResources().getColor(R.color.purple));
 					list_view1.	setVisibility(View.GONE);
 					
-					
-					
-					
-					
 					if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 						
 						/*o_search_array = GlobelOffersNews.centered_filter_array;
