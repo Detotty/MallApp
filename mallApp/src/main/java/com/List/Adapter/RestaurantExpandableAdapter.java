@@ -120,7 +120,7 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
-			holder.is_fav.setImageResource(R.drawable.offer_fav);
+			holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 		
 		
 		holder.is_fav.setOnClickListener(new OnClickListener() {
@@ -135,7 +135,7 @@ public class RestaurantExpandableAdapter extends BaseExpandableListAdapter {
 					volleyNetworkUtil.PostFavRestaurant(url);
 //					RestaurantCacheManager.updateRestaurant(_context, rest_obj, "");
 				}else{
-					holder.is_fav.setImageResource(R.drawable.offer_fav);
+					holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 					rest_obj.setFav(false);
 					updateRestaurants(rest_obj);
 					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=true";

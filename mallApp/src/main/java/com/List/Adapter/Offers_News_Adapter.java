@@ -81,7 +81,6 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         this.audience_type = audience_type;
 //        FilteredOffersNewsList(mallActivities_All);
         UserId = SharedPreferenceUserProfile.getUserId(context);
-        url = ApiConstants.POST_FAV_OFFERS_URL_KEY;
     }
 
     public String getAudience_type() {
@@ -162,32 +161,18 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         offer_obj = getItem(position);
         Drawable d = null;
 
-		/*if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
-            endorsement_images_list= endorsement_all_images_list;
-		}else if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
-			endorsement_images_list= endorsement_contacts_images_list;
-		}else if(this.audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
-			endorsement_images_list= endorsement_trusted_images_list;
-		}else{
-			endorsement_images_list= endorsement_all_images_list;
-		}
-		
-		if(endorsement_images_list!=null && endorsement_images_list.size()>0){
-			d = endorsement_images_list.get(position);
-			holder.back_image.setBackground(d);
-		}*/
         String offerTime;
-        if (offer_obj.getActivityName().equals("Offer")){
-            offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
-        }else {
-            offerTime  = offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"));
-        }
+//        if (offer_obj.getActivityName().equals("Offer")){
+//            offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
+//        }else {
+//            offerTime  = offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"));
+//        }
         holder.title.setText(offer_obj.getActivityTextTitle());
         holder.decs.setText(offer_obj.getBriefText());
-        holder.center_name.setText(offerTime);
+//        holder.center_name.setText(offerTime);
         holder.shome_name.setText(offer_obj.getEntityName());
         Picasso.with(context).load(offer_obj.getImageURL()).fit().into(holder.back_image);
-        Picasso.with(context).load(offer_obj.getEntityLogo()).fit().into(holder.entity_logo);
+        Picasso.with(context).load(offer_obj.getEntityLogoSquare()).fit().into(holder.entity_logo);
 		final boolean fav	= offer_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
@@ -202,16 +187,18 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                 if (!offer_obj.isFav()) {
                     holder.is_fav.setImageResource(R.drawable.offer_fav_p);
                     offer_obj.setFav(true);
-                    url = url+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=false";
-                    updateMalls(offer_obj);
+                    url = ApiConstants.POST_FAV_OFFERS_URL_KEY+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=false";
                     volleyNetworkUtil.PostFavNnO(url);
+                    url = "";
+                    updateMalls(offer_obj);
 //                    AppCacheManager.updateOffersNews(context, offer_obj, position);
                 } else {
                     holder.is_fav.setImageResource(R.drawable.offer_fav);
                     offer_obj.setFav(false);
-                    url = url+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=true";
-                    updateMalls(offer_obj);
+                    url = ApiConstants.POST_FAV_OFFERS_URL_KEY+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=true";
                     volleyNetworkUtil.PostFavNnO(url);
+                    url = "";
+                    updateMalls(offer_obj);
 //                    AppCacheManager.updateOffersNews(context, offer_obj, position);
                 }
             }
@@ -234,30 +221,6 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
     }
 
 
-    private void FilteredOffersNewsList(ArrayList<MallActivitiesModel> all) {
-
-        mallActivities_Offers = new ArrayList<>();
-        mallActivities_News = new ArrayList<>();
-        for (MallActivitiesModel ma : all) {
-            if (ma.getActivityName().equals("News")) {
-                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
-                    mallActivities_News.add(ma);
-                } else {
-                    if (ma.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
-                        this.mallActivities_News.add(ma);
-                    }
-                }
-            } else {
-                if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
-                    mallActivities_Offers.add(ma);
-                } else {
-                    if (ma.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
-                        mallActivities_Offers.add(ma);
-                    }
-                }
-            }
-        }
-    }
 
     public void updateMalls(MallActivitiesModel fav){
         try {

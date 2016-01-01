@@ -81,7 +81,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 	ShopsModel shop_obj;
 	ShopDetailModel shop_detail_obj;
 	Fragment fragment_Map;
-	private ImageView 		shop_logo,shop_map;
+	private ImageView 		shop_logo,shop_map,expand;
 	private TextView 		tv_about, tv_Detail, shop_name, 	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
@@ -117,6 +117,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		shop_name.setText(rest_obj.getStoreName());
 		shop_detail.setText(rest_obj.getBriefText());*/
 		shop_map	= (ImageView)	findViewById(R.id.ivMap);
+		expand	= (ImageView)	findViewById(R.id.iv_expand);
 		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
 		rel_shop_offers_layout		= (LinearLayout) findViewById(R.id.shop_rel_offers);
 		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
@@ -135,6 +136,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
 		tv_Web.setOnClickListener(this);
+		expand.setOnClickListener(this);
 		try {
 			// This is how, a reference of DAO object can be done
 			shopsDao = getHelper().getShopsDao();
@@ -456,6 +458,13 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			intent.putExtra("url",shop_detail_obj.getWebURL());
 			startActivity(intent);
 		}
+		else if (v.getId() == expand.getId()){
+				Intent intent= new Intent(ShopDetailActivity.this, MapFullScreenActivity.class);
+				intent.putExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT,shop_detail_obj);
+				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+				startActivity(intent);
+
+		}
 		
 	}
 
@@ -510,10 +519,11 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			if (shopsModel.getMallStoreId().equals(mallStoreId)){
 				if (shopsModel.isFav()){
 					is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+					shop_detail_obj.setFav(true);
 				}
 				else {
 					is_fav.setImageResource(R.drawable.ofer_detail_heart);
-
+					shop_detail_obj.setFav(false);
 				}
 			}
 		}
@@ -524,7 +534,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			View frag = findViewById(R.id.mapAddress);
 			frag.setVisibility(View.GONE);
 			shop_map.setVisibility(View.VISIBLE);
-			Picasso.with(this).load(shopDetail.getSiteMapURL()).into(shop_map);
+			Picasso.with(this).load(shopDetail.getSiteMapURL()).placeholder(R.drawable.mallapp_placeholder).into(shop_map);
 		}
 		else {
 			shop_map.setVisibility(View.GONE);
@@ -582,13 +592,13 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			map.setMyLocationEnabled(true);
 
 			// Enable / Disable zooming controls
-			map.getUiSettings().setZoomControlsEnabled(true);
+			map.getUiSettings().setZoomControlsEnabled(false);
 
 			// Enable / Disable my location button
-			map.getUiSettings().setMyLocationButtonEnabled(true);
+			map.getUiSettings().setMyLocationButtonEnabled(false);
 
 			// Enable / Disable Compass icon
-			map.getUiSettings().setCompassEnabled(true);
+			map.getUiSettings().setCompassEnabled(false);
 
 			// Enable / Disable Rotate gesture
 			map.getUiSettings().setRotateGesturesEnabled(true);
@@ -599,7 +609,6 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 			/*
 			 * drawMarkerandZoom(Constants.USER_CURRENT_LOCATION.latitude, Constants.USER_CURRENT_LOCATION.longitude, "Your Current Position");
 			 */
-
 
 			map.setOnMarkerClickListener(new GoogleMap.OnMarkerClickListener() {
 				@Override

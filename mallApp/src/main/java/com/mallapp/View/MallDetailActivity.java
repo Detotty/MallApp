@@ -118,7 +118,7 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 	public void onMallDetailReceived(MallDetailModel mallDetailModel) {
 
 		initilizeMap();
-		Picasso.with(this).load(mallDetailModel.getAppBackgroundImageUrl()).into(mall_background);
+		Picasso.with(this).load(mallDetailModel.getAppBackgroundImageUrl()).placeholder(R.drawable.mallapp_placeholder).fit().into(mall_background);
 		mall_name.setText(mallDetailModel.getName());
 		tv_about.setText(mallDetailModel.getAboutText());
 		tv_Detail.setText(mallDetailModel.getBriefText());

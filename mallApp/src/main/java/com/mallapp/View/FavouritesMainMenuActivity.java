@@ -2,14 +2,15 @@ package com.mallapp.View;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
@@ -23,39 +24,36 @@ import android.widget.ListView;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.List.Adapter.OfferNewsSearchAdapter;
 import com.List.Adapter.OffersNewsExpandableAdapter;
+import com.List.Adapter.Offers_News_Adapter;
 import com.List.Adapter.RestaurantExpandableAdapter;
 import com.List.Adapter.RestaurantSearchAdapter;
+import com.List.Adapter.ShopAdapter;
 import com.List.Adapter.ShopExpandableAdapter;
 import com.List.Adapter.ShopSearchAdapter;
+import com.foound.widget.AmazingListView;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.FavouriteCentersFiltration;
-import com.mallapp.Controllers.OffersNewsList;
 import com.mallapp.Controllers.RestaurantFiltration;
-import com.mallapp.Controllers.RestaurantList;
 import com.mallapp.Controllers.ShopFiltration;
-import com.mallapp.Controllers.ShopList;
 import com.mallapp.Model.FavoritesModel;
 import com.mallapp.Model.MallActivitiesModel;
-import com.mallapp.Model.Offers_News;
-import com.mallapp.Model.Restaurant;
 import com.mallapp.Model.RestaurantModel;
-import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.globel.GlobelRestaurants;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.layouts.SegmentedRadioGroup;
 import com.mallapp.listeners.FavoritesDataListener;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
 import com.mallapp.utils.VolleyNetworkUtil;
-
-import twitter4j.User;
 
 public class FavouritesMainMenuActivity extends Activity  
 										implements 	OnCheckedChangeListener, OnClickListener, FavoritesDataListener {
@@ -66,7 +64,9 @@ public class FavouritesMainMenuActivity extends Activity
 	SegmentedRadioGroup segmentText;
 	private ImageButton open_navigation;
 	
-	private ExpandableListView 	list_view;
+	private ExpandableListView list_view1;
+	private ListView list_view;
+
 	private ListView 			list_view_search;
 	
 	private EditText 	search_feild;
@@ -78,8 +78,9 @@ public class FavouritesMainMenuActivity extends Activity
 	ShopExpandableAdapter adapter_S;
 	RestaurantExpandableAdapter adapter_R;
 	OffersNewsExpandableAdapter adapter_O;
-	
-	
+	Offers_News_Adapter adapter;
+
+
 	ShopSearchAdapter 		adapter_search_S;
 	RestaurantSearchAdapter adapter_search_R;
 	OfferNewsSearchAdapter 	adapter_search_O;
@@ -96,7 +97,8 @@ public class FavouritesMainMenuActivity extends Activity
 	static ArrayList <RestaurantModel>  restaurant_read_audience, r_searchResults,r_search_array;
 	
 	static ArrayList <MallActivitiesModel> offers_read_audience,  o_searchResults,o_search_array;
-	
+	static ArrayList <MallActivitiesModel> news_read_audience,  n_searchResults,n_search_array;
+
 	static HashMap<String, ArrayList<RestaurantModel>> 	r_category_audience ;
 	static HashMap<String, ArrayList<ShopsModel>> 		shops_category_audience;
 	static HashMap<String, ArrayList<MallActivitiesModel>> 	offer_category_audience, news_category_audience ;
@@ -144,7 +146,7 @@ public class FavouritesMainMenuActivity extends Activity
 					
 					Log.e(TAG, "hide existing lists = "+audienceFilter);
 					cancel_search.setTextColor(getResources().getColor(R.color.purple));
-					list_view.	setVisibility(View.GONE);
+					list_view1.	setVisibility(View.GONE);
 					
 					
 					
@@ -176,7 +178,7 @@ public class FavouritesMainMenuActivity extends Activity
 							list_view_search.setVisibility(View.VISIBLE);
 						
 						}else{
-							list_view.	setVisibility(View.VISIBLE);
+							list_view1.	setVisibility(View.VISIBLE);
 						}
 						
 					}else if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
@@ -205,7 +207,7 @@ public class FavouritesMainMenuActivity extends Activity
 							list_view_search.setVisibility(View.VISIBLE);
 						
 						}else{
-							list_view.	setVisibility(View.VISIBLE);
+							list_view1.	setVisibility(View.VISIBLE);
 						}
 						
 					}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){
@@ -232,7 +234,7 @@ public class FavouritesMainMenuActivity extends Activity
 							list_view_search.setVisibility(View.VISIBLE);
 						
 						}else{
-							list_view.	setVisibility(View.VISIBLE);
+							list_view1.	setVisibility(View.VISIBLE);
 						}
 					}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
 						
@@ -256,7 +258,7 @@ public class FavouritesMainMenuActivity extends Activity
 							list_view_search.setVisibility(View.VISIBLE);
 							
 						}else{
-							list_view.	setVisibility(View.VISIBLE);
+							list_view1.	setVisibility(View.VISIBLE);
 						}
 					}
 					
@@ -279,7 +281,7 @@ public class FavouritesMainMenuActivity extends Activity
 				}else{
 					cancel_search.setTextColor(getResources().getColor(R.color.grey));
 					Log.e(TAG, "view existing lists");
-					list_view.	setVisibility(View.VISIBLE);
+					list_view1.	setVisibility(View.VISIBLE);
 				}
 			}
 
@@ -310,7 +312,8 @@ public class FavouritesMainMenuActivity extends Activity
 		
 		list_view_search	= (ListView) 			findViewById(R.id.search_list_view);
 		side_index_layout	= (LinearLayout) 		findViewById(R.id.side_index);
-		list_view 			= (ExpandableListView) 	findViewById(R.id.expandableListView);
+		list_view1 = (ExpandableListView) 	findViewById(R.id.expandableListView);
+		list_view = (ListView) findViewById(R.id.shop_list);
 		heading.setText(getResources().getString(R.string.heading_favourite));
 	}
 
@@ -363,35 +366,39 @@ public class FavouritesMainMenuActivity extends Activity
 
 
 	private void initExpandableList() {
-		list_view.setHeaderDividersEnabled(true);
-		list_view.setSelector(android.R.color.white);
-		list_view.setOnGroupExpandListener(new OnGroupExpandListener() {
+		list_view1.setHeaderDividersEnabled(true);
+		list_view1.setSelector(android.R.color.white);
+		list_view1.setOnGroupExpandListener(new OnGroupExpandListener() {
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				if(prev!=-1){
-					list_view.collapseGroup(prev);    
+				if (prev != -1) {
+					list_view1.collapseGroup(prev);
 				}
-				prev=groupPosition;
+				prev = groupPosition;
 			}
 		});
 		
-		list_view.setGroupIndicator(getResources().getDrawable(R.drawable.my_group_statelist));
+		list_view1.setGroupIndicator(getResources().getDrawable(R.drawable.my_group_statelist));
 	}
 
 
 	private void filterShops() {
-		shops_category_audience= ShopFiltration.filterFavouriteShopsModelCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, shops_read_audience);
+		if (shops_read_audience.size()>0)
+		shops_category_audience= ShopFiltration.filterFavouriteShopsCat(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, shops_read_audience);
 	}
 
 	private void filterRestaurants() {
-		r_category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, restaurant_read_audience);
+		if (restaurant_read_audience.size()>0)
+		r_category_audience	= RestaurantFiltration.filterFavouriteRestCategory(MainMenuConstants.AUDIENCE_FILTER_CATEGORY, restaurant_read_audience);
 	}
 	
 	private void filterOffers() {
+		if (offers_read_audience.size()>0)
 		offer_category_audience= FavouriteCentersFiltration.filterFavouriteOffersCategory(offers_read_audience);
 	}
 	
 	private void filterNews() {
+		if (offers_read_audience.size()>0)
 		news_category_audience = FavouriteCentersFiltration.filterFavouriteNewsCategory(offers_read_audience);
 	}
 	
@@ -403,6 +410,11 @@ public class FavouritesMainMenuActivity extends Activity
 		shops_category_audience	= new HashMap<String, ArrayList<ShopsModel>>();
 		offer_category_audience	= new HashMap<String, ArrayList<MallActivitiesModel>>();
 		news_category_audience	= new HashMap<String, ArrayList<MallActivitiesModel>>();
+		offers_read_audience = new ArrayList<>();
+		news_read_audience = new ArrayList<>();
+		shops_read_audience = new ArrayList<>();
+		restaurant_read_audience = new ArrayList<>();
+
 	}
 
 	Map<String, Integer> mapIndex;
@@ -438,7 +450,7 @@ public class FavouritesMainMenuActivity extends Activity
 				audienceFilter= Offers_News_Constants.AUDIENCE_FILTER_NEWS;
 			} else if (checkedId == R.id.button_three) {
 				audienceFilter= MainMenuConstants.AUDIENCE_FILTER_SHOPS;
-			} else if (checkedId == R.id.button_three) {
+			} else if (checkedId == R.id.button_four) {
 				audienceFilter= MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS;
 			}
 			callInOnResume();
@@ -456,9 +468,9 @@ public class FavouritesMainMenuActivity extends Activity
 
 	private void callInOnResume() {
 
-		readShopList();
+		/*readShopList();
 		readRestaurantsList();
-		readOffersNewsList();
+		readOffersNewsList();*/
 		
 		filterShops();
 		filterRestaurants();
@@ -466,28 +478,39 @@ public class FavouritesMainMenuActivity extends Activity
 		filterNews();
 		
 		invisibleSearch();
-		list_view.setVisibility(View.VISIBLE);
+		list_view1.setVisibility(View.VISIBLE);
 		
 		if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
-		
-			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
-			list_view.setAdapter(adapter_O);
-			
+			/*adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
+			list_view1.setAdapter(adapter_O);*/
+			adapter = new Offers_News_Adapter(getApplicationContext(), this, R.layout.list_item_offers_new,
+					offers_read_audience, audienceFilter, null
+			);
+			list_view.setAdapter(adapter);
+			list_view1.setVisibility(View.GONE);
+			list_view.setVisibility(View.VISIBLE);
+
 		}else if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
-		
-			adapter_O= new OffersNewsExpandableAdapter(getApplicationContext(),this, news_category_audience, GlobelOffersNews.header_section_news);
-			list_view.setAdapter(adapter_O);
-			
+			adapter = new Offers_News_Adapter(getApplicationContext(), this, R.layout.list_item_offers_new,
+					news_read_audience, audienceFilter, null
+			);
+			list_view.setAdapter(adapter);
+			list_view1.setVisibility(View.GONE);
+			list_view.setVisibility(View.VISIBLE);
+
+
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){
-		
 			adapter_S = new ShopExpandableAdapter(getApplicationContext(),this, shops_category_audience, GlobelShops.header_section_category,null);
-			list_view.setAdapter(adapter_S);
-			
+			list_view1.setAdapter(adapter_S);
+			list_view1.setVisibility(View.VISIBLE);
+			list_view.setVisibility(View.GONE);
+
 		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
-		
 			adapter_R = new RestaurantExpandableAdapter(getApplicationContext(),this, r_category_audience, GlobelRestaurants.header_section_category,null);
-			list_view.setAdapter(adapter_R);
-			
+			list_view1.setAdapter(adapter_R);
+			list_view1.setVisibility(View.VISIBLE);
+			list_view.setVisibility(View.GONE);
+
 		}
 	}
 
@@ -496,6 +519,41 @@ public class FavouritesMainMenuActivity extends Activity
 		list_view_search.setVisibility(View.GONE);
 		cancel_search.setTextColor(getResources().getColor(R.color.grey));
 		search_feild.setText("");
+	}
+
+
+	private void displayIndex() {
+		mapIndex = ShopFiltration.getIndexList(getResources());
+		TextView textView;
+		List<String> indexList = new ArrayList<String>(mapIndex.keySet());
+		for (String index : indexList) {
+			textView = (TextView) getLayoutInflater().inflate(R.layout.list_item_side_index, side_index_layout, false);
+			textView.setText(index);
+			textView.setOnClickListener(new OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					onClickIndex(v);
+				}
+			});
+			side_index_layout.addView(textView);
+		}
+	}
+
+
+	private void onClickIndex(View view) {
+		TextView selectedIndex = (TextView) view;
+		list_view.setSelection(mapIndex.get(selectedIndex.getText()));
+		Toast.makeText(getApplicationContext(), "" + selectedIndex.getText(), Toast.LENGTH_SHORT).show();
+	}
+
+	private void initSectionHeaderList() {
+//		list_view.setPinnedHeaderView(LayoutInflater.from(getApplicationContext()).inflate(R.layout.list_item_shop_header, list_view, false));
+		/*adapter = new Offers_News_Adapter(getApplicationContext(), RestaurantMainMenuActivity.this, shops_all, GlobelShops.header_section_alphabetics, audienceFilter, shopsDao);
+		list_view.setAdapter(adapter);*/
+		adapter = new Offers_News_Adapter(getApplicationContext(), this, R.layout.list_item_offers_new,
+				offers_read_audience, audienceFilter, null
+		);
+		list_view.setAdapter(adapter);
 	}
 	
 	
@@ -513,7 +571,7 @@ public class FavouritesMainMenuActivity extends Activity
 				cancel_search.setTextColor(getResources().getColor(R.color.grey));
 				search_feild.setText("");
 				
-				list_view.	setVisibility(View.VISIBLE);
+				list_view1.	setVisibility(View.VISIBLE);
 				
 //				if(audienceFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
 //					
@@ -545,25 +603,34 @@ public class FavouritesMainMenuActivity extends Activity
 
 		for (FavoritesModel fav: favoritesModels
 			 ) {
-			ShopsModel myObject = ShopsModel.class.cast(fav);
-			shops_read_audience.add(myObject);
-			if (fav.getEntityType().equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS)){
-
-			}else if (fav.getEntityType().equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS)){
-
-			}else if (fav.getEntityType().equals(MainMenuConstants.AUDIENCE_FILTER_SHOPS)){
-
-			}else if (fav.getEntityType().equals(MainMenuConstants.AUDIENCE_FILTER_RESTUARANTS)){
-
+			if (fav.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_OFFER) ){
+					offers_read_audience.add(AppUtils.CastToMallActivities(fav));
+			}else if (  fav.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_NEWS)){
+					news_read_audience.add(AppUtils.CastToMallActivities(fav));
+			}else if (fav.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_SHOP)){
+					shops_read_audience.add(AppUtils.CastToShopModel(fav));
+			}else if (fav.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_RESTAURANT)){
+					restaurant_read_audience.add(AppUtils.CastToRestaurantModel(fav));
 			}else {
 
 			}
 		}
-
+		search_array	=  shops_read_audience;
+		searchResults	=  shops_read_audience;
+		r_search_array= restaurant_read_audience;
+		r_searchResults= restaurant_read_audience;
+		o_search_array = offers_read_audience;
+		o_searchResults= offers_read_audience;
+		filterShops();
+		filterRestaurants();
+		filterOffers();
+		filterNews();
+//		displayIndex();
+		initSectionHeaderList();
 		initExpandableList();
 
-		adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
-		list_view.setAdapter(adapter_O);
+		/*adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
+		list_view1.setAdapter(adapter_O);*/
 		adapter_search_O= new OfferNewsSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, o_searchResults);
 		list_view_search.setAdapter(adapter_search_O);
 	}

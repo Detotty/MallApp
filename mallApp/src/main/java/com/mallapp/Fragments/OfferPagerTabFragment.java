@@ -285,7 +285,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             mallActivitiesListing = null;
                             Toast.makeText(context, "No Mall Activity Found!", Toast.LENGTH_SHORT).show();
                         }
-                        adapter.notifyDataSetChanged();
+//                        adapter.notifyDataSetChanged();
                     }
                 });
                 break;
@@ -546,17 +546,27 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     void MallIdSelection(){
         ArrayList<FavouriteCentersModel> TITLES_Centers = GlobelOffersNews.TITLES_centers;
         if (TITLES_Centers == null || TITLES_Centers.size() == 0) {
-            TITLES_Centers = CentersCacheManager.getAllCenters(context);
+            try {
+                TITLES_Centers = CentersCacheManager.readSelectedObjectList(context);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
         }
         String selectedCenter = GlobelOffersNews.TITLES.get(position).trim();
         if (selectedCenter.equals("All")){
             MainMenuConstants.SELECTED_MALL_PLACE_ID = "";
         }
-        for (FavouriteCentersModel center : TITLES_Centers) {
+        /*for (FavouriteCentersModel center : TITLES_Centers) {
             if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                 MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
             }
 
+        }*/
+        if (position>0){
+            FavouriteCentersModel centers = TITLES_Centers.get(position-1);
+            MainMenuConstants.SELECTED_MALL_PLACE_ID = centers.getMallPlaceId();
         }
     }
 }

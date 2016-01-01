@@ -21,6 +21,7 @@ import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.RestaurantDetailModel;
@@ -67,7 +68,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 
 	RestaurantModel rest_obj;
 	RestaurantDetailModel rest_detail_obj;
-	private ImageView 		shop_logo,rest_map;
+	private ImageView 		shop_logo,rest_map,expand;
 	private TextView 		tv_about, tv_Detail, shop_name, rel_offer_title,	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
@@ -100,6 +101,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	//region Data Initialization
 	private void init() {
 
+		expand	= (ImageView)	findViewById(R.id.iv_expand);
 		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
 		rel_shop_offers_layout		= (LinearLayout) findViewById(R.id.shop_rel_offers);
 		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
@@ -120,6 +122,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
 		tv_Web.setOnClickListener(this);
+		expand.setOnClickListener(this);
 		try {
 			// This is how, a reference of DAO object can be done
 			restDao = getHelper().getRestaurantsDao();
@@ -234,7 +237,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			boolean fav	= rest_detail_obj.isFav();
 			if(fav){
 				is_fav.setImageResource(R.drawable.ofer_detail_heart);
-				url = ApiConstants.POST_FAV_SHOP_URL_KEY+ SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=true"+"&IsDeleted=true";
+				url = ApiConstants.POST_FAV_SHOP_URL_KEY+ SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=true";
 				volleyNetworkUtil.PostFavShop(url);
 				rest_detail_obj.setFav(false);
 
@@ -243,7 +246,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 				updateShops(rest_obj);
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
-				url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=true"+"&IsDeleted=false";
+				url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=false";
 				volleyNetworkUtil.PostFavShop(url);
 				rest_detail_obj.setFav(true);
 
@@ -260,6 +263,13 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			intent.putExtra("url", rest_detail_obj.getWebURL());
 			startActivity(intent);
+		}
+		else if (v.getId() == expand.getId()){
+			Intent intent= new Intent(RestaurantDetailActivity.this, MapFullScreenActivity.class);
+			intent.putExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT,rest_detail_obj);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+
 		}
 
 	}
@@ -304,10 +314,11 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			if (restaurantModel.getMallResturantId().equals(mallStoreId)){
 				if (restaurantModel.isFav()){
 					is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+					rest_detail_obj.setFav(true);
 				}
 				else {
 					is_fav.setImageResource(R.drawable.ofer_detail_heart);
-
+					rest_detail_obj.setFav(false);
 				}
 			}
 		}

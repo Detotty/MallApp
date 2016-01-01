@@ -8,13 +8,25 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.support.v4.app.FragmentManager;
+import android.util.*;
+import android.widget.Toast;
 
+import com.google.android.gms.maps.CameraUpdateFactory;
+import com.google.android.gms.maps.GoogleMap;
+import com.google.android.gms.maps.SupportMapFragment;
+import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
+import com.google.android.gms.maps.model.Marker;
+import com.google.android.gms.maps.model.MarkerOptions;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Model.FavoritesModel;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.RestaurantModel;
+import com.mallapp.Model.ShopDetailModel;
+import com.mallapp.Model.ShopsModel;
 import com.mallapp.Model.UserLocationModel;
 import com.mallapp.View.R;
 import com.mallapp.cache.CentersCacheManager;
@@ -28,16 +40,40 @@ import java.util.List;
  */
 public class AppUtils {
 
+    public static final int DEFAULT_MAP_ZOOM_LEVEL = 12;
+
+
     public static String GetSelectedMallPlaceId(Context context){
         String MallPlacecId = null;
-        for (FavouriteCentersModel fav: CentersCacheManager.getAllCenters(context)
-                ) {
-            if (fav.getName().equals(MainMenuConstants.SELECTED_CENTER_NAME)){
-                MallPlacecId = fav.getMallPlaceId();
-                return MallPlacecId;
+        try {
+            for (FavouriteCentersModel fav: CentersCacheManager.readSelectedObjectList(context)
+                    ) {
+                if (fav.getName().equals(MainMenuConstants.SELECTED_CENTER_NAME)){
+                    MallPlacecId = fav.getMallPlaceId();
+                    return MallPlacecId;
+                }
             }
+        } catch (ClassNotFoundException e) {
+            e.printStackTrace();
+        } catch (IOException e) {
+            e.printStackTrace();
         }
         return MallPlacecId;
+    }
+
+    public static String MallIdSelection(Context context, int position){
+        ArrayList<FavouriteCentersModel> TITLES_Centers = GlobelOffersNews.TITLES_centers;
+        if (TITLES_Centers == null || TITLES_Centers.size() == 0) {
+            try {
+                TITLES_Centers = CentersCacheManager.readSelectedObjectList(context);
+            } catch (ClassNotFoundException e) {
+                e.printStackTrace();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+        }
+            FavouriteCentersModel centers = TITLES_Centers.get(position-1);
+            return centers.getMallPlaceId();
     }
 
     public static void displayCallDialog(final Context context, final String num) {
@@ -98,11 +134,59 @@ public class AppUtils {
 
     public static MallActivitiesModel CastToMallActivities(FavoritesModel model){
         MallActivitiesModel mallActivitiesModel = new MallActivitiesModel();
+        mallActivitiesModel.setMallName(model.getEntityType());
         mallActivitiesModel.setEntityType(model.getEntityType());
+        mallActivitiesModel.setActivityName(model.getEntityType());
+        mallActivitiesModel.setActivityName(model.getEntityType());
         mallActivitiesModel.setActivityId(model.getEntityId());
-        mallActivitiesModel.setActivityTextTitle(model.getActivityTextTitle());
+        mallActivitiesModel.setActivityTextTitle(model.getEntityType());
         mallActivitiesModel.setBriefText(model.getBriefText());
+        mallActivitiesModel.setDetailText(model.getAboutText());
+        mallActivitiesModel.setEntityLogo(model.getLogoURL());
+        mallActivitiesModel.setImageURL(model.getLogoURL());
+        mallActivitiesModel.setFav(true);
 
         return mallActivitiesModel;
+    }
+
+    public static ShopsModel CastToShopModel(FavoritesModel model){
+        ShopsModel shopDetailModel = new ShopsModel();
+        shopDetailModel.setMallStoreId(model.getEntityId());
+        shopDetailModel.setStoreName(model.getEntityName());
+        shopDetailModel.setBriefText(model.getBriefText());
+        shopDetailModel.setLogoURL(model.getLogoURL());
+        shopDetailModel.setCat(model.getCategoryName());
+        shopDetailModel.setFav(true);
+
+        return shopDetailModel;
+    }
+
+    public static RestaurantModel CastToRestaurantModel(FavoritesModel model){
+        RestaurantModel restaurantModel = new RestaurantModel();
+        restaurantModel.setMallResturantId(model.getEntityId());
+        restaurantModel.setRestaurantName(model.getEntityName());
+        restaurantModel.setBriefText(model.getBriefText());
+        restaurantModel.setLogoURL(model.getLogoURL());
+        restaurantModel.setCat(model.getCategoryName());
+        restaurantModel.setFav(true);
+
+
+        return restaurantModel;
+    }
+
+    public static void drawMarkerandZoom(double latitude, double longitude, String tagName,GoogleMap map) {
+
+        android.util.Log.e("In zoom", "In Xoom");
+        android.util.Log.e("Latt", "lati :" + latitude);
+        android.util.Log.e("Longg", "longg :" + longitude);
+        android.util.Log.e("TagName", "tagName :" + tagName);
+        LatLng thisPosition;
+        thisPosition = new LatLng(latitude, longitude);
+        map.addMarker(new MarkerOptions().position(thisPosition).title(tagName));
+        map.clear();
+        map.addMarker(new MarkerOptions().position(thisPosition).title(tagName));
+        CameraPosition cameraPosition = new CameraPosition.Builder().target(thisPosition).zoom(DEFAULT_MAP_ZOOM_LEVEL).build();
+        map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
     }
 }

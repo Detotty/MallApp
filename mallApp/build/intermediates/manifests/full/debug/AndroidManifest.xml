@@ -220,6 +220,11 @@
             android:name="com.mallapp.View.WebViewActivity"
             android:label="@string/title_activity_webview" >
         </activity>
+        <activity
+            android:name="com.mallapp.View.MapFullScreenActivity"
+            android:label="@string/title_activity_fullscreen_maps"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" >
+        </activity>
         <!-- Include the AdActivity and InAppPurchaseActivity configChanges and themes. -->
         <activity
             android:name="com.google.android.gms.ads.AdActivity"

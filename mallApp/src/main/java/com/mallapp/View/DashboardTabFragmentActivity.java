@@ -174,7 +174,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				
 				MainMenuConstants.uiHandler= uiHandler;
 				Intent activity = new Intent(DashboardTabFragmentActivity.this, ShopMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
 				startActivity(activity);
 			} else
 				showdailog();
@@ -190,7 +190,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, RestaurantMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
 				startActivity(activity);
 			} else
 				showdailog();
@@ -206,7 +206,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, ServicesMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
 				startActivity(activity);
 			} else
 				showdailog();
@@ -217,11 +217,10 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity = new Intent(DashboardTabFragmentActivity.this, MallDetailActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.GetSelectedMallPlaceId(context));
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
 				startActivity(activity);
 			} else
 				showdailog();

@@ -171,7 +171,7 @@ public class ShopAdapter extends AmazingAdapter {
         if (fav)
             holder.is_fav.setImageResource(R.drawable.offer_fav_p);
         else
-            holder.is_fav.setImageResource(R.drawable.offer_fav);
+            holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 
 
         holder.is_fav.setOnClickListener(new OnClickListener() {
@@ -187,7 +187,7 @@ public class ShopAdapter extends AmazingAdapter {
 
 //                    ShopCacheManager.updateShops(context, shop_obj, "", position);
                 } else {
-                    holder.is_fav.setImageResource(R.drawable.offer_fav);
+                    holder.is_fav.setImageResource(R.drawable.offer_fav_r);
                     shop_obj.setFav(false);
                     updateShops(shop_obj);
                     url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=true";

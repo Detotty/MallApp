@@ -8,9 +8,9 @@
         android:layout_width="match_parent"
         custom:pager_animation="Accordion"
         custom:auto_cycle="true"
-        android:background="@drawable/mallapp_placeholder"
         custom:indicator_visibility="visible"
         custom:pager_animation_span="1100"
+        android:background="@drawable/mallapp_placeholder"
         android:layout_height="190dp"/>
 
     <com.daimajia.slider.library.Indicators.PagerIndicator

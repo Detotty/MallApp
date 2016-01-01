@@ -165,7 +165,7 @@ public class RestaurantAdapter extends AmazingAdapter {
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
-			holder.is_fav.setImageResource(R.drawable.offer_fav);
+			holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 		
 		
 		holder.is_fav.setOnClickListener(new OnClickListener() {
@@ -176,14 +176,14 @@ public class RestaurantAdapter extends AmazingAdapter {
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					rest_obj.setFav(true);
 					updateRestaurants(rest_obj);
-					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=false";
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsShop=false"+"&IsDeleted=false";
 					volleyNetworkUtil.PostFavRestaurant(url);
 //					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");
 				}else{
-					holder.is_fav.setImageResource(R.drawable.offer_fav);
+					holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 					rest_obj.setFav(false);
 					updateRestaurants(rest_obj);
-					url = ApiConstants.POST_FAV_RESTAURANT_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsRestaurant=true"+"&IsDeleted=true";
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsShop=false"+"&IsDeleted=true";
 					volleyNetworkUtil.PostFavRestaurant(url);
 //					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");
 				}

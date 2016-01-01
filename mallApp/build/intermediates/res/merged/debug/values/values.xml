@@ -929,6 +929,7 @@
     <string name="timing_m2">From clock 9 to clock 18, From Sat to Sun.</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="title_activity_fullscreen_maps">MapFullScreenActivity</string>
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_webview">WebviewActivity</string>

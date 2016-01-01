@@ -1,5 +1,6 @@
 package com.mallapp.Fragments;
 
+import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -67,12 +68,13 @@ public class OffersTabFragment extends Fragment
     VolleyNetworkUtil volleyNetworkUtil;
     public static Handler uihandler;
     int tabPos = 0;
+    public static int pos = 0;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.e(TAG, " on create OffersTabFragment ");
         context = getActivity().getApplicationContext();
-        TITLES = FavouriteCentersFiltration.getFavCenterTITLES(context);
+        TITLES = FavouriteCentersFiltration.getFavTITLES(context);
 //        volleyNetworkUtil = new VolleyNetworkUtil(context);
         uihandler = MainMenuConstants.uiHandler;
         super.onCreate(savedInstanceState);
@@ -111,6 +113,7 @@ public class OffersTabFragment extends Fragment
                 //Log.e(" offers tab fragment ", "onPageSelected" + position+" centers fav size = "+ TITLES.size());
                 setCenterLogo(position);
                 tabPos = position;
+                pos = position;
 //                callInOnResume();
 
             }
@@ -150,9 +153,23 @@ public class OffersTabFragment extends Fragment
         } else {
             ArrayList<FavouriteCentersModel> TITLES_Centers = GlobelOffersNews.TITLES_centers;
             if (TITLES_Centers == null || TITLES_Centers.size() == 0) {
-                TITLES_Centers = CentersCacheManager.getAllCenters(context);
+                try {
+                    TITLES_Centers = CentersCacheManager.readSelectedObjectList(context);
+                } catch (ClassNotFoundException e) {
+                    e.printStackTrace();
+                } catch (IOException e) {
+                    e.printStackTrace();
+                }
             }
-            for (FavouriteCentersModel center : TITLES_Centers) {
+            if (position>0){
+                FavouriteCentersModel center = TITLES_Centers.get(position-1);
+                String center_logo_name = center.getLogoUrl();
+                if (center.getCorporateColor() != null)
+                    headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
+                setCenter_logo(center_logo_name);
+                setSelected_center_logo(center_logo_name);
+            }
+            /*for (FavouriteCentersModel center : TITLES_Centers) {
                 if (center.isIsfav() && center.getName().trim().equals(selectedCenter)) {
                     String center_logo_name = center.getLogoUrl();
 //                    MainMenuConstants.SELECTED_MALL_PLACE_ID = center.getMallPlaceId();
@@ -161,7 +178,7 @@ public class OffersTabFragment extends Fragment
                     setCenter_logo(center_logo_name);
                     setSelected_center_logo(center_logo_name);
                 }
-            }
+            }*/
         }
     }
 

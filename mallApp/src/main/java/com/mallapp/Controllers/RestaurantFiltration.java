@@ -238,47 +238,6 @@ public class RestaurantFiltration {
 		return favourite_shop_List;
 	}
 
-
-
-	
-	public static LinkedHashMap<String, Integer> getIndexList(Resources res) {
-		String[] alphabetic= res.getStringArray(R.array.alphabetic_list);
-		
-		LinkedHashMap<String, Integer> mapIndex = new LinkedHashMap<String, Integer>();
-		for (int i = 0; i < alphabetic.length; i++) {
-			String fruit = alphabetic[i];
-			String index = fruit.substring(0, 1);
-
-			if (mapIndex.get(index) == null)
-				mapIndex.put(index, i);
-		}
-		return mapIndex;
-	}
-	
-
-	public static Drawable getShopLogo(Context context,String image_nam) {
-		int imageResource = context.getResources().getIdentifier(image_nam, "drawable", context.getPackageName());
-		Drawable d = context.getResources().getDrawable(imageResource);
-		
-		
-		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-		int mDstWidth 	= context.getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-        int mDstHeight 	= context.getResources().getDimensionPixelSize(R.dimen.createview_destination_height);
-		
-        return d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-	}
-	
-	public static Drawable getShopLogo(Context context,int imageResource) {
-		//int imageResource = context.getResources().getIdentifier(image_nam, "drawable", context.getPackageName());
-		Drawable d = context.getResources().getDrawable(imageResource);
-		
-		
-		Bitmap bitmap = ((BitmapDrawable) d).getBitmap();
-		int mDstWidth 	= context.getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-        int mDstHeight 	= context.getResources().getDimensionPixelSize(R.dimen.createview_destination_height);
-		
-        return d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-	}
 	
 	
 	
@@ -292,5 +251,74 @@ public class RestaurantFiltration {
 				}
 			}
 		return favourite_center_Filter_List;
+	}
+
+	public static HashMap<String, ArrayList<RestaurantModel>>  filterFavouriteRestCategory(String favShopFilter,
+																							ArrayList<RestaurantModel> favourite_shop_List) {
+
+		HashMap<String, ArrayList<RestaurantModel>> mainDictionary
+				= new HashMap<String, ArrayList<RestaurantModel>>();
+		ArrayList<String> mainSectionArray 	= new ArrayList<String>();
+		String current_section_header		= null;
+		ArrayList<RestaurantModel> shop_list 	= null;
+
+
+		favourite_shop_List = sortRestaurantListCategorys(favourite_shop_List);
+		for(int i=0; i< favourite_shop_List.size() ; i++){
+
+			RestaurantModel rest_obj 		= favourite_shop_List.get(i);
+			if(rest_obj != null){
+
+				String shop_category= rest_obj.getCat();
+
+				if(shop_category != null && shop_category.length()>0){
+
+					if(current_section_header == null || current_section_header.length()== 0)
+						current_section_header= shop_category;
+
+					if(mainSectionArray.size()>0
+							&& mainSectionArray.contains(shop_category)
+							&& current_section_header.equals(shop_category)){
+
+						shop_list.add(rest_obj);
+						if(i+1==favourite_shop_List.size() ){
+							Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+							mainDictionary.put(current_section_header, shop_list);
+
+						}
+
+					}else if(!current_section_header.equals(shop_category)){
+						Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+						mainDictionary.put(current_section_header, shop_list);
+
+						shop_list = new ArrayList<RestaurantModel>();
+						shop_list.add(rest_obj);
+						mainSectionArray.add(shop_category);
+						current_section_header= shop_category;
+
+						if(i+1==favourite_shop_List.size() ){
+							Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
+							mainDictionary.put(current_section_header, shop_list);
+						}
+					}else{
+						shop_list = new ArrayList<RestaurantModel>();
+						shop_list.add(rest_obj);
+						mainSectionArray.add(shop_category);
+					}
+				}
+			}
+		}
+		GlobelRestaurants.header_section_category= mainSectionArray;
+		return mainDictionary;
+	}
+
+	private static ArrayList<RestaurantModel> sortRestaurantListCategorys(ArrayList<RestaurantModel> favourite_shop_List) {
+		Collections.sort(favourite_shop_List, new Comparator<RestaurantModel>() {
+			@Override
+			public int compare(RestaurantModel lhs, RestaurantModel rhs) {
+				return lhs.getCat().compareTo(rhs.getCat());
+			}
+		});
+		return favourite_shop_List;
 	}
 }

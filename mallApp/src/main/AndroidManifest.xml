@@ -216,6 +216,11 @@
             android:name=".WebViewActivity"
             android:label="@string/title_activity_webview" >
         </activity>
+        <activity
+            android:name=".MapFullScreenActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:label="@string/title_activity_fullscreen_maps" >
+        </activity>
     </application>
 
 </manifest>

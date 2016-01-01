@@ -121,7 +121,7 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
-			holder.is_fav.setImageResource(R.drawable.offer_fav);
+			holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 		
 		
 		holder.is_fav.setOnClickListener(new OnClickListener() {
@@ -136,7 +136,7 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
 					volleyNetworkUtil.PostFavShop(url);
 //					ShopCacheManager.updateShops(_context, shop_obj, "", childPosition);
 				}else{
-					holder.is_fav.setImageResource(R.drawable.offer_fav);
+					holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 					shop_obj.setFav(false);
 					updateShops(shop_obj);
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=true";

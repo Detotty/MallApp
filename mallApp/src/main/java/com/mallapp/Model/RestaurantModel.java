@@ -29,6 +29,8 @@ public class RestaurantModel implements Serializable
 
     private RestaurantCategoriesModel[] RestaurantCategories;
 
+    private String Categories;
+
     @DatabaseField(columnName = "FaceBookURL")
     private String FaceBookURL;
 
@@ -188,9 +190,17 @@ public class RestaurantModel implements Serializable
         return MallResturantId;
     }
 
-    public void setMallResturantId (String MallResturantId)
-    {
+    public void setMallResturantId (String MallResturantId) {
         this.MallResturantId = MallResturantId;
+    }
+
+    public String getCat ()
+    {
+        return Categories;
+    }
+
+    public void setCat (String Categories)    {
+        this.Categories = Categories;
     }
 
     public boolean isFav ()

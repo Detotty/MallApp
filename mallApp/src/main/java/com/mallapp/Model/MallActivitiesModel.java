@@ -72,6 +72,8 @@ public class MallActivitiesModel implements Serializable{
     @DatabaseField(columnName = "EntityId")
     private String EntityId;
 
+    private String EntityLogoSquare;
+
     @DatabaseField(columnName = "isFav")
     private boolean isFav;
 
@@ -293,6 +295,16 @@ public class MallActivitiesModel implements Serializable{
     public void setEntityId (String EntityId)
     {
         this.EntityId = EntityId;
+    }
+
+    public String getEntityLogoSquare ()
+    {
+        return EntityLogoSquare;
+    }
+
+    public void setEntityLogoSquare (String EntityLogoSquare)
+    {
+        this.EntityLogoSquare = EntityLogoSquare;
     }
 
     public boolean isFav ()

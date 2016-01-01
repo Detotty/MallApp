@@ -15,6 +15,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.View.OffersDetailActivity;
@@ -103,7 +104,7 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 		else
-			holder.is_fav.setImageResource(R.drawable.offer_fav);
+			holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 		
 		
 		holder.is_fav.setOnClickListener(new OnClickListener() {
@@ -115,7 +116,7 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 					offer_obj.setFav(true);
 					AppCacheManager.updateOffersNews(_context, offer_obj,childPosition);
 				}else{
-					holder.is_fav.setImageResource(R.drawable.offer_fav);
+					holder.is_fav.setImageResource(R.drawable.offer_fav_r);
 					offer_obj.setFav(false);
 					AppCacheManager.updateOffersNews(_context, offer_obj,childPosition);
 				}
@@ -132,6 +133,7 @@ public class OffersNewsExpandableAdapter extends BaseExpandableListAdapter {
 				offer_obj= getChild(groupPosition, childPosition);
 				GlobelOffersNews.offer_obj_mall= offer_obj;
 				Intent intent= new Intent(activity, OffersDetailActivity.class);
+				intent.putExtra(Offers_News_Constants.MALL_OBJECT,offer_obj);
 				intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);                     
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				activity.getApplication().startActivity(intent);

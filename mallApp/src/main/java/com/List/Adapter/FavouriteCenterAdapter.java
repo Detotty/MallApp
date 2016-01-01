@@ -27,7 +27,7 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 	private ArrayList<FavouriteCentersModel> interst_;
 	Context context;
 	ImageLoader imageLoader = MallApplication.getInstance().getImageLoader();
-	NetworkImageView thumbNail;
+	ImageView thumbNail;
 	
 	public FavouriteCenterAdapter(Context context, int textViewResourceId, 
 						ArrayList<FavouriteCentersModel> objects) {
@@ -58,7 +58,7 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 	}
 	
 	static class ViewHolder {
-		TextView center_title, center_city;
+		TextView center_title, center_city, center_add;
 		ImageView is_center, center_image;
 	}
 
@@ -74,10 +74,11 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 			
 			holder = new ViewHolder();
 			holder.center_title = (TextView) view.findViewById(R.id.center_name);
+			holder.center_add = (TextView) view.findViewById(R.id.center_add);
 			holder.center_city 	= (TextView) view.findViewById(R.id.center_city);
 			if (imageLoader == null)
 				imageLoader = MallApplication.getInstance().getImageLoader();
-			thumbNail = (NetworkImageView) view.findViewById(R.id.center_image);
+			thumbNail = (ImageView) view.findViewById(R.id.center_image);
 			holder.is_center	= (ImageView) view.findViewById(R.id.fav_center);
 //			holder.center_image	= (ImageView) view.findViewById(R.id.center_image);
 			view.setTag(holder);
@@ -88,25 +89,27 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 		
 		FavouriteCentersModel fav_obj= getItem(position);
 		holder.center_title.setText(fav_obj.getName());
+		holder.center_add.setText(fav_obj.getPlaceName());
 		holder.center_city.setText(fav_obj.getCityName());
-		thumbNail.setImageUrl(fav_obj.getLogoUrl(), imageLoader);
-//		Picasso.with(context).load(fav_obj.getLogoUrl()).into(thumbNail);
+		Picasso.with(context).load(fav_obj.getLogoUrl()).into(thumbNail);
 //		int res = context.getResources().getIdentifier(image_nam, "drawable", context.getPackageName());
 //		holder.center_image.setImageResource(res);
 		
 		boolean is_interts = fav_obj.isIsfav();
 		if(is_interts){
-			holder.is_center.setImageResource(R.drawable.interest_p);
+			holder.is_center.setImageResource(R.drawable.offer_fav_p);
 			holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
+			holder.center_add.setTextColor(context.getResources().getColor(R.color.purple));
 			holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
 		}else{
-			holder.is_center.setImageResource(R.drawable.interest);
+			holder.is_center.setImageResource(R.drawable.offer_fav_r);
 			holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
+			holder.center_add.setTextColor(context.getResources().getColor(R.color.search_area));
 			holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
 		}
 
 		if(fav_obj.isIsfav()){
-			holder.is_center.setImageResource(R.drawable.interest_p);
+			holder.is_center.setImageResource(R.drawable.offer_fav_p);
 			CentersCacheManager.updateCenters(context, fav_obj, position);
 			holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 			holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
@@ -139,13 +142,13 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 				FavouriteCentersModel fav_obj= getItem(position);
 				if(fav_obj.isIsfav()){
 					fav_obj.setIsfav(false);
-					holder.is_center.setImageResource(R.drawable.interest);
+					holder.is_center.setImageResource(R.drawable.offer_fav_r);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
 					CentersCacheManager.updateCenters(context, fav_obj,position);
 				}else{
 					fav_obj.setIsfav(true);
-					holder.is_center.setImageResource(R.drawable.interest_p);
+					holder.is_center.setImageResource(R.drawable.offer_fav_p);
 					CentersCacheManager.updateCenters(context, fav_obj,position);
 					
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
@@ -161,13 +164,13 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 				FavouriteCentersModel fav_obj= getItem(position);
 				if(fav_obj.isIsfav()){
 					fav_obj.setIsfav(false);
-					holder.is_center.setImageResource(R.drawable.interest);
+					holder.is_center.setImageResource(R.drawable.offer_fav_r);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
 					CentersCacheManager.updateCenters(context, fav_obj,position);
 				}else{
 					fav_obj.setIsfav(true);
-					holder.is_center.setImageResource(R.drawable.interest_p);
+					holder.is_center.setImageResource(R.drawable.offer_fav_p);
 					CentersCacheManager.updateCenters(context, fav_obj,position);
 					
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));

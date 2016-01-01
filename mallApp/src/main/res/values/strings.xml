@@ -126,6 +126,7 @@
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_webview">WebviewActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_fullscreen_maps">MapFullScreenActivity</string>
 
 
 	<!-- Alert Strings-->

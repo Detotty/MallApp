@@ -17,7 +17,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:divider="#C7CDCE"
-            android:dividerHeight="@dimen/margin_left_10"
+            android:dividerHeight="@dimen/margin_left_5"
             android:padding="10dp" >
         </ListView>
 

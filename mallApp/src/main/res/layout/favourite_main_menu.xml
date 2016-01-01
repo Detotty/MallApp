@@ -20,50 +20,60 @@
         android:layout_width="fill_parent"
 		android:layout_height="fill_parent"
 	   	android:orientation="vertical">
-	    
-<!-- 	    <LinearLayout  -->
-<!-- 		    android:id="@+id/scroll_side_index" -->
-<!-- 		    android:layout_width="fill_parent" -->
-<!-- 		    android:layout_height="wrap_content" -->
-<!-- 		    android:baselineAligned="false" -->
-<!-- 		    android:orientation="horizontal" -->
-<!-- 		    android:weightSum="1"> -->
-        
-<!-- 			<com.foound.widget.AmazingListView  -->
-<!-- 			    android:layout_width="0dp" -->
-<!-- 	       		android:animateLayoutChanges="true" -->
-<!-- 			    android:layout_height="wrap_content"  -->
-<!-- 			    android:visibility="visible" -->
-<!-- 			    android:layout_weight="0.93" -->
-<!-- 			    android:scrollbars="none" -->
-<!-- 			    android:divider="@null" -->
-<!-- 				android:dividerHeight="0dp" -->
-<!-- 			    android:id="@+id/shop_list"/> -->
-	    
-<!-- 		    <ScrollView -->
-<!-- 		        android:layout_width="0dp" -->
-<!-- 		        android:layout_height="match_parent" -->
-<!-- 		        android:visibility="visible" -->
-<!-- 		        android:layout_weight="0.07" -->
-<!-- 		        android:scrollbars="none"> -->
-<!-- 		        <LinearLayout -->
-<!-- 		            android:id="@+id/side_index" -->
-<!-- 		            android:layout_width="match_parent" -->
-<!-- 		            android:layout_height="0dp" -->
-<!-- 		            android:background="@android:color/transparent" -->
-<!-- 		            android:gravity="center_horizontal" -->
-<!-- 		            android:orientation="vertical" > -->
-<!-- 		        </LinearLayout> -->
-<!-- 		    </ScrollView> -->
-<!-- 		</LinearLayout> -->
-        
+
+		<!-- <LinearLayout
+             android:id="@+id/scroll_side_index"
+             android:layout_width="fill_parent"
+             android:layout_height="wrap_content"
+             android:baselineAligned="false"
+             android:orientation="horizontal"
+             android:weightSum="1">
+
+             <ListView
+                 android:layout_width="fill_parent"
+                    android:animateLayoutChanges="true"
+                 android:layout_height="wrap_content"
+                 android:visibility="visible"
+                 android:layout_weight="0.93"
+                 android:scrollbars="none"
+                 android:divider="@null"
+                 android:dividerHeight="0dp"
+                 android:id="@+id/shop_list"/>
+
+             &lt;!&ndash;<ScrollView
+                 android:layout_width="0dp"
+                 android:layout_height="match_parent"
+                 android:visibility="visible"
+                 android:layout_weight="0.07"
+                 android:scrollbars="none">
+                 <LinearLayout
+                     android:id="@+id/side_index"
+                     android:layout_width="match_parent"
+                     android:layout_height="0dp"
+                     android:background="@android:color/transparent"
+                     android:gravity="center_horizontal"
+                     android:orientation="vertical" >
+                 </LinearLayout>
+             </ScrollView>&ndash;&gt;
+         </LinearLayout>-->
+		<ListView
+			android:layout_width="fill_parent"
+			android:animateLayoutChanges="true"
+			android:layout_height="wrap_content"
+			android:visibility="visible"
+			android:layout_weight="0.93"
+			android:scrollbars="none"
+            android:divider="#C7CDCE"
+            android:dividerHeight="@dimen/margin_left_5"
+            android:padding="10dp"
+			android:id="@+id/shop_list"/>
         <ExpandableListView
 		    android:id="@+id/expandableListView"
 		    android:layout_width="match_parent"
        		android:layout_height="wrap_content"
        		android:divider="@null"
 			android:dividerHeight="0dp"
-		    android:visibility="visible" >
+		    android:visibility="gone" >
 		</ExpandableListView>
 	
 		<ListView

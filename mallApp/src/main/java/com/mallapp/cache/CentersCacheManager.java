@@ -159,7 +159,7 @@ public class CentersCacheManager {
 					list.add(acc);
 			}
 		} catch (EOFException ex) {
-			ex.printStackTrace();
+//			ex.printStackTrace();
 		}finally{
 			// releases any associated system files with this stream
 			if(fis!=null)

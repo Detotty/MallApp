@@ -44,6 +44,8 @@ public class ShopsModel implements Serializable
 
     private ShopCategoriesModel[] ShopCategories;
 
+    private String Categories;
+
     @DatabaseField(columnName = "LogoURL")
     private String LogoURL;
 
@@ -178,6 +180,15 @@ public class ShopsModel implements Serializable
     public void setLogoURL (String LogoURL)
     {
         this.LogoURL = LogoURL;
+    }
+
+    public String getCat ()
+    {
+        return Categories;
+    }
+
+    public void setCat (String Categories)    {
+        this.Categories = Categories;
     }
 
     public boolean isFav ()
