@@ -99,92 +99,8 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			offer_image.setVisibility(View.VISIBLE);
 			Picasso.with(this).load(offer_object.getImageURL()).placeholder(R.drawable.mallapp_placeholder).into(offer_image);
 		}
-		/*String image_		= offer_object.getImage();
-		int imageResource 	= getResources().getIdentifier(image_, "drawable", getPackageName());
-		Drawable d 			= getResources().getDrawable(imageResource);
-		Bitmap bitmap 		= ((BitmapDrawable) d).getBitmap();
-		
-		Display display 	= getWindowManager().getDefaultDisplay();
-		Point size 			= new Point();
-		display.getSize(size);
-		//int width = size.x;
-		int mDstWidth 	= size.x;;//getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-        int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.offer_detail_height);
-		d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-		offer_image.setBackground(d);*/
-//		Picasso.with(this).load(offer_object.getImageURL()).into(offer_image);
-//		setRelatedOffers();
 	}
 
-	private void setRelatedOffers() {
-		related_offers.removeAllViews();
-		
-		SharedPreference sharedPreference = new SharedPreference();
-		ArrayList <Offers_News> endorsement_list_filter = sharedPreference.getOffersNews(getApplicationContext());
-		if(endorsement_list_filter!=null){
-			for(int i=0; i<3; i++){
-				Offers_News object= endorsement_list_filter.get(i);
-				View view =add_layout(object);
-				related_offers.addView(view);
-			}
-		}
-	}
-
-	private View add_layout(final Offers_News offer_obj) {
-		LayoutInflater layoutInflater 	= (LayoutInflater)getSystemService(Context.LAYOUT_INFLATER_SERVICE);
-        final View view 				= layoutInflater.inflate(R.layout.list_item_offers, null);
-        
-        TextView title 		= (TextView) view.findViewById(R.id.title);
-        TextView decs 		= (TextView) view.findViewById(R.id.center_city);
-        TextView center_name= (TextView) view.findViewById(R.id.center_name);
-        TextView shop_name 	= (TextView) view.findViewById(R.id.shop_name);
-        final ImageButton is_fav	= (ImageButton) view.findViewById(R.id.fav_center);
-        ImageView back_image= (ImageView) view.findViewById(R.id.center_image);
-        
-        title.setText(offer_obj.getTitle());
-		decs.setText(offer_obj.getDetail());
-		center_name.setText(offer_obj.getCenter_name());
-		shop_name.setText(offer_obj.getShop_name());
-		
-		final boolean fav	= offer_obj.isFav();
-		if(fav)
-			is_fav.setImageResource(R.drawable.offer_fav_p);
-		else
-			is_fav.setImageResource(R.drawable.offer_fav);
-		
-		String image_nam	= offer_obj.getImage();
-		int imageResource 	= getResources().getIdentifier(image_nam, "drawable", getPackageName());
-		Drawable d 			= getResources().getDrawable(imageResource);
-		Bitmap bitmap 	= ((BitmapDrawable) d).getBitmap();
-		int mDstWidth 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_width);
-        int mDstHeight 	= getResources().getDimensionPixelSize(R.dimen.createview_destination_height);
-		d = new BitmapDrawable(getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
-		back_image.setBackground(d);
-		
-		is_fav.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				if(!offer_obj.isFav()){
-					is_fav.setImageResource(R.drawable.offer_fav_p);
-					offer_obj.setFav(true);
-				}else{
-					is_fav.setImageResource(R.drawable.offer_fav);
-					offer_obj.setFav(false);
-				}
-			}
-		});
-		
-        view.setOnClickListener(new OnClickListener() {
-			@Override
-			public void onClick(View v) {
-				Log.e("related offer...", "related offer...");
-				GlobelOffersNews.related_offer_obj= offer_obj;
-				Intent intent= new Intent(OffersDetailActivity.this, OffersRelatedDetailActivity.class);
-				startActivity(intent);
-			}
-		});
-		return view;
-	}
 
 	private void init() {
 		
@@ -224,21 +140,7 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			e.printStackTrace();
 		}
 	}
-	
-	private Shops readShopList() {
-		Shops shop_obj= null;
-		ArrayList <Shops> shops_read_audience = GlobelShops.shop_array;
-		
-		if(shops_read_audience == null || shops_read_audience.size() == 0){
-			ShopList.saveOffersNewsData(getApplicationContext());
-			shops_read_audience 	= ShopList.readShopsList(getApplicationContext());
-			GlobelShops.shop_array	= shops_read_audience;
-			shop_obj= shops_read_audience.get(0);
-		}else{
-			shop_obj= shops_read_audience.get(0);
-		}
-		return shop_obj;
-	}
+
 
 	@Override
 	public void onClick(View v) {
@@ -274,13 +176,13 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		
 		}else if(v.getId()== face_book.getId()){
 		
-			Facebook_Login fb_profile= new Facebook_Login(getApplicationContext(), 	OffersDetailActivity.this, true );
-			fb_profile.loginToFacebook();
+			/*Facebook_Login fb_profile= new Facebook_Login(getApplicationContext(), 	OffersDetailActivity.this, true );
+			fb_profile.loginToFacebook();*/
 			
 		}else if(v.getId()== twitter.getId()){
 		
-			Twitter_Integration twitter= new Twitter_Integration(getApplicationContext(), OffersDetailActivity.this);
-			twitter.post_twitter();
+			/*Twitter_Integration twitter= new Twitter_Integration(getApplicationContext(), OffersDetailActivity.this);
+			twitter.post_twitter();*/
 			
 		}else if(v.getId()== email.getId()){
 			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);  

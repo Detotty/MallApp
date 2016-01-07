@@ -293,6 +293,19 @@
         <item>Discount Calculator</item>
         <item>Favourite</item>
 	</string-array>
+    <string-array name="profile_items">
+        <item>Edit Profile</item>
+        <item>Centers</item>
+        <item>Interests</item>
+        <item>Help</item>
+        <item>Privacy Policy</item>
+        <item>About Us</item>
+        <item>Logout</item>
+    </string-array>
+    <string-array name="settings_items">
+        <item>Notifications</item>
+        <item>Change Language</item>
+    </string-array>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
     <attr format="reference" name="drawerArrowStyle"/>
@@ -348,6 +361,21 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
+    <eat-comment/>
+    <color name="com_facebook_blue">#3B5998</color>
+    <color name="com_facebook_button_background_color">#415dae</color>
+    <color name="com_facebook_button_background_color_disabled">#bdc1c9</color>
+    <color name="com_facebook_button_background_color_pressed">#2f477a</color>
+    <color name="com_facebook_button_like_background_color_selected">#7c8fc8</color>
+    <color name="com_facebook_button_login_silver_background_color">#f4f6f8</color>
+    <color name="com_facebook_button_login_silver_background_color_pressed">#e9eaf0</color>
+    <color name="com_facebook_button_send_background_color">#0084ff</color>
+    <color name="com_facebook_button_send_background_color_pressed">#006fff</color>
+    <color name="com_facebook_likeboxcountview_border_color">#6a7180</color>
+    <color name="com_facebook_likeboxcountview_text_color">#6a7180</color>
+    <color name="com_facebook_likeview_text_color">#6a7180</color>
+    <color name="com_facebook_share_button_text_color">#FFFFFF</color>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/res/values/common_colors.xml -->
     <eat-comment/>
     <color name="common_action_bar_splitter">#d2d2d2</color>
@@ -486,6 +514,7 @@
     <declare-styleable name="MenuView"><attr name="android:itemTextAppearance"/><attr name="android:horizontalDivider"/><attr name="android:verticalDivider"/><attr name="android:headerBackground"/><attr name="android:itemBackground"/><attr name="android:windowAnimationStyle"/><attr name="android:itemIconDisabledAlpha"/><attr format="boolean" name="preserveIconSpacing"/></declare-styleable>
     <declare-styleable name="PagerIndicator"><attr format="enum" name="visibility"><enum name="visible" value="0"/><enum name="invisible" value="1"/></attr><attr format="enum" name="shape"><enum name="oval" value="0"/><enum name="rect" value="1"/></attr><attr format="color" name="selected_color"/><attr format="color" name="unselected_color"/><attr format="reference" name="selected_drawable"/><attr format="reference" name="unselected_drawable"/><attr format="dimension" name="selected_width"/><attr format="dimension" name="selected_height"/><attr format="dimension" name="unselected_width"/><attr format="dimension" name="unselected_height"/><attr format="dimension" name="padding_left"/><attr format="dimension" name="padding_right"/><attr format="dimension" name="padding_top"/><attr format="dimension" name="padding_bottom"/><attr format="dimension" name="selected_padding_left"/><attr format="dimension" name="selected_padding_right"/><attr format="dimension" name="selected_padding_top"/><attr format="dimension" name="selected_padding_bottom"/><attr format="dimension" name="unselected_padding_left"/><attr format="dimension" name="unselected_padding_right"/><attr format="dimension" name="unselected_padding_top"/><attr format="dimension" name="unselected_padding_bottom"/></declare-styleable>
     <declare-styleable name="PagerSlidingTabStrip"><attr format="color" name="pstsIndicatorColor"/><attr format="color" name="pstsUnderlineColor"/><attr format="color" name="pstsDividerColor"/><attr format="dimension" name="pstsIndicatorHeight"/><attr format="dimension" name="pstsUnderlineHeight"/><attr format="dimension" name="pstsDividerPadding"/><attr format="dimension" name="pstsTabPaddingLeftRight"/><attr format="dimension" name="pstsScrollOffset"/><attr format="reference" name="pstsTabBackground"/><attr format="boolean" name="pstsShouldExpand"/><attr format="boolean" name="pstsTextAllCaps"/></declare-styleable>
+    <declare-styleable name="ParallaxScroll"><attr format="float" name="parallax_factor"/><attr format="float" name="alpha_factor"/><attr format="float" name="inner_parallax_factor"/><attr format="integer" name="parallax_views_num"/><attr format="boolean" name="circular_parallax"/></declare-styleable>
     <declare-styleable name="ParallaxScrollView"><attr format="float" name="zoomRatio"/></declare-styleable>
     <declare-styleable name="PopupWindow"><attr format="boolean" name="overlapAnchor"/><attr name="android:popupBackground"/></declare-styleable>
     <declare-styleable name="PopupWindowBackgroundState"><attr format="boolean" name="state_above_anchor"/></declare-styleable>
@@ -501,6 +530,9 @@
     <declare-styleable name="ViewStubCompat"><attr name="android:layout"/><attr name="android:inflatedId"/><attr name="android:id"/></declare-styleable>
     <declare-styleable name="WalletFragmentOptions"><attr format="enum" name="appTheme"><enum name="holo_dark" value="0"/><enum name="holo_light" value="1"/></attr><attr format="enum" name="environment"><enum name="production" value="1"/><enum name="test" value="3"/><enum name="sandbox" value="0"/><enum name="strict_sandbox" value="2"/></attr><attr format="reference" name="fragmentStyle"/><attr format="enum" name="fragmentMode"><enum name="buyButton" value="1"/><enum name="selectionDetails" value="2"/></attr></declare-styleable>
     <declare-styleable name="WalletFragmentStyle"><attr format="dimension" name="buyButtonHeight"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="dimension" name="buyButtonWidth"><enum name="match_parent" value="-1"/><enum name="wrap_content" value="-2"/></attr><attr format="enum" name="buyButtonText"><enum name="buy_with" value="5"/><enum name="logo_only" value="6"/><enum name="donate_with" value="7"/><enum name="buy_with_google" value="1"/><enum name="buy_now" value="2"/><enum name="book_now" value="3"/><enum name="donate_with_google" value="4"/></attr><attr format="enum" name="buyButtonAppearance"><enum name="google_wallet_classic" value="1"/><enum name="google_wallet_grayscale" value="2"/><enum name="google_wallet_monochrome" value="3"/><enum name="classic" value="1"/><enum name="grayscale" value="2"/><enum name="monochrome" value="3"/></attr><attr format="reference" name="maskedWalletDetailsTextAppearance"/><attr format="reference" name="maskedWalletDetailsHeaderTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsBackground"/><attr format="reference" name="maskedWalletDetailsButtonTextAppearance"/><attr format="reference|color" name="maskedWalletDetailsButtonBackground"/><attr format="color" name="maskedWalletDetailsLogoTextColor"/><attr format="enum" name="maskedWalletDetailsLogoImageType"><enum name="google_wallet_classic" value="1"/><enum name="google_wallet_monochrome" value="2"/><enum name="classic" value="1"/><enum name="monochrome" value="2"/></attr></declare-styleable>
+    <declare-styleable name="com_facebook_like_view"><attr format="color" name="com_facebook_foreground_color"/><attr format="string" name="com_facebook_object_id"/><attr name="com_facebook_object_type"><enum name="unknown" value="0"/><enum name="open_graph" value="1"/><enum name="page" value="2"/></attr><attr name="com_facebook_style"><enum name="standard" value="0"/><enum name="button" value="1"/><enum name="box_count" value="2"/></attr><attr name="com_facebook_auxiliary_view_position"><enum name="bottom" value="0"/><enum name="inline" value="1"/><enum name="top" value="2"/></attr><attr name="com_facebook_horizontal_alignment"><enum name="center" value="0"/><enum name="left" value="1"/><enum name="right" value="2"/></attr></declare-styleable>
+    <declare-styleable name="com_facebook_login_view"><attr format="boolean" name="com_facebook_confirm_logout"/><attr format="string" name="com_facebook_login_text"/><attr format="string" name="com_facebook_logout_text"/><attr name="com_facebook_tooltip_mode"><enum name="automatic" value="0"/><enum name="display_always" value="1"/><enum name="never_display" value="2"/></attr></declare-styleable>
+    <declare-styleable name="com_facebook_profile_picture_view"><attr name="com_facebook_preset_size"><enum name="small" value="-2"/><enum name="normal" value="-3"/><enum name="large" value="-4"/></attr><attr format="boolean" name="com_facebook_is_cropped"/></declare-styleable>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
     <dimen name="abc_action_bar_content_inset_material">16dp</dimen>
@@ -569,6 +601,29 @@
     <dimen name="activity_vertical_margin">16dp</dimen>
     <dimen name="center_logo_height">50dp</dimen>
     <dimen name="center_logo_width">100dp</dimen>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
+    <eat-comment/>
+    <dimen name="com_facebook_likeboxcountview_border_radius">3dp</dimen>
+    <dimen name="com_facebook_likeboxcountview_border_width">1dp</dimen>
+    <dimen name="com_facebook_likeboxcountview_caret_height">3dp</dimen>
+    <dimen name="com_facebook_likeboxcountview_caret_width">6dp</dimen>
+    <dimen name="com_facebook_likeboxcountview_text_padding">6dp</dimen>
+    <dimen name="com_facebook_likeboxcountview_text_size">11.0sp</dimen>
+    <dimen name="com_facebook_likeview_edge_padding">2dp</dimen>
+    <dimen name="com_facebook_likeview_internal_padding">6dp</dimen>
+    <dimen name="com_facebook_likeview_text_size">11.0sp</dimen>
+    <dimen name="com_facebook_profilepictureview_preset_size_large">180dp</dimen>
+    <dimen name="com_facebook_profilepictureview_preset_size_normal">100dp</dimen>
+    <dimen name="com_facebook_profilepictureview_preset_size_small">50dp</dimen>
+    <dimen name="com_facebook_share_button_compound_drawable_padding">12dp</dimen>
+    <dimen name="com_facebook_share_button_padding_bottom">12dp</dimen>
+    <dimen name="com_facebook_share_button_padding_left">12dp</dimen>
+    <dimen name="com_facebook_share_button_padding_right">16dp</dimen>
+    <dimen name="com_facebook_share_button_padding_top">12dp</dimen>
+    <dimen name="com_facebook_share_button_text_size">16.0sp</dimen>
+    <dimen name="com_facebook_tooltip_horizontal_padding">10dp</dimen>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/dimens.xml -->
+    <eat-comment/>
     <dimen name="createview_destination_height">80dp</dimen>
     <dimen name="createview_destination_height1">155dp</dimen>
     <dimen name="createview_destination_width">100dp</dimen>
@@ -665,6 +720,9 @@
     <string name="abc_shareactionprovider_share_with">Share with</string>
     <string name="abc_shareactionprovider_share_with_application">Share with %s</string>
     <string name="abc_toolbar_collapse_description">Collapse</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="about_us">About Us</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.1.0/res/values/admob_strings.xml -->
     <eat-comment/>
     <string name="accept">Accept</string>
@@ -700,6 +758,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="birthday">Birthday</string>
+    <string name="build_verion">Android Build Version </string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="calculaor">CALCULATOR</string>
@@ -722,6 +781,27 @@
     <string name="category">Category</string>
     <string name="center_select_message">Please select a center from home page first.</string>
     <string name="center_select_title">The Mall App</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="change_language">Change Language</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
+    <eat-comment/>
+    <string name="com_facebook_image_download_unknown_error">Unexpected error while downloading an image.</string>
+    <string name="com_facebook_internet_permission_error_message">WebView login requires INTERNET permission</string>
+    <string name="com_facebook_internet_permission_error_title">AndroidManifest Error</string>
+    <string name="com_facebook_like_button_liked">Liked</string>
+    <string name="com_facebook_like_button_not_liked">Like</string>
+    <string name="com_facebook_loading">Loading...</string>
+    <string name="com_facebook_loginview_cancel_action">Cancel</string>
+    <string name="com_facebook_loginview_log_in_button">Log in</string>
+    <string name="com_facebook_loginview_log_in_button_long">Log in with Facebook</string>
+    <string name="com_facebook_loginview_log_out_action">Log out</string>
+    <string name="com_facebook_loginview_log_out_button">Log out</string>
+    <string name="com_facebook_loginview_logged_in_as">Logged in as: %1$s</string>
+    <string name="com_facebook_loginview_logged_in_using_facebook">Logged in using Facebook</string>
+    <string name="com_facebook_send_button_text">Send</string>
+    <string name="com_facebook_share_button_text">Share</string>
+    <string name="com_facebook_tooltip_default">New! You\'re in control - choose what info you want to share with apps.</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-basement/8.1.0/res/values/common_strings.xml -->
     <eat-comment/>
     <string name="common_android_wear_notification_needs_update_text"><ns1:g id="app_name">%1$s</ns1:g> requires an update to the Android Wear app.</string>
@@ -776,11 +856,15 @@
     <eat-comment/>
     <string name="done_title">Done</string>
     <string name="edit_">Edit</string>
+    <string name="edit_centers">Centers</string>
+    <string name="edit_interests">Interests</string>
+    <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
     <string name="enter_location">Enter Location</string>
     <string name="fav_center1">Select your favourite Center</string>
     <string name="fav_interest">Select your interest</string>
     <string name="fav_interest1">Select all</string>
+    <string name="fb_app_id">869358796518933</string>
     <string name="female">Female</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
@@ -804,6 +888,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
+    <string name="help">Help</string>
     <string name="home_page">Go to Homepage</string>
     <string name="loading_data_message">Loading</string>
     <string name="location">Add Location</string>
@@ -815,10 +900,14 @@
     <string name="location_text_view_place_holder">Enter location</string>
     <string name="location_title">Location</string>
     <string name="login_in_message">Signing In</string>
+    <string name="logout">Logout</string>
     <string name="male">Male</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/keys.xml -->
     <eat-comment/>
     <string name="mapkey_mallapp_debug_ayesha">AIzaSyA5w03WI_-iQWIMYWb8Qy9H8KXe9h5XlhI</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
+    <eat-comment/>
+    <string name="messenger_send_button_text">Send</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/mediarouter-v7/22.2.0/res/values/values.xml -->
     <eat-comment/>
     <string name="mr_media_route_button_content_description">Cast</string>
@@ -841,6 +930,7 @@
     <string name="news_">News</string>
     <string name="next_">Next</string>
     <string name="no_">No</string>
+    <string name="notification">Notifications</string>
     <string name="offer_">Offers</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
@@ -852,6 +942,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="phone_no">Phone Number</string>
+    <string name="privacy_policy">Privacy Policy</string>
     <string name="register_country_1">Select your country, enter your phone number and press continue</string>
     <string name="register_country_10">SMS faild, please try again.</string>
     <string name="register_country_11">SMS sent.</string>
@@ -933,6 +1024,7 @@
     <string name="title_activity_maps">Map</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_webview">WebviewActivity</string>
+    <string name="title_settings">Settings</string>
     <string name="updating_profile_data_message">Updating Profile</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
@@ -1972,6 +2064,66 @@
         <item name="android:textSize">18sp</item>
         <item name="android:typeface">sans</item>
     </style>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="MessengerButton">
+    <item name="android:clickable">true</item>
+  </style>
+    <style name="MessengerButton.Blue">
+    <item name="android:background">@drawable/messenger_button_blue_bg_selector</item>
+  </style>
+    <style name="MessengerButton.Blue.Large">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">44dp</item>
+    <item name="android:layout_marginLeft">16dp</item>
+    <item name="android:layout_marginRight">16dp</item>
+  </style>
+    <style name="MessengerButton.Blue.Small">
+    <item name="android:layout_width">158dp</item>
+    <item name="android:layout_height">36dp</item>
+  </style>
+    <style name="MessengerButton.White">
+    <item name="android:background">@drawable/messenger_button_white_bg_selector</item>
+  </style>
+    <style name="MessengerButton.White.Large">
+    <item name="android:layout_width">match_parent</item>
+    <item name="android:layout_height">44dp</item>
+    <item name="android:layout_marginLeft">16dp</item>
+    <item name="android:layout_marginRight">16dp</item>
+  </style>
+    <style name="MessengerButton.White.Small">
+    <item name="android:layout_width">158dp</item>
+    <item name="android:layout_height">36dp</item>
+  </style>
+    <style name="MessengerButtonText">
+    <item name="android:layout_width">wrap_content</item>
+    <item name="android:layout_height">wrap_content</item>
+    <item name="android:layout_gravity">center</item>
+    <item name="android:drawablePadding">4dp</item>
+    <item name="android:gravity">center</item>
+    <!--suppress NewApi -->
+    <item name="android:textAllCaps">true</item>
+    <item name="android:textSize">14sp</item>
+    <item name="android:textStyle">bold</item>
+  </style>
+    <style name="MessengerButtonText.Blue">
+    <item name="android:textColor">#ffffff</item>
+  </style>
+    <style name="MessengerButtonText.Blue.Large">
+    <item name="android:drawableLeft">@drawable/messenger_bubble_large_white</item>
+  </style>
+    <style name="MessengerButtonText.Blue.Small">
+    <item name="android:drawableLeft">@drawable/messenger_bubble_small_white</item>
+  </style>
+    <style name="MessengerButtonText.White">
+    <item name="android:textColor">#0084ff</item>
+  </style>
+    <style name="MessengerButtonText.White.Large">
+    <item name="android:drawableLeft">@drawable/messenger_bubble_large_blue</item>
+  </style>
+    <style name="MessengerButtonText.White.Small">
+    <item name="android:drawableLeft">@drawable/messenger_bubble_small_blue</item>
+  </style>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">
@@ -2386,5 +2538,46 @@
         <item name="android:focusable">true</item>
         <item name="android:contentDescription">@string/mr_media_route_button_content_description</item>
         <item name="externalRouteEnabledDrawable">@drawable/mr_ic_media_route_mono_dark</item>
+    </style>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
+    <eat-comment/>
+    <style name="com_facebook_button" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/com_facebook_button_background</item>
+        <item name="android:drawablePadding">6dp</item>
+        <item name="android:gravity">center</item>
+        <item name="android:paddingBottom">5dp</item>
+        <item name="android:paddingLeft">8dp</item>
+        <item name="android:paddingRight">8dp</item>
+        <item name="android:paddingTop">5dp</item>
+        <item name="android:textColor">#ffffff</item>
+        <item name="android:textSize">14.0dp</item>
+    </style>
+    <style name="com_facebook_button_like" parent="com_facebook_button">
+        <item name="android:background">@drawable/com_facebook_button_like_background</item>
+    </style>
+    <style name="com_facebook_button_send" parent="com_facebook_button">
+        <item name="android:background">@drawable/com_facebook_button_send_background</item>
+        <item name="android:drawableLeft">@drawable/com_facebook_button_send_icon</item>
+        <item name="android:text">@string/com_facebook_send_button_text</item>
+    </style>
+    <style name="com_facebook_button_share" parent="com_facebook_button">
+        <item name="android:drawableLeft">@drawable/com_facebook_button_icon</item>
+        <item name="android:text">@string/com_facebook_share_button_text</item>
+    </style>
+    <style name="com_facebook_loginview_default_style" parent="com_facebook_button">
+        <item name="android:drawableLeft">@drawable/com_facebook_button_icon</item>
+    </style>
+    <style name="com_facebook_loginview_silver_style" parent="com_facebook_loginview_default_style">
+        <item name="android:background">@drawable/com_facebook_button_login_silver_background</item>
+        <item name="android:drawableLeft">@null</item>
+        <item name="android:textColor">#4b5164</item>
+    </style>
+    <style name="tooltip_bubble_text">
+	    <item name="android:textColor">@android:color/white</item>
+	    <item name="android:gravity">left</item>
+	    <item name="android:textSize">12sp</item>
+	    <item name="android:shadowDy">-1</item>
+	    <item name="android:shadowRadius">0.25</item>
+	    <item name="android:shadowColor">#40000000</item>
     </style>
 </resources>

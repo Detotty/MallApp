@@ -134,16 +134,18 @@ public class AppUtils {
 
     public static MallActivitiesModel CastToMallActivities(FavoritesModel model){
         MallActivitiesModel mallActivitiesModel = new MallActivitiesModel();
-        mallActivitiesModel.setMallName(model.getEntityType());
+        mallActivitiesModel.setEntityName(model.getEntityName());
         mallActivitiesModel.setEntityType(model.getEntityType());
         mallActivitiesModel.setActivityName(model.getEntityType());
-        mallActivitiesModel.setActivityName(model.getEntityType());
+        mallActivitiesModel.setActivityTextTitle(model.getActivityTextTitle());
         mallActivitiesModel.setActivityId(model.getEntityId());
-        mallActivitiesModel.setActivityTextTitle(model.getEntityType());
         mallActivitiesModel.setBriefText(model.getBriefText());
         mallActivitiesModel.setDetailText(model.getAboutText());
         mallActivitiesModel.setEntityLogo(model.getLogoURL());
         mallActivitiesModel.setImageURL(model.getLogoURL());
+        mallActivitiesModel.setEntityLogoSquare(model.getLogoSquareURL());
+        mallActivitiesModel.setStartDate(model.getStartDate());
+        mallActivitiesModel.setEndDate(model.getEndDate());
         mallActivitiesModel.setFav(true);
 
         return mallActivitiesModel;
@@ -156,6 +158,7 @@ public class AppUtils {
         shopDetailModel.setBriefText(model.getBriefText());
         shopDetailModel.setLogoURL(model.getLogoURL());
         shopDetailModel.setCat(model.getCategoryName());
+        shopDetailModel.setFloor(model.getFloor());
         shopDetailModel.setFav(true);
 
         return shopDetailModel;
@@ -168,6 +171,7 @@ public class AppUtils {
         restaurantModel.setBriefText(model.getBriefText());
         restaurantModel.setLogoURL(model.getLogoURL());
         restaurantModel.setCat(model.getCategoryName());
+        restaurantModel.setFloor(model.getFloor());
         restaurantModel.setFav(true);
 
 

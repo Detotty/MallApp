@@ -44,7 +44,7 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 	Double lat,lng;
 	String locationName;
 
-	private ImageView 		mall_logo,mall_map,mall_background;
+	private ImageView 		mall_logo,mall_map,mall_background,expand;
 	private TextView 		tv_about, tv_Detail, mall_name, rel_offer_title,	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
@@ -76,6 +76,7 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 	
 	private void init() {
 		mallDetailModel = new MallDetailModel();
+		expand	= (ImageView)	findViewById(R.id.iv_expand);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		mall_background		= (ImageView) findViewById(R.id.iv_background);
 		mall_name = (TextView) findViewById(R.id.offer_title);
@@ -93,6 +94,7 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 		is_fav.setVisibility(View.GONE);
 		back_screen.setVisibility(View.GONE);
 		tv_Web.setOnClickListener(this);
+		expand.setOnClickListener(this);
 	}
 
 
@@ -107,6 +109,13 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 			intent.putExtra("url", mallDetailModel.getWebURL());
 			startActivity(intent);
 		}
+		else if (v.getId() == expand.getId()){
+			Intent intent= new Intent(MallDetailActivity.this, MapFullScreenActivity.class);
+			intent.putExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT,mallDetailModel);
+			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+			startActivity(intent);
+
+		}
 	}
 
 	@Override
@@ -117,14 +126,15 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 	@Override
 	public void onMallDetailReceived(MallDetailModel mallDetailModel) {
 
+		this.mallDetailModel = mallDetailModel;
 		initilizeMap();
 		Picasso.with(this).load(mallDetailModel.getAppBackgroundImageUrl()).placeholder(R.drawable.mallapp_placeholder).fit().into(mall_background);
 		mall_name.setText(mallDetailModel.getName());
 		tv_about.setText(mallDetailModel.getAboutText());
 		tv_Detail.setText(mallDetailModel.getBriefText());
 		tv_address.setText(mallDetailModel.getAddress());
-		tv_Phone.setText(mallDetailModel.getPhone());
-		tv_Email.setText(mallDetailModel.getEmail());
+		tv_Phone.setText(mallDetailModel.getPhone());tv_Phone.setVisibility(View.GONE);
+		tv_Email.setText(mallDetailModel.getEmail());tv_Email.setVisibility(View.GONE);
 		MallTimingsModel[] timinigs = mallDetailModel.getMallTimings();
 		for (MallTimingsModel st:timinigs
 				) {
@@ -179,13 +189,13 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 			map.setMyLocationEnabled(true);
 
 			// Enable / Disable zooming controls
-			map.getUiSettings().setZoomControlsEnabled(true);
+			map.getUiSettings().setZoomControlsEnabled(false);
 
 			// Enable / Disable my location button
-			map.getUiSettings().setMyLocationButtonEnabled(true);
+			map.getUiSettings().setMyLocationButtonEnabled(false);
 
 			// Enable / Disable Compass icon
-			map.getUiSettings().setCompassEnabled(true);
+			map.getUiSettings().setCompassEnabled(false);
 
 			// Enable / Disable Rotate gesture
 			map.getUiSettings().setRotateGesturesEnabled(true);

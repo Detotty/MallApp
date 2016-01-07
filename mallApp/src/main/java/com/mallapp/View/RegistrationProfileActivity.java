@@ -39,10 +39,6 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
-import com.facebook.android.Util;
 import com.mallapp.Adapters.PlaceAutoCompleteAdapter;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.ApiConstants;
@@ -94,7 +90,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 	private static String FB_APP_ID = SocialSharingConstants.FB_APP_ID;
 
-	Facebook facebook = new Facebook(FB_APP_ID);
+//	Facebook facebook = new Facebook(FB_APP_ID);
 
 	Bitmap profile_image_bitmap = null;
 
@@ -171,7 +167,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		DOBEditText.setOnClickListener(dobEditTextListener);
 		locationTextView.setOnClickListener(locationTextViewListener);
 		profileImageView.setOnClickListener(profileImageListener);
-		syncFbButton.setOnClickListener(loginButtonListener);
+//		syncFbButton.setOnClickListener(loginButtonListener);
 		continueButton.setOnClickListener(continueButtonListener);
 	}
 
@@ -259,7 +255,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 				}
 			}
 		}else{
-			facebook.authorizeCallback(requestCode, resultCode, data);
+//			facebook.authorizeCallback(requestCode, resultCode, data);
 		}
 	}
 
@@ -374,7 +370,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		userProfile.setFullName(nameString);
 		userProfile.setEmail(emailString);
 		userProfile.setDefaultLocationName(locationString);
-		userProfile.setDeviceType("android");
+		userProfile.setDeviceType("2");
 
 		if(genderRadioButtonText.trim().startsWith("M")|| genderRadioButtonText.trim().startsWith("m"))
 			userProfile.setGender("Male");
@@ -600,7 +596,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		location_dialog.show();
 	}
 
-	private View.OnClickListener loginButtonListener = new View.OnClickListener() {
+	/*private View.OnClickListener loginButtonListener = new View.OnClickListener() {
 
 		public void onClick( View v ) {
 
@@ -703,9 +699,9 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 				}
 			}
 		}
-	};
+	};*/
 
-	public final class LoginDialogListener implements Facebook.DialogListener {
+	/*public final class LoginDialogListener implements Facebook.DialogListener {
 		public void onComplete(Bundle values) {
 			try {
 				//The user has logged in, so now you can query and use their Facebook info
@@ -823,7 +819,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		public void onCancel() {
 			Toast.makeText( RegistrationProfileActivity.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
 		}
-	}
+	}*/
 
 	private View.OnClickListener profileImageListener = new View.OnClickListener() {
 		@Override
@@ -893,7 +889,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
 			UserLocationModel userLocationModel = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
 			String userLocation = userLocationModel.getCityName()+","+ userLocationModel.getCountryName();
-			locationTextView.setText(userLocation);
+//			locationTextView.setText(userLocation);
 		}
 
 
@@ -946,7 +942,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					DOBEditText.setText(facebookProfileModel.getBirthday());
 
 				String gender = facebookProfileModel.getGender();
-				if (gender != null & (gender.startsWith("male") || gender.startsWith("Male"))) {
+				if (gender != null)  {
+					if(gender.startsWith("male") || gender.startsWith("Male"))
 					male.setChecked(true);
 				} else {
 					female.setChecked(true);
@@ -967,8 +964,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 				if(userProfile.getEmail()!= null )
 					emailEditText.setText( userProfile.getEmail() ) ;
 
-				String unixDate = Utils.convertUnixDate(Long.parseLong(userProfile.getDOB()),"MMM dd, yyyy");
-				if(unixDate!= null) {
+				if(userProfile.getDOB()!= null) {
+					String unixDate = Utils.convertUnixDate(Long.parseLong(userProfile.getDOB()),"MMM dd, yyyy");
 					dateOfBirthday = GetCurrentDate.StringToDate("MMM dd, yyyy", unixDate);
 					Log.d("date","date of birthday:"+dateOfBirthday);
 					DOBEditText.setText(unixDate);

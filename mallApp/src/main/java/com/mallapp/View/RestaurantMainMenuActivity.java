@@ -109,7 +109,7 @@ public class RestaurantMainMenuActivity extends Activity
 		initSectionHeaderList();
 		initExpandableList();*/
 		
-		/*adapter_search= new RestaurantSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, searchResults);
+		/*adapter_search= new RestaurantSearchAdapter(getApplicationContext(),this, R.layout.list_item_shop, s_searchResults);
 		list_view_search.setAdapter(adapter_search);*/
 		
 		search_feild.addTextChangedListener(new TextWatcher() {
@@ -124,7 +124,7 @@ public class RestaurantMainMenuActivity extends Activity
 					cancel_search.setTextColor(getResources().getColor(R.color.purple));
 					list_view1.setVisibility(View.GONE);
 					side_index_scroll.setVisibility(View.GONE);
-//					search_array = GlobelRestaurants.restaurant_array;
+//					s_search_array = GlobelRestaurants.restaurant_array;
 					if(search_array== null || search_array.size()==0){
 						readRestaurantsList();
 					}
@@ -159,6 +159,8 @@ public class RestaurantMainMenuActivity extends Activity
 							|| audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)){
 
 						list_view1.	setVisibility(View.VISIBLE);
+						list_view_search.setVisibility(View.GONE);
+
 					}
 				}
 			}
@@ -217,11 +219,11 @@ public class RestaurantMainMenuActivity extends Activity
 			restaurant_read_audience= RestaurantList.readRestaurantList(getApplicationContext());
 			
 			GlobelRestaurants.restaurant_array= restaurant_read_audience;
-			search_array= restaurant_read_audience;
-			searchResults= restaurant_read_audience;
+			s_search_array= restaurant_read_audience;
+			s_searchResults= restaurant_read_audience;
 		}
-		search_array	=  GlobelRestaurants.restaurant_array;
-		searchResults	=  GlobelRestaurants.restaurant_array;*/
+		s_search_array	=  GlobelRestaurants.restaurant_array;
+		s_searchResults	=  GlobelRestaurants.restaurant_array;*/
 	}
 
 	
@@ -378,7 +380,6 @@ public class RestaurantMainMenuActivity extends Activity
 			invisibleIndexList();
 			adapter1 = new RestaurantExpandableAdapter(getApplicationContext(),this, floor_audience, GlobelRestaurants.header_section_floor,restaurantDao);
 			list_view1.setAdapter(adapter1);
-			list_view1.setVisibility(View.VISIBLE);
 		}
 	}
 

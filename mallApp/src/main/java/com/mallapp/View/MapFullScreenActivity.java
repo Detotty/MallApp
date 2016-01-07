@@ -22,6 +22,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.utils.AppUtils;
@@ -36,6 +37,7 @@ public class MapFullScreenActivity extends FragmentActivity implements View.OnCl
     GoogleMap map;
     ShopDetailModel shopDetail;
     RestaurantDetailModel restaurantDetail;
+    MallDetailModel mallDetail;
     private ImageView 	shop_map;
     boolean mapActive;
     String url,add;
@@ -65,12 +67,21 @@ public class MapFullScreenActivity extends FragmentActivity implements View.OnCl
             add = shopDetail.getAddress();
 
         }catch (Exception e){
-            restaurantDetail = (RestaurantDetailModel) getIntent().getSerializableExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT);
-            mapActive = restaurantDetail.getSiteMapActive();
-            url = restaurantDetail.getSiteMapURL();
-            lat = Double.parseDouble(restaurantDetail.getLatitude());
-            lon = Double.parseDouble(restaurantDetail.getLongitude());
-            add = restaurantDetail.getAddress();
+            try{
+                restaurantDetail = (RestaurantDetailModel) getIntent().getSerializableExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT);
+                mapActive = restaurantDetail.getSiteMapActive();
+                url = restaurantDetail.getSiteMapURL();
+                lat = Double.parseDouble(restaurantDetail.getLatitude());
+                lon = Double.parseDouble(restaurantDetail.getLongitude());
+                add = restaurantDetail.getAddress();
+            }catch (Exception es){
+                mallDetail = (MallDetailModel) getIntent().getSerializableExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT);
+                mapActive = false;
+                lat = Double.parseDouble(mallDetail.getLatitude());
+                lon = Double.parseDouble(mallDetail.getLongitude());
+                add = mallDetail.getAddress();
+            }
+
 
         }
         //endregion

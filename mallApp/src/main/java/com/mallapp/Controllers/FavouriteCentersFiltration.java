@@ -205,8 +205,10 @@ public class FavouriteCentersFiltration {
         Collections.sort(favourite_shop_List, new Comparator<MallActivitiesModel>() {
             @Override
             public int compare(MallActivitiesModel lhs, MallActivitiesModel rhs) {
-                return lhs.getMallName().compareTo(rhs.getMallName());
+                if (lhs.getEntityName()!=null && rhs.getEntityName()!=null)
+                return lhs.getEntityName().compareTo(rhs.getEntityName());
 //                return lhs.getShop_catagory().compareTo(rhs.getShop_catagory());
+                return 1;
             }
         });
         return favourite_shop_List;

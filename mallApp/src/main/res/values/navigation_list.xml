@@ -20,4 +20,20 @@
         <item>fav</item>
 
 	</string-array>
+
+
+    <string-array name="profile_items" >
+        <item>Edit Profile</item>
+        <item>Centers</item>
+        <item>Interests</item>
+        <item>Help</item>
+        <item>Privacy Policy</item>
+        <item>About Us</item>
+        <item>Logout</item>
+    </string-array>
+
+    <string-array name="settings_items" >
+        <item>Notifications</item>
+        <item>Change Language</item>
+    </string-array>
 </resources>

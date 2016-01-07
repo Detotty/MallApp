@@ -107,7 +107,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 	}
 
 	private void getNavList() {
-		navMenuTitles = getResources().getStringArray(R.array.nav_drawer_items);
+		navMenuTitles =
 		navMenuIcons = getResources().getStringArray(R.array.nav_drawer_icons);
 		for(int i=0; i<navMenuTitles.length; i++){
 			String image_nam= navMenuIcons[i];
@@ -272,7 +272,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		View view1 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_offers, null);
 		View view2 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_messages, null); 
 		View view3 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_cards, null); 
-		View view4 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_rewards, null);
+//		View view4 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_rewards, null);
 		View view5 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_profile, null);
 		
 //		View view1 = getLayoutInflater().inflate(R.layout.tab_indicator_offers, 	mTabHost, false);
@@ -284,7 +284,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		mTabHost.addTab(mTabHost.newTabSpec("Offer")	.setIndicator(view1),OffersTabFragment.class, 	null);
 		mTabHost.addTab(mTabHost.newTabSpec("Messages")	.setIndicator(view2),MessagesTabFragments.class,null);
 		mTabHost.addTab(mTabHost.newTabSpec("Cards")	.setIndicator(view3),CardTabFragments.class, 	null);
-		mTabHost.addTab(mTabHost.newTabSpec("Rewards")	.setIndicator(view4),RewardsTabFragments.class, null);
+//		mTabHost.addTab(mTabHost.newTabSpec("Rewards")	.setIndicator(view4),RewardsTabFragments.class, null);
 		mTabHost.addTab(mTabHost.newTabSpec("Profile")	.setIndicator(view5),ProfileTabFragment.class, 	null);
 	
 	}

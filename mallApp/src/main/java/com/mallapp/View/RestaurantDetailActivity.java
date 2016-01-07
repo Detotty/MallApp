@@ -384,16 +384,16 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			map.setMapType(GoogleMap.MAP_TYPE_NORMAL);
 
 			// Showing / hiding your current location
-			map.setMyLocationEnabled(true);
+//			map.setMyLocationEnabled(true);
 
 			// Enable / Disable zooming controls
-			map.getUiSettings().setZoomControlsEnabled(true);
+//			map.getUiSettings().setZoomControlsEnabled(true);
 
 			// Enable / Disable my location button
-			map.getUiSettings().setMyLocationButtonEnabled(true);
+//			map.getUiSettings().setMyLocationButtonEnabled(true);
 
 			// Enable / Disable Compass icon
-			map.getUiSettings().setCompassEnabled(true);
+//			map.getUiSettings().setCompassEnabled(true);
 
 			// Enable / Disable Rotate gesture
 			map.getUiSettings().setRotateGesturesEnabled(true);

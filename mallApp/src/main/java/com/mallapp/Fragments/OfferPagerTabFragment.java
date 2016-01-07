@@ -283,7 +283,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                         } else {
                             list.setAdapter(null);
                             mallActivitiesListing = null;
-                            Toast.makeText(context, "No Mall Activity Found!", Toast.LENGTH_SHORT).show();
+//                            Toast.makeText(context, "No Mall Activity Found!", Toast.LENGTH_SHORT).show();
                         }
 //                        adapter.notifyDataSetChanged();
                     }

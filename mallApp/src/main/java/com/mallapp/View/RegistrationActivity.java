@@ -13,22 +13,28 @@ import android.view.WindowManager;
 import android.widget.Button;
 import android.widget.Toast;
 
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.FacebookError;
-import com.facebook.android.Util;
+
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.facebook.login.widget.LoginButton;
 import com.google.gson.Gson;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.SocialSharingConstants;
 import com.mallapp.Model.UserProfileModel;
 import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FacebookProfileModel;
-import com.mallapp.Model.UserProfile;
-import com.mallapp.socialsharing.SessionStore;
 import com.mallapp.utils.SharedInstance;
 import com.mallapp.utils.Utils;
 
 import org.json.JSONObject;
+
+import java.util.Arrays;
 
 public class RegistrationActivity extends Activity {
 
@@ -38,11 +44,12 @@ public class RegistrationActivity extends Activity {
 
     private Button registerPhoneButton;
     private Button registerFbButton;
-
+    private LoginButton loginButton;
+    CallbackManager callbackManager;
     private Resources res;
     private static String FB_APP_ID = SocialSharingConstants.FB_APP_ID;
 
-    private Facebook facebook = new Facebook(FB_APP_ID);
+//    private Facebook facebook = new Facebook(FB_APP_ID);
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -65,7 +72,53 @@ public class RegistrationActivity extends Activity {
 //        String token = SharedPreferenceUserProfile.getUserToken(this);
 
 //        if( token == null )
+
             Utils.getDefaultLocation(this);
+        FacebookSdk.sdkInitialize(this.getApplicationContext());
+
+        callbackManager = CallbackManager.Factory.create();
+
+        LoginManager.getInstance().registerCallback(callbackManager,
+                new FacebookCallback<LoginResult>() {
+                    @Override
+                    public void onSuccess(LoginResult loginResult) {
+                        Log.d("Success", "Login");
+// App code
+                        GraphRequest request = GraphRequest.newMeRequest(
+                                loginResult.getAccessToken(),
+                                new GraphRequest.GraphJSONObjectCallback() {
+                                    @Override
+                                    public void onCompleted(
+                                            JSONObject object,
+                                            GraphResponse response) {
+                                        // Application code
+                                        setFbData(object);
+                                        Log.v("LoginActivity", response.toString());
+                                    }
+                                });
+                        Bundle parameters = new Bundle();
+                        parameters.putString("fields", "id,name,email,gender, birthday");
+                        request.setParameters(parameters);
+                        request.executeAsync();
+                    }
+
+                    @Override
+                    public void onCancel() {
+                        Toast.makeText(RegistrationActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+                    }
+
+                    @Override
+                    public void onError(FacebookException exception) {
+                        Toast.makeText(RegistrationActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+                    }
+                });
+        registerFbButton.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                LoginManager.getInstance().logInWithReadPermissions(RegistrationActivity.this, Arrays.asList("public_profile", "user_friends"));
+            }
+        });
+
     }
 
     private void init() {
@@ -76,7 +129,7 @@ public class RegistrationActivity extends Activity {
         registerFbButton		= (Button) findViewById(R.id.btn_register_fb);
 
         registerPhoneButton.setOnClickListener(registerPhoneButtonListener);
-        registerFbButton.setOnClickListener(registerFbButtonListener);
+//        registerFbButton.setOnClickListener(registerFbButtonListener);
 
     }
 
@@ -119,10 +172,10 @@ public class RegistrationActivity extends Activity {
         }
         else if(data != null ){
 
-            facebook.authorizeCallback(requestCode, resultCode, data);
+//            facebook.authorizeCallback(requestCode, resultCode, data);
 
         }
-
+        callbackManager.onActivityResult(requestCode, resultCode, data);
     }
 
 
@@ -143,7 +196,7 @@ public class RegistrationActivity extends Activity {
         }
     };
 
-    public View.OnClickListener registerFbButtonListener = new View.OnClickListener() {
+    /*public View.OnClickListener registerFbButtonListener = new View.OnClickListener() {
         @Override
         public void onClick(View v) {
 
@@ -217,7 +270,7 @@ public class RegistrationActivity extends Activity {
         public void onCancel() {
             Toast.makeText( RegistrationActivity.this, "Something went wrong. Please try again.", Toast.LENGTH_LONG).show();
         }
-    }
+    }*/
 
     private void setFbData(JSONObject jsonObject){
 

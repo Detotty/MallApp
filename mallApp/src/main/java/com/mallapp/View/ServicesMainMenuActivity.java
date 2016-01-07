@@ -84,7 +84,7 @@ public class ServicesMainMenuActivity extends Activity implements OnClickListene
                     cancel_search.setTextColor(getResources().getColor(R.color.purple));
 
                     scroll_side_index.setVisibility(View.GONE);
-//					search_array = GlobelMainMenu.services_array;
+//					s_search_array = GlobelMainMenu.services_array;
                     if (search_array == null || search_array.size() == 0) {
 //                        readServicesList();
                     }

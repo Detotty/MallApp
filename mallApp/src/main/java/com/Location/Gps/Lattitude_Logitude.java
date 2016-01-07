@@ -98,7 +98,7 @@ public class Lattitude_Logitude extends Service implements LocationListener {
 							longitude = location.getLongitude();
 //							Log.e("no network provider is enabled ", "latitude .."+ latitude+".......longitude...."+longitude
 //									+"\n"+countryName+""+countryCode);
-							getLocationFormGoogle(latitude, longitude);
+//							getLocationFormGoogle(latitude, longitude);
 
 						}
 					}
@@ -116,7 +116,7 @@ public class Lattitude_Logitude extends Service implements LocationListener {
 							if (location != null) {
 								latitude = location.getLatitude();
 								longitude = location.getLongitude();
-								getLocationFormGoogle(latitude, longitude);
+								//getLocationFormGoogle(latitude, longitude);
 								//onLocationCountry();
 							}
 						}

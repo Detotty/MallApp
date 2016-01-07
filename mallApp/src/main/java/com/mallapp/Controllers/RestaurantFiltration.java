@@ -113,7 +113,7 @@ public class RestaurantFiltration {
 
 						if(mainSectionArray.size()>0
 								&& mainSectionArray.contains(shopCat.getCategoryName())
-								&& current_section_header.equals(shopCat.getCategoryName())){
+								){
 
 							shop_list.add(rest_obj);
 							if(i+1==favourite_shop_List.size() ){
@@ -139,7 +139,7 @@ public class RestaurantFiltration {
 							shop_list = new ArrayList<RestaurantModel>();
 							shop_list.add(rest_obj);
 							mainSectionArray.add(shopCat.getCategoryName());
-							if(i+1==favourite_shop_List.size() ){
+							if(i+1== favourite_shop_List.size() ){
 								Log.e("", "shop_list of "+current_section_header+" = "+shop_list.size());
 								mainDictionary.put(current_section_header, shop_list);
 
@@ -204,6 +204,7 @@ public class RestaurantFiltration {
 					}else{
 						shop_list = new ArrayList<RestaurantModel>();
 						shop_list.add(rest_obj);
+						mainSectionArray.add(shop_category);
 						if(i+1==favourite_shop_List.size() ){
 							mainDictionary.put(current_section_header, shop_list);
 						}

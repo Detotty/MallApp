@@ -229,15 +229,15 @@ public class OffersRelatedDetailActivity extends Activity implements OnClickList
 		
 		}else if(v.getId()== face_book.getId()){
 		
-			Facebook_Login fb_profile= new Facebook_Login(getApplicationContext(), 
+			/*Facebook_Login fb_profile= new Facebook_Login(getApplicationContext(),
 					OffersRelatedDetailActivity.this, true );
-			fb_profile.loginToFacebook();
+			fb_profile.loginToFacebook();*/
 			
 		}else if(v.getId()== twitter.getId()){
 		
-			Twitter_Integration twitter= new Twitter_Integration(getApplicationContext(), 
+			/*Twitter_Integration twitter= new Twitter_Integration(getApplicationContext(),
 					OffersRelatedDetailActivity.this);
-			twitter.post_twitter();
+			twitter.post_twitter();*/
 			
 		}else if(v.getId()== email.getId()){
 		

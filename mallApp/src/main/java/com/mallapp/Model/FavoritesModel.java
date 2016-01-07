@@ -31,6 +31,12 @@ public class FavoritesModel implements Serializable
 
     private String LogoURL;
 
+    private String LogoSquareURL;
+
+    private String StartDate;
+
+    private String EndDate;
+
     public String getActivityTextTitle ()
     {
         return ActivityTextTitle;
@@ -151,6 +157,35 @@ public class FavoritesModel implements Serializable
         this.LogoURL = LogoURL;
     }
 
+    public String getLogoSquareURL ()
+    {
+        return LogoSquareURL;
+    }
+
+    public void setLogoSquareURL (String LogoSquareURL)
+    {
+        this.LogoSquareURL = LogoSquareURL;
+    }
+
+    public String getStartDate ()
+    {
+        return StartDate;
+    }
+
+    public void setStartDate (String StartDate)
+    {
+        this.StartDate = StartDate;
+    }
+
+    public String getEndDate ()
+    {
+        return EndDate;
+    }
+
+    public void setEndDate (String EndDate)
+    {
+        this.EndDate = EndDate;
+    }
     @Override
     public String toString()
     {

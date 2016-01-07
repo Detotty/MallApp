@@ -162,17 +162,17 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         Drawable d = null;
 
         String offerTime;
-//        if (offer_obj.getActivityName().equals("Offer")){
-//            offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
-//        }else {
-//            offerTime  = offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"));
-//        }
+        if (offer_obj.getActivityName().equals("Offer")){
+            offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
+        }else {
+            offerTime  = offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"));
+        }
         holder.title.setText(offer_obj.getActivityTextTitle());
         holder.decs.setText(offer_obj.getBriefText());
-//        holder.center_name.setText(offerTime);
+        holder.center_name.setText(offerTime);
         holder.shome_name.setText(offer_obj.getEntityName());
         Picasso.with(context).load(offer_obj.getImageURL()).fit().into(holder.back_image);
-        Picasso.with(context).load(offer_obj.getEntityLogoSquare()).fit().into(holder.entity_logo);
+        Picasso.with(context).load(offer_obj.getEntityLogoSquare()).placeholder(R.drawable.listview_logo_placeholder).fit().into(holder.entity_logo);
 		final boolean fav	= offer_obj.isFav();
 		if(fav)
 			holder.is_fav.setImageResource(R.drawable.offer_fav_p);

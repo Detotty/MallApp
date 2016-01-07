@@ -70,7 +70,7 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 	
 		AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
 		alertDialogBuilder.setTitle(res.getString(R.string.register_country_7));
-		alertDialogBuilder.setMessage(res.getString(R.string.register_country_8)+phone_no+"\n"+res.getString(R.string.register_country_9));
+		alertDialogBuilder.setMessage(res.getString(R.string.register_country_8)+"+"+phone_no+"\n"+res.getString(R.string.register_country_9));
 		
 		alertDialogBuilder.setPositiveButton(res.getString(R.string.yes_), 	new DialogInterface.OnClickListener() {
 			@Override

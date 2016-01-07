@@ -12,30 +12,20 @@ import android.widget.RadioButton;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.facebook.android.DialogError;
-import com.facebook.android.Facebook;
-import com.facebook.android.Facebook.DialogListener;
-import com.facebook.android.FacebookError;
 import com.mallapp.Constants.SocialSharingConstants;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.utils.Log;
-//import com.facebook.android.AsyncFacebookRunner;
-//import com.facebook.android.AsyncFacebookRunner.RequestListener;
-//import com.facebook.android.DialogError;
-//import com.facebook.android.Facebook;
-//import com.facebook.android.Facebook.DialogListener;
-//import com.facebook.android.FacebookError;
 
 
 public class Facebook_Login {
 	
-	Context context;
+	/*Context context;
 	Activity activity;
 	TextView user_name, user_education, user_location, user_dob, text_;
 	RadioButton male, female;
 	UserProfile userProfile;
 	private static String FB_APP_ID;
-	private Facebook facebook;
+//	private Facebook facebook;
 	//private AsyncFacebookRunner mAsyncRunner;
 	String FILENAME = "AndroidSSO_data";
 	private SharedPreferences mPrefs;
@@ -51,8 +41,8 @@ public class Facebook_Login {
 		text_= text;
 		this.connection_type=connection_type;
 		FB_APP_ID= SocialSharingConstants.FB_APP_ID;
-		facebook = new Facebook(FB_APP_ID);
-		SessionStore.restore(facebook, context);
+		*//*facebook = new Facebook(FB_APP_ID);
+		SessionStore.restore(facebook, context);*//*
 		
 		
 		
@@ -74,7 +64,7 @@ public class Facebook_Login {
 		this.female= female;
 		this.connection_type=connection_type;
 		FB_APP_ID= SocialSharingConstants.FB_APP_ID;
-		facebook = new Facebook(FB_APP_ID);
+//		facebook = new Facebook(FB_APP_ID);
 		//mAsyncRunner = new AsyncFacebookRunner(facebook);
 	}
 
@@ -227,9 +217,9 @@ public class Facebook_Login {
 		}
 	}
 
-	/**
+	*//**
 	 * Get Profile information by making request to Facebook Graph API
-	 * */
+	 * *//*
 //	protected void getProfileInformation() {
 //		Log.e("profile json", "priofile");
 //		mAsyncRunner.request("me", new RequestListener() {
@@ -329,6 +319,6 @@ public class Facebook_Login {
 				
 			}
 		});
-	}
+	}*/
 
 }

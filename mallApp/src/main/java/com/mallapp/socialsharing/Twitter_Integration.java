@@ -1,13 +1,7 @@
 package com.mallapp.socialsharing;
 
 
-import twitter4j.Twitter;
-import twitter4j.TwitterException;
-import twitter4j.TwitterFactory;
-import twitter4j.User;
-import twitter4j.auth.AccessToken;
-import twitter4j.auth.RequestToken;
-import twitter4j.conf.ConfigurationBuilder;
+
 import android.annotation.SuppressLint;
 import android.app.Activity;
 import android.app.Dialog;
@@ -30,7 +24,7 @@ import com.mallapp.View.R;
 
 public class Twitter_Integration {
 	
-	private static String TWITTER_CONSUMER_KEY 		= "P3YMqVUXjl8HgyNnl9IlJmCT6";
+	/*private static String TWITTER_CONSUMER_KEY 		= "P3YMqVUXjl8HgyNnl9IlJmCT6";
     private static String TWITTER_CONSUMER_SECRET 	= "ltshwIbfrsNIvnn461nAMCzxEVhXsDNcprvtr6vsKXytmWJgQS";
     // Shared Preferences
  	private static SharedPreferences mSharedPreferences;
@@ -228,5 +222,5 @@ public class Twitter_Integration {
 			}
 		}
 	}
-	
+	*/
 }

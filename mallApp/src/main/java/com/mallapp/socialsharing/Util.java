@@ -32,7 +32,6 @@ import java.net.URLEncoder;
 import org.json.JSONException;
 import org.json.JSONObject;
 
-import com.facebook.android.FacebookError;
 
 import android.app.AlertDialog.Builder;
 import android.content.Context;
@@ -246,7 +245,7 @@ public final class Util {
      * @throws JSONException - if the response is not valid JSON
      * @throws FacebookError - if an error condition is set
      */
-    public static JSONObject parseJson(String response)
+    /*public static JSONObject parseJson(String response)
           throws JSONException, FacebookError {
         // Edge case: when sending a POST request to /[post_id]/likes
         // the return value is 'true' or 'false'. Unfortunately
@@ -282,7 +281,7 @@ public final class Util {
             throw new FacebookError(json.getString("error_reason"));
         }
         return json;
-    }
+    }*/
 
     /**
      * Display a simple alert dialog with the given text and title.

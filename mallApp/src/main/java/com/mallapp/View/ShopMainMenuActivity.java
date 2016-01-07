@@ -169,6 +169,8 @@ public class ShopMainMenuActivity extends Activity
                             || audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
 
                         list_view1.setVisibility(View.VISIBLE);
+                        list_view_search.setVisibility(View.GONE);
+
                     }
                 }
             }

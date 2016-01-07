@@ -62,17 +62,17 @@ public class RegistrationController {
     private String tag_json_obj = "json_obj_req";
     private ProgressDialog progressDialog;
 
-    public RegistrationController(Context context){
+    public RegistrationController(Context context) {
         this.context = context;
     }
 
     //******-------Profile Updation Api Call-----*********
 
-    public void  updateUserProfile( final UserProfileModel user_profile , RegistrationUserListener registrationUserListener) {
+    public void updateUserProfile(final UserProfileModel user_profile, RegistrationUserListener registrationUserListener) {
 
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.updating_profile_data_message) );
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.updating_profile_data_message));
 
-        this.listener  = registrationUserListener;
+        this.listener = registrationUserListener;
 
 
         //JSONObject jsonObj = null ;
@@ -89,19 +89,19 @@ public class RegistrationController {
 
             Gson gson = new Gson();
 
-            final String jsonString = gson.toJson( user_profile );
+            final String jsonString = gson.toJson(user_profile);
             //System.out.println(jsonString);
-            final JSONObject jsonObject = new JSONObject( jsonString );
+            final JSONObject jsonObject = new JSONObject(jsonString);
 
-            android.util.Log.d("", "json send usper profile ...." + jsonObject.toString() );
+            android.util.Log.d("", "json send usper profile ...." + jsonObject.toString());
 
-            String url		= ApiConstants.PROFILE_UPDATE_URL_KEY;
+            String url = ApiConstants.PROFILE_UPDATE_URL_KEY;
 
             JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject jsonObject) {
                     try {
-                        if( progressDialog!= null )
+                        if (progressDialog != null)
                             progressDialog.dismiss();
 
                         boolean success = jsonObject.getBoolean("Success");
@@ -116,14 +116,14 @@ public class RegistrationController {
 //
 //                            UserProfile userProfile = gson.fromJson(jsonString, UserProfile.class);
 
-                            SharedPreferenceUserProfile.SaveUserProfile(user_profile,context);
+                            SharedPreferenceUserProfile.SaveUserProfile(user_profile, context);
                             listener.onDataReceived(user_profile);
 
-                        } else if (jsonObject.has("Message")){
+                        } else if (jsonObject.has("Message")) {
 
                             String message = jsonObject.getString("Message");
 
-                            if(message!=null && message!= "")
+                            if (message != null && message != "")
                                 Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                         }
 
@@ -134,24 +134,22 @@ public class RegistrationController {
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
-                    String message = VolleyErrorHelper.getMessage(volleyError,context);
-
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
 
 
                     Log.e("", " error message ..." + message);
 
-                    if(message!=null && message!= "")
+                    if (message != null && message != "")
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.request_error_message);
                         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
                     }
                 }
-            })
-            {
+            }) {
 
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
@@ -166,8 +164,7 @@ public class RegistrationController {
             };
 
             MallApplication.getInstance().addToRequestQueue(jsonRequest, tag_json_obj);
-        }
-        catch (Exception e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -175,7 +172,7 @@ public class RegistrationController {
 
     //******-------Getting Information of Existing User-----*********
 
-    public void getUserProfile( String url, RegistrationUserListener registrationUserListener) {
+    public void getUserProfile(String url, RegistrationUserListener registrationUserListener) {
 
 
         String userId = SharedPreferenceUserProfile.getUserId(context);
@@ -185,8 +182,8 @@ public class RegistrationController {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject obj) {
-                Log.d("","ProfileModel:"+obj.toString());
-                if(progressDialog!=null)
+                Log.d("", "ProfileModel:" + obj.toString());
+                if (progressDialog != null)
                     progressDialog.dismiss();
 
                 try {
@@ -201,14 +198,15 @@ public class RegistrationController {
 
                         Gson gson = new Gson();
 
-                        user_profile  = gson.fromJson(jsonObj.toString(),UserProfileModel.class);
-                        if(user_profile== null)
-                            user_profile = new UserProfileModel();
+                        user_profile = gson.fromJson(jsonObj.toString(), UserProfileModel.class);
+//                        if (user_profile == null)
+//                            user_profile = new UserProfileModel();
 
-                            if(listener!= null)
+                        if (listener != null && user_profile != null) {
                             listener.onDataReceived(user_profile);
+                            SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, user_profile);
+                        }
 //                            else
-                        SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, user_profile);
 //                        ((Code_Verifiction)context).startProfileActivity();
 
 
@@ -227,12 +225,11 @@ public class RegistrationController {
 				 * "PersonIdentificationNumber":null,"FileName":"http:\/\/52.28.59.218:9010\/\/profiles\/images\/3def09ea-9850-46dc-9831-a8d6b1f44b00.png",
 				 * "Username":null,"Gender":"Female","CreatedUTCDateTime":"2015-08-04T09:35:02.327","IsDeleted":false},"Message":""}
 				 */
-                    }
-                    else if (obj.has("Message")){
+                    } else if (obj.has("Message")) {
 
                         String message = obj.getString("Message");
 
-                        if(message!=null && message!= "")
+                        if (message != null && message != "")
                             Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     }
 
@@ -247,16 +244,15 @@ public class RegistrationController {
             public void onErrorResponse(VolleyError volleyError) {
                 Log.e("", " user not exist ..." + volleyError.toString());
 
-                if(progressDialog!=null)
+                if (progressDialog != null)
                     progressDialog.dismiss();
 
-                String message = VolleyErrorHelper.getMessage(volleyError,context);
-
+                String message = VolleyErrorHelper.getMessage(volleyError, context);
 
 
                 Log.e("", " error message ..." + message);
 
-                if(message!=null && message!= "")
+                if (message != null && message != "")
                     Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                 else {
                     String serverError = context.getResources().getString(R.string.request_error_message);
@@ -287,11 +283,11 @@ public class RegistrationController {
 
     //******-------Registration with Facbook Api Call-----*********
 
-    public void registerWithFacebook(final FacebookProfileModel facebookProfileModel){
+    public void registerWithFacebook(final FacebookProfileModel facebookProfileModel) {
 
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.registration_with_fb_dialog_message));
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.registration_with_fb_dialog_message));
 
-        try{
+        try {
 
             ThirdPartyRegistrationModel thirdPartyRegistrationModel = new ThirdPartyRegistrationModel();
             thirdPartyRegistrationModel.setAccount("facebook");
@@ -303,34 +299,34 @@ public class RegistrationController {
 
             String lastName = "";
 
-            for(int i=1;i< name.length;i++){
+            for (int i = 1; i < name.length; i++) {
                 lastName += name[1];
             }
 
             thirdPartyRegistrationModel.setFirstName(firstName);
 
-            if(lastName!= "")
+            if (lastName != "")
                 thirdPartyRegistrationModel.setLastName(lastName);
 
-            String parameters = "" ;
+            String parameters = "";
 
-            parameters += "account="+thirdPartyRegistrationModel.getAccount()
-                    + "&id="+ thirdPartyRegistrationModel.getId()
-                    + "&firstName="+ thirdPartyRegistrationModel.getFirstName()
-                    + "&lastName="+ thirdPartyRegistrationModel.getLastName();
+            parameters += "account=" + thirdPartyRegistrationModel.getAccount()
+                    + "&id=" + thirdPartyRegistrationModel.getId()
+                    + "&firstName=" + thirdPartyRegistrationModel.getFirstName()
+                    + "&lastName=" + thirdPartyRegistrationModel.getLastName();
 
             Gson gson = new Gson();
 
-            JSONObject jsonObject = new JSONObject( gson.toJson(thirdPartyRegistrationModel) );
+            JSONObject jsonObject = new JSONObject(gson.toJson(thirdPartyRegistrationModel));
 
             Log.d(TAG, jsonObject.toString());
 
-            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, ApiConstants.FB_REG_URL_KEY+thirdPartyRegistrationModel.getId(),
+            JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, ApiConstants.FB_REG_URL_KEY + thirdPartyRegistrationModel.getId(),
                     null, new Response.Listener<JSONObject>() {
 
                 @Override
                 public void onResponse(JSONObject jsonObj) {
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     Log.d(TAG, jsonObj.toString());
@@ -339,13 +335,12 @@ public class RegistrationController {
                         boolean success = jsonObj.getBoolean("Success");
 
 
+                        /** {"Success":true,"User_Id":"3def09ea-9850-46dc-9831-a8d6b1f44b00",
+                         * "Auth_Token":"d1bbadcb-1118-4c4a-84e4-38221f7dc37b",
+                         * "Message":"","httpStatusCode":200}*/
 
-                             /** {"Success":true,"User_Id":"3def09ea-9850-46dc-9831-a8d6b1f44b00",
-                             * "Auth_Token":"d1bbadcb-1118-4c4a-84e4-38221f7dc37b",
-                             * "Message":"","httpStatusCode":200}*/
 
-
-                        if(success) {
+                        if (success) {
                             String profileID = jsonObj.getString("User_Id");
                             String security_token = jsonObj.getString("Auth_Token");
 
@@ -360,18 +355,17 @@ public class RegistrationController {
                             Intent profileScreen = new Intent(context, RegistrationProfileActivity.class);
                             context.startActivity(profileScreen);
 
-                        }else{
+                        } else {
 
-                            if( jsonObj.has("Message")) {
+                            if (jsonObj.has("Message")) {
                                 String message = jsonObj.getString("Message");
-                                if(message != "")
+                                if (message != "")
                                     Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                             }
 
                         }
 
-                    }
-                    catch(JSONException e) {
+                    } catch (JSONException e) {
                         e.printStackTrace();
                     }
 
@@ -380,17 +374,16 @@ public class RegistrationController {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
 
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
 
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
 
 
-
                     Log.e("", " error message ..." + message);
 
-                    if(message!=null && message!= "")
+                    if (message != null && message != "")
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.request_error_message);
@@ -402,13 +395,11 @@ public class RegistrationController {
             );
 
 
-
             // Adding request to request queue
             MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
 
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
 
@@ -416,15 +407,15 @@ public class RegistrationController {
 
     //******-------Get Mall List Api Call-----*********
 
-    public void GetMallList(String url, final FavouriteCenterAdapter adapter, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList, final NearbyListener nearbyListener, final ListView listView){
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+    public void GetMallList(String url, final FavouriteCenterAdapter adapter, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList, final NearbyListener nearbyListener, final ListView listView) {
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
 //        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
-        try{
+        try {
 
-            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray jsonArr) {
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     Log.d(TAG, jsonArr.toString());
@@ -445,22 +436,22 @@ public class RegistrationController {
                     }
                     nearbyListener.onMallDataReceived(favouriteCentersArrayList);
                     CentersCacheManager.saveFavorites(context, favouriteCentersArrayList);
-                    String urls = ApiConstants.GET_USER_MALL_URL_KEY+SharedPreferenceUserProfile.getUserId(context);
-                    GetSubscribedMallList(urls,adapter,listView,favouriteCentersArrayList);
+                    String urls = ApiConstants.GET_USER_MALL_URL_KEY + SharedPreferenceUserProfile.getUserId(context);
+                    GetSubscribedMallList(urls, adapter, listView, favouriteCentersArrayList);
 //                    adapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
 
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
 
                     Log.e("", " error message ..." + message);
 
-                    if(message!=null && message!= "")
+                    if (message != null && message != "")
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.request_error_message);
@@ -469,8 +460,7 @@ public class RegistrationController {
                 }
 
             }
-            )
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<String, String>();
@@ -486,22 +476,21 @@ public class RegistrationController {
             // Adding request to request queue
             MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-
-    public void GetSubscribedMallList(String url, final FavouriteCenterAdapter adapter, final ListView listView,final ArrayList<FavouriteCentersModel> favouriteCentersArrayList){
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+    public void GetSubscribedMallList(String url, final FavouriteCenterAdapter adapter, final ListView listView, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList) {
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
 //        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
-        try{
-            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+        try {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray jsonArr) {
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     Log.d(TAG, jsonArr.toString());
@@ -510,13 +499,13 @@ public class RegistrationController {
                         try {
                             JSONObject obj = jsonArr.getJSONObject(i);
                             FavouriteCentersModel fav = new Gson().fromJson(String.valueOf(obj), FavouriteCentersModel.class);
-                            for (FavouriteCentersModel f:  favouriteCentersArrayList ) {
-                                if (f.getMallPlaceId().equals(fav.getMallPlaceId())){
+                            for (FavouriteCentersModel f : favouriteCentersArrayList) {
+                                if (f.getMallPlaceId().equals(fav.getMallPlaceId())) {
                                     fav.setIsfav(true);
                                     favouriteCentersArrayList.set(favouriteCentersArrayList.indexOf(f), fav);
                                 }
                             }
-                        }catch (JSONException e) {
+                        } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
@@ -526,13 +515,13 @@ public class RegistrationController {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
 
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     Log.e("", " error message ..." + message);
 
-                    if(message!=null && message!= "")
+                    if (message != null && message != "")
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.request_error_message);
@@ -540,8 +529,7 @@ public class RegistrationController {
                     }
                 }
             }
-            )
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<String, String>();
@@ -557,20 +545,20 @@ public class RegistrationController {
             // Adding request to request queue
             MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
 
-    public void GetSelectedInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels){
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+    public void GetSelectedInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels) {
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
 //        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
-        try{
-            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+        try {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
                 @Override
                 public void onResponse(JSONArray jsonArr) {
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     Log.d(TAG, jsonArr.toString());
@@ -579,8 +567,8 @@ public class RegistrationController {
                         try {
                             JSONObject obj = jsonArr.getJSONObject(i);
                             InterestSelectionModel fav = new Gson().fromJson(String.valueOf(obj), InterestSelectionModel.class);
-                            for (InterestSelectionModel f:  interestSelectionModels ) {
-                                if (f.getCategoryId().equals(fav.getCategoryId())){
+                            for (InterestSelectionModel f : interestSelectionModels) {
+                                if (f.getCategoryId().equals(fav.getCategoryId())) {
                                     fav.setInterested(true);
                                     interestSelectionModels.set(interestSelectionModels.indexOf(f), fav);
                                 }
@@ -590,7 +578,7 @@ public class RegistrationController {
                         }
                     }
                     adapter.notifyDataSetChanged();
-                    if (areAllTrue(interestSelectionModels)){
+                    if (areAllTrue(interestSelectionModels)) {
                         is_interest_select_all.setImageResource(R.drawable.interest_p);
                     }
                 }
@@ -598,17 +586,16 @@ public class RegistrationController {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
 
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
 
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
 
 
-
                     Log.e("", " error message ..." + message);
 
-                    if(message!=null && message!= "")
+                    if (message != null && message != "")
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.request_error_message);
@@ -617,8 +604,7 @@ public class RegistrationController {
                 }
 
             }
-            )
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<String, String>();
@@ -634,26 +620,26 @@ public class RegistrationController {
             // Adding request to request queue
             MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
 
     //******-------Get Interest List Api Call-----*********
 
-    public ArrayList<InterestSelectionModel> GetInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels,ImageView is_interest_select_all){
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message));
+    public ArrayList<InterestSelectionModel> GetInterestList(String url, final InterestAdapter adapter, final ArrayList<InterestSelectionModel> interestSelectionModels, ImageView is_interest_select_all) {
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
         this.is_interest_select_all = is_interest_select_all;
 
 //        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
-        try{
+        try {
 
 
-            JsonArrayRequest request = new JsonArrayRequest( url, new Response.Listener<JSONArray>() {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
 
                 @Override
                 public void onResponse(JSONArray jsonArr) {
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
                     Log.d(TAG, jsonArr.toString());
@@ -674,24 +660,23 @@ public class RegistrationController {
                     }
                     InterestCacheManager.saveFavorites(context, interestSelectionModels);
                     adapter.notifyDataSetChanged();
-                    String urls = ApiConstants.GET_SELECTED_INTEREST_URL_KEY+SharedPreferenceUserProfile.getUserId(context)+"&LanguageId=1";
+                    String urls = ApiConstants.GET_SELECTED_INTEREST_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1";
                     GetSelectedInterestList(urls, adapter, interestSelectionModels);
                 }
             }, new Response.ErrorListener() {
                 @Override
                 public void onErrorResponse(VolleyError volleyError) {
 
-                    if(progressDialog!=null)
+                    if (progressDialog != null)
                         progressDialog.dismiss();
 
 
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
 
 
-
                     Log.e("", " error message ..." + message);
 
-                    if(message!=null && message!= "")
+                    if (message != null && message != "")
                         Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.request_error_message);
@@ -700,8 +685,7 @@ public class RegistrationController {
                 }
 
             }
-            )
-            {
+            ) {
                 @Override
                 public Map<String, String> getHeaders() throws AuthFailureError {
                     Map<String, String> headers = new HashMap<String, String>();
@@ -718,8 +702,7 @@ public class RegistrationController {
             MallApplication.getInstance().addToRequestQueue(request, tag_json_obj);
 
 
-
-        }catch(Exception e){
+        } catch (Exception e) {
             e.printStackTrace();
         }
         return interestSelectionModels;
@@ -727,78 +710,73 @@ public class RegistrationController {
 
     //******-------Saving User Mall and Interest Selection through Api Call-----*********
 
-    public void PostMallInterestSelection(String url, final boolean act){
+    public void PostMallInterestSelection(String url, final boolean act) {
 
-        progressDialog =  ProgressDialog.show(context,"",context.getResources().getString(R.string.loading_data_message) );
+        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
-                @Override
-                public void onResponse(JSONObject jsonObject) {
-                    try {
-                        boolean success = jsonObject.getBoolean("Success");
-                        if (success){
-                            if (act){
-                                Intent fav= new Intent(context, Select_Interest.class);
-                                ((Activity) context).finish();
-                                context.startActivity(fav);
-                            }
-                            else {
-                                Intent select_interest= new Intent(context, DashboardTabFragmentActivity.class);
-                                ((Activity) context).finish();
-                                context.startActivity(select_interest);
-                            }
+            @Override
+            public void onResponse(JSONObject jsonObject) {
+                try {
+                    boolean success = jsonObject.getBoolean("Success");
+                    if (success) {
+                        if (act) {
+                            Intent fav = new Intent(context, Select_Interest.class);
+                            ((Activity) context).finish();
+                            context.startActivity(fav);
+                        } else {
+                            Intent select_interest = new Intent(context, DashboardTabFragmentActivity.class);
+                            ((Activity) context).finish();
+                            context.startActivity(select_interest);
                         }
-                        else {
-                            if( jsonObject.has("Message")) {
-                                String message = jsonObject.getString("Message");
-                                if(message != "")
-                                    Toast.makeText(context, message, Toast.LENGTH_LONG).show();
-                            }
+                    } else {
+                        if (jsonObject.has("Message")) {
+                            String message = jsonObject.getString("Message");
+                            if (message != "")
+                                Toast.makeText(context, message, Toast.LENGTH_LONG).show();
                         }
-
-                    } catch (JSONException e) {
-                        e.printStackTrace();
                     }
-                }
-            }, new Response.ErrorListener() {
-                @Override
-                public void onErrorResponse(VolleyError volleyError) {
-                    if(progressDialog!=null)
-                        progressDialog.dismiss();
 
-                    String message = VolleyErrorHelper.getMessage(volleyError,context);
-                    Log.e("", " error message ..." + message);
-
-                    if(message!=null && message!= "")
-                        Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
-                    else {
-                        String serverError = context.getResources().getString(R.string.request_error_message);
-                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-                    }
+                } catch (JSONException e) {
+                    e.printStackTrace();
                 }
-            })
-            {
-                @Override
-                public Map<String, String> getHeaders() throws AuthFailureError {
-                    Map<String, String> headers = new HashMap<String, String>();
-                    String token = SharedPreferenceUserProfile.getUserToken(context);
-                    Log.e("", " token:" + token);
+            }
+        }, new Response.ErrorListener() {
+            @Override
+            public void onErrorResponse(VolleyError volleyError) {
+                if (progressDialog != null)
+                    progressDialog.dismiss();
+
+                String message = VolleyErrorHelper.getMessage(volleyError, context);
+                Log.e("", " error message ..." + message);
+
+                if (message != null && message != "")
+                    Toast.makeText(context, message, Toast.LENGTH_SHORT).show();
+                else {
+                    String serverError = context.getResources().getString(R.string.request_error_message);
+                    Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                }
+            }
+        }) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token:" + token);
 //                    headers.put("Content-Type", "application/json");
-                    headers.put("Auth-Token", token);
+                headers.put("Auth-Token", token);
 
-                    return headers;
-                }
-            };
+                return headers;
+            }
+        };
 
-            MallApplication.getInstance().addToRequestQueue(jsonRequest, tag_json_obj);
+        MallApplication.getInstance().addToRequestQueue(jsonRequest, tag_json_obj);
 
-        }
+    }
 
 
-
-    public static boolean areAllTrue(ArrayList<InterestSelectionModel> array)
-    {
-        for(InterestSelectionModel b : array) if(!b.isInterested()) return false;
+    public static boolean areAllTrue(ArrayList<InterestSelectionModel> array) {
+        for (InterestSelectionModel b : array) if (!b.isInterested()) return false;
         return true;
     }
 }

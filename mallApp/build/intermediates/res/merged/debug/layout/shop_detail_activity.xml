@@ -83,7 +83,7 @@
                     android:layout_marginRight="@dimen/margin_left_15"
                     android:layout_alignParentRight="true"
                     android:layout_alignParentBottom="true"
-                    android:src="@drawable/listview_logo_placeholder"/>
+                    android:src="@drawable/expand"/>
             </RelativeLayout>
 
 
