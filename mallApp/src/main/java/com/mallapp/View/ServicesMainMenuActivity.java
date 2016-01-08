@@ -35,11 +35,11 @@ import com.mallapp.listeners.ServicesDataListener;
 import com.mallapp.utils.InputHandler;
 import com.mallapp.utils.VolleyNetworkUtil;
 
-public class ServicesMainMenuActivity extends Activity implements OnClickListener, OnItemClickListener, ServicesDataListener {
+public class ServicesMainMenuActivity extends SlidingDrawerActivity implements OnClickListener, OnItemClickListener, ServicesDataListener {
 
     //region Data Members
     String TAG = getClass().getCanonicalName();
-    private ImageButton open_navigation;
+    private ImageButton open_navigation,open_drawer;
 
     private ListView list_view;
     private ListView list_view_search;
@@ -125,12 +125,16 @@ public class ServicesMainMenuActivity extends Activity implements OnClickListene
         //endregion
 
         open_navigation.setOnClickListener(this);
+        open_drawer.setOnClickListener(this);
+        open_navigation.setVisibility(View.GONE);
+        open_drawer.setVisibility(View.VISIBLE);
         cancel_search.setOnClickListener(this);
     }
 
     //region Data Initializations
     private void init() {
         open_navigation = (ImageButton) findViewById(R.id.navigation);
+        open_drawer		= (ImageButton) 		findViewById(R.id.navigation_drawer);
         heading = (TextView) findViewById(R.id.heading);
         heading.setText(getResources().getString(R.string.heading_services));
 
@@ -208,6 +212,8 @@ public class ServicesMainMenuActivity extends Activity implements OnClickListene
         if (open_navigation.getId() == v.getId()) {
             //DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
             finish();
+        }else if(open_drawer.getId() == v.getId()){
+            SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
         } else if (cancel_search.getId() == v.getId()) {
             list_view_search.setVisibility(View.GONE);
             scroll_side_index.setVisibility(View.VISIBLE);

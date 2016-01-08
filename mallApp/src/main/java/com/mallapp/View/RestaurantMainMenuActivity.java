@@ -53,7 +53,7 @@ import com.mallapp.utils.InputHandler;
 import com.mallapp.utils.VolleyNetworkUtil;
 
 
-public class RestaurantMainMenuActivity extends Activity 
+public class RestaurantMainMenuActivity extends SlidingDrawerActivity
 										implements 	OnCheckedChangeListener,RestaurantDataListener,
 													OnClickListener {
 	
@@ -61,7 +61,7 @@ public class RestaurantMainMenuActivity extends Activity
 	//public static Handler uihandler;
 	//static Context context;
 	SegmentedRadioGroup segmentText;
-	private ImageButton open_navigation;
+	private ImageButton open_navigation,open_drawer;
 	
 	private AmazingListView 	list_view;
 	private ExpandableListView 	list_view1;
@@ -178,11 +178,15 @@ public class RestaurantMainMenuActivity extends Activity
 		
 		segmentText.setOnCheckedChangeListener(this);
 		open_navigation.setOnClickListener(this);
+		open_drawer.setOnClickListener(this);
+		open_navigation.setVisibility(View.GONE);
+		open_drawer.setVisibility(View.VISIBLE);
 		cancel_search.setOnClickListener(this);
 	}
 
 	private void init() {
 		open_navigation		= (ImageButton) 		findViewById(R.id.navigation);
+		open_drawer		= (ImageButton) 		findViewById(R.id.navigation_drawer);
 		segmentText 		= (SegmentedRadioGroup) findViewById(R.id.segment_text);
 		search_feild		= (EditText) 			findViewById(R.id.search_feild);
 		search_feild.setHint(R.string.restaurant_search_hint);
@@ -398,6 +402,8 @@ public class RestaurantMainMenuActivity extends Activity
 		if(open_navigation.getId()== v.getId()){
 			//DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 			finish();
+		}else if(open_drawer.getId() == v.getId()){
+			SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
 		}else if(cancel_search.getId() == v.getId()){
 
 			list_view_search.setVisibility(View.GONE);

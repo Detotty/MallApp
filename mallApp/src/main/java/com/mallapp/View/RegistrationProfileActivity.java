@@ -889,7 +889,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
 			UserLocationModel userLocationModel = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
 			String userLocation = userLocationModel.getCityName()+","+ userLocationModel.getCountryName();
-//			locationTextView.setText(userLocation);
+			locationTextView.setText(userLocation);
 		}
 
 

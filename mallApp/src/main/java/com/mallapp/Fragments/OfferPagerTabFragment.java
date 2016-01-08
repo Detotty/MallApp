@@ -327,6 +327,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             mallActivitiesListing.clear();
                             ArrayList<MallActivitiesModel> news = FavouriteSelection(context, mallActivitiesModels);
                             mallActivities_All.clear();
+                            mallActivities_News.clear();
+                            mallActivities_Offers.clear();
                             mallActivitiesListing.addAll(0, news);
                             callAddapter();
                         } else {
@@ -344,7 +346,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                                     Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
                                     if (adapter.getCount() > 0)
-                                        if (!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                                        if (!isPaused &&!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
                                             MallIdSelection();
                                             pageNo++;

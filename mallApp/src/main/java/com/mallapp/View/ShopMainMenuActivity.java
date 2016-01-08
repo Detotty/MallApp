@@ -15,6 +15,7 @@ import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -56,14 +57,14 @@ import com.mallapp.utils.Log;
 import com.mallapp.utils.VolleyNetworkUtil;
 
 
-public class ShopMainMenuActivity extends Activity
+public class ShopMainMenuActivity extends SlidingDrawerActivity
         implements ShopsDataListener, OnCheckedChangeListener,
         OnClickListener {
 
     String TAG = getClass().getCanonicalName();
     public static Handler uihandler;
     SegmentedRadioGroup segmentText;
-    private ImageButton open_navigation;
+    private ImageButton open_navigation, open_drawer;
 
     private AmazingListView list_view;
     private ExpandableListView list_view1;
@@ -189,12 +190,16 @@ public class ShopMainMenuActivity extends Activity
 
         segmentText.setOnCheckedChangeListener(this);
         open_navigation.setOnClickListener(this);
+        open_drawer.setOnClickListener(this);
+        open_navigation.setVisibility(View.GONE);
+        open_drawer.setVisibility(View.VISIBLE);
         cancel_search.setOnClickListener(this);
 
     }
 
     private void init() {
         open_navigation = (ImageButton) findViewById(R.id.navigation);
+        open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
         search_feild = (EditText) findViewById(R.id.search_feild);
         cancel_search = (Button) findViewById(R.id.cancel_search);
@@ -410,7 +415,10 @@ public class ShopMainMenuActivity extends Activity
             DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
             finish();
 
-        } else if (cancel_search.getId() == v.getId()) {
+        } else if(open_drawer.getId() == v.getId()){
+            SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
+        }
+        else if (cancel_search.getId() == v.getId()) {
 
             list_view_search.setVisibility(View.GONE);
 

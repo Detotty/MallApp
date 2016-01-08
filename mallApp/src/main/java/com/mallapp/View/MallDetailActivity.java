@@ -34,7 +34,7 @@ import com.mallapp.listeners.MallDataListener;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
-public class MallDetailActivity extends FragmentActivity  implements OnClickListener, MallDataListener{
+public class MallDetailActivity extends SlidingDrawerActivity  implements OnClickListener, MallDataListener{
 
 	//region Data Members
 	private GestureDetector detector ;
@@ -47,7 +47,7 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 	private ImageView 		mall_logo,mall_map,mall_background,expand;
 	private TextView 		tv_about, tv_Detail, mall_name, rel_offer_title,	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
-	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
+	private ImageButton	 	open_drawer, open_navigation , location, timing, social_sharing ;
 	LinearLayout linear_timing_layout;
 	String url;
 	String mallStoreId;
@@ -75,9 +75,10 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 	
 	
 	private void init() {
+		open_navigation = (ImageButton) findViewById(R.id.navigation);
+		open_drawer		= (ImageButton) 		findViewById(R.id.navigation_drawer);
 		mallDetailModel = new MallDetailModel();
 		expand	= (ImageView)	findViewById(R.id.iv_expand);
-		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
 		mall_background		= (ImageView) findViewById(R.id.iv_background);
 		mall_name = (TextView) findViewById(R.id.offer_title);
 		mall_map		= (ImageView) findViewById(R.id.ivMap);
@@ -88,11 +89,12 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 		tv_Email 		= (TextView) findViewById(R.id.tv_email);
 		rel_offer_title 		= (TextView) findViewById(R.id.textView4);
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
-		back_screen = (ImageButton) findViewById(R.id.back);
 		linear_timing_layout	= (LinearLayout) findViewById(R.id.layout_timings);
 
-		is_fav.setVisibility(View.GONE);
-		back_screen.setVisibility(View.GONE);
+		open_navigation.setOnClickListener(this);
+		open_drawer.setOnClickListener(this);
+		open_navigation.setVisibility(View.GONE);
+		open_drawer.setVisibility(View.VISIBLE);
 		tv_Web.setOnClickListener(this);
 		expand.setOnClickListener(this);
 	}
@@ -115,6 +117,12 @@ public class MallDetailActivity extends FragmentActivity  implements OnClickList
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 
+		}
+		if (open_navigation.getId() == v.getId()) {
+			//DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+			finish();
+		}else if(open_drawer.getId() == v.getId()){
+			SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
 		}
 	}
 

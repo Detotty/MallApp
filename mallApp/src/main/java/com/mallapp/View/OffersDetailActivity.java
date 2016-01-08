@@ -168,13 +168,13 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 			activity.putExtra("MallStoreId", offer_object.getEntityId());
 			startActivity(activity);
 		
-		}else if(v.getId() == social_sharing.getId()){
+		}/*else if(v.getId() == social_sharing.getId()){
 			if(social_sharing_layout.getVisibility()== View.GONE)
 				social_sharing_layout.setVisibility(View.VISIBLE);
 			else
 				social_sharing_layout.setVisibility(View.GONE);
 		
-		}else if(v.getId()== face_book.getId()){
+		}*/else if(v.getId()== face_book.getId()){
 		
 			/*Facebook_Login fb_profile= new Facebook_Login(getApplicationContext(), 	OffersDetailActivity.this, true );
 			fb_profile.loginToFacebook();*/

@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">MallApp 0.0.8</string>
-    <string name="app_name1">The Mall App</string>
+    <string name="app_name1">Mall App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="fb_app_id">869358796518933</string>

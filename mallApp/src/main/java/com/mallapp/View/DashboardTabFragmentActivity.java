@@ -107,7 +107,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 	}
 
 	private void getNavList() {
-		navMenuTitles =
+		navMenuTitles =getResources().getStringArray(R.array.nav_drawer_items);
 		navMenuIcons = getResources().getStringArray(R.array.nav_drawer_icons);
 		for(int i=0; i<navMenuTitles.length; i++){
 			String image_nam= navMenuIcons[i];
