@@ -65,6 +65,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
     public static Handler uihandler;
     SegmentedRadioGroup segmentText;
     private ImageButton open_navigation, open_drawer;
+    private TextView heading;
 
     private AmazingListView list_view;
     private ExpandableListView list_view1;
@@ -201,6 +202,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
         open_navigation = (ImageButton) findViewById(R.id.navigation);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
+        heading				= (TextView) 			findViewById(R.id.heading);
         search_feild = (EditText) findViewById(R.id.search_feild);
         cancel_search = (Button) findViewById(R.id.cancel_search);
         list_view = (AmazingListView) findViewById(R.id.shop_list);
@@ -208,6 +210,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
         side_index_layout = (LinearLayout) findViewById(R.id.side_index);
         side_index_scroll = (LinearLayout) findViewById(R.id.scroll_side_index);
         list_view1 = (ExpandableListView) findViewById(R.id.expandableListView);
+        heading.setText("SHOPS");
 
         try {
             // This is how, a reference of DAO object can be done

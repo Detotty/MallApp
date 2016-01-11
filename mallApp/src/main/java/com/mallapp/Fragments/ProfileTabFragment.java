@@ -15,6 +15,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.util.Base64;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -43,6 +44,7 @@ public class ProfileTabFragment extends Fragment{
     View viewHome;
     UserProfile user_profile;
     ImageView user_ImageView;
+    ImageButton back,fav;
 //    String link = StaticLiterls.link;
     String[] list_items, settings_items ;
 
@@ -74,14 +76,18 @@ public class ProfileTabFragment extends Fragment{
 
     public void initUI() {
         profileListview();
-        TextView header = (TextView) viewHome.findViewById(R.id.heading);
+        TextView header = (TextView) viewHome.findViewById(R.id.offer_title);
         user_ImageView = (ImageView) viewHome.findViewById(R.id.user_image);
+        back = (ImageButton) viewHome.findViewById(R.id.back);
+        fav = (ImageButton) viewHome.findViewById(R.id.fav_offer);
         ImageButton imageButton_back = (ImageButton) viewHome.findViewById(R.id.back);
         Button camera = (Button) viewHome.findViewById(R.id.button_camera);
         ImageView facebook_btn = (ImageView) viewHome.findViewById(R.id.facebook);
         ImageView twitter = (ImageView) viewHome.findViewById(R.id.twitter);
         ImageView sms = (ImageView) viewHome.findViewById(R.id.sms);
         ImageView email = (ImageView) viewHome.findViewById(R.id.email);
+        back.setVisibility(View.GONE);
+        fav.setVisibility(View.GONE);
        /* facebook_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -170,7 +176,8 @@ public class ProfileTabFragment extends Fragment{
 
         return dest;
     }
-     private void profileListview() {
+
+    private void profileListview() {
         list_items = getResources().getStringArray(R.array.profile_items);
         settings_items = getResources().getStringArray(R.array.settings_items);
         LinearLayout profile_view = (LinearLayout) viewHome.findViewById(R.id.listView_profile_activities);
@@ -211,29 +218,13 @@ public class ProfileTabFragment extends Fragment{
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
 
-                } /*else if (textView_prfile.getText().toString().equals(getString(R.string.title_activity_invite_contacts))) {
-                    Intent intent = new Intent(getActivity(), InviteContacts.class);
-                    startActivity(intent);
-                    getActivity().overridePendingTransition(R.anim.slidout_left,
-                            R.anim.slidein_left);
-
-                } else if (textView_prfile.getText().toString().equals(getString(R.string.about))) {
-                    Intent i = new Intent(getActivity(), WebPages.class);
-                    i.setData(Uri.parse(getResources().getString(R.string.abou_url)));
-                    StaticLiterls.web_title = textView_prfile.getText().toString();
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slidout_left,
-                            R.anim.slidein_left);
-
-                } else if (textView_prfile.getText().toString().equals(getString(R.string.faqs))) {
-                    Intent i = new Intent(getActivity(), WebPages.class);
-                    i.setData(Uri.parse(getResources().getString(R.string.faqs_url)));
-                    StaticLiterls.web_title = textView_prfile.getText().toString();
-                    startActivity(i);
-                    getActivity().overridePendingTransition(R.anim.slidout_left,
-                            R.anim.slidein_left);
-
+                } else if (textView_prfile.getText().toString().equals(getString(R.string.help))) {
+                    loadWebFragments();
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
+                    loadWebFragments();
+                } else if (textView_prfile.getText().toString().equals(getString(R.string.about_us))) {
+                    loadWebFragments();
+                } /*else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
                     Intent i = new Intent(getActivity(), WebPages.class);
                     i.setData(Uri.parse(getResources().getString(R.string.privacy_url)));
                     StaticLiterls.web_title = textView_prfile.getText().toString();
@@ -333,5 +324,11 @@ public class ProfileTabFragment extends Fragment{
         return cursor.getString(column_index);
     }
 
-
+    void loadWebFragments(){
+        WebFragment nextFrag= new WebFragment();
+        FragmentTransaction transaction = getFragmentManager().beginTransaction();
+        transaction.replace(R.id.scrollView, nextFrag);
+        transaction.addToBackStack(null);
+        transaction.commit();
+    }
 }

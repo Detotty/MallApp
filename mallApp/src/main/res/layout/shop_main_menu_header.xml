@@ -32,6 +32,5 @@
         android:layout_centerVertical="true"
         android:textColor="@color/white"
         android:textSize="@dimen/shops_heading"
-        android:textStyle="bold"
-        android:text="@string/heading_shops" />
+        android:textStyle="bold" />
 </RelativeLayout>

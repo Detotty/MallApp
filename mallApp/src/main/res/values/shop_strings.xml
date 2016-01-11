@@ -13,6 +13,7 @@
     <string name="category">Category</string>
     <string name="floor">Floor</string>
     <string name="shop_1">Type Shop Name</string>
+    <string name="search">Search</string>
     <string name="restaurant_search_hint">Type Restaurant Name</string>
     <string name="shop_offers">The Shop Offers</string>
     <string name="related_shop">Related Shops</string>

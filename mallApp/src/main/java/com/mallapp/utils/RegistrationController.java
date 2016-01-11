@@ -193,11 +193,8 @@ public class RegistrationController {
                     if (success) {
                         JSONObject jsonObj = obj.getJSONObject("Profile");
                         Log.e("", " user not exist ..." + obj.toString());
-
                         UserProfileModel user_profile = null;
-
                         Gson gson = new Gson();
-
                         user_profile = gson.fromJson(jsonObj.toString(), UserProfileModel.class);
 //                        if (user_profile == null)
 //                            user_profile = new UserProfileModel();

@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.mallapp.Model.ServicesModel;
 import com.mallapp.View.R;
+import com.mallapp.globel.GlobelMainMenu;
 import com.mallapp.imagecapture.ImageLoader;
 import com.mallapp.utils.AppUtils;
 import com.squareup.picasso.Picasso;
@@ -86,7 +87,7 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 	ServicesModel service_obj;
 
 	@Override
-	public View getView(int position, View convertView, ViewGroup parent) {
+	public View getView(final int position, View convertView, ViewGroup parent) {
 	
 		View v = convertView;
 		int type = getItemViewType(position);
@@ -117,7 +118,7 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 			final TextView phone_no 	= (TextView) v.findViewById(R.id.phone_no);
 			address.setText(service_obj.getAddress());
 			phone_no.setText(service_obj.getPhone());
-			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.profile_image_placeholder).fit().into(back_image);
+			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.mallapp_placeholder).fit().into(back_image);
 
 			phone_no.setOnClickListener(new View.OnClickListener() {
 				@Override
@@ -130,7 +131,22 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 		decs.setText(service_obj.getBriefText());
 		floor_no.setText(service_obj.getFloor());
 
+		/*v.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				ServicesModel s1 = 	getItem(position);
+				s1.setOpened(false);
 
+
+				ServicesModel s = getItem(position);
+				if (s.isOpened()) {
+					s.setOpened(false);
+				} else {
+					s.setOpened(true);
+				}
+				GlobelMainMenu.selected_index_services = position;
+			}
+		});*/
 		return v;
 	}
 }

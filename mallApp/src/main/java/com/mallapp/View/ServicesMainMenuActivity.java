@@ -1,11 +1,5 @@
 package com.mallapp.View;
 
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -26,20 +20,22 @@ import android.widget.Toast;
 import com.List.Adapter.ServiceAdapter;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
-import com.mallapp.Controllers.ServicesList;
 import com.mallapp.Controllers.ShopFiltration;
-import com.mallapp.Model.Services;
 import com.mallapp.Model.ServicesModel;
 import com.mallapp.globel.GlobelMainMenu;
 import com.mallapp.listeners.ServicesDataListener;
 import com.mallapp.utils.InputHandler;
 import com.mallapp.utils.VolleyNetworkUtil;
 
-public class ServicesMainMenuActivity extends SlidingDrawerActivity implements OnClickListener, OnItemClickListener, ServicesDataListener {
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
+
+public class ServicesMainMenuActivity extends SlidingDrawerActivity implements OnClickListener,  ServicesDataListener {
 
     //region Data Members
     String TAG = getClass().getCanonicalName();
-    private ImageButton open_navigation,open_drawer;
+    private ImageButton open_navigation, open_drawer;
 
     private ListView list_view;
     private ListView list_view_search;
@@ -129,12 +125,33 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
         open_navigation.setVisibility(View.GONE);
         open_drawer.setVisibility(View.VISIBLE);
         cancel_search.setOnClickListener(this);
+
+        list_view.setOnItemClickListener(new OnItemClickListener() {
+            @Override
+            public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
+                ServicesModel s1 = (ServicesModel) adapter.getItem(GlobelMainMenu.selected_index_services);
+                s1.setOpened(false);
+                services_read.set(GlobelMainMenu.selected_index_services, s1);
+
+
+                ServicesModel s = (ServicesModel) adapter.getItem(position);
+                if (s.isOpened()) {
+                    s.setOpened(false);
+                } else {
+                    s.setOpened(true);
+                }
+                GlobelMainMenu.selected_index_services = position;
+                services_read.set(position, s);
+                adapter.setService_search(services_read);
+                adapter.notifyDataSetChanged();
+            }
+        });
     }
 
     //region Data Initializations
     private void init() {
         open_navigation = (ImageButton) findViewById(R.id.navigation);
-        open_drawer		= (ImageButton) 		findViewById(R.id.navigation_drawer);
+        open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         heading = (TextView) findViewById(R.id.heading);
         heading.setText(getResources().getString(R.string.heading_services));
 
@@ -212,7 +229,7 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
         if (open_navigation.getId() == v.getId()) {
             //DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
             finish();
-        }else if(open_drawer.getId() == v.getId()){
+        } else if (open_drawer.getId() == v.getId()) {
             SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
         } else if (cancel_search.getId() == v.getId()) {
             list_view_search.setVisibility(View.GONE);
@@ -227,9 +244,12 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
     }
     //endregion
 
-    //region Expandable List Management
+
+
+    /*//region Expandable List Management
     @Override
     public void onItemClick(AdapterView<?> adapter, View row, int position, long index) {
+
 
         ServicesModel s1 = (ServicesModel) adapter.getItemAtPosition(GlobelMainMenu.selected_index_services);
         s1.setOpened(false);
@@ -250,7 +270,7 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
         Log.e("", ".....on item click listener in adapter... position = " + position + ".....id......" + s.getId() + "......... " + s.isOpened() + "  .... title ......" + s.getFacilityType());
         Log.e("", ".....on item click listener in adapter... GlobelMainMenu.selected_index_services = " + GlobelMainMenu.selected_index_services + ".....id......" + s.getId() + "......... " + s.isOpened() + "  .... title ......" + s.getFacilityType());
     }
-    //endregion
+    //endregion*/
 
     @Override
     public void onDataReceived(ArrayList<ServicesModel> servicesModels) {

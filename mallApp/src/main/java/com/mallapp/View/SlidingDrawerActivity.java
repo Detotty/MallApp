@@ -97,8 +97,10 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
         drawer_logo = (ImageView) view1.findViewById(R.id.selected_center_logo);
         drawer_text = (TextView) view1.findViewById(R.id.side_menu_header);
 
-        mDrawerList.addHeaderView(view1);
-        mDrawerList.addFooterView(view2);
+        if (mDrawerList.getHeaderViewsCount() == 0){
+            mDrawerList.addHeaderView(view1);
+            mDrawerList.addFooterView(view2);
+        }
 
         adapter = new NavDrawerListAdapter(this,this, navDrawerItems);
         mDrawerList.setAdapter(adapter);

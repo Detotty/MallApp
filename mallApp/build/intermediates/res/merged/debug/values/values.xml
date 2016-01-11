@@ -881,7 +881,7 @@
     <eat-comment/>
     <string name="heading_directions"> Directions &amp; Parking</string>
     <string name="heading_favourite">FAVOURITE</string>
-    <string name="heading_services">Services</string>
+    <string name="heading_services">SERVICES</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="heading_shops">SHOPS</string>
@@ -981,6 +981,7 @@
     <string name="restaurant_search_hint">Type Restaurant Name</string>
     <string name="restaurants_">Restaurants</string>
     <string name="s_price">STARTING PRICE</string>
+    <string name="search">Search</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="sending_phone_number_dialog_message">Sending Verification Code</string>

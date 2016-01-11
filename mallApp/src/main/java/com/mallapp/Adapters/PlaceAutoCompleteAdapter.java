@@ -63,7 +63,6 @@ public class PlaceAutoCompleteAdapter extends ArrayAdapter<PlaceAutoCompleteMode
         TextView placeNameTextView;
         TextView placeDescriptionTextView;
         PlaceAutoCompleteModel PlaceAutoCompleteModel;
-
     }
 
 

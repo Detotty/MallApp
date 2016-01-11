@@ -21,7 +21,7 @@
 	            android:singleLine="true"
 	            android:layout_marginRight="5dp"
 	            android:imeOptions="actionDone"
-	            android:hint="@string/shop_1"
+	            android:hint="@string/abc_search_hint"
 	            android:layout_weight="1"
 	            android:ems="10" >
 	            <requestFocus />
