@@ -16,6 +16,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AbsListView;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.Toast;
 
@@ -63,7 +64,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     boolean lastPage = false;
     boolean isPaused = false;
 
-
+    LinearLayout linlaHeaderProgress;
+    View footerView;
     private ListView list;
     private int position;
     public static Handler uihandler;
@@ -143,10 +145,20 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
 //		filterData();
         View rootView = inflater.inflate(R.layout.endorsement_view_pager_list, container, false);
+        footerView = inflater.inflate(R.layout.list_footer_loader, null);
         list = (ListView) rootView.findViewById(R.id.mallapp_listview);
+        linlaHeaderProgress = (LinearLayout) rootView.findViewById(R.id.listfooterlayout);
         volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
         requestType = LOADING_MALL_ACTIVITIES;
-        getLatestListing();
+
+        if (isPaused){
+            linlaHeaderProgress.setVisibility(View.GONE);
+            mallActivitiesListing.clear();
+            callAddapter();
+        }
+        else
+            getLatestListing();
+
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
@@ -155,6 +167,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     swipeRefreshLayout.setRefreshing(true);
                     pageNo = 1;
                     requestType = REFRESH_MALL_ACTIVITIES;
+                    mallActivities_All.clear();
+                    mallActivities_News.clear();
+                    mallActivities_Offers.clear();
                     getLatestListing();
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
@@ -244,6 +259,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 
     @Override
     public void onDataReceived(final ArrayList<MallActivitiesModel> mallActivitiesModels) {
+        linlaHeaderProgress.setVisibility(View.GONE);
 
         switch (requestType) {
 
@@ -252,7 +268,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
-
+                        list.removeFooterView(footerView);
                         if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
                             if (mallActivitiesModels.size() < 10)
                                 lastPage = true;
@@ -276,13 +292,14 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                             requestType = LAZY_LOADING;
                                             MallIdSelection();
                                             pageNo++;
+                                            list.addFooterView(footerView);
                                             pullToRefresh();
                                         }
                                 }
                             });
                         } else {
-                            list.setAdapter(null);
-                            mallActivitiesListing = null;
+//                            list.setAdapter(null);
+//                            mallActivitiesListing = null;
 //                            Toast.makeText(context, "No Mall Activity Found!", Toast.LENGTH_SHORT).show();
                         }
 //                        adapter.notifyDataSetChanged();
@@ -295,7 +312,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
-
+                        list.removeFooterView(footerView);
                         if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
 //                            mallActivitiesListing.addAll(FavouriteSelection(context, mallActivitiesModels));
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
@@ -318,6 +335,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 uihandler.post(new Runnable() {
                     @Override
                     public void run() {
+                        list.removeFooterView(footerView);
                         swipeRefreshLayout.setRefreshing(false);
                         if (mallActivitiesModels.size() < 10)
                             lastPage = true;
@@ -346,10 +364,11 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                 public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
                                     Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
                                     if (adapter.getCount() > 0)
-                                        if (!isPaused &&!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                                        if (!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
                                             requestType = LAZY_LOADING;
                                             MallIdSelection();
                                             pageNo++;
+                                            list.addFooterView(footerView);
                                             pullToRefresh();
                                         }
                                 }

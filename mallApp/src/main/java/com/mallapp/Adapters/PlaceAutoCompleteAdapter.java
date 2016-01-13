@@ -9,15 +9,19 @@ import android.widget.Filter;
 import android.widget.Filterable;
 import android.widget.TextView;
 
+import com.google.gson.reflect.TypeToken;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.GPS.AutoCompleteApi;
 import com.mallapp.Model.PlaceAutoCompleteModel;
 import com.mallapp.Model.UserLocationModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.View.R;
 import com.mallapp.utils.SharedInstance;
 import com.mallapp.utils.Utils;
 
+import java.lang.reflect.Type;
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  * Created by Sharjeel on 11/6/2015.
@@ -147,7 +151,8 @@ public class PlaceAutoCompleteAdapter extends ArrayAdapter<PlaceAutoCompleteMode
 
                 if(userLocationModel == null) {
                     Utils.getDefaultLocation(context);
-                    userLocationModel = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+//                    userLocationModel = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+                    userLocationModel = (UserLocationModel) DataHandler.getObjectPreferences(AppConstants.USER_LOCATION, UserLocationModel.class);
                 } else {
                     mResultList = AutoCompleteApi.autocomplete(constraint.toString(), userLocationModel);
                 }

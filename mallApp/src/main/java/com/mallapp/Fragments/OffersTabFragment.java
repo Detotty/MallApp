@@ -23,6 +23,7 @@ import android.view.View.OnClickListener;
 import android.view.ViewGroup;
 import android.widget.ImageButton;
 import android.widget.ImageView;
+import android.widget.RadioButton;
 import android.widget.RadioGroup;
 import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.RelativeLayout;
@@ -69,6 +70,7 @@ public class OffersTabFragment extends Fragment
     public static Handler uihandler;
     int tabPos = 0;
     public static int pos = 0;
+    RadioButton radio_all, radio_offer , radio_news;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -87,6 +89,8 @@ public class OffersTabFragment extends Fragment
 
         navigation_button = (ImageButton) view.findViewById(R.id.navigation_drawer);
         center_logo = (ImageView) view.findViewById(R.id.center_logo);
+        radio_offer  = (RadioButton) view.findViewById(R.id.button_two);
+        radio_news  = (RadioButton) view.findViewById(R.id.button_three);
         headerLayoutColor = (RelativeLayout) view.findViewById(R.id.headerColor);
         headerLayoutColor.setBackgroundColor(getResources().getColor(R.color.purple));
         center_logo.setImageResource(R.drawable.logo);
@@ -204,10 +208,16 @@ public class OffersTabFragment extends Fragment
         if (group == segmentText) {
             if (checkedId == R.id.button_one) {
                 audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_ALL;
+                radio_offer.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.offers_radio), null, null, null);
+                radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.news_radio), null, null, null);
             } else if (checkedId == R.id.button_two) {
                 audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_OFFERS;
+                radio_offer.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.p_offers_radio), null, null, null);
+                radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.news_radio), null, null, null);
             } else if (checkedId == R.id.button_three) {
                 audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_NEWS;
+                radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.p_news_radio),null,null,null);
+                radio_offer.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.offers_radio), null, null, null);
             }
             callInOnResume();
         }
@@ -228,6 +238,7 @@ public class OffersTabFragment extends Fragment
         adapter = new OffersNewsPagerAdapter(getChildFragmentManager(), context, uiHandler, audienceFilter, TITLES);
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
+        tabs.setTextColor(Color.parseColor("#663399"));
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
         pager.setPageMargin(pageMargin);
@@ -265,8 +276,6 @@ public class OffersTabFragment extends Fragment
 
     public static void setCenter_logo(String center_logo) {
         Picasso.with(context).load(center_logo).into(OffersTabFragment.center_logo);
-
-
     }
 
     public static String getSelected_center_name() {

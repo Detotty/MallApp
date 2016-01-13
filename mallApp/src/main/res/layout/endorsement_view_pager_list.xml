@@ -4,21 +4,20 @@
     android:layout_height="match_parent"
     android:orientation="vertical" >
 
-
+    <include layout="@layout/list_footer_loader"/>
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
         android:layout_height="wrap_content">
 
-        <!-- place your view here -->
+
 
         <ListView
             android:id="@+id/mallapp_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:divider="#C7CDCE"
-            android:dividerHeight="@dimen/margin_left_5"
-            android:padding="10dp" >
+            android:dividerHeight="@dimen/margin_left_10"
+             >
         </ListView>
 
     </android.support.v4.widget.SwipeRefreshLayout>

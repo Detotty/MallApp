@@ -27,6 +27,7 @@ import com.mallapp.Model.ThirdPartyRegistrationModel;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.Model.UserProfileModel;
 import com.mallapp.Model.VolleyErrorHelper;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.DashboardTabFragmentActivity;
 import com.mallapp.View.R;
@@ -202,6 +203,7 @@ public class RegistrationController {
                         if (listener != null && user_profile != null) {
                             listener.onDataReceived(user_profile);
                             SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, user_profile);
+                            DataHandler.updatePreferences(AppConstants.PROFILE_DATA, user_profile);
                         }
 //                            else
 //                        ((Code_Verifiction)context).startProfileActivity();

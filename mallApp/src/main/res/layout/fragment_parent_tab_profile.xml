@@ -23,7 +23,7 @@
                 android:layout_height="250dp"
                 android:scaleType="centerCrop"
                 android:layout_centerHorizontal="true"
-                android:src="@drawable/mallapp_placeholder"
+                android:src="@drawable/avatar"
                 />
             <TextView
                 android:id="@+id/textView10"
@@ -84,8 +84,7 @@
                 android:layout_height="wrap_content"
                 android:orientation="horizontal"
                 android:weightSum="4"
-                android:layout_marginTop="@dimen/margin_left_5"
-                android:layout_marginBottom="@dimen/margin_left_5"
+                android:layout_margin = "20dp"
                 android:background="@color/white"
                 android:layout_below="@+id/textView9"
 
@@ -94,33 +93,29 @@
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:src="@drawable/e_det_facebook"
+                    android:src="@drawable/p_fb"
                     android:id="@+id/facebook" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:src="@drawable/e_det_twitter"
+                    android:src="@drawable/p_twitter"
                     android:id="@+id/twitter" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:src="@drawable/e_det_sms"
+                    android:src="@drawable/p_msg"
                     android:id="@+id/sms" />
 
                 <ImageView
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_gravity="bottom"
                     android:layout_weight="1"
-                    android:src="@drawable/e_det_email"
+                    android:src="@drawable/p_social"
                     android:id="@+id/email" />
             </LinearLayout>
 

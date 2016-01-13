@@ -30,7 +30,7 @@ public class AutoCompleteApi {
     private static final String TYPE_AUTOCOMPLETE = "/autocomplete";
     private static final String TYPE_NEAYBYPLACE = "/nearbysearch";
     private static final String OUT_JSON = "/json";
-    private static final String API_KEY = "AIzaSyBDI_nkm_I3UuQRAXjQWQx550zD87Rfc4M";
+    private static final String API_KEY = "AIzaSyDo3jXU0q6nI9VwUE5JO3dqnJFIBaaOaEg";
 //										   AIzaSyBDI_nkm_I3UuQRAXjQWQx550zD87Rfc4M
 //	private static final String API_KEY = "AIzaSyCp6TKbZckem3_I7hDOmOEueJ3Qf6WVS40";
 

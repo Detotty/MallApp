@@ -28,6 +28,7 @@ import com.mallapp.Model.RestaurantModel;
 import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.Model.UserLocationModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.View.R;
 import com.mallapp.cache.CentersCacheManager;
 
@@ -119,7 +120,8 @@ public class AppUtils {
                 model.setCountryCode(addresses.get(0).getCountryCode());
                 model.setCityName(addresses.get(0).getLocality());
 
-                SharedInstance.getInstance().getSharedHashMap().put(AppConstants.USER_LOCATION, model);
+//                SharedInstance.getInstance().getSharedHashMap().put(AppConstants.USER_LOCATION, model);
+                DataHandler.updatePreferences(AppConstants.USER_LOCATION, model);
                 /*List<LatLng> ll = new ArrayList<LatLng>(addresses.size()); // A list to save the coordinates if they are available
                 for(Address a : addresses){
                     if(a.hasLatitude() && a.hasLongitude()){

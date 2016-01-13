@@ -129,7 +129,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
     static class ViewHolder {
         TextView title, decs, center_name, shome_name;
         ImageButton is_fav;
-        ImageView back_image, entity_logo;
+        ImageView back_image, entity_logo, activity_type;
         //RelativeLayout r1;
     }
 
@@ -152,6 +152,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
             holder.is_fav = (ImageButton) view.findViewById(R.id.fav_center);
             holder.back_image = (ImageView) view.findViewById(R.id.center_image);
             holder.entity_logo = (ImageView) view.findViewById(R.id.entity_logo);
+            holder.activity_type = (ImageView) view.findViewById(R.id.iv_activity_type);
 
             view.setTag(holder);
         } else {
@@ -164,8 +165,10 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         String offerTime;
         if (offer_obj.getActivityName().equals("Offer")){
             offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
+            holder.activity_type.setImageResource(R.drawable.offer_activity);
         }else {
             offerTime  = offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"));
+            holder.activity_type.setImageResource(R.drawable.news_activity);
         }
         holder.title.setText(offer_obj.getActivityTextTitle());
         holder.decs.setText(offer_obj.getBriefText());

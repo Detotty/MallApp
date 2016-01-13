@@ -2,6 +2,11 @@ package com.mallapp.Constants;
 
 public class AppConstants {
 
+	//********* FILES ********//
+	public static final String FILE_NAME_SHARED_PREF = "mall_app.xml";
+	public static final String FILE_NAME_DB = "mall_app.db";
+
+
 	public static final String USER_TOKEN = "Mall_Token";
 
 

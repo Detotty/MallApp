@@ -17,11 +17,12 @@ public class GlobelProfile {
 	public static String mobile_no = "mobile_no";
 	public static String country_code="country_code";
 	public static String push_notification= "push_notification";
-	
+
 	// endorsement...
 	public static String search_list[];
-	
-	
+
+	public static String USER_MODEL_OBJECT= "push_notification";
+
 
 }
 

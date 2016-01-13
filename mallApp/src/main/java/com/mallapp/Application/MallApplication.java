@@ -11,6 +11,7 @@ import com.android.volley.toolbox.ImageLoader;
 import com.android.volley.toolbox.Volley;
 import com.mallapp.Controllers.OffersNewsList;
 import com.mallapp.Model.Offers_News;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.View.R;
 import com.mallapp.cache.AppCacheManager;
 import com.mallapp.utils.LruBitmapCache;
@@ -48,6 +49,7 @@ public class MallApplication extends Application implements Serializable {
 
         ACRA.init(this);
         mInstance = this;
+        new DataHandler(this);
 //        readOffersNews();
         readShops();
         readRetuarant();

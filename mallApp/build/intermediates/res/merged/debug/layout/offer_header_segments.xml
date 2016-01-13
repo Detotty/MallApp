@@ -33,6 +33,7 @@
 			android:textAppearance="?android:attr/textAppearanceMedium"
 			android:button="@null"
 			android:gravity="center"
+			android:paddingLeft="5dp"
 			android:text="@string/all_"
 			android:textColor="@color/radio_colors" />
 		
@@ -43,7 +44,10 @@
 			android:layout_height="wrap_content"
 			android:button="@null"
 			android:gravity="center"
+			android:paddingLeft="15dp"
+			android:paddingRight="10dp"
 			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:drawableLeft="@drawable/offers_radio"
 			android:text="@string/offer_"
 			android:textColor="@color/radio_colors" />
 		
@@ -54,6 +58,9 @@
 			android:button="@null"
 			android:gravity="center"
 			android:textAppearance="?android:attr/textAppearanceMedium"
+			android:paddingLeft="15dp"
+			android:paddingRight="10dp"
+			android:drawableLeft="@drawable/news_radio"
 			android:text="@string/news_"
 			android:textColor="@color/radio_colors" />
 

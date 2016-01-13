@@ -27,6 +27,7 @@ import com.google.gson.Gson;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.SocialSharingConstants;
 import com.mallapp.Model.UserProfileModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FacebookProfileModel;
 import com.mallapp.utils.SharedInstance;
@@ -306,7 +307,7 @@ public class RegistrationActivity extends Activity {
 //            SharedPreferenceUserProfile.SaveUserProfile(userProfile,this);
 
             SharedInstance.getInstance().getSharedHashMap().put(AppConstants.FACEBOOK_DATA,facebookProfileModel);
-
+            DataHandler.updatePreferences(AppConstants.FACEBOOK_DATA, facebookProfileModel);
             RegistrationController controller = new RegistrationController(this);
 
             controller.registerWithFacebook(facebookProfileModel);
@@ -322,7 +323,7 @@ public class RegistrationActivity extends Activity {
     public void showDashboard(UserProfileModel userProfile){
 
         SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
-
+        DataHandler.updatePreferences(AppConstants.PROFILE_DATA, userProfile);
         //SharedPreferenceUserProfile.SaveUserProfile(userProfile, this);
         //Toast.makeText(getApplicationContext(), "Registration Successfully!", Toast.LENGTH_LONG).show();
 

@@ -64,6 +64,7 @@ public class ProfileTabFragment extends Fragment{
             SignUpWebservice.getPlayStoreLink();
             link = StaticLiterls.link;
         }*/
+        initUI();
         return viewHome;
     }
 
@@ -71,7 +72,6 @@ public class ProfileTabFragment extends Fragment{
     public void onResume() {
         super.onResume();
 //        user_profile = SharedPreferenceUserProfile.getUserProfile(getActivity().getApplicationContext());
-        initUI();
     }
 
     public void initUI() {

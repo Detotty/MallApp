@@ -14,6 +14,8 @@ import android.widget.ListView;
 
 import com.List.Adapter.FavouriteCenterAdapter;
 import com.mallapp.Constants.AppConstants;
+import com.mallapp.Model.UserProfileModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.FavouriteCenters;
 import com.mallapp.Model.FavouriteCentersModel;
@@ -42,8 +44,9 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		super.onCreate(savedInstanceState);
 		setContentView(R.layout.select_favourite_center);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
-		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION))
-			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+//		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION))
+//			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
+		model = (UserLocationModel) DataHandler.getObjectPreferences(AppConstants.USER_LOCATION, UserLocationModel.class);
 
 		centers_listM= new ArrayList<FavouriteCentersModel>();
 		list_view= (ListView) findViewById(R.id.search_list);

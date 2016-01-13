@@ -11,6 +11,7 @@ import android.widget.Toast;
 import com.Location.Gps.Lattitude_Logitude;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.UserLocationModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.View.R;
 
 import java.io.InputStream;
@@ -73,8 +74,9 @@ public class Utils {
                     model.setCountryCode(countryID);
                     model.setCityName(cityName);
 
-                    SharedInstance.getInstance().getSharedHashMap().put(AppConstants.USER_LOCATION, model);
+//                    SharedInstance.getInstance().getSharedHashMap().put(AppConstants.USER_LOCATION, model);
 
+                    DataHandler.updatePreferences(AppConstants.USER_LOCATION, model);
 
 //                if(countryID!= null && countryID.length()>0 &&  !countryID.equals("null")){
 //
@@ -192,6 +194,16 @@ public class Utils {
             e.printStackTrace();
         }
         return null;
+    }
+
+    /*
+	 * Checks whether the Value String is Empty or Not
+	 */
+    public static boolean isEmpty(String value) {
+        if (value == null || "".equals(value.trim())) {
+            return true;
+        }
+        return false;
     }
 
 }
