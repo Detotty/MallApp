@@ -291,9 +291,20 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		shop_name.setText(restaurantDetailModel.getName());
 		tv_about.setText(restaurantDetailModel.getAboutText());
 		tv_Detail.setText(restaurantDetailModel.getBriefText());
-		tv_address.setText(restaurantDetailModel.getAddress());
-		tv_Phone.setText(restaurantDetailModel.getPhone());
-		tv_Email.setText(restaurantDetailModel.getEmail());
+		if (restaurantDetailModel.getAddress() != null && !restaurantDetailModel.getAddress().isEmpty())
+			tv_address.setText(restaurantDetailModel.getAddress());
+		else
+			tv_address.setVisibility(View.GONE);
+		if (restaurantDetailModel.getEmail() != null && !restaurantDetailModel.getEmail().isEmpty())
+			tv_Email.setText(restaurantDetailModel.getEmail());
+		else
+			tv_Email.setVisibility(View.GONE);
+		if (restaurantDetailModel.getPhone() != null && !restaurantDetailModel.getPhone().isEmpty())
+			tv_Phone.setText(restaurantDetailModel.getPhone());
+		else
+			tv_Phone.setVisibility(View.GONE);
+		if (restaurantDetailModel.getWebURL() == null || restaurantDetailModel.getWebURL().isEmpty())
+			tv_Web.setVisibility(View.GONE);
 		RestaurantTimingsModel[] timinigs = restaurantDetailModel.getResturantTimings();
 		RestaurantOffersModel[] storeOffers = restaurantDetailModel.getRestaurantOffers();
 		getRestaurantOffers(storeOffers);

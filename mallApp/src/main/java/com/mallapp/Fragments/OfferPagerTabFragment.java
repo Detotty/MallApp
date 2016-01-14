@@ -6,6 +6,7 @@ import java.util.ArrayList;
 import java.util.Iterator;
 
 import android.content.Context;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
 import android.os.Bundle;
@@ -160,6 +161,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             getLatestListing();
 
         swipeRefreshLayout = (SwipeRefreshLayout) rootView.findViewById(R.id.swipe_refresh_layout);
+        swipeRefreshLayout.setColorSchemeColors(Color.parseColor("#663399"));
         swipeRefreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
@@ -391,22 +393,22 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     public void OnError() {
         switch (requestType) {
             case REFRESH_MALL_ACTIVITIES: {
-                if (adapter!= null)
+                /*if (adapter!= null)
                  adapter.clear();
 
 //                mallActivities_All.clear();
 
 //                adapter.notifyDataSetChanged();
-                swipeRefreshLayout.setRefreshing(false);
+                swipeRefreshLayout.setRefreshing(false);*/
             }
             break;
 
             case LOADING_MALL_ACTIVITIES:{
-                if (mallActivities_All!=null) {
+                /*if (mallActivities_All!=null) {
                     mallActivities_All.clear();
                     if (adapter!=null)
                     adapter.notifyDataSetChanged();
-                }
+                }*/
                 break;
             }
         }

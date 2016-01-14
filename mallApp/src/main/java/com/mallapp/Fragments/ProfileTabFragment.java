@@ -47,7 +47,7 @@ public class ProfileTabFragment extends Fragment{
     ImageButton back,fav;
 //    String link = StaticLiterls.link;
     String[] list_items, settings_items ;
-
+    public static boolean isUpdate = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -202,17 +202,20 @@ public class ProfileTabFragment extends Fragment{
             @Override
             public void onClick(View v) {
                 if (textView_prfile.getText().toString().equals(getString(R.string.edit_profile))) {
+                    isUpdate = true;
                     Intent intent = new Intent(getActivity(), RegistrationProfileActivity.class);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.edit_centers))) {
+                    isUpdate = true;
                     Intent intent = new Intent(getActivity(), Select_Favourite_Center.class);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
 
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.edit_interests))) {
+                    isUpdate = true;
                     Intent intent = new Intent(getActivity(), Select_Interest.class);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,

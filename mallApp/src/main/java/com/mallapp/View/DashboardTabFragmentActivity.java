@@ -92,7 +92,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
         drawer_text = (TextView) view1.findViewById(R.id.side_menu_header);
         
         mDrawerList.addHeaderView(view1);
-        mDrawerList.addFooterView(view2);
+//        mDrawerList.addFooterView(view2);
         
         adapter = new NavDrawerListAdapter(getApplicationContext(),this, navDrawerItems);
         mDrawerList.setAdapter(adapter);
@@ -129,6 +129,8 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		@Override
 		public void onDrawerOpened(View view) {
 			mDrawerLayout.openDrawer(mDrawerList);
+			drawerLogoCondtions();
+
 		}
 		@Override
 		public void onDrawerClosed(View view) {
@@ -147,11 +149,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		// update the main content by replacing fragments
 		//fragment= null;
 		switch (position) {
-		case 1:
-			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-				&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+		case 1:{
 
 			MainMenuConstants.uiHandler= uiHandler;
 			DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
@@ -161,9 +159,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 			//b.putString("favourite", subcatagory);
 			//activity.putExtras(b);
 			startActivity(activity);
-		} else
-				showdailog();
-			break;
+		}			break;
 			
 		case 2:
 			
@@ -228,32 +224,22 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 
 			
 		case 6:
-			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			
+			{
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, DiscountCalculatorActivity.class);
 				startActivity(activity);
-			} else
-				showdailog();
+			}
 			break;
 			
 			
 		case 7:
-			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			
-				MainMenuConstants.uiHandler= uiHandler;
+			{
+				MainMenuConstants.uiHandler = uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, FavouritesMainMenuActivity.class);
+				Intent activity = new Intent(DashboardTabFragmentActivity.this, FavouritesMainMenuActivity.class);
 				startActivity(activity);
-			} else
-				showdailog();
+			}
 			break;
 
 		default:
@@ -359,8 +345,24 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		
 		d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
 		drawer_logo.setImageDrawable(d);*/
-		Picasso.with(context).load(center_logo).into(drawer_logo);
+		Picasso.with(context).load(center_logo).placeholder(R.drawable.mallapp_placeholder).error(R.drawable.mallapp_placeholder).into(drawer_logo);
 	
+	}
+
+	static void drawerLogoCondtions(){
+		if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
+				&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+
+			drawer_text.setVisibility(View.GONE);
+			drawer_logo.setVisibility(View.VISIBLE);
+			setCenter_logo(MainMenuConstants.SELECTED_CENTER_LOGO, context);
+
+		} else{
+			drawer_text.setVisibility(View.VISIBLE);
+			drawer_logo.setVisibility(View.GONE);
+		}
 	}
 
 

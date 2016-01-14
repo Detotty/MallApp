@@ -10,10 +10,12 @@ import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.WindowManager;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.List.Adapter.FavouriteCenterAdapter;
 import com.mallapp.Constants.AppConstants;
+import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Model.UserProfileModel;
 import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.utils.RegistrationController;
@@ -30,6 +32,7 @@ import com.mallapp.utils.SharedInstance;
 
 public class Select_Favourite_Center extends Activity implements OnClickListener, NearbyListener {
 	Button next, all, nearby ;
+	ImageView btn_back;
 	ListView list_view;
 	public FavouriteCenterAdapter adapter;
 	ArrayList<FavouriteCenters> centers_list;
@@ -62,12 +65,21 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		next 	= (Button) findViewById(R.id.next_screen);
 		all		= (Button) findViewById(R.id.all_centers);
 		nearby	= (Button) findViewById(R.id.nearby_centers);
-		
+		btn_back	= (ImageView) findViewById(R.id.back);
+
 		all.setOnClickListener(this);
 		next.setOnClickListener(this);
 		nearby.setOnClickListener(this);
-		
+		btn_back.setOnClickListener(this);
 
+		try{
+			if (ProfileTabFragment.isUpdate){
+				btn_back.setVisibility(View.VISIBLE);
+				next.setText(getResources().getString(R.string.update));
+			}
+		}catch (Exception e){
+
+		}
 		
 		all.setBackgroundResource(R.drawable.all_fav_p);
 		nearby.setBackgroundResource(R.drawable.nearby_fav);
@@ -144,6 +156,8 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 			nearby.setTextColor(getResources().getColor(R.color.white));
 			CalculateNearByCenters();
 
+		}else if (v.getId() == btn_back.getId()){
+			finish();
 		}
 	}
 

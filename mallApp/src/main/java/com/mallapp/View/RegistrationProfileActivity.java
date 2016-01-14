@@ -46,6 +46,7 @@ import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelProfile;
 import com.mallapp.Constants.SocialSharingConstants;
+import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Model.UserProfileModel;
 import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.utils.AppUtils;
@@ -81,7 +82,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 	//private static final String TAG = RegistrationProfileActivity.class.getSimpleName();
 
 	private ImageImportHelper mImageImportHelper;
-	private ImageView profileImageView;
+	private ImageView profileImageView, btn_back;
 	private EditText nameEditText, emailEditText;
 	private TextView DOBEditText, locationTextView;
 	private Date dateOfBirthday;
@@ -115,28 +116,17 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		setContentView(R.layout.registration_profile);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 
-		/*ActionBar actionBar = getActionBar();
-		actionBar.hide();*/
-
 		init();
 		mImageImportHelper 	= ImageImportHelper.getInstance(RegistrationProfileActivity.this);
+		try{
+			if (ProfileTabFragment.isUpdate){
+				btn_back.setVisibility(View.VISIBLE);
+				syncFbButton.setVisibility(View.GONE);
+				continueButton.setText(getResources().getString(R.string.update));
+			}
+		}catch (Exception e){
 
-
-
-
-//		k/6DY49SZoyBXA7o/zbYuetdL78=
-//		try {
-//			PackageInfo info = getPackageManager().getPackageInfo("com.crowdeye.View",
-//					PackageManager.GET_SIGNATURES);
-//			for (Signature signature : info.signatures) {
-//				MessageDigest md = MessageDigest.getInstance("SHA");
-//				md.update(signature.toByteArray());
-//				Log.d("KeyHash:", Base64.encodeToString(md.digest(), Base64.DEFAULT));
-//			}
-//		} catch (NameNotFoundException e) {
-//
-//		} catch (NoSuchAlgorithmException e) {
-//		}	//06-17 14:48:41.501: D/KeyHash:(4000): k/6DY49SZoyBXA7o/zbYuetdL78=
+		}
 
 	}
 
@@ -152,6 +142,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		syncFbButton = (Button) findViewById(R.id.synce_facebook);
 
 		profileImageView= (ImageView) findViewById(R.id.profile_image_edit);
+		btn_back= (ImageView) findViewById(R.id.back);
 
 		male 			= (RadioButton) findViewById(R.id.male);
 		female 			= (RadioButton) findViewById(R.id.female);
@@ -171,6 +162,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		DOBEditText.setOnClickListener(dobEditTextListener);
 		locationTextView.setOnClickListener(locationTextViewListener);
 		profileImageView.setOnClickListener(profileImageListener);
+		btn_back.setOnClickListener(back_btn_listener);
 //		syncFbButton.setOnClickListener(loginButtonListener);
 		continueButton.setOnClickListener(continueButtonListener);
 	}
@@ -210,15 +202,10 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		super.onActivityResult(requestCode, resultCode, data);
 		if (requestCode == ImageImportHelper.ACTION_TAKE_PHOTO_IMAGEVIEW) {
 			if (resultCode == RESULT_OK) {
-
-
 				final Bitmap bitmapSelectedImage = (Bitmap) data.getExtras().get("data");
-
 				profile_image_bitmap = bitmapSelectedImage;
 				//bitmapSelectedImage = Image_Scaling.getImageOrintation(bitmapSelectedImage, picturePath);
 				Image_Scaling.setRoundedImgeToImageView(getApplicationContext(), profileImageView, bitmapSelectedImage);
-
-
 			}
 
 		} else if (requestCode == ImageImportHelper.ACTION_TAKE_PHOTO_FROM_GALLERY) {
@@ -226,17 +213,12 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 			Log.e("", "image from gallery ");
 
 			if (resultCode == RESULT_OK) {
-
-
 				try {
-
 					Uri selectedImageUri = data.getData();
 					String picturePath 	= getPath(selectedImageUri);
-
 					Log.e("", "image from gallery path " + picturePath);
 					//SharedPreferenceManager.saveString(RegistrationProfileActivity.this, GlobelProfile.profile_image, profile_image_array);
 					Bitmap bitmapSelectedImage = BitmapFactory.decodeFile(picturePath);
-
 					if (bitmapSelectedImage == null) {
 						selectProfileImage("Re-Select Picture");
 						return;
@@ -245,8 +227,6 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					profile_image_bitmap = bitmapSelectedImage;
 					bitmapSelectedImage = Image_Scaling.getImageOrintation(bitmapSelectedImage, picturePath);
 					Image_Scaling.setRoundedImgeToImageView(getApplicationContext(), profileImageView, bitmapSelectedImage);
-
-
 
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -397,10 +377,22 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 //			Intent tabIntent = new Intent(RegistrationProfileActivity.this, DashBoardCrowedEye.class);
 
 			Intent intent = new Intent(RegistrationProfileActivity.this, Select_Favourite_Center.class);
-			if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
-				finishAffinity();
+
+			try{
+				if (!ProfileTabFragment.isUpdate) {
+					if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+						finishAffinity();
+					}
+					startActivity(intent);
+				}
+			}catch (Exception e){
+				if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.JELLY_BEAN) {
+					finishAffinity();
+				}
+				startActivity(intent);
+				Log.e("Updation ",e.toString());
 			}
-			startActivity(intent);
+
 
 		}else if(requestType.equals(RequestType.GET_USER_PROFILE)){
 
@@ -557,6 +549,12 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		@Override
 		public void onClick(View v) {
 			selectProfileImage("Add Photo!");
+		}
+	};
+	private View.OnClickListener back_btn_listener = new View.OnClickListener() {
+		@Override
+		public void onClick(View v) {
+			finish();
 		}
 	};
 

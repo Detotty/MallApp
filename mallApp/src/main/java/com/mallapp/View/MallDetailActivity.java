@@ -135,11 +135,21 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         mall_name.setText(mallDetailModel.getName());
         tv_about.setText(mallDetailModel.getAboutText());
         tv_Detail.setText(mallDetailModel.getBriefText());
-        tv_address.setText(mallDetailModel.getAddress());
-        tv_Phone.setText(mallDetailModel.getPhone());
-        tv_Phone.setVisibility(View.GONE);
-        tv_Email.setText(mallDetailModel.getEmail());
-        tv_Email.setVisibility(View.GONE);
+
+        if (mallDetailModel.getAddress() != null && !mallDetailModel.getAddress().isEmpty())
+            tv_address.setText(mallDetailModel.getAddress());
+        else
+            tv_address.setVisibility(View.GONE);
+        if (mallDetailModel.getEmail() != null && !mallDetailModel.getEmail().isEmpty())
+            tv_Email.setText(mallDetailModel.getEmail());
+        else
+            tv_Email.setVisibility(View.GONE);
+        if (mallDetailModel.getPhone() != null && !mallDetailModel.getPhone().isEmpty())
+            tv_Phone.setText(mallDetailModel.getPhone());
+        else
+            tv_Phone.setVisibility(View.GONE);
+        if (mallDetailModel.getWebURL() == null || mallDetailModel.getWebURL().isEmpty())
+            tv_Web.setVisibility(View.GONE);
         MallTimingsModel[] timinigs = mallDetailModel.getMallTimings();
         for (MallTimingsModel st : timinigs
                 ) {

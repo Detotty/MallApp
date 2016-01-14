@@ -15,6 +15,7 @@ import android.widget.ImageView;
 import android.widget.ListView;
 
 import com.List.Adapter.InterestAdapter;
+import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.utils.RegistrationController;
 import com.mallapp.Model.InterestSelectionModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
@@ -60,7 +61,14 @@ public class Select_Interest extends Activity implements OnClickListener {
 		is_interest_select_all.setOnClickListener(this);
 //		getInterestList();
 		isSelectAll= false;
+		try{
+			if (ProfileTabFragment.isUpdate){
+				back.setVisibility(View.VISIBLE);
+				next.setText(getResources().getString(R.string.update));
+			}
+		}catch (Exception e){
 
+		}
 		
 	}
 
@@ -155,9 +163,17 @@ public class Select_Interest extends Activity implements OnClickListener {
 				AlertMessages.show_alert(Select_Interest.this, "The Mall App", "Please select at least one interest.", "OK");
 			
 		}else if(v.getId()== back.getId()){
-			Intent select_interest= new Intent(Select_Interest.this, Select_Favourite_Center.class);
-			finish();
-			startActivity(select_interest);
+			try{
+				if (!ProfileTabFragment.isUpdate){
+					Intent select_interest= new Intent(Select_Interest.this, Select_Favourite_Center.class);
+					finish();
+					startActivity(select_interest);
+				}
+				else
+					finish();
+			}catch (Exception e){
+				finish();
+			}
 			
 		}else if(v.getId()== is_interest_select_all.getId()){
 			selectAllInterests();

@@ -70,7 +70,7 @@ public class OffersTabFragment extends Fragment
     public static Handler uihandler;
     int tabPos = 0;
     public static int pos = 0;
-    RadioButton radio_all, radio_offer , radio_news;
+    RadioButton radio_all, radio_offer, radio_news;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -89,8 +89,8 @@ public class OffersTabFragment extends Fragment
 
         navigation_button = (ImageButton) view.findViewById(R.id.navigation_drawer);
         center_logo = (ImageView) view.findViewById(R.id.center_logo);
-        radio_offer  = (RadioButton) view.findViewById(R.id.button_two);
-        radio_news  = (RadioButton) view.findViewById(R.id.button_three);
+        radio_offer = (RadioButton) view.findViewById(R.id.button_two);
+        radio_news = (RadioButton) view.findViewById(R.id.button_three);
         headerLayoutColor = (RelativeLayout) view.findViewById(R.id.headerColor);
         headerLayoutColor.setBackgroundColor(getResources().getColor(R.color.purple));
         center_logo.setImageResource(R.drawable.logo);
@@ -165,8 +165,8 @@ public class OffersTabFragment extends Fragment
                     e.printStackTrace();
                 }
             }
-            if (position>0){
-                FavouriteCentersModel center = TITLES_Centers.get(position-1);
+            if (position > 0) {
+                FavouriteCentersModel center = TITLES_Centers.get(position - 1);
                 String center_logo_name = center.getLogoUrl();
                 if (center.getCorporateColor() != null)
                     headerLayoutColor.setBackgroundColor(Color.parseColor(center.getCorporateColor()));
@@ -190,6 +190,11 @@ public class OffersTabFragment extends Fragment
     public void onResume() {
 //        callInOnResume();
         super.onResume();
+        if (ProfileTabFragment.isUpdate) {
+            ProfileTabFragment.isUpdate = false;
+            TITLES = FavouriteCentersFiltration.getFavTITLES(context);
+            callInOnResume();
+        }
     }
 
     @Override
@@ -216,7 +221,7 @@ public class OffersTabFragment extends Fragment
                 radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.news_radio), null, null, null);
             } else if (checkedId == R.id.button_three) {
                 audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_NEWS;
-                radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.p_news_radio),null,null,null);
+                radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.p_news_radio), null, null, null);
                 radio_offer.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.offers_radio), null, null, null);
             }
             callInOnResume();
@@ -275,7 +280,7 @@ public class OffersTabFragment extends Fragment
     }
 
     public static void setCenter_logo(String center_logo) {
-        Picasso.with(context).load(center_logo).into(OffersTabFragment.center_logo);
+        Picasso.with(context).load(center_logo).placeholder(R.drawable.mallapp_placeholder).error(R.drawable.mallapp_placeholder).into(OffersTabFragment.center_logo);
     }
 
     public static String getSelected_center_name() {

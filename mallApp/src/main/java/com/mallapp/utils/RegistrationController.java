@@ -5,6 +5,7 @@ import android.app.ProgressDialog;
 import android.content.Context;
 import android.content.Intent;
 import android.util.Log;
+import android.view.View;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.Toast;
@@ -20,6 +21,7 @@ import com.android.volley.toolbox.JsonObjectRequest;
 import com.google.gson.Gson;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.AppConstants;
+import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Model.FacebookProfileModel;
 import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.Model.InterestSelectionModel;
@@ -716,17 +718,29 @@ public class RegistrationController {
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
             public void onResponse(JSONObject jsonObject) {
+                if (progressDialog != null)
+                    progressDialog.dismiss();
                 try {
                     boolean success = jsonObject.getBoolean("Success");
                     if (success) {
                         if (act) {
-                            Intent fav = new Intent(context, Select_Interest.class);
-                            ((Activity) context).finish();
-                            context.startActivity(fav);
+                            try{
+                                if (!ProfileTabFragment.isUpdate){
+                                    Intent fav = new Intent(context, Select_Interest.class);
+                                    ((Activity) context).finish();
+                                    context.startActivity(fav);
+                                }
+                            }catch (Exception e){
+
+                            }
+
                         } else {
-                            Intent select_interest = new Intent(context, DashboardTabFragmentActivity.class);
-                            ((Activity) context).finish();
-                            context.startActivity(select_interest);
+                            if (!ProfileTabFragment.isUpdate){
+                                Intent select_interest = new Intent(context, DashboardTabFragmentActivity.class);
+                                ((Activity) context).finish();
+                                context.startActivity(select_interest);
+                            }
+
                         }
                     } else {
                         if (jsonObject.has("Message")) {

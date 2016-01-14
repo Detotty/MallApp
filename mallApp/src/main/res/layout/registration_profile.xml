@@ -11,6 +11,13 @@
 		android:layout_height="500dp"
 		android:background="@color/purple">
 
+		<ImageView
+			android:id="@+id/back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_margin="@dimen/margin_left_10"
+			android:visibility="gone"
+			android:src="@drawable/back_screen_indicator"/>
 		<RelativeLayout
 			android:id="@+id/relativeLayout1"
 			android:layout_width="match_parent"

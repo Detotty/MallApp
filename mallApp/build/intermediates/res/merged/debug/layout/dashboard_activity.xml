@@ -37,6 +37,6 @@
         android:layout_height="match_parent"
         android:layout_gravity="start"
         android:choiceMode="singleChoice"
-        android:background="@color/black3"/>
+        android:background="@color/black1"/>
 
 </android.support.v4.widget.DrawerLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/dashboard_activity.xml -->

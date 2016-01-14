@@ -21,7 +21,7 @@
     <ImageView
         android:id="@+id/center_logo"
         android:layout_width="100dp"
-        android:layout_height="30dp"
+        android:layout_height="40dp"
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:contentDescription="@string/app_name"

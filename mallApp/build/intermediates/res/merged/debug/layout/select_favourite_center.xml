@@ -8,6 +8,15 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:background="@drawable/top_bar">
+
+		<ImageView
+			android:id="@+id/back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:visibility="gone"
+			android:layout_margin="@dimen/margin_left_10"
+			android:src="@drawable/back_screen_indicator"/>
 		<TextView
 		    android:id="@+id/endorsement_name"
 		    android:layout_width="wrap_content"
@@ -73,7 +82,6 @@
 		    android:textSize="18sp"
             android:textColor="@color/purple"
             android:text="@string/all_"
-		    
 		    style="?android:attr/buttonBarButtonStyle"
 		     />
 		<Button 
@@ -82,7 +90,6 @@
 		    android:layout_width="wrap_content"
 		    android:layout_height="wrap_content"
 		    android:background="@drawable/nearby_fav"
-		    
 		    android:textSize="18sp"
             android:textColor="@color/purple"
             android:text="@string/nearby_" 
@@ -113,7 +120,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_alignParentBottom="true"
-            android:layout_marginBottom="20dp"
+            android:layout_marginBottom="10dp"
             android:layout_centerHorizontal="true"
             android:background="@drawable/continue_selector"
            	android:text="@string/next_"

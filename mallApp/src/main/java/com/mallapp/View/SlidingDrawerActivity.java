@@ -99,7 +99,6 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
 
         if (mDrawerList.getHeaderViewsCount() == 0){
             mDrawerList.addHeaderView(view1);
-            mDrawerList.addFooterView(view2);
         }
 
         adapter = new NavDrawerListAdapter(this,this, navDrawerItems);
@@ -137,6 +136,8 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
         @Override
         public void onDrawerOpened(View view) {
             mDrawerLayout.openDrawer(mDrawerList);
+            drawerLogoCondtions();
+
         }
         @Override
         public void onDrawerClosed(View view) {
@@ -155,11 +156,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
         // update the main content by replacing fragments
         //fragment= null;
         switch (position) {
-            case 1:
-                if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-                        && MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+            case 1:{
 
                     MainMenuConstants.uiHandler= uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
@@ -171,8 +168,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                     //activity.putExtras(b);
                     startActivity(activity);
                     finish();
-                } else
-                    showdailog();
+                }
                 break;
 
             case 2:
@@ -245,28 +241,18 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                 break;
 
 
-            case 6:
-                if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-                        && MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+            case 6: {
 
-                    MainMenuConstants.uiHandler= uiHandler;
+                    MainMenuConstants.uiHandler = uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    Intent activity= new Intent(SlidingDrawerActivity.this, DiscountCalculatorActivity.class);
+                    Intent activity = new Intent(SlidingDrawerActivity.this, DiscountCalculatorActivity.class);
                     activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(activity);
-                    finish();
-                } else
-                    showdailog();
+                }
                 break;
 
 
-            case 7:
-                if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-                        && MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+            case 7:{
 
                     MainMenuConstants.uiHandler= uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
@@ -274,8 +260,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                     activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
                     startActivity(activity);
                     finish();
-                } else
-                    showdailog();
+                }
                 break;
 
             default:
@@ -344,7 +329,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
 		
 		d = new BitmapDrawable(context.getResources(), Bitmap.createScaledBitmap(bitmap, mDstWidth,mDstHeight, true));
 		drawer_logo.setImageDrawable(d);*/
-        Picasso.with(context).load(center_logo).into(drawer_logo);
+        Picasso.with(context).load(center_logo).placeholder(R.drawable.mallapp_placeholder).error(R.drawable.mallapp_placeholder).into(drawer_logo);
 
     }
 

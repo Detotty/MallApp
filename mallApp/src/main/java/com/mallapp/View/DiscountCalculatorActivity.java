@@ -13,12 +13,12 @@ import android.widget.NumberPicker;
 import android.widget.NumberPicker.OnValueChangeListener;
 import android.widget.TextView;
 
-public class DiscountCalculatorActivity extends Activity implements OnClickListener {
+public class DiscountCalculatorActivity extends SlidingDrawerActivity implements OnClickListener {
 	
 	private EditText s_discount;
 	private TextView discount_value, discounted_price;
 	private TextView heading;
-	private ImageButton navigation_button;
+	private ImageButton open_drawer,navigation_button;
 	private NumberPicker picker;
 	String[] discount_percent = new String[] { "--", "5%", "10%", "15%", "20%", 
 												"25%", "30%", "35%","40%", "45%",
@@ -43,7 +43,8 @@ public class DiscountCalculatorActivity extends Activity implements OnClickListe
 	}
 
 	private void init() {
-	
+
+		open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
 		s_discount		=  (EditText) findViewById(R.id.start_value);
 		discount_value	=  (TextView) findViewById(R.id.discount_value);
 		discounted_price=  (TextView) findViewById(R.id.discount_price);
@@ -52,7 +53,9 @@ public class DiscountCalculatorActivity extends Activity implements OnClickListe
 		navigation_button	= (ImageButton) findViewById(R.id.navigation);
 		navigation_button.setOnClickListener(this);
 
-		
+		open_drawer.setOnClickListener(this);
+		navigation_button.setVisibility(View.GONE);
+		open_drawer.setVisibility(View.VISIBLE);
 		picker = (NumberPicker) findViewById(R.id.discount_picker);
 		picker.setMinValue(0);
 		picker.setMaxValue(discount_percent.length-1);
@@ -134,6 +137,9 @@ public class DiscountCalculatorActivity extends Activity implements OnClickListe
 	public void onClick(View v) {
 		if(navigation_button.getId() == v.getId()){
 			finish();
+		}
+		else if (open_drawer.getId() == v.getId()) {
+			SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
 		}
 	}
 }
