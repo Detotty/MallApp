@@ -39,6 +39,15 @@ import android.widget.Toast;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.ImageRequest;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookCallback;
+import com.facebook.FacebookException;
+import com.facebook.FacebookSdk;
+import com.facebook.GraphRequest;
+import com.facebook.GraphResponse;
+import com.facebook.login.LoginManager;
+import com.facebook.login.LoginResult;
+import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.mallapp.Adapters.PlaceAutoCompleteAdapter;
 import com.mallapp.Application.MallApplication;
@@ -66,12 +75,15 @@ import com.mallapp.socialsharing.SessionStore;
 import com.mallapp.utils.GetCurrentDate;
 import com.mallapp.utils.SharedInstance;
 import com.mallapp.utils.Utils;
+import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.lang.reflect.Type;
 import java.text.ParseException;
 import java.text.SimpleDateFormat;
+import java.util.Arrays;
 import java.util.Calendar;
 import java.util.Date;
 import java.util.List;
@@ -86,6 +98,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 	private EditText nameEditText, emailEditText;
 	private TextView DOBEditText, locationTextView;
 	private Date dateOfBirthday;
+	CallbackManager callbackManager;
 
 	//private String profile_image_array;
 	private Button continueButton, syncFbButton;
@@ -133,6 +146,9 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 	private void init() {
 
+		FacebookSdk.sdkInitialize(this.getApplicationContext());
+		callbackManager = CallbackManager.Factory.create();
+
 		nameEditText = (EditText) findViewById(R.id.user_name);
 		emailEditText = (EditText) findViewById(R.id.user_email);
 		locationTextView = (TextView) findViewById(R.id.user_location);
@@ -165,6 +181,60 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		btn_back.setOnClickListener(back_btn_listener);
 //		syncFbButton.setOnClickListener(loginButtonListener);
 		continueButton.setOnClickListener(continueButtonListener);
+		LoginManager.getInstance().registerCallback(callbackManager,
+				new FacebookCallback<LoginResult>() {
+					@Override
+					public void onSuccess(LoginResult loginResult) {
+						Log.d("Success", "Login");
+// App code
+						GraphRequest request = GraphRequest.newMeRequest(
+								loginResult.getAccessToken(),
+								new GraphRequest.GraphJSONObjectCallback() {
+									@Override
+									public void onCompleted(
+											JSONObject object,
+											GraphResponse response) {
+										Gson gson = new Gson();
+										FacebookProfileModel facebookProfileModel = gson.fromJson(object.toString(), FacebookProfileModel.class);
+										nameEditText.setText(facebookProfileModel.getName());
+										emailEditText.setText(facebookProfileModel.getEmail());
+										DOBEditText.setText(facebookProfileModel.getBirthday());
+										String gender = facebookProfileModel.getGender();
+										if (gender != null && (gender.startsWith("male") || gender.startsWith("Male"))) {
+											male.setChecked(true);
+										} else {
+											female.setChecked(true);
+											Log.v("LoginActivity", response.toString());
+										}
+										String imageUrl = "https://graph.facebook.com/#/picture?type=large";
+										imageUrl = imageUrl.replace("#", facebookProfileModel.getId());
+										Picasso.with(RegistrationProfileActivity.this).load(imageUrl).placeholder(R.drawable.profile_image_placeholder).into(profileImageView);
+										profileImageView.buildDrawingCache();
+										profile_image_bitmap = profileImageView.getDrawingCache();
+									}
+								});
+						Bundle parameters = new Bundle();
+						parameters.putString("fields", "id,name,email,gender, birthday");
+						request.setParameters(parameters);
+						request.executeAsync();
+					}
+
+					@Override
+					public void onCancel() {
+						Toast.makeText(RegistrationProfileActivity.this, "Login Cancel", Toast.LENGTH_LONG).show();
+					}
+
+					@Override
+					public void onError(FacebookException exception) {
+						Toast.makeText(RegistrationProfileActivity.this, exception.getMessage(), Toast.LENGTH_LONG).show();
+					}
+				});
+		syncFbButton.setOnClickListener(new View.OnClickListener() {
+			@Override
+			public void onClick(View view) {
+				LoginManager.getInstance().logInWithReadPermissions(RegistrationProfileActivity.this, Arrays.asList("public_profile", "user_friends"));
+			}
+		});
 	}
 
 
@@ -200,6 +270,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 
 		super.onActivityResult(requestCode, resultCode, data);
+		callbackManager.onActivityResult(requestCode, resultCode, data);
+
 		if (requestCode == ImageImportHelper.ACTION_TAKE_PHOTO_IMAGEVIEW) {
 			if (resultCode == RESULT_OK) {
 				final Bitmap bitmapSelectedImage = (Bitmap) data.getExtras().get("data");
@@ -713,23 +785,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 				String imageUrl = userProfile.getFileName();
 				if(imageUrl!=null && imageUrl.length() > 0) {
-					volleyImageLoader.get(imageUrl, new com.android.volley.toolbox.ImageLoader.ImageListener() {
-
-						@Override
-						public void onErrorResponse(VolleyError error) {
-							Log.e("Image Loading error", "Image Load Error: " + error.getMessage());
-						}
-
-						@Override
-						public void onResponse(com.android.volley.toolbox.ImageLoader.ImageContainer response, boolean arg1) {
-							if (response.getBitmap() != null) {
-								// load image into imageview
-								profile_image_bitmap = response.getBitmap();
-								Image_Scaling.setRoundedImgeToImageView(getApplicationContext(), profileImageView, profile_image_bitmap);
-
-							}
-						}
-					});
+					Picasso.with(this).load(imageUrl).placeholder(R.drawable.profile_image_placeholder).into(profileImageView);
 				}
 
 			}
@@ -812,4 +868,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 		}
 	}
+
+
+
 }

@@ -301,7 +301,7 @@ public class ImageImportHelper {
 
 	public void dispatchTakeAndSavePictureIntent(Activity activity, int actionCode) {
 		Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-		setupResourcess(takePictureIntent);
+//		setupResourcess(takePictureIntent);
 		activity.startActivityForResult(takePictureIntent, actionCode);
 	}
 
