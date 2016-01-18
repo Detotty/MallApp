@@ -271,6 +271,7 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 	@Override
 	protected void onActivityResult(int requestCode, int resultCode, Intent data) {
 		//Log.e(TAG, ""+requestCode+"............"+ resultCode);
+		super.onActivityResult(requestCode, resultCode, data);
 		if(resultCode == requestCode && requestCode== REQUEST_CODE_FOR_COUNTRY){
 	    	//Log.e(TAG, "back: REQUEST_CODE_FOR_ENDORSEMENT");
 	    	String resultString = data.getExtras().getString("result", "#");
@@ -282,7 +283,6 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 	    	phone_no.requestFocus();
 	    	getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_VISIBLE);
 	    }
-		super.onActivityResult(requestCode, resultCode, data);
 	}
 	
 
@@ -292,7 +292,7 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 		TelephonyManager tm = (TelephonyManager) this.getSystemService(Context.TELEPHONY_SERVICE);
 		if (tm.getSimState() != TelephonyManager.SIM_STATE_ABSENT){
 		  // The phone has SIM card
-			GetCountryZipCode();
+//			GetCountryZipCode();
 			//Log.e(TAG, "on resume call from mobile network ...."+ country.getText().toString());
 		} else {
 		  // No SIM card on the phone

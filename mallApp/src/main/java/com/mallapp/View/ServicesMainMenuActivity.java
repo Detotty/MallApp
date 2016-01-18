@@ -281,7 +281,7 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
 
         adapter = new ServiceAdapter(getApplicationContext(), this, R.layout.list_item, services_read);
         list_view.setAdapter(adapter);
-        list_view.setOnItemClickListener(this);
+//        list_view.setOnItemClickListener(this);
 
         adapter_search = new ServiceAdapter(getApplicationContext(), this, R.layout.list_item_shop, searchResults);
         list_view_search.setAdapter(adapter_search);

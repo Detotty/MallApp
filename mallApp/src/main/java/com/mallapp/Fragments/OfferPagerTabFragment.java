@@ -125,6 +125,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         mallActivities_All = new ArrayList<>();
         mallActivities_Offers = new ArrayList<>();
         mallActivities_News = new ArrayList<>();
+        mallActivitiesListing = new ArrayList<>();
         if (navigationFilter) ;
         else {
             position = getArguments().getInt(ARG_POSITION);

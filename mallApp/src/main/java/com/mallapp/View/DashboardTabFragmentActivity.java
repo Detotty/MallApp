@@ -92,7 +92,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
         drawer_text = (TextView) view1.findViewById(R.id.side_menu_header);
         
         mDrawerList.addHeaderView(view1);
-//        mDrawerList.addFooterView(view2);
+        mDrawerList.addFooterView(view2);
         
         adapter = new NavDrawerListAdapter(getApplicationContext(),this, navDrawerItems);
         mDrawerList.setAdapter(adapter);
@@ -120,7 +120,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 	private DrawerListener mDrawerListener = new DrawerListener() {
 		@Override
 		public void onDrawerStateChanged(int status) {
-
+			drawerLogoCondtions();
 		}
 		@Override
 		public void onDrawerSlide(View view, float slideArg) {
@@ -129,7 +129,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		@Override
 		public void onDrawerOpened(View view) {
 			mDrawerLayout.openDrawer(mDrawerList);
-			drawerLogoCondtions();
+//			drawerLogoCondtions();
 
 		}
 		@Override
@@ -349,7 +349,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 	
 	}
 
-	static void drawerLogoCondtions(){
+	public static void drawerLogoCondtions(){
 		if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
 				&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")

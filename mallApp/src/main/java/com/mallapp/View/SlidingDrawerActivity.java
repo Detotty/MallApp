@@ -99,6 +99,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
 
         if (mDrawerList.getHeaderViewsCount() == 0){
             mDrawerList.addHeaderView(view1);
+            mDrawerList.addFooterView(view2);
         }
 
         adapter = new NavDrawerListAdapter(this,this, navDrawerItems);
@@ -127,7 +128,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
     private DrawerListener mDrawerListener = new DrawerListener() {
         @Override
         public void onDrawerStateChanged(int status) {
-
+            drawerLogoCondtions();
         }
         @Override
         public void onDrawerSlide(View view, float slideArg) {
@@ -136,7 +137,6 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
         @Override
         public void onDrawerOpened(View view) {
             mDrawerLayout.openDrawer(mDrawerList);
-            drawerLogoCondtions();
 
         }
         @Override
