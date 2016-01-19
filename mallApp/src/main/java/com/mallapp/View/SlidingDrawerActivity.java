@@ -73,6 +73,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
         context = this;
         initDrawer();
     }
+
     @Override
     public void onBackPressed() {
 
