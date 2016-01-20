@@ -58,6 +58,7 @@ import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.ShopsDataListener;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
@@ -136,6 +137,8 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
         back_screen.setOnClickListener(this);
         tv_Web.setOnClickListener(this);
         expand.setOnClickListener(this);
+        tv_Phone.setOnClickListener(this);
+        tv_Email.setOnClickListener(this);
         try {
             // This is how, a reference of DAO object can be done
             shopsDao = getHelper().getShopsDao();
@@ -459,6 +462,10 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             startActivity(intent);
 
+        }else if (tv_Phone.getId() == v.getId()) {
+            AppUtils.displayCallDialog(this, shop_detail_obj.getPhone());
+        }else if (tv_Email.getId() == v.getId()) {
+            AppUtils.sendEmail(this,shop_detail_obj.getEmail());
         }
 
     }
@@ -513,13 +520,32 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
                 ) {
             final RelativeLayout newView = (RelativeLayout) getLayoutInflater().inflate(R.layout.timing_layout, null);
             String t1 = st.getFromDay() + "-" + st.getToDay();
-            String t2 = st.getOpeningTiming() + "-" + st.getClosingTiming();
-
             TextView tv = (TextView) newView.findViewById(R.id.tv_d);
             tv.setText(t1);
-            TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
-            tv1.setText(t2);
-            this.linear_timing_layout.addView(newView);
+
+
+            if (!st.getIsException()){
+                String t2 = st.getOpeningTiming() + "-" + st.getClosingTiming();
+                TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
+                tv1.setText(t2);
+                this.linear_timing_layout.addView(newView);
+            }
+            else {
+                String t2 = st.getDescription();
+                TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
+                tv1.setText(t2);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    LinearLayout.LayoutParams relativeParams = null;
+                    relativeParams = new LinearLayout.LayoutParams(
+                            new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT));
+                    relativeParams.setMargins(0, 35, 0, 0);
+                    newView.setLayoutParams(relativeParams);
+                    newView.requestLayout();
+                }
+                this.linear_timing_layout.addView(newView);
+            }
         }
         for (ShopsModel shopsModel : dbList
                 ) {

@@ -31,6 +31,7 @@ import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.MallTimingsModel;
 import com.mallapp.Model.RestaurantModel;
 import com.mallapp.listeners.MallDataListener;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -92,7 +93,10 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         open_navigation.setVisibility(View.GONE);
         open_drawer.setVisibility(View.VISIBLE);
         tv_Web.setOnClickListener(this);
+        tv_address.setOnClickListener(this);
+        tv_Phone.setOnClickListener(this);
         expand.setOnClickListener(this);
+        tv_Email.setOnClickListener(this);
     }
 
 
@@ -106,6 +110,11 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
             intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
             intent.putExtra("url", mallDetailModel.getWebURL());
             startActivity(intent);
+        } else if (v.getId() == tv_address.getId()) {
+            Intent intent = new Intent(MallDetailActivity.this, MapDirectionActivity.class);
+            intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+            intent.putExtra("latlong", mallDetailModel.getLatitude() + "-" + mallDetailModel.getLongitude());
+            startActivity(intent);
         } else if (v.getId() == expand.getId()) {
             Intent intent = new Intent(MallDetailActivity.this, MapFullScreenActivity.class);
             intent.putExtra(Offers_News_Constants.SHOP_DETAIL_OBJECT, mallDetailModel);
@@ -118,6 +127,10 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
             finish();
         } else if (open_drawer.getId() == v.getId()) {
             SlidingDrawerActivity.uiHandler.sendEmptyMessage(1);
+        }else if (tv_Phone.getId() == v.getId()) {
+            AppUtils.displayCallDialog(this, mallDetailModel.getPhone());
+        }else if (tv_Email.getId() == v.getId()) {
+            AppUtils.sendEmail(this,mallDetailModel.getEmail());
         }
     }
 
@@ -155,13 +168,33 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
                 ) {
             final RelativeLayout newView = (RelativeLayout) getLayoutInflater().inflate(R.layout.timing_layout, null);
             String t1 = st.getFromDay() + "-" + st.getToDay();
-            String t2 = st.getStartTime() + "-" + st.getEndTime();
-
             TextView tv = (TextView) newView.findViewById(R.id.tv_d);
             tv.setText(t1);
-            TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
-            tv1.setText(t2);
-            this.linear_timing_layout.addView(newView);
+
+
+            if (!st.getIsException()){
+                String t2 = st.getStartTime() + "-" + st.getEndTime();
+                TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
+                tv1.setText(t2);
+                this.linear_timing_layout.addView(newView);
+            }
+            else {
+                String t2 = st.getDescription();
+                TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
+                tv1.setText(t2);
+                if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+                    LinearLayout.LayoutParams relativeParams = null;
+                    relativeParams = new LinearLayout.LayoutParams(
+                            new LinearLayout.LayoutParams(
+                                    LinearLayout.LayoutParams.MATCH_PARENT,
+                                    LinearLayout.LayoutParams.WRAP_CONTENT));
+                    relativeParams.setMargins(0, 35, 0, 0);
+                    newView.setLayoutParams(relativeParams);
+                    newView.requestLayout();
+                }
+
+                this.linear_timing_layout.addView(newView);
+            }
         }
         lat = Double.parseDouble(mallDetailModel.getLatitude());
         lng = Double.parseDouble(mallDetailModel.getLongitude());

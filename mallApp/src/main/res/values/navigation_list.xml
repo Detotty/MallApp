@@ -2,23 +2,22 @@
 <resources>
     <string-array name="nav_drawer_items" >
         <item>Home</item>
+        <item>Mall Information</item>
         <item>Shops</item>
         <item>Restaurants</item>
         <item>Services</item>
-        <item>Mall Information</item>
         <item>Discount Calculator</item>
         <item>Favourite</item>
 	</string-array>
 	
     <string-array name="nav_drawer_icons" >
         <item>home</item>
+        <item>opening</item>
         <item>shop</item>
         <item>restaurant</item>
         <item>services</item>
-        <item>opening</item>
         <item>offer</item>
         <item>fav</item>
-
 	</string-array>
 
 

@@ -2,7 +2,11 @@ package com.List.Adapter;
 
 import java.io.Serializable;
 import java.sql.SQLException;
+import java.text.DateFormat;
+import java.text.ParseException;
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
+import java.util.Date;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -30,6 +34,7 @@ import com.mallapp.View.OffersDetailActivity;
 import com.mallapp.View.R;
 import com.mallapp.cache.AppCacheManager;
 import com.mallapp.utils.GlobelOffersNews;
+import com.mallapp.utils.StringUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -42,19 +47,12 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
     private Activity activity;
     String audience_type;
     String UserId;
-    String ActivityId;
-    String isDeleted;
     String url;
     private MallActivitiesModel offer_obj;
     Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
     VolleyNetworkUtil volleyNetworkUtil;
 
-
-
-    ArrayList<MallActivitiesModel> mallActivities_All,
-            mallActivities_Offers,
-            mallActivities_News;
-    String mall_clicked_type;
+    ArrayList<MallActivitiesModel> mallActivities_All;
 
     public Offers_News_Adapter(Context context, Activity activti, int textViewResourceId,
 
@@ -69,17 +67,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         volleyNetworkUtil = new VolleyNetworkUtil(context);
         this.mallActivities_All = mallActivities_All;
 
-        /*if (MainMenuConstants.SELECTED_CENTER_NAME.equals("All")) {
-        } else {
-            for (MallActivitiesModel mam : mallActivities_All
-                    ) {
-                if (mam.getMallName().equals(MainMenuConstants.SELECTED_CENTER_NAME)) {
-                    this.mallActivities_All.add(mam);
-                }
-            }
-        }*/
         this.audience_type = audience_type;
-//        FilteredOffersNewsList(mallActivities_All);
         UserId = SharedPreferenceUserProfile.getUserId(context);
     }
 
@@ -94,25 +82,11 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
 
     @Override
     public int getCount() {
-        /*if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
-            return mallActivities_All.size();
-        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
-            return mallActivities_Offers.size();
-        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
-            return mallActivities_News.size();
-        else*/
             return mallActivities_All.size();
     }
 
     @Override
     public MallActivitiesModel getItem(int position) {
-        /*if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL))
-            return mallActivities_All.get(position);
-        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_OFFERS))
-            return mallActivities_Offers.get(position);
-        else if (audience_type.equals(Offers_News_Constants.AUDIENCE_FILTER_NEWS))
-            return mallActivities_News.get(position);
-        else*/
             return mallActivities_All.get(position);
     }
 
@@ -127,10 +101,9 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
     }
 
     static class ViewHolder {
-        TextView title, decs, center_name, shome_name;
+        TextView title, decs, center_name, shome_name, new_offer_news;
         ImageButton is_fav;
         ImageView back_image, entity_logo, activity_type;
-        //RelativeLayout r1;
     }
 
     @SuppressLint("InflateParams")
@@ -149,6 +122,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
             holder.decs = (TextView) view.findViewById(R.id.center_city);
             holder.center_name = (TextView) view.findViewById(R.id.center_name);
             holder.shome_name = (TextView) view.findViewById(R.id.shop_name);
+            holder.new_offer_news = (TextView) view.findViewById(R.id.tv_new_offer_news);
             holder.is_fav = (ImageButton) view.findViewById(R.id.fav_center);
             holder.back_image = (ImageView) view.findViewById(R.id.center_image);
             holder.entity_logo = (ImageView) view.findViewById(R.id.entity_logo);
@@ -163,6 +137,14 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         Drawable d = null;
 
         String offerTime;
+        String UTCDate = StringUtils.changeDateFormat(offer_obj.getCreatedUTCDateTime());
+        String date = new SimpleDateFormat("dd-MM-yyyy").format(new Date());
+        if (UTCDate.equals(date)){
+            holder.new_offer_news.setVisibility(View.VISIBLE);
+        }
+        else
+            holder.new_offer_news.setVisibility(View.GONE);
+
         if (offer_obj.getActivityName().equals("Offer")){
             offerTime  = "Offer Starts "+offer_obj.getStartDate().substring(0,offer_obj.getStartDate().indexOf("T"))+" Ends "+offer_obj.getEndDate().substring(0,offer_obj.getEndDate().indexOf("T"));
             holder.activity_type.setImageResource(R.drawable.offer_activity);
@@ -194,7 +176,6 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                     volleyNetworkUtil.PostFavNnO(url);
                     url = "";
                     updateMalls(offer_obj);
-//                    AppCacheManager.updateOffersNews(context, offer_obj, position);
                 } else {
                     holder.is_fav.setImageResource(R.drawable.offer_fav);
                     offer_obj.setFav(false);
@@ -202,7 +183,6 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                     volleyNetworkUtil.PostFavNnO(url);
                     url = "";
                     updateMalls(offer_obj);
-//                    AppCacheManager.updateOffersNews(context, offer_obj, position);
                 }
             }
         });
@@ -222,8 +202,6 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         });
         return view;
     }
-
-
 
     public void updateMalls(MallActivitiesModel fav){
         try {

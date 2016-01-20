@@ -107,6 +107,18 @@ public class AppUtils {
         alertDialog.show();
     }
 
+    public static void sendEmail(Context context, String email){
+        Intent i = new Intent(Intent.ACTION_SEND);
+        i.setType("message/rfc822");
+        i.putExtra(Intent.EXTRA_EMAIL  , new String[]{email});
+        i.putExtra(Intent.EXTRA_SUBJECT, "Mall App");
+        try {
+            context.startActivity(Intent.createChooser(i, "Send mail..."));
+        } catch (android.content.ActivityNotFoundException ex) {
+            Toast.makeText(context, "There are no email clients installed.", Toast.LENGTH_SHORT).show();
+        }
+    }
+
     public static void CityLatLong(Context context, String city){
         if(Geocoder.isPresent()){
             try {

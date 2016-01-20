@@ -276,20 +276,19 @@
     <eat-comment/>
     <string-array name="nav_drawer_icons">
         <item>home</item>
+        <item>opening</item>
         <item>shop</item>
         <item>restaurant</item>
         <item>services</item>
-        <item>opening</item>
         <item>offer</item>
         <item>fav</item>
-
 	</string-array>
     <string-array name="nav_drawer_items">
         <item>Home</item>
+        <item>Mall Information</item>
         <item>Shops</item>
         <item>Restaurants</item>
         <item>Services</item>
-        <item>Mall Information</item>
         <item>Discount Calculator</item>
         <item>Favourite</item>
 	</string-array>
@@ -975,6 +974,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="request_error_message">Something went wrong. Please try again later</string>
+    <string name="rest_error_message">No restaurants found for this mall</string>
     <string name="rest_offer_title">The Restaurant Offers</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
@@ -985,6 +985,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="sending_phone_number_dialog_message">Sending Verification Code</string>
+    <string name="service_error_message">No services found for this mall</string>
     <string name="share">Share</string>
     <string name="share_points"> 5pts</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->

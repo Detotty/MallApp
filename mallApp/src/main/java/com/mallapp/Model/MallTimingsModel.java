@@ -6,6 +6,8 @@ import java.io.Serializable;
  * Created by Sharjeel on 12/16/2015.
  */
 public class MallTimingsModel implements Serializable {
+    private String Description;
+
     private String FromDay;
 
     private String EndTime;
@@ -14,7 +16,19 @@ public class MallTimingsModel implements Serializable {
 
     private String ToDay;
 
+    private boolean IsException;
+
     private String TimingId;
+
+    public String getDescription ()
+    {
+        return Description;
+    }
+
+    public void setDescription (String Description)
+    {
+        this.Description = Description;
+    }
 
     public String getFromDay ()
     {
@@ -56,6 +70,16 @@ public class MallTimingsModel implements Serializable {
         this.ToDay = ToDay;
     }
 
+    public boolean getIsException ()
+    {
+        return IsException;
+    }
+
+    public void setIsException (boolean IsException)
+    {
+        this.IsException = IsException;
+    }
+
     public String getTimingId ()
     {
         return TimingId;
@@ -69,6 +93,6 @@ public class MallTimingsModel implements Serializable {
     @Override
     public String toString()
     {
-        return "ClassPojo [FromDay = "+FromDay+", EndTime = "+EndTime+", StartTime = "+StartTime+", ToDay = "+ToDay+", TimingId = "+TimingId+"]";
+        return "ClassPojo [Description = "+Description+", FromDay = "+FromDay+", EndTime = "+EndTime+", StartTime = "+StartTime+", ToDay = "+ToDay+", IsException = "+IsException+", TimingId = "+TimingId+"]";
     }
 }

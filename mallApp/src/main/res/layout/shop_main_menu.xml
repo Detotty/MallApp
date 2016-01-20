@@ -39,7 +39,7 @@
                     android:id="@+id/shop_list"
                     android:layout_width="0dp"
                     android:layout_height="wrap_content"
-                    android:layout_weight="0.93"
+                    android:layout_weight="1"
                     android:animateLayoutChanges="true"
                     android:divider="@null"
                     android:dividerHeight="0dp"
@@ -51,7 +51,7 @@
                     android:layout_height="match_parent"
                     android:layout_weight="0.07"
                     android:scrollbars="none"
-                    android:visibility="visible">
+                    android:visibility="gone">
 
                     <LinearLayout
                         android:id="@+id/side_index"

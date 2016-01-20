@@ -90,6 +90,7 @@ public class MapFullScreenActivity extends FragmentActivity implements View.OnCl
             View frag = findViewById(R.id.mapAddress);
             frag.setVisibility(View.GONE);
             shop_map.setVisibility(View.VISIBLE);
+            shop_map.setRotation(90);
             Picasso.with(this).load(url).placeholder(R.drawable.mallapp_placeholder).into(shop_map);
         }
         else {

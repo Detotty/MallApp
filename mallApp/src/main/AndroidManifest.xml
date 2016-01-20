@@ -211,16 +211,37 @@
 
         <activity
             android:name=".RegistrationActivity"
-            android:label="@string/title_activity_registration" >
+            android:label="@string/title_activity_registration"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible">
         </activity>
         <activity
             android:name=".WebViewActivity"
-            android:label="@string/title_activity_webview" >
+            android:label="@string/title_activity_webview"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible">
         </activity>
         <activity
             android:name=".MapFullScreenActivity"
             android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:label="@string/title_activity_fullscreen_maps" >
+            android:label="@string/title_activity_fullscreen_maps"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible">
+        </activity>
+        <activity
+            android:name=".MapDirectionActivity"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:label="@string/title_activity_fullscreen_maps"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible">
         </activity>
         <activity android:name="com.facebook.FacebookActivity"
             android:configChanges=

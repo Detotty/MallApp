@@ -100,7 +100,21 @@
         android:text="Levis, Amager Center"
         android:textColor="@color/black"
         android:textSize="16sp" />
-
+    <TextView
+        android:id="@+id/tv_new_offer_news"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_below="@id/frame_layout"
+        android:layout_margin="@dimen/margin_left_5"
+        android:layout_alignParentRight="true"
+        android:paddingLeft="@dimen/margin_left_5"
+        android:paddingRight="@dimen/margin_left_5"
+        android:lines="1"
+        android:text="New"
+        android:visibility="gone"
+        android:background="@drawable/new_offer_news"
+        android:textColor="@color/white"
+        android:textSize="10sp" />
 
     <TextView
         android:id="@+id/center_name"

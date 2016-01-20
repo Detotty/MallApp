@@ -233,7 +233,8 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
 	
 	
 	private static int prev = -1;
-	
+	private static int collapsed = -1;
+
 	
 	private void initExpandableList() {
 		list_view1.setHeaderDividersEnabled(true);
@@ -241,10 +242,17 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
 		list_view1.setOnGroupExpandListener(new OnGroupExpandListener() {
 			@Override
 			public void onGroupExpand(int groupPosition) {
-				/*if(prev!=-1){
-					list_view1.collapseGroup(prev);    
+				if (prev != -1) {
+					if (prev != collapsed)
+						list_view1.collapseGroup(prev);
 				}
-				prev=groupPosition;*/
+				prev = groupPosition;
+			}
+		});
+		list_view1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+			@Override
+			public void onGroupCollapse(int groupPosition) {
+				collapsed = groupPosition;
 			}
 		});
 		
@@ -474,7 +482,8 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
 
 	@Override
 	public void OnError() {
-
+		String serverError = context.getResources().getString(R.string.rest_error_message);
+		Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
 	}
 
 	public void getDBRestaurants() {

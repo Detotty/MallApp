@@ -63,4 +63,6 @@ public class ApiConstants {
 	public static final String GET_MALL_SERVICES_URL_KEY = MALL_SERVICE_URL_KEY +"GetMallServices?MallPlaceId=";
 
 	public static final String GET_USER_FAV_URL_KEY = FAVOURITE_SERVICE_URL_KEY +"GetUserFavorite?UserId=";
+
+	public static final String GET_MALL_FLOOR_URL_KEY = MALL_SERVICE_URL_KEY+"GetMallFloor/";
 }

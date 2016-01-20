@@ -217,16 +217,37 @@
 
         <activity
             android:name="com.mallapp.View.RegistrationActivity"
-            android:label="@string/title_activity_registration" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_registration"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
             android:name="com.mallapp.View.WebViewActivity"
-            android:label="@string/title_activity_webview" >
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_webview"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
             android:name="com.mallapp.View.MapFullScreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_maps"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" >
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysVisible" >
+        </activity>
+        <activity
+            android:name="com.mallapp.View.MapDirectionActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:label="@string/title_activity_fullscreen_maps"
+            android:launchMode="standard"
+            android:screenOrientation="portrait"
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
+            android:windowSoftInputMode="stateAlwaysVisible" >
         </activity>
         <activity
             android:name="com.facebook.FacebookActivity"

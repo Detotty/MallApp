@@ -31,7 +31,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class ServicesMainMenuActivity extends SlidingDrawerActivity implements OnClickListener,  ServicesDataListener {
+public class ServicesMainMenuActivity extends SlidingDrawerActivity implements OnClickListener, ServicesDataListener {
 
     //region Data Members
     String TAG = getClass().getCanonicalName();
@@ -130,16 +130,20 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
             @Override
             public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
                 ServicesModel s1 = (ServicesModel) adapter.getItem(GlobelMainMenu.selected_index_services);
-                s1.setOpened(false);
+                if (GlobelMainMenu.selected_index_services != position)
+                    s1.setOpened(false);
                 services_read.set(GlobelMainMenu.selected_index_services, s1);
 
 
                 ServicesModel s = (ServicesModel) adapter.getItem(position);
+
                 if (s.isOpened()) {
                     s.setOpened(false);
                 } else {
                     s.setOpened(true);
                 }
+
+
                 GlobelMainMenu.selected_index_services = position;
                 services_read.set(position, s);
                 adapter.setService_search(services_read);
@@ -309,6 +313,7 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
 
     @Override
     public void OnError() {
-
+        String serverError = context.getResources().getString(R.string.service_error_message);
+        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
     }
 }

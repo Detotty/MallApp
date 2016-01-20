@@ -72,6 +72,8 @@ public class MallActivitiesModel implements Serializable{
     @DatabaseField(columnName = "EntityId")
     private String EntityId;
 
+    private String CreatedUTCDateTime;
+
     private String EntityLogoSquare;
 
     @DatabaseField(columnName = "isFav")
@@ -305,6 +307,16 @@ public class MallActivitiesModel implements Serializable{
     public void setEntityLogoSquare (String EntityLogoSquare)
     {
         this.EntityLogoSquare = EntityLogoSquare;
+    }
+
+    public String getCreatedUTCDateTime ()
+    {
+        return CreatedUTCDateTime;
+    }
+
+    public void setCreatedUTCDateTime (String CreatedUTCDateTime)
+    {
+        this.CreatedUTCDateTime = CreatedUTCDateTime;
     }
 
     public boolean isFav ()

@@ -162,27 +162,42 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		}			break;
 			
 		case 2:
-			
 			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-				&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-				
+					&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+				MainMenuConstants.uiHandler= uiHandler;
+				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+				Intent activity = new Intent(DashboardTabFragmentActivity.this, MallDetailActivity.class);
+				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+				startActivity(activity);
+			} else
+				showdailog();
+
+			break;
+			
+		case 3:
+			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
+					&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+
 				MainMenuConstants.uiHandler= uiHandler;
 				Intent activity = new Intent(DashboardTabFragmentActivity.this, ShopMainMenuActivity.class);
 				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
 				startActivity(activity);
 			} else
 				showdailog();
-			break;
-			
-		case 3:
 
+			break;
+		
+		
+		case 4:
 			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-				&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-				&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-				
+					&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
 				Intent activity= new Intent(DashboardTabFragmentActivity.this, RestaurantMainMenuActivity.class);
@@ -190,32 +205,18 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				startActivity(activity);
 			} else
 				showdailog();
-			break;
-		
-		
-		case 4:
-			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, ServicesMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-				startActivity(activity);
-			} else
-				showdailog();
+
 			break;
 		
 		case 5:
 			if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
-			&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
-			&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+					&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+
 				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity = new Intent(DashboardTabFragmentActivity.this, MallDetailActivity.class);
+				Intent activity= new Intent(DashboardTabFragmentActivity.this, ServicesMainMenuActivity.class);
 				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
 				startActivity(activity);
 			} else

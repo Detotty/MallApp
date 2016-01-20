@@ -139,12 +139,12 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     android.util.Log.e("", " error message ..." + message);
 
-                    if (message != null && message != "")
+                    /*if (message != null && message != "")
                         Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.shop_error_message);
                         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
             }
             ) {
@@ -200,12 +200,12 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     android.util.Log.e("", " error message ..." + message);
 
-                    if (message != null && message != "")
+                    /*if (message != null && message != "")
                         Toast.makeText(context, MainMenuConstants.NO_SERVICES_ERROR, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.shop_error_message);
                         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
             }
             ) {
@@ -261,12 +261,12 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     android.util.Log.e("", " error message ..." + message);
 
-                    if (message != null && message != "")
+                    /*if (message != null && message != "")
                         Toast.makeText(context, MainMenuConstants.NO_SERVICES_ERROR, Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.shop_error_message);
                         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
             }
             ) {
@@ -327,12 +327,12 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     android.util.Log.e("", " error message ..." + message);
 
-                    if (message != null && message != "")
+                    /*if (message != null && message != "")
                         Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
                     else {
                         String serverError = context.getResources().getString(R.string.shop_error_message);
                         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-                    }
+                    }*/
                 }
             }
             ) {

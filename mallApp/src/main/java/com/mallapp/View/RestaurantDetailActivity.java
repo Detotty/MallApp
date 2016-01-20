@@ -32,6 +32,7 @@ import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.RestaurantDataListener;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -123,6 +124,8 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		back_screen	.setOnClickListener(this);
 		tv_Web.setOnClickListener(this);
 		expand.setOnClickListener(this);
+		tv_Phone.setOnClickListener(this);
+		tv_Email.setOnClickListener(this);
 		try {
 			// This is how, a reference of DAO object can be done
 			restDao = getHelper().getRestaurantsDao();
@@ -270,6 +273,10 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 			startActivity(intent);
 
+		}else if (tv_Phone.getId() == v.getId()) {
+			AppUtils.displayCallDialog(this, rest_detail_obj.getPhone());
+		}else if (tv_Email.getId() == v.getId()) {
+			AppUtils.sendEmail(this,rest_detail_obj.getEmail());
 		}
 
 	}

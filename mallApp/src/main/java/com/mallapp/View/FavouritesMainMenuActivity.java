@@ -337,6 +337,7 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 
 
 	private static int prev = -1;
+	private static int collapsed = -1;
 
 
 	private void initExpandableList() {
@@ -346,9 +347,16 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 			@Override
 			public void onGroupExpand(int groupPosition) {
 				if (prev != -1) {
+					if (prev != collapsed)
 					list_view1.collapseGroup(prev);
 				}
 				prev = groupPosition;
+			}
+		});
+		list_view1.setOnGroupCollapseListener(new ExpandableListView.OnGroupCollapseListener() {
+			@Override
+			public void onGroupCollapse(int groupPosition) {
+				collapsed = groupPosition;
 			}
 		});
 		
@@ -631,7 +639,8 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 
 	@Override
 	public void OnError() {
-
+		/*String serverError = context.getResources().getString(R.string.shop_error_message);
+		Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();*/
 	}
 
 	private DatabaseHelper getHelper() {
