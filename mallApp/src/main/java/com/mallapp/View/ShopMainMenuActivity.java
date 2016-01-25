@@ -190,10 +190,10 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
         });
 
         segmentText.setOnCheckedChangeListener(this);
-        open_navigation.setOnClickListener(this);
-        open_drawer.setOnClickListener(this);
-        open_navigation.setVisibility(View.GONE);
-        open_drawer.setVisibility(View.VISIBLE);
+            open_navigation.setOnClickListener(this);
+            open_drawer.setOnClickListener(this);
+            open_navigation.setVisibility(View.GONE);
+            open_drawer.setVisibility(View.VISIBLE);
         cancel_search.setOnClickListener(this);
 
     }

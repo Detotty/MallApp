@@ -49,8 +49,9 @@
 	<string name="register_dummy4">labore et dolore magna aliqua.</string>
 	<string name="registration_with_phone_button_title">Register with Phone</string>
 	<string name="registration_wtih_facebook_button_title">Register with Facebook</string>
-	
-	
+	<string name="notifications">Notifications</string>
+
+
 	<string name="access_code_country">Sent SMS successfully</string>
 <!-- 	<string name="access_code_country">Your Mall App code is </string> -->
 <!-- 	<string name="access_code_country_">Close this message and enter the code into Mall App to activate your account.</string> -->
@@ -360,5 +361,9 @@
 		<item>260,ZM</item>
 		<item>263,ZW</item>
 	</string-array>
+
+    <string name="title_activity_floor_overview">FloorOverviewActivity</string>
+    <string name="floor_name">Floor Name</string>
+    <string name="title_activity_notification">NotificationActivity</string>
 
 </resources>

@@ -23,6 +23,7 @@ import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.FavoritesModel;
 import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.Model.FloorOverViewModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.Restaurant;
@@ -36,6 +37,7 @@ import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.listeners.FavoritesDataListener;
+import com.mallapp.listeners.FloorsDataListener;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.listeners.RestaurantDataListener;
 import com.mallapp.listeners.ServicesDataListener;
@@ -65,6 +67,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private ProgressDialog progressDialog;
     private String TAG = VolleyNetworkUtil.class.getSimpleName();
     MallDataListener mallDataListener;
+    FloorsDataListener floorsDataListener;
     ShopsDataListener shopsDataListener;
     RestaurantDataListener restaurantDataListener;
     private String requestType;
@@ -75,6 +78,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
     private final String GET_REST_DETAIL = "GET_REST_DETAIL";
     private final String GET_MALL_DETAIL = "GET_MALL_DETAIL";
+    private final String GET_MALL_FLOORS = "GET_MALL_FLOORS";
     private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
     private final String GET_MALL_SERVICES = "GET_MALL_SERVICES";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
@@ -416,6 +420,74 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         };
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
+
+
+    /*<---------------GET MALL FLOORS ---------------->*/
+
+    public ArrayList<String> GetFloorOverview(String url, final FloorsDataListener floorsDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        final ArrayList<FloorOverViewModel> floorOverViewModels = new ArrayList<>();
+        try {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    android.util.Log.d(TAG, jsonArr.toString());
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+                    for (int i = 0; i < jsonArr.length(); i++) {
+                        try {
+                            JSONObject obj = jsonArr.getJSONObject(i);
+                            FloorOverViewModel fav = new Gson().fromJson(String.valueOf(obj), FloorOverViewModel.class);
+                            floorOverViewModels.add(fav);
+
+                        } catch (JSONException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    floorsDataListener.onDataReceived(floorOverViewModels);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+
+                    floorsDataListener.OnError();
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+                    android.util.Log.e("", " error message ..." + message);
+
+                    /*if (message != null && message != "")
+                        Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.shop_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }*/
+                }
+            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, url);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     /*<--------------NEWS AND OFFERS FAVORITE SELECTION ---------------->*/
 
     public void PostFavNnO(String url) {
@@ -618,6 +690,24 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     mallDataListener.onDataReceived(model);
                 } catch (Exception e) {
                     mallDataListener.OnError();
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //endregion
+
+            //region GET_MALL_FLOORS
+            case GET_MALL_FLOORS: {
+                try {
+                    Gson gson = new Gson();
+                    String data = response.getJSONArray("MallActivities").toString();
+                    Type listType = new TypeToken<List<FloorOverViewModel>>() {
+                    }.getType();
+
+                    ArrayList<FloorOverViewModel> model = gson.fromJson(data, listType);
+                    floorsDataListener.onDataReceived(model);
+                } catch (Exception e) {
+                    floorsDataListener.OnError();
                     e.printStackTrace();
                 }
                 break;

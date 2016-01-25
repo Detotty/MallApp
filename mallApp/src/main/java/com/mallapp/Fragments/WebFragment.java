@@ -2,13 +2,16 @@ package com.mallapp.Fragments;
 
 import android.os.Bundle;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentActivity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.widget.ImageButton;
 import android.widget.ProgressBar;
+import android.widget.TextView;
 
 import com.mallapp.View.R;
 import com.mallapp.utils.ourViewClient;
@@ -16,19 +19,33 @@ import com.mallapp.utils.ourViewClient;
 /**
  * Created by Sharjeel on 1/11/2016.
  */
-public class WebFragment extends Fragment {
+public class WebFragment extends FragmentActivity {
 
     private View viewInflate;
     WebView r;
     ProgressBar Pbar;
+    TextView heading;
 
 
     public WebFragment() { }
 
     @Override
-    public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
-        viewInflate = inflater.inflate(R.layout.fragment_web, null);
-        r=(WebView) viewInflate.findViewById(R.id.webView);
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.fragment_web);
+        ImageButton button_back = (ImageButton) findViewById(R.id.navigation);
+        heading = (TextView) findViewById(R.id.heading);
+        heading.setText(getIntent().getStringExtra("heading"));
+        button_back.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                finish();
+                /*overridePendingTransition(R.anim.right_out,
+                        R.anim.right_in);*/
+
+            }
+        });
+        r=(WebView) findViewById(R.id.webView);
         r.setInitialScale(50);
         r.getSettings().setUseWideViewPort(true);
         r.setVerticalScrollBarEnabled(false);
@@ -45,7 +62,7 @@ public class WebFragment extends Fragment {
         r.loadUrl("https://www.google.com.pk/");
 
 
-        Pbar = (ProgressBar) viewInflate.findViewById(R.id.progressBar);
+        Pbar = (ProgressBar) findViewById(R.id.progressBar);
         r.setWebChromeClient(new WebChromeClient() {
             public void onProgressChanged(WebView view, int progress)
             {
@@ -61,7 +78,6 @@ public class WebFragment extends Fragment {
             }
         });
 
-        return viewInflate;
     }
 
     @Override
@@ -69,12 +85,7 @@ public class WebFragment extends Fragment {
         super.onSaveInstanceState(outState);
     }
 
-    @Override
-    public void onViewCreated(View view, Bundle savedInstanceState) {
-        // TODO Auto-generated method stub
-        super.onViewCreated(view, savedInstanceState);
 
-    }
 
 }
 

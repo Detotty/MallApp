@@ -243,7 +243,24 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                 break;
 
 
-            case 6: {
+            case 6:
+                if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
+                        && MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+                        && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+
+                    MainMenuConstants.uiHandler= uiHandler;
+                    DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+                    Intent activity= new Intent(SlidingDrawerActivity.this, FloorOverviewActivity.class);
+                    activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                    startActivity(activity);
+                    finish();
+                } else
+                    showdailog();
+                break;
+
+            case 7: {
 
                     MainMenuConstants.uiHandler = uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
@@ -254,7 +271,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                 break;
 
 
-            case 7:{
+            case 8:{
 
                     MainMenuConstants.uiHandler= uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);

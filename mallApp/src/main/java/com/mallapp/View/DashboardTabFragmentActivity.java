@@ -223,23 +223,43 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 				showdailog();
 			break;
 
-			
-		case 6:
-			{
-				MainMenuConstants.uiHandler= uiHandler;
+
+			case 6:
+				if(	MainMenuConstants.SELECTED_CENTER_NAME!=null
+						&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
+						&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
+						&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+
+					MainMenuConstants.uiHandler= uiHandler;
+					DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+					Intent activity= new Intent(DashboardTabFragmentActivity.this, FloorOverviewActivity.class);
+					activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+					activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(activity);
+					finish();
+				} else
+					showdailog();
+				break;
+
+			case 7: {
+
+				MainMenuConstants.uiHandler = uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, DiscountCalculatorActivity.class);
+				Intent activity = new Intent(DashboardTabFragmentActivity.this, DiscountCalculatorActivity.class);
+				activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(activity);
 			}
 			break;
-			
-			
-		case 7:
-			{
-				MainMenuConstants.uiHandler = uiHandler;
+
+
+			case 8:{
+
+				MainMenuConstants.uiHandler= uiHandler;
 				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity = new Intent(DashboardTabFragmentActivity.this, FavouritesMainMenuActivity.class);
+				Intent activity= new Intent(DashboardTabFragmentActivity.this, FavouritesMainMenuActivity.class);
+				activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
 				startActivity(activity);
+				finish();
 			}
 			break;
 

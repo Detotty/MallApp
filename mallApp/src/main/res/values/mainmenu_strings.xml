@@ -1,6 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 	<string name="heading_favourite">FAVOURITE</string>
+	<string name="heading_floors">FLOORS</string>
 	<string name="heading_services">SERVICES</string>
 	<string name="heading_directions"> Directions &amp; Parking</string>
 	<string name="address">Address</string>

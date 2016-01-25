@@ -24,6 +24,7 @@
 	
 	
 	<color name="text_gray">#58595b</color>
+	<color name="grey_cells">#F1F1F1</color>
 	<color name="grey">#7A7A7A</color>
 	<color name="grey1">#939393</color>
   	<color name="grey2">#D1D0CE</color>

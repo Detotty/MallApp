@@ -275,13 +275,14 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/navigation_list.xml -->
     <eat-comment/>
     <string-array name="nav_drawer_icons">
-        <item>home</item>
-        <item>opening</item>
-        <item>shop</item>
-        <item>restaurant</item>
-        <item>services</item>
-        <item>offer</item>
-        <item>fav</item>
+        <item>mall_home</item>
+        <item>mall_info</item>
+        <item>mall_shops</item>
+        <item>mall_restaurants</item>
+        <item>mall_services</item>
+        <item>mall_floors</item>
+        <item>discount_calculator</item>
+        <item>mall_fav</item>
 	</string-array>
     <string-array name="nav_drawer_items">
         <item>Home</item>
@@ -289,6 +290,7 @@
         <item>Shops</item>
         <item>Restaurants</item>
         <item>Services</item>
+        <item>Floor Overview</item>
         <item>Discount Calculator</item>
         <item>Favourite</item>
 	</string-array>
@@ -403,6 +405,7 @@
     <color name="grey3">#B6B6B4</color>
     <color name="grey4">#B8B8B8</color>
     <color name="grey5">#AAAAAA</color>
+    <color name="grey_cells">#F1F1F1</color>
     <color name="greylight">#E5E4E2</color>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
@@ -870,6 +873,7 @@
     <string name="floor">Floor</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="floor_name">Floor Name</string>
     <string name="go_to_shop">Go to Shop</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/debug/res/values/google_maps_api.xml -->
     <eat-comment/>
@@ -880,6 +884,7 @@
     <eat-comment/>
     <string name="heading_directions"> Directions &amp; Parking</string>
     <string name="heading_favourite">FAVOURITE</string>
+    <string name="heading_floors">FLOORS</string>
     <string name="heading_services">SERVICES</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
@@ -930,6 +935,7 @@
     <string name="next_">Next</string>
     <string name="no_">No</string>
     <string name="notification">Notifications</string>
+    <string name="notifications">Notifications</string>
     <string name="offer_">Offers</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
@@ -1022,8 +1028,10 @@
     <string name="timing_m2">From clock 9 to clock 18, From Sat to Sun.</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="title_activity_floor_overview">FloorOverviewActivity</string>
     <string name="title_activity_fullscreen_maps">MapFullScreenActivity</string>
     <string name="title_activity_maps">Map</string>
+    <string name="title_activity_notification">NotificationActivity</string>
     <string name="title_activity_registration">RegistrationActivity</string>
     <string name="title_activity_webview">WebviewActivity</string>
     <string name="title_settings">Settings</string>

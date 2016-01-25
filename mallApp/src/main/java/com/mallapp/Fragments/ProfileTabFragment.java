@@ -28,12 +28,17 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.UserProfile;
+import com.mallapp.Model.UserProfileModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.View.NotificationActivity;
 import com.mallapp.View.R;
 import com.mallapp.View.RegistrationProfileActivity;
 import com.mallapp.View.Select_Favourite_Center;
 import com.mallapp.View.Select_Interest;
+import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
 
@@ -42,9 +47,10 @@ public class ProfileTabFragment extends Fragment{
 
 
     View viewHome;
-    UserProfile user_profile;
+    UserProfileModel user_profile;
     ImageView user_ImageView;
     ImageButton back,fav;
+    TextView heading;
 //    String link = StaticLiterls.link;
     String[] list_items, settings_items ;
     public static boolean isUpdate = false;
@@ -76,7 +82,7 @@ public class ProfileTabFragment extends Fragment{
 
     public void initUI() {
         profileListview();
-        TextView header = (TextView) viewHome.findViewById(R.id.offer_title);
+        heading = (TextView) viewHome.findViewById(R.id.offer_title);
         user_ImageView = (ImageView) viewHome.findViewById(R.id.user_image);
         back = (ImageButton) viewHome.findViewById(R.id.back);
         fav = (ImageButton) viewHome.findViewById(R.id.fav_offer);
@@ -88,6 +94,11 @@ public class ProfileTabFragment extends Fragment{
         ImageView email = (ImageView) viewHome.findViewById(R.id.email);
         back.setVisibility(View.GONE);
         fav.setVisibility(View.GONE);
+
+        user_profile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
+
+        Picasso.with(getActivity()).load(user_profile.getImageURL()).placeholder(R.drawable.avatar).into(user_ImageView);
+        heading.setText(user_profile.getFullName());
        /* facebook_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -222,11 +233,29 @@ public class ProfileTabFragment extends Fragment{
                             R.anim.slidein_left);
 
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.help))) {
-                    loadWebFragments();
+                    Intent intent = new Intent(getActivity(), WebFragment.class);
+                    intent.putExtra("heading",getString(R.string.help));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slidout_left,
+                            R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
-                    loadWebFragments();
+                    Intent intent = new Intent(getActivity(), WebFragment.class);
+                    intent.putExtra("heading",getString(R.string.privacy_policy));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slidout_left,
+                            R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.about_us))) {
-                    loadWebFragments();
+                    Intent intent = new Intent(getActivity(), WebFragment.class);
+                    intent.putExtra("heading",getString(R.string.about_us));
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slidout_left,
+                            R.anim.slidein_left);
+                } else if (textView_prfile.getText().toString().equals(getString(R.string.notification))) {
+                    Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slidout_left,
+                            R.anim.slidein_left);
+
                 } /*else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
                     Intent i = new Intent(getActivity(), WebPages.class);
                     i.setData(Uri.parse(getResources().getString(R.string.privacy_url)));
@@ -328,10 +357,10 @@ public class ProfileTabFragment extends Fragment{
     }
 
     void loadWebFragments(){
-        WebFragment nextFrag= new WebFragment();
+        /*WebFragment nextFrag= new WebFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.scrollView, nextFrag);
         transaction.addToBackStack(null);
-        transaction.commit();
+        transaction.commit();*/
     }
 }

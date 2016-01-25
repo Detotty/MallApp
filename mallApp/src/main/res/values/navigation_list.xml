@@ -6,18 +6,20 @@
         <item>Shops</item>
         <item>Restaurants</item>
         <item>Services</item>
+        <item>Floor Overview</item>
         <item>Discount Calculator</item>
         <item>Favourite</item>
 	</string-array>
 	
     <string-array name="nav_drawer_icons" >
-        <item>home</item>
-        <item>opening</item>
-        <item>shop</item>
-        <item>restaurant</item>
-        <item>services</item>
-        <item>offer</item>
-        <item>fav</item>
+        <item>mall_home</item>
+        <item>mall_info</item>
+        <item>mall_shops</item>
+        <item>mall_restaurants</item>
+        <item>mall_services</item>
+        <item>mall_floors</item>
+        <item>discount_calculator</item>
+        <item>mall_fav</item>
 	</string-array>
 
 

@@ -33,7 +33,7 @@ public class StringUtils {
 	}
 
 	public static String changeDateFormat(String encode_date) {
-		if (!encode_date.equals("null")) {
+		if (encode_date!=null) {
 
 			SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd'T'HH:mm:ss");
 			sdf.setTimeZone(TimeZone.getTimeZone("UTC"));

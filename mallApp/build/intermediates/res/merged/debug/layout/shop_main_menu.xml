@@ -83,11 +83,11 @@
 
     </RelativeLayout>
 
-    <ListView
-        android:id="@+id/list_slidermenu"
-        android:layout_width="270dp"
-        android:layout_height="match_parent"
-        android:layout_gravity="start"
-        android:background="@color/black1"
-        android:choiceMode="singleChoice" />
-</android.support.v4.widget.DrawerLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/shop_main_menu.xml -->
+        <ListView
+            android:id="@+id/list_slidermenu"
+            android:layout_width="270dp"
+            android:layout_height="match_parent"
+            android:layout_gravity="start"
+            android:background="@color/black1"
+            android:choiceMode="singleChoice" />
+    </android.support.v4.widget.DrawerLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/shop_main_menu.xml -->
