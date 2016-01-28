@@ -3,6 +3,8 @@ package com.mallapp.utils;
 import android.app.Activity;
 import android.app.ProgressDialog;
 import android.content.Context;
+import android.os.AsyncTask;
+import android.text.TextUtils;
 import android.util.*;
 import android.util.Log;
 import android.widget.Toast;
@@ -14,6 +16,7 @@ import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.google.gson.Gson;
 import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -50,6 +53,7 @@ import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.IOException;
 import java.lang.reflect.Type;
 import java.sql.SQLException;
 import java.util.ArrayList;
@@ -71,15 +75,18 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     ShopsDataListener shopsDataListener;
     RestaurantDataListener restaurantDataListener;
     private String requestType;
+    GoogleCloudMessaging gcmObj;
 
     private final String POST_FAV_NnO = "POST_FAV_NnO";
     private final String POST_FAV_SHOP = "POST_FAV_SHOP";
     private final String POST_FAV_REST = "POST_FAV_REST";
+    private final String POST_NOT_SET = "POST_NOT_SET";
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
     private final String GET_REST_DETAIL = "GET_REST_DETAIL";
     private final String GET_MALL_DETAIL = "GET_MALL_DETAIL";
     private final String GET_MALL_FLOORS = "GET_MALL_FLOORS";
     private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
+    private final String GET_USER_SIGN_OUT = "GET_USER_SIGN_OUT";
     private final String GET_MALL_SERVICES = "GET_MALL_SERVICES";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
     //endregion
@@ -492,7 +499,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
     public void PostFavNnO(String url) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
-        requestType = POST_FAV_NnO;
+        requestType = POST_NOT_SET;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, this, this) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
@@ -543,6 +550,61 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+    /*<--------------POST NOTIFICATION and DEVICE IDENTITY SETTINGS ---------------->*/
+    public void PostNotSet(String url, JSONObject user) {
+//        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = POST_NOT_SET;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, user, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
+
+
+    /*<--------------POST DEVICE IDENTITY ---------------->*/
+    public void PostDeviceIdentity(String url, JSONObject user) {
+//        progressDialog = ProgressDialog.show(context,"","Loading");
+        gcmObj = GoogleCloudMessaging.getInstance(context);
+
+        requestType = POST_NOT_SET;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, user, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
+
+    /*<--------------USER SIGN OUT ---------------->*/
+
+    public void GetUserSignOut(String url) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = GET_USER_SIGN_OUT;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
 
     @Override
     public void onErrorResponse(VolleyError volleyError) {
@@ -696,6 +758,23 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             }
             //endregion
 
+            //region GET_USER_SIGN_OUT
+            case GET_USER_SIGN_OUT: {
+                try {
+                    boolean success = response.getBoolean("Success");
+                    if (success) {
+
+                    }
+                    else{
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //endregion
+
             //region GET_MALL_FLOORS
             case GET_MALL_FLOORS: {
                 try {
@@ -714,7 +793,27 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             }
             //endregion
 
+            //region POST_NOTIFICATION SETTINGS
+            case POST_NOT_SET: {
+                try {
+                    boolean success = response.getBoolean("Success");
+                    if (success) {
+
+                    }
+                    else{
+
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //endregion
+
         }
         //endregion
     }
+
+
+
 }

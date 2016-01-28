@@ -28,19 +28,25 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.Model.UserProfileModel;
 import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.View.FullScreenImage;
 import com.mallapp.View.NotificationActivity;
 import com.mallapp.View.R;
 import com.mallapp.View.RegistrationProfileActivity;
 import com.mallapp.View.Select_Favourite_Center;
 import com.mallapp.View.Select_Interest;
+import com.mallapp.utils.SocialUtils;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 import java.io.ByteArrayOutputStream;
+
+import me.drakeet.materialdialog.MaterialDialog;
 
 
 public class ProfileTabFragment extends Fragment{
@@ -54,6 +60,7 @@ public class ProfileTabFragment extends Fragment{
 //    String link = StaticLiterls.link;
     String[] list_items, settings_items ;
     public static boolean isUpdate = false;
+    MaterialDialog mMaterialDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -99,30 +106,41 @@ public class ProfileTabFragment extends Fragment{
 
         Picasso.with(getActivity()).load(user_profile.getImageURL()).placeholder(R.drawable.avatar).into(user_ImageView);
         heading.setText(user_profile.getFullName());
+
+        sms.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SocialUtils.sendSms(getActivity(), getResources().getString(R.string.request_error_message) + "\n" );
+            }
+        });
+        email.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SocialUtils.sendEmail(getActivity(), getResources().getString(R.string.request_error_message) + "\n" );
+            }
+        });
+        twitter.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                SocialUtils.postToTwitter(getActivity(), getResources().getString(R.string.request_error_message) + "\n" );
+            }
+        });
+        /*user_ImageView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent i = new Intent(getActivity(), FullScreenImage.class);
+                i.putExtra("img", user_profile.getImageURL());
+                startActivity(i);
+            }
+        });*/
        /* facebook_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 StaticLiterls.postToFacebook(getActivity(), getResources().getString(R.string.ce_share_msg) + "\n" + link);
             }
         });
-        sms.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StaticLiterls.sendSms(getActivity(), getResources().getString(R.string.ce_share_msg) + "\n" + link);
-            }
-        });
-        email.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StaticLiterls.sendEmail(getActivity(), getResources().getString(R.string.ce_share_msg) + "\n" + link);
-            }
-        });
-        twitter.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                StaticLiterls.postToTwitter(getActivity(), getResources().getString(R.string.ce_share_msg_tw) + "\n" + link);
-            }
-        });*/
+
+        */
         /*imageButton_back.setVisibility(View.GONE);
         String user_image = user_profile.getPicture_path();
         String user_name = user_profile.getName();
@@ -135,18 +153,7 @@ public class ProfileTabFragment extends Fragment{
             e.printStackTrace();
         }
         final Bitmap bmp = ((BitmapDrawable) user_ImageView.getDrawable()).getBitmap();
-        user_ImageView.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                ByteArrayOutputStream baos = new ByteArrayOutputStream();
-                bmp.compress(Bitmap.CompressFormat.JPEG, 80, baos); //bm is the bitmap object
-                byte[] b = baos.toByteArray();
-                String encoded = Base64.encodeToString(b, Base64.DEFAULT);
-                *//*Intent i = new Intent(getActivity(), FullScreenImage.class);
-                i.putExtra("img", encoded);
-                startActivity(i);*//*
-            }
-        });
+
         camera.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -255,6 +262,29 @@ public class ProfileTabFragment extends Fragment{
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
+
+                }else if (textView_prfile.getText().toString().equals(getString(R.string.logout))) {
+                            mMaterialDialog = new MaterialDialog(getActivity())
+                            .setTitle(getResources().getString(R.string.logout_dialog_title))
+                            .setMessage(getResources().getString(R.string.logout_dialog_message))
+                            .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mMaterialDialog.dismiss();
+                                    VolleyNetworkUtil volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
+                                    volleyNetworkUtil.GetUserSignOut(ApiConstants.MALL_USER_SIGN_OUT+SharedPreferenceUserProfile.getUserId(getActivity()));
+
+                                }
+                            })
+                            .setNegativeButton(getResources().getString(R.string.cancel_button_title), new View.OnClickListener() {
+                                @Override
+                                public void onClick(View v) {
+                                    mMaterialDialog.dismiss();
+
+                                }
+                            });
+
+                    mMaterialDialog.show();
 
                 } /*else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
                     Intent i = new Intent(getActivity(), WebPages.class);

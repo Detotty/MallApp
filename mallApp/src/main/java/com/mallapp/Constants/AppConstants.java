@@ -22,8 +22,9 @@ public class AppConstants {
 
 	public static final String PROFILE_DATA = "USER_PROFILE_DATA";
 
+	public static final String GCM_PROJECT_ID = "472621522539";
+	public static final String PREF_GCM_DEVICE_ID = "PREF_GCM_DEVICE_ID";
+
 	public static  final int OPEN_LOCATION_SETTING_RESULT_CODE = 1;
-
-
 
 }

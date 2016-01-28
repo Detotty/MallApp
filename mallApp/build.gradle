@@ -36,4 +36,5 @@ dependencies {
     compile 'com.daimajia.slider:library:1.1.5@aar'
     compile 'com.github.nirhart:parallaxscroll:1.0'
     compile 'com.facebook.android:facebook-android-sdk:4.7.0'
+    compile 'me.drakeet.materialdialog:library:1.2.8'
 }

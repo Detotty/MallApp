@@ -40,6 +40,7 @@ public class MallApplication extends Application implements Serializable {
     private RequestQueue mRequestQueue;
     private ImageLoader mImageLoader;
     private static MallApplication mInstance;
+    public  static Context appContext;
 
     @Override
     public void onCreate() {
@@ -50,6 +51,7 @@ public class MallApplication extends Application implements Serializable {
         ACRA.init(this);
         mInstance = this;
         new DataHandler(this);
+        appContext = this;
 //        readOffersNews();
         readShops();
         readRetuarant();

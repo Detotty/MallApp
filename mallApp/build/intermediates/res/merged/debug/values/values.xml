@@ -350,6 +350,11 @@
     <color name="black1">#404040</color>
     <color name="black2">#5A5A5A</color>
     <color name="black3">#595959</color>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.8/res/values/values.xml -->
+    <eat-comment/>
+    <color name="black_de">#DE000000</color>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/colors.xml -->
+    <eat-comment/>
     <color name="border_grey">#C1C1BE</color>
     <color name="bottom_tabs">#E2E2E2</color>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
@@ -362,6 +367,10 @@
     <color name="bright_foreground_material_light">@android:color/black</color>
     <color name="button_material_dark">#ff5a595b</color>
     <color name="button_material_light">#ffd6d7d7</color>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.8/res/values/values.xml -->
+    <eat-comment/>
+    <color name="card_background">#ffffff</color>
+    <color name="card_shadow">#10000000</color>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
     <eat-comment/>
     <color name="com_facebook_blue">#3B5998</color>
@@ -423,6 +432,9 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/colors.xml -->
     <eat-comment/>
     <color name="list_item_text">#5d5047</color>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.8/res/values/values.xml -->
+    <eat-comment/>
+    <color name="lite_blue">#ff359ff2</color>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/22.2.1/res/values/values.xml -->
     <eat-comment/>
     <color name="material_blue_grey_800">#ff37474f</color>
@@ -493,6 +505,9 @@
     <eat-comment/>
     <color name="where_are_you_know_action_bar_color">#CC39617d</color>
     <color name="white">#FFFFFF</color>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/me.drakeet.materialdialog/library/1.2.8/res/values/values.xml -->
+    <eat-comment/>
+    <color name="window_background">#00000000</color>
     <declare-styleable name="ActionBar"><attr name="navigationMode"><enum name="normal" value="0"/><enum name="listMode" value="1"/><enum name="tabMode" value="2"/></attr><attr name="displayOptions"><flag name="none" value="0"/><flag name="useLogo" value="0x1"/><flag name="showHome" value="0x2"/><flag name="homeAsUp" value="0x4"/><flag name="showTitle" value="0x8"/><flag name="showCustom" value="0x10"/><flag name="disableHome" value="0x20"/></attr><attr name="title"/><attr format="string" name="subtitle"/><attr format="reference" name="titleTextStyle"/><attr format="reference" name="subtitleTextStyle"/><attr format="reference" name="icon"/><attr format="reference" name="logo"/><attr format="reference" name="divider"/><attr format="reference" name="background"/><attr format="reference|color" name="backgroundStacked"/><attr format="reference|color" name="backgroundSplit"/><attr format="reference" name="customNavigationLayout"/><attr name="height"/><attr format="reference" name="homeLayout"/><attr format="reference" name="progressBarStyle"/><attr format="reference" name="indeterminateProgressStyle"/><attr format="dimension" name="progressBarPadding"/><attr name="homeAsUpIndicator"/><attr format="dimension" name="itemPadding"/><attr format="boolean" name="hideOnContentScroll"/><attr format="dimension" name="contentInsetStart"/><attr format="dimension" name="contentInsetEnd"/><attr format="dimension" name="contentInsetLeft"/><attr format="dimension" name="contentInsetRight"/><attr format="dimension" name="elevation"/><attr format="reference" name="popupTheme"/></declare-styleable>
     <declare-styleable name="ActionBarLayout"><attr name="android:layout_gravity"/></declare-styleable>
     <declare-styleable name="ActionMenuItemView"><attr name="android:minWidth"/></declare-styleable>
@@ -905,6 +920,8 @@
     <string name="location_title">Location</string>
     <string name="login_in_message">Signing In</string>
     <string name="logout">Logout</string>
+    <string name="logout_dialog_message">Are you sure you want to logout?</string>
+    <string name="logout_dialog_title">Mall App</string>
     <string name="male">Male</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/keys.xml -->
     <eat-comment/>

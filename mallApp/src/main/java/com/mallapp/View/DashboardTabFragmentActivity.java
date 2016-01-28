@@ -1,5 +1,6 @@
 package com.mallapp.View;
 
+import java.io.IOException;
 import java.util.ArrayList;
 
 import android.annotation.SuppressLint;
@@ -7,6 +8,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Message;
@@ -16,6 +18,7 @@ import android.support.v4.app.FragmentTabHost;
 import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v4.widget.DrawerLayout.DrawerListener;
+import android.text.TextUtils;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.WindowManager;
@@ -26,6 +29,9 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.List.Adapter.NavDrawerListAdapter;
+import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Fragments.CardTabFragments;
@@ -34,9 +40,14 @@ import com.mallapp.Fragments.OffersTabFragment;
 import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Fragments.RewardsTabFragments;
 import com.mallapp.Model.NavDrawerItem;
+import com.mallapp.SharedPreferences.DataHandler;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
+
+import org.json.JSONObject;
 
 @SuppressLint("InflateParams")
 public class DashboardTabFragmentActivity extends FragmentActivity implements OnItemClickListener {
@@ -61,8 +72,8 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
     private static ImageView drawer_logo;
     private static TextView drawer_text;
     static Context context;
-    
-    
+    GoogleCloudMessaging gcmObj;
+	String regId;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -72,6 +83,11 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 //		actionBar.hide();
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		context= getApplicationContext();
+		regId = DataHandler.getStringPreferences(AppConstants.PREF_GCM_DEVICE_ID);
+		if (!regId.equals("")){
+			gcmObj = GoogleCloudMessaging.getInstance(context);
+			registerWithGcm(context);
+		}
 		initDrawer();
 		initTabs();
         
@@ -386,6 +402,49 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		}
 	}
 
+	private void registerWithGcm(final Context con) {
+
+		new AsyncTask<Void, Void, String>() {
+
+			@Override
+			protected String doInBackground(Void... params) {
+				String msg = "";
+				try {
+
+					if (gcmObj == null) {
+						gcmObj = GoogleCloudMessaging.getInstance(con);
+					}
+					regId = gcmObj.register(AppConstants.GCM_PROJECT_ID);
+					msg = "Registration ID :" + regId;
+					android.util.Log.e("RegID", "" + msg);
+
+				} catch (IOException ex) {
+					msg = "Error :" + ex.getMessage();
+				}
+				return msg;
+			}
+
+			@Override
+			protected void onPostExecute(String msg) {
+				if (!TextUtils.isEmpty(regId)) {
+					DataHandler.updatePreferences(AppConstants.PREF_GCM_DEVICE_ID,regId);
+					try {
+						JSONObject jsonObject = new JSONObject();
+						jsonObject.put("UserId", SharedPreferenceUserProfile.getUserId(context));
+						jsonObject.put("DeviceId",regId);
+						jsonObject.put("DeviceType","2");
+						VolleyNetworkUtil volleyNetworkUtil = new VolleyNetworkUtil(context);
+						volleyNetworkUtil.PostNotSet(ApiConstants.POST_DEVICE_IDENTITY,jsonObject);
+					}catch (Exception ex){
+
+					}
+					android.util.Log.e("GCM ", "response");
+				} else {
+					android.util.Log.e("GCM E", "error ");
+				}
+			}
+		}.execute(null, null, null);
+	}
 
 
 
