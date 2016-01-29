@@ -202,15 +202,15 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         if (!isPaused)
             pageNo = 1;
         if (isRefresh){
-            /*isRefresh = false;
+            isRefresh = false;
             swipeRefreshLayout.setRefreshing(true);
             pageNo = 1;
             requestType = REFRESH_MALL_ACTIVITIES;
+            dbList.clear();
             mallActivities_All.clear();
             mallActivities_News.clear();
             mallActivities_Offers.clear();
-            getLatestListing();*/
-            dbList.clear();
+            getLatestListing();
 
         }
        /* if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
@@ -475,6 +475,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 }
             }
         }
+        dbList.clear();
         return mallModelArrayList;
     }
 
