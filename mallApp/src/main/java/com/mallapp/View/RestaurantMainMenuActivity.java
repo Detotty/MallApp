@@ -272,13 +272,16 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
 	
 	private void filterRestaurants() {
 		initArrays();
-		if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-			all_audience 		= RestaurantFiltration.filterFavouriteRestaurantAlphabetically(audienceFilter, restaurant_read_audience);
-		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)){
-			category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(audienceFilter, restaurant_read_audience);
-		}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)){
-			floor_audience		= RestaurantFiltration.filterFavouriteRestaurantFloor(audienceFilter, restaurant_read_audience);
+		if (restaurant_read_audience!=null){
+			if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
+				all_audience 		= RestaurantFiltration.filterFavouriteRestaurantAlphabetically(audienceFilter, restaurant_read_audience);
+			}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)){
+				category_audience	= RestaurantFiltration.filterFavouriteRestaurantCategory(audienceFilter, restaurant_read_audience);
+			}else if(audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)){
+				floor_audience		= RestaurantFiltration.filterFavouriteRestaurantFloor(audienceFilter, restaurant_read_audience);
+			}
 		}
+
 	}
 
 	

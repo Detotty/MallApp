@@ -54,7 +54,6 @@
                 android:layout_alignParentRight="true"
                 android:contentDescription="@string/app_name"
                 android:layout_marginRight="@dimen/margin_left_15"
-                android:visibility="gone"
                 android:src="@drawable/shop_detail_location_p" />
             
         </RelativeLayout>

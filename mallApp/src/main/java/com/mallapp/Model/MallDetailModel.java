@@ -53,6 +53,8 @@ public class MallDetailModel implements Serializable
 
     private String LinkedInURL;
 
+    private BannerImagesModel[] BannerImages;
+
     public String getCountryName ()
     {
         return CountryName;
@@ -281,6 +283,16 @@ public class MallDetailModel implements Serializable
     public void setLinkedInURL (String LinkedInURL)
     {
         this.LinkedInURL = LinkedInURL;
+    }
+
+    public BannerImagesModel[] getBannerImages ()
+    {
+        return BannerImages;
+    }
+
+    public void setBannerImages (BannerImagesModel[] BannerImages)
+    {
+        this.BannerImages = BannerImages;
     }
 
     @Override

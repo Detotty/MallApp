@@ -81,16 +81,16 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 		boolean is_interts= interst_obj.isInterested();
 		
 		if(is_interts){
-			holder.is_interest.setImageResource(R.drawable.interest_p);
+			holder.is_interest.setImageResource(R.drawable.offer_fav_p);
 			holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 		}else{
-			holder.is_interest.setImageResource(R.drawable.interest);
+			holder.is_interest.setImageResource(R.drawable.offer_fav_r);
 			holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 		}
 
 		if(interst_obj.isInterested()){
 			InterestCacheManager.updateCenters(context, interst_obj, position);
-			holder.is_interest.setImageResource(R.drawable.interest_p);
+			holder.is_interest.setImageResource(R.drawable.offer_fav_p);
 			holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 		}
 
@@ -103,13 +103,13 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 				if(fav_obj.isInterested()){
 					fav_obj.setInterested(false);
 					InterestCacheManager.updateCenters(context, fav_obj, position);
-					holder.is_interest.setImageResource(R.drawable.interest);
-					is_interest_select_all.setImageResource(R.drawable.interest);
+					holder.is_interest.setImageResource(R.drawable.offer_fav_r);
+					is_interest_select_all.setImageResource(R.drawable.offer_fav_r);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 				}else{
 					fav_obj.setInterested(true);
 					InterestCacheManager.updateCenters(context, fav_obj, position);
-					holder.is_interest.setImageResource(R.drawable.interest_p);
+					holder.is_interest.setImageResource(R.drawable.offer_fav_p);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 				}
 			}
@@ -124,12 +124,12 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 				if(fav_obj.isInterested()){
 					fav_obj.setInterested(false);
 					InterestCacheManager.updateCenters(context, fav_obj, position);
-					holder.is_interest.setImageResource(R.drawable.interest);
+					holder.is_interest.setImageResource(R.drawable.offer_fav_r);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 				}else{
 					fav_obj.setInterested(true);
 					InterestCacheManager.updateCenters(context, fav_obj, position);
-					holder.is_interest.setImageResource(R.drawable.interest_p);
+					holder.is_interest.setImageResource(R.drawable.offer_fav_p);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 				}
 			

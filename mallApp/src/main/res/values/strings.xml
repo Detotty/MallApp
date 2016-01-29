@@ -122,6 +122,8 @@
 	<string name="rest_error_message">No restaurants found for this mall</string>
 	<string name="service_error_message">No services found for this mall</string>
 	<string name="add_new_place_error_message">Please enter place name</string>
+	<string name="no_internet">No internet</string>
+	<string name="network_error">There is problem with your network connction</string>
 
 	<!--Shops and Restaurant Strings-->
 	<string name="home_page">Go to Homepage</string>
@@ -367,5 +369,8 @@
     <string name="title_activity_floor_overview">FloorOverviewActivity</string>
     <string name="floor_name">Floor Name</string>
     <string name="title_activity_notification">NotificationActivity</string>
+
+	<string name="take_photo">Take Photo</string>
+	<string name="choose_gallery">Choose Gallery</string>
 
 </resources>

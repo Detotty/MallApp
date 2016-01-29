@@ -125,11 +125,11 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 		uihandler= MainMenuConstants.uiHandler;
 		UserID  = SharedPreferenceUserProfile.getUserId(this);
 		URL = ApiConstants.GET_USER_FAV_URL_KEY+ UserID;
-		volleyNetworkUtil = new VolleyNetworkUtil(this);
-		volleyNetworkUtil.GetUserFav(URL, this);
 		init();
 		initArrays();
-		
+		volleyNetworkUtil = new VolleyNetworkUtil(this);
+		volleyNetworkUtil.GetUserFav(URL, this);
+
 
 
 		
@@ -542,7 +542,7 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 		/*adapter = new Offers_News_Adapter(getApplicationContext(), RestaurantMainMenuActivity.this, shops_all, GlobelShops.header_section_alphabetics, audienceFilter, shopsDao);
 		list_view.setAdapter(adapter);*/
 		adapter = new Offers_News_Adapter(getApplicationContext(), this, R.layout.list_item_offers_new,
-				offers_read_audience, audienceFilter, null
+				offers_read_audience, audienceFilter, mallActivitiesDao
 		);
 		list_view.setAdapter(adapter);
 	}
@@ -632,7 +632,7 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 		/*adapter_O		= new OffersNewsExpandableAdapter(getApplicationContext(),this, offer_category_audience, GlobelOffersNews.header_section_offer);
 		list_view1.setAdapter(adapter_O);*/
 		adapter_search_O= new Offers_News_Adapter(getApplicationContext(), FavouritesMainMenuActivity.this, R.layout.list_item_offers_new,
-				o_searchResults, audienceFilter, null
+				o_searchResults, audienceFilter, mallActivitiesDao
 		);
 		list_view_search.setAdapter(adapter_search_O);
 	}

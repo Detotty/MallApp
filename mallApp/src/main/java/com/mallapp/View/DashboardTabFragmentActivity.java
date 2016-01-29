@@ -84,7 +84,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN);
 		context= getApplicationContext();
 		regId = DataHandler.getStringPreferences(AppConstants.PREF_GCM_DEVICE_ID);
-		if (!regId.equals("")){
+		if (regId.equals("")){
 			gcmObj = GoogleCloudMessaging.getInstance(context);
 			registerWithGcm(context);
 		}

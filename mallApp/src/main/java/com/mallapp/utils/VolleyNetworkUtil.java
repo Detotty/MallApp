@@ -22,6 +22,7 @@ import com.google.gson.reflect.TypeToken;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.mallapp.Application.MallApplication;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.FavoritesModel;
@@ -39,6 +40,7 @@ import com.mallapp.Model.VolleyErrorHelper;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.db.DatabaseHelper;
+import com.mallapp.listeners.ActivityDetailListener;
 import com.mallapp.listeners.FavoritesDataListener;
 import com.mallapp.listeners.FloorsDataListener;
 import com.mallapp.listeners.MallDataListener;
@@ -71,6 +73,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private ProgressDialog progressDialog;
     private String TAG = VolleyNetworkUtil.class.getSimpleName();
     MallDataListener mallDataListener;
+    ActivityDetailListener activityDetailListener;
     FloorsDataListener floorsDataListener;
     ShopsDataListener shopsDataListener;
     RestaurantDataListener restaurantDataListener;
@@ -87,6 +90,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private final String GET_MALL_FLOORS = "GET_MALL_FLOORS";
     private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
     private final String GET_USER_SIGN_OUT = "GET_USER_SIGN_OUT";
+    private final String GET_ACTIVITY_DETAIL = "GET_ACTIVITY_DETAIL";
     private final String GET_MALL_SERVICES = "GET_MALL_SERVICES";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
     //endregion
@@ -567,19 +571,19 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+    /*<--------------ACTIVITY DETAILS ---------------->*/
 
-    /*<--------------POST DEVICE IDENTITY ---------------->*/
-    public void PostDeviceIdentity(String url, JSONObject user) {
-//        progressDialog = ProgressDialog.show(context,"","Loading");
-        gcmObj = GoogleCloudMessaging.getInstance(context);
-
-        requestType = POST_NOT_SET;
-        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, user, this, this) {
+    public void GetActivityDetail(String url, ActivityDetailListener activityDetailListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = GET_ACTIVITY_DETAIL;
+        this.activityDetailListener = activityDetailListener;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
             @Override
             public Map<String, String> getHeaders() throws AuthFailureError {
                 Map<String, String> headers = new HashMap<String, String>();
                 String token = SharedPreferenceUserProfile.getUserToken(context);
                 Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
                 headers.put("Auth-Token", token);
                 return headers;
             }
@@ -606,8 +610,37 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+    /*<--------------USER SIGN OUT ---------------->*/
+
+    public void GetNotAck(String url) {
+//        progressDialog = ProgressDialog.show(context,"","Loading");
+        url = ApiConstants.GET_NOT_ACK_URL_KEY+SharedPreferenceUserProfile.getUserId(context);
+        requestType = POST_NOT_SET;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        switch (requestType) {
+            case GET_MALL_NEWSnOFFERS: {
+                mallDataListener.OnError();
+                break;
+            }
+            case GET_REST_DETAIL: {
+                restaurantDataListener.OnError();
+                break;
+            }
+        }
         Log.d(TAG, volleyError.toString());
         NetworkResponse networkResponse = volleyError.networkResponse;
         if (networkResponse != null && networkResponse.statusCode == HttpStatus.SC_UNAUTHORIZED) {}
@@ -619,11 +652,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
         String message = VolleyErrorHelper.getMessage(volleyError, context);
 
-        switch (requestType) {
-            case GET_MALL_NEWSnOFFERS: {
-                mallDataListener.OnError();
-            }
-        }
+
 
 
         Log.e("", " error message ..." + message);
@@ -768,6 +797,21 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     else{
 
                     }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //endregion
+
+            //region GET_MALL_FLOORS
+            case GET_ACTIVITY_DETAIL: {
+                try {
+                    Gson gson = new Gson();
+                    MallActivitiesModel model = gson.fromJson(String.valueOf(response), MallActivitiesModel.class);
+                    Log.d(TAG, "Shop Detail:" + String.valueOf(response));
+                    if (model != null)
+                        activityDetailListener.onDataReceived(model);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }

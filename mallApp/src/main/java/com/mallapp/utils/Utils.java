@@ -5,6 +5,8 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.net.ConnectivityManager;
+import android.net.NetworkInfo;
 import android.provider.Settings;
 import android.widget.Toast;
 
@@ -203,6 +205,26 @@ public class Utils {
         if (value == null || "".equals(value.trim())) {
             return true;
         }
+        return false;
+    }
+
+    /**
+     * Checks if the Internet connection is available.
+     *
+     * @return Returns true if the Internet connection is available. False otherwise.
+     * *
+     */
+    public static boolean isInternetAvailable(Context ctx) {
+        ConnectivityManager cm = (ConnectivityManager) ctx.getSystemService(Context.CONNECTIVITY_SERVICE);
+
+        NetworkInfo networkInfo = cm.getActiveNetworkInfo();
+
+        // if network is NOT available networkInfo will be null
+        // otherwise check if we are connected
+        if (networkInfo != null && networkInfo.isConnected()) {
+            return true;
+        }
+
         return false;
     }
 

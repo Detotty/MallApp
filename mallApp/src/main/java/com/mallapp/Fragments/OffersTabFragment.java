@@ -190,8 +190,9 @@ public class OffersTabFragment extends Fragment
     public void onResume() {
 //        callInOnResume();
         super.onResume();
-        if (ProfileTabFragment.isUpdate) {
+        if (ProfileTabFragment.isUpdate || OfferPagerTabFragment.isRefresh) {
             ProfileTabFragment.isUpdate = false;
+            OfferPagerTabFragment.isRefresh = false;
             TITLES = FavouriteCentersFiltration.getFavTITLES(context);
             callInOnResume();
         }

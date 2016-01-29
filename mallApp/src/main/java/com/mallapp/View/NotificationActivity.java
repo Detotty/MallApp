@@ -3,6 +3,7 @@ package com.mallapp.View;
 import android.os.Bundle;
 import android.app.Activity;
 import android.view.View;
+import android.widget.CompoundButton;
 import android.widget.ImageButton;
 import android.widget.Switch;
 import android.widget.TextView;
@@ -48,17 +49,21 @@ public class NotificationActivity extends Activity {
             e.printStackTrace();
         }
         switch_notification = (Switch) findViewById(R.id.switch_notification);
-        switch_notification.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
+        switch_notification.setChecked(DataHandler.getBooleanPreferences(AppConstants.PREF_NOT_KEY));
+        switch_notification.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
 
-                if (!user_profile.isPush_notification()) {
+            @Override
+            public void onCheckedChanged(CompoundButton buttonView,
+                                         boolean isChecked) {
+
+                if (isChecked) {
                     try {
                         jsonObject.put("IsEnabled",true);
                         volleyNetworkUtil.PostNotSet(ApiConstants.POST_MALL_NOTIFICATION_SETTING,jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    DataHandler.updatePreferences(AppConstants.PREF_NOT_KEY,true);
                 } else {
                     try {
                         jsonObject.put("IsEnabled",false);
@@ -66,9 +71,14 @@ public class NotificationActivity extends Activity {
                     } catch (JSONException e) {
                         e.printStackTrace();
                     }
+                    DataHandler.updatePreferences(AppConstants.PREF_NOT_KEY,false);
                 }
+
             }
         });
+
+
     }
+
 
 }

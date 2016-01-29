@@ -17,6 +17,11 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.daimajia.slider.library.Animations.DescriptionAnimation;
+import com.daimajia.slider.library.SliderLayout;
+import com.daimajia.slider.library.SliderTypes.BaseSliderView;
+import com.daimajia.slider.library.SliderTypes.TextSliderView;
+import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.SupportMapFragment;
@@ -26,6 +31,7 @@ import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
+import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.MallTimingsModel;
@@ -35,12 +41,13 @@ import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
-public class MallDetailActivity extends SlidingDrawerActivity implements OnClickListener, MallDataListener {
+public class MallDetailActivity extends SlidingDrawerActivity implements OnClickListener, MallDataListener, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
     //region Data Members
     private GestureDetector detector;
     VolleyNetworkUtil volleyNetworkUtil;
     GoogleMap map;
+    private SliderLayout mDemoSlider;
     public static final int DEFAULT_MAP_ZOOM_LEVEL = 12;
     Double lat, lng;
     String locationName;
@@ -76,7 +83,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         mallDetailModel = new MallDetailModel();
         expand = (ImageView) findViewById(R.id.iv_expand);
-        mall_background = (ImageView) findViewById(R.id.iv_background);
+//        mall_background = (ImageView) findViewById(R.id.iv_background);
         mall_name = (TextView) findViewById(R.id.heading);
         mall_map = (ImageView) findViewById(R.id.ivMap);
         tv_about = (TextView) findViewById(R.id.tv_about);
@@ -87,6 +94,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         rel_offer_title = (TextView) findViewById(R.id.textView4);
         tv_Web = (TextView) findViewById(R.id.tv_web);
         linear_timing_layout = (LinearLayout) findViewById(R.id.layout_timings);
+        mDemoSlider = (SliderLayout) findViewById(R.id.slider);
 
         open_navigation.setOnClickListener(this);
         open_drawer.setOnClickListener(this);
@@ -144,7 +152,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
 
         this.mallDetailModel = mallDetailModel;
         initilizeMap();
-        Picasso.with(this).load(mallDetailModel.getAppBackgroundImageUrl()).placeholder(R.drawable.mallapp_placeholder).fit().into(mall_background);
+//        Picasso.with(this).load(mallDetailModel.getAppBackgroundImageUrl()).placeholder(R.drawable.mallapp_placeholder).fit().into(mall_background);
         mall_name.setText(mallDetailModel.getName());
         tv_about.setText(mallDetailModel.getAboutText());
         tv_Detail.setText(mallDetailModel.getBriefText());
@@ -200,7 +208,8 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         lng = Double.parseDouble(mallDetailModel.getLongitude());
         locationName = mallDetailModel.getAddress();
         drawMarkerandZoom(lat, lng, locationName);
-
+        BannerImagesModel bImage[] = mallDetailModel.getBannerImages();
+        ImageSlider(bImage);
 		/*if(mallDetailModel.getSiteMapActive()){
 			View frag = findViewById(R.id.mapAddress);
 			frag.setVisibility(View.GONE);
@@ -280,6 +289,52 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         map.addMarker(new MarkerOptions().position(thisPosition).title(tagName));
         CameraPosition cameraPosition = new CameraPosition.Builder().target(thisPosition).zoom(DEFAULT_MAP_ZOOM_LEVEL).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
+
+    }
+
+    public void ImageSlider(BannerImagesModel bImages[]) {
+        for (BannerImagesModel name : bImages) {
+            TextSliderView textSliderView = new TextSliderView(this);
+            // initialize a SliderLayout
+            textSliderView
+                    .error(R.drawable.mallapp_placeholder)
+                    .empty(R.drawable.mallapp_placeholder)
+                    .errorDisappear(false)
+                    .image(name.getBannerImageURL())
+                    .setScaleType(BaseSliderView.ScaleType.Fit)
+                    .setOnSliderClickListener(this);
+
+            //add your extra information
+            textSliderView.bundle(new Bundle());
+            textSliderView.getBundle()
+                    .putString("extra", name.getBannerImageURL());
+
+            mDemoSlider.addSlider(textSliderView);
+        }
+        mDemoSlider.setPresetTransformer(SliderLayout.Transformer.Accordion);
+        mDemoSlider.setPresetIndicator(SliderLayout.PresetIndicators.Right_Bottom);
+        mDemoSlider.setCustomAnimation(new DescriptionAnimation());
+        mDemoSlider.setDuration(3500);
+        mDemoSlider.addOnPageChangeListener(this);
+    }
+
+    @Override
+    public void onSliderClick(BaseSliderView slider) {
+
+    }
+
+    @Override
+    public void onPageScrolled(int position, float positionOffset, int positionOffsetPixels) {
+
+    }
+
+    @Override
+    public void onPageSelected(int position) {
+
+    }
+
+    @Override
+    public void onPageScrollStateChanged(int state) {
 
     }
 }

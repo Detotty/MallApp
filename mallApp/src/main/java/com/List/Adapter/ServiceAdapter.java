@@ -4,6 +4,7 @@ import java.util.ArrayList;
 
 import android.app.Activity;
 import android.content.Context;
+import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.mallapp.Model.ServicesModel;
+import com.mallapp.View.FullScreenImage;
 import com.mallapp.View.R;
 import com.mallapp.globel.GlobelMainMenu;
 import com.mallapp.imagecapture.ImageLoader;
@@ -114,6 +116,7 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 			//img.setImageResource(c.imageId);
 		}else{
 			ImageView back_image= (ImageView) v.findViewById(R.id.service_image);
+			ImageView location= (ImageView) v.findViewById(R.id.imageView1);
 			TextView address 	= (TextView) v.findViewById(R.id.address);
 			final TextView phone_no 	= (TextView) v.findViewById(R.id.phone_no);
 			address.setText(service_obj.getAddress());
@@ -124,6 +127,17 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 				@Override
 				public void onClick(View v) {
 					AppUtils.displayCallDialog(v.getRootView().getContext(), service_obj.getPhone());
+				}
+			});
+			location.setOnClickListener(new View.OnClickListener() {
+				@Override
+				public void onClick(View v) {
+					String encoded = service_obj.getMapImageURL();
+					Intent i = new Intent(activity, FullScreenImage.class);
+					i.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+					i.putExtra("img", encoded);
+					if (encoded!=null)
+						activity.getApplication().startActivity(i);
 				}
 			});
 		}

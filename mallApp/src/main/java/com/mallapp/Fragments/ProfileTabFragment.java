@@ -110,19 +110,25 @@ public class ProfileTabFragment extends Fragment{
         sms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SocialUtils.sendSms(getActivity(), getResources().getString(R.string.request_error_message) + "\n" );
+                SocialUtils.sendSms(getActivity(), getResources().getString(R.string.request_error_message) + "\n");
             }
         });
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SocialUtils.sendEmail(getActivity(), getResources().getString(R.string.request_error_message) + "\n" );
+                SocialUtils.sendEmail(getActivity(), getResources().getString(R.string.request_error_message) + "\n");
             }
         });
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SocialUtils.postToTwitter(getActivity(), getResources().getString(R.string.request_error_message) + "\n" );
+                SocialUtils.postToTwitter(getActivity(), getResources().getString(R.string.request_error_message) + "\n");
+            }
+        });
+        camera.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                selectProfileImage("Add Photo!");
             }
         });
         /*user_ImageView.setOnClickListener(new View.OnClickListener() {
@@ -241,19 +247,19 @@ public class ProfileTabFragment extends Fragment{
 
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.help))) {
                     Intent intent = new Intent(getActivity(), WebFragment.class);
-                    intent.putExtra("heading",getString(R.string.help));
+                    intent.putExtra("heading", getString(R.string.help));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
                     Intent intent = new Intent(getActivity(), WebFragment.class);
-                    intent.putExtra("heading",getString(R.string.privacy_policy));
+                    intent.putExtra("heading", getString(R.string.privacy_policy));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.about_us))) {
                     Intent intent = new Intent(getActivity(), WebFragment.class);
-                    intent.putExtra("heading",getString(R.string.about_us));
+                    intent.putExtra("heading", getString(R.string.about_us));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
@@ -263,8 +269,8 @@ public class ProfileTabFragment extends Fragment{
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
 
-                }else if (textView_prfile.getText().toString().equals(getString(R.string.logout))) {
-                            mMaterialDialog = new MaterialDialog(getActivity())
+                } else if (textView_prfile.getText().toString().equals(getString(R.string.logout))) {
+                    mMaterialDialog = new MaterialDialog(getActivity())
                             .setTitle(getResources().getString(R.string.logout_dialog_title))
                             .setMessage(getResources().getString(R.string.logout_dialog_message))
                             .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
@@ -272,7 +278,7 @@ public class ProfileTabFragment extends Fragment{
                                 public void onClick(View v) {
                                     mMaterialDialog.dismiss();
                                     VolleyNetworkUtil volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
-                                    volleyNetworkUtil.GetUserSignOut(ApiConstants.MALL_USER_SIGN_OUT+SharedPreferenceUserProfile.getUserId(getActivity()));
+                                    volleyNetworkUtil.GetUserSignOut(ApiConstants.MALL_USER_SIGN_OUT + SharedPreferenceUserProfile.getUserId(getActivity()));
 
                                 }
                             })
@@ -320,7 +326,7 @@ public class ProfileTabFragment extends Fragment{
         return addView;
     }
 
-    /*private void selectProfileImage(String dialogTitle) {
+    private void selectProfileImage(String dialogTitle) {
         final CharSequence[] options = {getResources().getString(R.string.take_photo), getResources().getString(R.string.choose_gallery), getResources().getString(R.string.cancel)};
         AlertDialog.Builder builder = new AlertDialog.Builder(getActivity());
         builder.setTitle(dialogTitle);
@@ -332,16 +338,16 @@ public class ProfileTabFragment extends Fragment{
                     Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
                     startActivityForResult(takePictureIntent, 0);
                 } else if (options[item].equals(getString(R.string.choose_gallery))) {
-                    Intent intent = new Intent(Intent.ACTION_PICK, android.provider.MediaStore.Images.Media.EXTERNAL_CONTENT_URI);
-                    intent.setType("image");
-                    startActivityForResult(intent, 1);
+                    Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
+                    photoPickerIntent.setType("image/*");
+                    startActivityForResult(photoPickerIntent, 1);
                 } else if (options[item].equals(getString(R.string.cancel))) {
                     dialog.dismiss();
                 }
             }
         });
         builder.show();
-    }*/
+    }
 
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
@@ -365,7 +371,7 @@ public class ProfileTabFragment extends Fragment{
                     Bitmap bitmapSelectedImage = BitmapFactory.decodeFile(picturePath);
 
                     if (bitmapSelectedImage == null) {
-//                        selectProfileImage("Re-Select Picture");
+                        selectProfileImage("Re-Select Picture");
                         return;
                     }
                     user_ImageView.setImageBitmap(bitmapSelectedImage);

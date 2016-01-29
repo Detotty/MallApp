@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-308:12
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-314:12
 	package
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:4:5-31
 		INJECTED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml
@@ -283,7 +283,7 @@ MERGED from [com.google.android.gms:play-services-gcm:8.1.0] J:\Android\Raw\Mall
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:44:22-79
 application
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:46:5-306:19
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:46:5-312:19
 MERGED from [MallApp:parallax:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\AndroidManifest.xml:11:5-16:19
 MERGED from [com.android.support:support-v4:22.2.1] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\22.2.1\AndroidManifest.xml:22:5-20
 MERGED from [MallApp:libraryviewpager:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\AndroidManifest.xml:5:5-20
@@ -860,7 +860,7 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:292:9-301
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:294:13-73
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:293:13-77
-intent-filter#com.crowdeyes.View+com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION
+intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.mallapp.View
 ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:295:13-300:29
 action#com.google.android.c2dm.intent.RECEIVE
 ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:296:17-81
@@ -870,14 +870,18 @@ action#com.google.android.c2dm.intent.REGISTRATION
 ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:297:17-86
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:297:25-83
-category#com.crowdeyes.View
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:299:17-63
+category#com.mallapp.View
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:299:17-61
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:299:27-60
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:299:27-58
 service#com.mallapp.pushnotification.GCMNotificationIntentService
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:304:9-93
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:304:9-310:19
+	android:exported
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:306:13-37
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:304:18-90
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:305:13-85
+intent-filter#com.google.android.c2dm.intent.RECEIVE
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:307:13-309:29
 activity#com.google.android.gms.ads.AdActivity
 ADDED from [com.google.android.gms:play-services-ads:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\AndroidManifest.xml:26:9-29:64
 MERGED from [com.google.android.gms:play-services-ads:8.1.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.1.0\AndroidManifest.xml:26:9-29:64

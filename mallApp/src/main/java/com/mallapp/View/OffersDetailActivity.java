@@ -29,26 +29,32 @@ import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
+import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.ShopList;
+import com.mallapp.Fragments.OfferPagerTabFragment;
 import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.MallActivitiesModel;
+import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.Shops;
 import com.mallapp.SharedPreferences.SharedPreference;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
+import com.mallapp.listeners.ActivityDetailListener;
+import com.mallapp.listeners.MallDataListener;
 import com.mallapp.socialsharing.Facebook_Login;
 import com.mallapp.socialsharing.Twitter_Integration;
+import com.mallapp.utils.BadgeUtils;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 @SuppressLint("InflateParams") 
 
-public class OffersDetailActivity extends Activity implements OnClickListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
+public class OffersDetailActivity extends Activity implements ActivityDetailListener,OnClickListener,BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener{
 	
 	private ImageView 	offer_image;
 	private TextView 	offer_title, shope_name, offer_detail;
@@ -62,6 +68,8 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 	Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
 	VolleyNetworkUtil volleyNetworkUtil;
 	private DatabaseHelper databaseHelper = null;
+	boolean fav = false;
+
 
 
 	@Override
@@ -74,8 +82,10 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 //		actionBar.hide();
 //		offer_object= GlobelOffersNews.offer_obj;
 		offer_object = (MallActivitiesModel) getIntent().getSerializableExtra(Offers_News_Constants.MALL_OBJECT);
+		fav = offer_object.isFav();
 		init();
-		setOfferDetail();
+		BadgeUtils.clearBadge(MallApplication.appContext);
+		volleyNetworkUtil.GetActivityDetail(ApiConstants.GET_NEWS_OFFERS_DETAIL_URL_KEY+offer_object.getActivityId()+"&languageId=1",this);
 	}
 
 	private void setOfferDetail() {
@@ -153,12 +163,13 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 				volleyNetworkUtil.PostFavNnO(url + SharedPreferenceUserProfile.getUserId(this) + "&ActivityId=" + offer_object.getActivityId() + "&isDeleted=true");
 						offer_object.setFav(false);
 				updateMalls(offer_object);
-				
+				OfferPagerTabFragment.isRefresh = true;
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 				volleyNetworkUtil.PostFavNnO(url + SharedPreferenceUserProfile.getUserId(this) + "&ActivityId=" + offer_object.getActivityId() + "&isDeleted=false");
 				offer_object.setFav(true);
 				updateMalls(offer_object);
+				OfferPagerTabFragment.isRefresh = true;
 			}
 		}else if(v.getId() == go_to_shop.getId()){
 		
@@ -280,5 +291,19 @@ public class OffersDetailActivity extends Activity implements OnClickListener,Ba
 		} catch (SQLException e) {
 			e.printStackTrace();
 		}
+	}
+
+
+	@Override
+	public void onDataReceived(MallActivitiesModel mallActivitiesModels) {
+		offer_object = mallActivitiesModels;
+		offer_object.setFav(fav);
+		setOfferDetail();
+
+	}
+
+	@Override
+	public void OnError() {
+
 	}
 }

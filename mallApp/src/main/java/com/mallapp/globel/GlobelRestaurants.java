@@ -33,9 +33,9 @@ public class GlobelRestaurants {
 	public static ArrayList<Drawable> floor_audience_images;
 	
 	
-	public static ArrayList<String> header_section_alphabetics;
-	public static ArrayList<String> header_section_category;
-	public static ArrayList<String> header_section_floor;
+	public static ArrayList<String> header_section_alphabetics = new ArrayList<>();
+	public static ArrayList<String> header_section_category= new ArrayList<>();
+	public static ArrayList<String> header_section_floor= new ArrayList<>();
 	
 	
 	public static List<RestaurantPagerFragment> fragment_instences;

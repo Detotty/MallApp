@@ -12,6 +12,7 @@ import android.graphics.drawable.Drawable;
 import android.os.Bundle;
 import android.os.Handler;
 import android.support.v4.app.Fragment;
+import android.support.v4.app.FragmentTransaction;
 import android.support.v4.widget.SwipeRefreshLayout;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -64,6 +65,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     private int pageNo = 1;
     boolean lastPage = false;
     boolean isPaused = false;
+    public static boolean isRefresh = false;
 
     LinearLayout linlaHeaderProgress;
     View footerView;
@@ -173,6 +175,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     mallActivities_All.clear();
                     mallActivities_News.clear();
                     mallActivities_Offers.clear();
+                    dbList.clear();
                     getLatestListing();
                 } else {
                     swipeRefreshLayout.setRefreshing(false);
@@ -198,6 +201,18 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         super.onResume();
         if (!isPaused)
             pageNo = 1;
+        if (isRefresh){
+            /*isRefresh = false;
+            swipeRefreshLayout.setRefreshing(true);
+            pageNo = 1;
+            requestType = REFRESH_MALL_ACTIVITIES;
+            mallActivities_All.clear();
+            mallActivities_News.clear();
+            mallActivities_Offers.clear();
+            getLatestListing();*/
+            dbList.clear();
+
+        }
        /* if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
             lastPage = false;
             getLatestListing();

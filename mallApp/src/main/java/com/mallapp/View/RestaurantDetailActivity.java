@@ -51,6 +51,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -75,8 +76,10 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
 	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout, rel_shop_offers_layout;
 	HorizontalScrollView shops_offers1;
+	ScrollView scrollView;
 	RelativeLayout 			timing_layout;
 	LinearLayout 			linear_timing_layout;
+	LinearLayout 			error_layout;
 	private ImageButton 	message, face_book, twitter, email, chat;
 
 	private AnimationListener mAnimationListener;
@@ -106,6 +109,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
 		rel_shop_offers_layout		= (LinearLayout) findViewById(R.id.shop_rel_offers);
 		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
+		scrollView	= (ScrollView) findViewById(R.id.scrollView);
 		rest_obj = new RestaurantModel();
 		shop_name 	= (TextView) findViewById(R.id.offer_title);
 		is_fav		= (ImageButton) findViewById(R.id.fav_offer);
@@ -119,6 +123,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
 		back_screen = (ImageButton) findViewById(R.id.back);
 		linear_timing_layout	= (LinearLayout) findViewById(R.id.layout_timings);
+		error_layout	= (LinearLayout) findViewById(R.id.error_layout);
 		is_fav.setOnClickListener(this);
 		mDemoSlider = (SliderLayout)findViewById(R.id.slider);
 		back_screen	.setOnClickListener(this);
@@ -237,28 +242,29 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			finish();
 		}else if(v.getId() == is_fav.getId()){
 
-			boolean fav	= rest_detail_obj.isFav();
-			if(fav){
-				is_fav.setImageResource(R.drawable.ofer_detail_heart);
-				url = ApiConstants.POST_FAV_SHOP_URL_KEY+ SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=true";
-				volleyNetworkUtil.PostFavShop(url);
-				rest_detail_obj.setFav(false);
+			if (rest_detail_obj!=null){
+				boolean fav	= rest_detail_obj.isFav();
+				if(fav){
+					is_fav.setImageResource(R.drawable.ofer_detail_heart);
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+ SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=true";
+					volleyNetworkUtil.PostFavShop(url);
+					rest_detail_obj.setFav(false);
 
-				rest_obj.setMallResturantId(mallStoreId);
-				rest_obj.setFav(false);
-				updateShops(rest_obj);
-			}else{
-				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
-				url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=false";
-				volleyNetworkUtil.PostFavShop(url);
-				rest_detail_obj.setFav(true);
+					rest_obj.setMallResturantId(mallStoreId);
+					rest_obj.setFav(false);
+					updateShops(rest_obj);
+				}else{
+					is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+					url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=false";
+					volleyNetworkUtil.PostFavShop(url);
+					rest_detail_obj.setFav(true);
 
-				rest_obj.setMallResturantId(mallStoreId);
-				rest_obj.setFav(true);
-				updateShops(rest_obj);
+					rest_obj.setMallResturantId(mallStoreId);
+					rest_obj.setFav(true);
+					updateShops(rest_obj);
 
+				}
 			}
-
 
 		}
 		else if (v.getId() == tv_Web.getId()){
@@ -315,17 +321,36 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		RestaurantTimingsModel[] timinigs = restaurantDetailModel.getResturantTimings();
 		RestaurantOffersModel[] storeOffers = restaurantDetailModel.getRestaurantOffers();
 		getRestaurantOffers(storeOffers);
-		for (RestaurantTimingsModel st:timinigs
+		for (RestaurantTimingsModel st : timinigs
 				) {
 			final RelativeLayout newView = (RelativeLayout) getLayoutInflater().inflate(R.layout.timing_layout, null);
-			String t1 = st.getFromDay()+"-"+st.getToDay();
-			String t2 = st.getOpeningTimings()+"-"+st.getClosingTimings();
-
-			TextView tv=(TextView) newView.findViewById(R.id.tv_d);
+			String t1 = st.getFromDay() + "-" + st.getToDay();
+			TextView tv = (TextView) newView.findViewById(R.id.tv_d);
 			tv.setText(t1);
-			TextView tv1=(TextView) newView.findViewById(R.id.tv_t);
-			tv1.setText(t2);
-			this.linear_timing_layout.addView(newView);
+
+
+			if (!st.getIsException()){
+				String t2 = st.getOpeningTimings() + "-" + st.getClosingTimings();
+				TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
+				tv1.setText(t2);
+				this.linear_timing_layout.addView(newView);
+			}
+			else {
+				String t2 = st.getDescription();
+				TextView tv1 = (TextView) newView.findViewById(R.id.tv_t);
+				tv1.setText(t2);
+				if (android.os.Build.VERSION.SDK_INT >= android.os.Build.VERSION_CODES.KITKAT) {
+					LinearLayout.LayoutParams relativeParams = null;
+					relativeParams = new LinearLayout.LayoutParams(
+							new LinearLayout.LayoutParams(
+									LinearLayout.LayoutParams.MATCH_PARENT,
+									LinearLayout.LayoutParams.WRAP_CONTENT));
+					relativeParams.setMargins(0, 35, 0, 0);
+					newView.setLayoutParams(relativeParams);
+					newView.requestLayout();
+				}
+				this.linear_timing_layout.addView(newView);
+			}
 		}
 		for (RestaurantModel restaurantModel:dbList
 				) {
@@ -360,6 +385,8 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	@Override
 	public void OnError() {
 
+		scrollView.setVisibility(View.INVISIBLE);
+		error_layout.setVisibility(View.VISIBLE);
 	}
 
 	@Override

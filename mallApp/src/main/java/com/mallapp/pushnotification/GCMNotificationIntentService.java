@@ -16,9 +16,13 @@ import android.util.Log;
 
 import com.google.android.gms.gcm.GoogleCloudMessaging;
 import com.mallapp.Application.MallApplication;
+import com.mallapp.Constants.Offers_News_Constants;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.View.DashboardTabFragmentActivity;
+import com.mallapp.View.OffersDetailActivity;
 import com.mallapp.View.R;
 import com.mallapp.utils.BadgeUtils;
+import com.mallapp.utils.VolleyNetworkUtil;
 import com.mallapp.utils.WakeLocker;
 
 import java.util.HashMap;
@@ -40,6 +44,7 @@ public class GCMNotificationIntentService extends IntentService {
         GoogleCloudMessaging gcm = GoogleCloudMessaging.getInstance(this);
         Log.e("push Notifications", "" + extras);
         String messageType = gcm.getMessageType(intent);
+//        sendNotification(extras.toString());
 
         if (!extras.isEmpty()) {
             if (GoogleCloudMessaging.MESSAGE_TYPE_SEND_ERROR
@@ -58,15 +63,23 @@ public class GCMNotificationIntentService extends IntentService {
     }
 
     private void sendNotification(String msg) {
-        Intent resultIntent = new Intent(this, DashboardTabFragmentActivity.class);
-        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
-                resultIntent, PendingIntent.FLAG_ONE_SHOT);
         int icon = R.drawable.icon;
-        String notification_msg = "";
+        String notification_msg = msg;
         WakeLocker.acquire(getApplicationContext());
         Log.e("push Notifications", "" + msg);
         String response = msg.substring(msg.indexOf("{") + 1, msg.indexOf("}"));
         Map<String, String> responseMap = splitToMap(response, ", ", "=");
+
+        Intent resultIntent = new Intent(this, OffersDetailActivity.class);
+        MallActivitiesModel mallActivitiesModel = new MallActivitiesModel();
+        mallActivitiesModel.setActivityId(responseMap.get("ActivityId"));
+        resultIntent.putExtra(Offers_News_Constants.MALL_OBJECT, mallActivitiesModel);
+        PendingIntent resultPendingIntent = PendingIntent.getActivity(this, 0,
+                resultIntent, PendingIntent.FLAG_ONE_SHOT);
+
+        VolleyNetworkUtil volleyNetworkUtil = new VolleyNetworkUtil(MallApplication.appContext);
+        volleyNetworkUtil.GetNotAck("");
+/*
         String type = modifyNotification(responseMap.get("Type"));
         if (type.equals("SimpleChat")) {
             type = "Chat";
@@ -83,33 +96,22 @@ public class GCMNotificationIntentService extends IntentService {
             notification_msg = "Activities:\nAnnouncement:" + responseMap.get("AnnouncementName") + "\n" + responseMap.get("Notification");
         } else if (type.equals("AnnouncementConversation")) {
             notification_msg = "Chat:\n" + responseMap.get("Notification");
-        }
-        int smallIcon = R.drawable.ic_launcher;
+        }*/
+        int smallIcon = R.drawable.icon;
         Notification notification = null;
         NotificationCompat.Builder mBuilder = new NotificationCompat.Builder(
                 getApplicationContext());
-        if (WakeLocker.isAppIsInBackground(MallApplication.appContext)) {
+        notification = mBuilder.setSmallIcon(smallIcon).setTicker("The Mall App: ").setWhen(0)
+                .setAutoCancel(true)
+                .setContentTitle("The Mall App")
+                .setStyle(new NotificationCompat.BigTextStyle().bigText(responseMap.get("alert")))
+                .setContentIntent(resultPendingIntent)
+                .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
+                .setVibrate(new long[]{100, 250})
+                .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), icon))
+                .setContentText(responseMap.get("alert"))
+                .build();
 
-            notification = mBuilder.setSmallIcon(smallIcon).setTicker("CrowdEyes: " + type).setWhen(0)
-                    .setAutoCancel(true)
-                    .setContentTitle("CrowdEyes")
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(modifyNotification(notification_msg)))
-                    .setContentIntent(resultPendingIntent)
-                    .setSound(RingtoneManager.getDefaultUri(RingtoneManager.TYPE_NOTIFICATION))
-                    .setVibrate(new long[]{100, 250})
-                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), icon))
-                    .setContentText(modifyNotification(notification_msg))
-                    .build();
-        } else {
-            notification = mBuilder.setSmallIcon(smallIcon).setTicker("CrowdEyes: " + type).setWhen(0)
-                    .setAutoCancel(true)
-                    .setContentTitle("CrowdEyes")
-                    .setStyle(new NotificationCompat.BigTextStyle().bigText(modifyNotification(notification_msg)))
-                    .setContentIntent(resultPendingIntent)
-                    .setLargeIcon(BitmapFactory.decodeResource(getApplicationContext().getResources(), icon))
-                    .setContentText(modifyNotification(notification_msg))
-                    .build();
-        }
         notifyID = notifyID + 1;
         NotificationManager notificationManager = (NotificationManager) getApplicationContext().getSystemService(Context.NOTIFICATION_SERVICE);
         notificationManager.notify(notifyID, notification);

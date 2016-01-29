@@ -801,6 +801,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="change_language">Change Language</string>
+    <string name="choose_gallery">Choose Gallery</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
     <eat-comment/>
     <string name="com_facebook_image_download_unknown_error">Unexpected error while downloading an image.</string>
@@ -948,9 +949,11 @@
     <eat-comment/>
     <string name="name">Name</string>
     <string name="nearby_">Nearby</string>
+    <string name="network_error">There is problem with your network connction</string>
     <string name="news_">News</string>
     <string name="next_">Next</string>
     <string name="no_">No</string>
+    <string name="no_internet">No internet</string>
     <string name="notification">Notifications</string>
     <string name="notifications">Notifications</string>
     <string name="offer_">Offers</string>
@@ -1039,6 +1042,7 @@
     <string name="tabs_offer">Offer</string>
     <string name="tabs_profile">Profile</string>
     <string name="tabs_rewards">Rewards</string>
+    <string name="take_photo">Take Photo</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>
     <string name="timing_m1">From clock 9 to clock 20, From Mon to Fri.</string>

@@ -29,10 +29,11 @@
             android:layout_height="wrap_content"
             android:orientation="vertical">
 
-        <ImageView
-            android:id="@+id/iv_background"
-            android:layout_width="match_parent"
-            android:layout_height="200dp"/>
+
+            <include
+                android:id="@+id/iv_background"
+                layout="@layout/shop_detail_image_slider" />
+
             <View
                 android:layout_width="fill_parent"
                 android:layout_height="1dp"
@@ -54,6 +55,7 @@
                 android:layout_margin="@dimen/margin_left_15"
                 android:textColor="@color/black3"
                 android:text="Details"
+                android:visibility="gone"
                 android:textSize="@dimen/text_15"/>
 
             <ImageView

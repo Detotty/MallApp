@@ -1,8 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:background="@drawable/background"
     android:layout_width="match_parent"
     android:layout_height="wrap_content"
     android:orientation="vertical" >
@@ -16,10 +15,21 @@
         android:layout_height="wrap_content"
         android:background="@drawable/shop_logo1"
         android:contentDescription="@string/app_name"/>-->
-    <include layout="@layout/activity_detail_header" />
+    <include android:id="@+id/header"
+        layout="@layout/activity_detail_header" />
+    <include
+        android:id="@+id/error_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        layout="@layout/no_data_layout"/>
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:layout_below="@+id/header"
+        android:id="@id/scrollView"
         android:scrollbars="none"
         android:fillViewport="false">
         <LinearLayout
@@ -167,4 +177,4 @@
     </ScrollView>
 
 
-</LinearLayout>
+</RelativeLayout>

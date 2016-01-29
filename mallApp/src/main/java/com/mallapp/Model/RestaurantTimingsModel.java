@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class RestaurantTimingsModel implements Serializable {
 
+    private String Description;
+
     private String ClosingTimings;
 
     private String FromDay;
@@ -16,6 +18,19 @@ public class RestaurantTimingsModel implements Serializable {
     private String Id;
 
     private String ToDay;
+
+    private boolean IsException;
+
+
+    public String getDescription ()
+    {
+        return Description;
+    }
+
+    public void setDescription (String Description)
+    {
+        this.Description = Description;
+    }
 
     public String getClosingTimings ()
     {
@@ -65,6 +80,16 @@ public class RestaurantTimingsModel implements Serializable {
     public void setToDay (String ToDay)
     {
         this.ToDay = ToDay;
+    }
+
+    public boolean getIsException ()
+    {
+        return IsException;
+    }
+
+    public void setIsException (boolean IsException)
+    {
+        this.IsException = IsException;
     }
 
     @Override

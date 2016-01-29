@@ -10,6 +10,7 @@ import android.location.Geocoder;
 import android.net.Uri;
 import android.support.v4.app.FragmentManager;
 import android.util.*;
+import android.view.View;
 import android.widget.Toast;
 
 import com.google.android.gms.maps.CameraUpdateFactory;
@@ -19,6 +20,7 @@ import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.Marker;
 import com.google.android.gms.maps.model.MarkerOptions;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Model.FavoritesModel;
@@ -29,6 +31,7 @@ import com.mallapp.Model.ShopDetailModel;
 import com.mallapp.Model.ShopsModel;
 import com.mallapp.Model.UserLocationModel;
 import com.mallapp.SharedPreferences.DataHandler;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.R;
 import com.mallapp.cache.CentersCacheManager;
 
@@ -36,13 +39,15 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.List;
 
+import me.drakeet.materialdialog.MaterialDialog;
+
 /**
  * Created by Sharjeel on 12/15/2015.
  */
 public class AppUtils {
 
     public static final int DEFAULT_MAP_ZOOM_LEVEL = 12;
-
+    static MaterialDialog mMaterialDialog;
 
     public static String GetSelectedMallPlaceId(Context context){
         String MallPlacecId = null;
@@ -206,5 +211,19 @@ public class AppUtils {
         CameraPosition cameraPosition = new CameraPosition.Builder().target(thisPosition).zoom(DEFAULT_MAP_ZOOM_LEVEL).build();
         map.animateCamera(CameraUpdateFactory.newCameraPosition(cameraPosition));
 
+    }
+
+    public static void matDialog(Context con,String title, String msg){
+                mMaterialDialog = new MaterialDialog(con)
+                .setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                    }
+                });
+
+        mMaterialDialog.show();
     }
 }

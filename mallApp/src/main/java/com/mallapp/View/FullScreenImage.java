@@ -16,6 +16,7 @@ import com.squareup.picasso.Picasso;
  * Created by Sharjeel on 1/25/2016.
  */
 public class FullScreenImage extends FragmentActivity {
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -32,7 +33,7 @@ public class FullScreenImage extends FragmentActivity {
         });
         Intent i = getIntent();
         String decoded = i.getExtras().getString("img");
-        Picasso.with(this).load(decoded).rotate(90).into(img);
+        Picasso.with(this).load(decoded).rotate(90).placeholder(R.drawable.mallapp_placeholder).into(img);
 
     }
 
