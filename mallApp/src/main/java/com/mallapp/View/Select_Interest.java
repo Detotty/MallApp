@@ -93,10 +93,10 @@ public class Select_Interest extends Activity implements OnClickListener {
 	private void selectAllInterests() {
 		if(isSelectAll){
 			isSelectAll= false;
-			is_interest_select_all.setImageResource(R.drawable.interest);
+			is_interest_select_all.setImageResource(R.drawable.offer_fav_r);
 		}else{
 			isSelectAll= true;
-			is_interest_select_all.setImageResource(R.drawable.interest_p);
+			is_interest_select_all.setImageResource(R.drawable.offer_fav_p);
 		}
 		resetInterestList(isSelectAll);
 	}

@@ -29,7 +29,7 @@ public class NotificationActivity extends Activity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_notification);
         volleyNetworkUtil = new VolleyNetworkUtil(this);
-        ImageButton button_back = (ImageButton) findViewById(R.id.navigation);
+        ImageButton button_back = (ImageButton) findViewById(R.id.back);
         heading = (TextView) findViewById(R.id.heading);
         heading.setText(getResources().getString(R.string.notifications));
         button_back.setOnClickListener(new View.OnClickListener() {

@@ -7,8 +7,6 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -39,12 +37,9 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Controllers.RestaurantFiltration;
-import com.mallapp.Controllers.RestaurantList;
 import com.mallapp.Controllers.ShopFiltration;
-import com.mallapp.Model.Restaurant;
 import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.RestaurantModel;
-import com.mallapp.Model.ShopsModel;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelRestaurants;
 import com.mallapp.layouts.SegmentedRadioGroup;
@@ -185,7 +180,7 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
 	}
 
 	private void init() {
-		open_navigation		= (ImageButton) 		findViewById(R.id.navigation);
+		open_navigation		= (ImageButton) 		findViewById(R.id.back);
 		open_drawer		= (ImageButton) 		findViewById(R.id.navigation_drawer);
 		segmentText 		= (SegmentedRadioGroup) findViewById(R.id.segment_text);
 		search_feild		= (EditText) 			findViewById(R.id.search_feild);

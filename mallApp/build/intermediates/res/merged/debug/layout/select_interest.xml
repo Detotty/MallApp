@@ -45,7 +45,7 @@
 	        android:layout_alignParentRight="true"
 	        android:layout_centerVertical="true"
 	        android:layout_marginRight="20dp"
-	        android:src="@drawable/interest"
+	        android:src="@drawable/offer_fav_r"
 	        android:contentDescription="@string/app_name" />
 	    <TextView
 	        android:id="@+id/interst_title"

@@ -1,7 +1,5 @@
 package com.mallapp.View;
 
-import android.app.ActionBar;
-import android.app.Activity;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -50,7 +48,7 @@ public class DiscountCalculatorActivity extends SlidingDrawerActivity implements
 		discounted_price=  (TextView) findViewById(R.id.discount_price);
 		heading			= (TextView) findViewById(R.id.heading);
 		heading.setText(getResources().getString(R.string.calculaor));
-		navigation_button	= (ImageButton) findViewById(R.id.navigation);
+		navigation_button	= (ImageButton) findViewById(R.id.back);
 		navigation_button.setOnClickListener(this);
 
 		open_drawer.setOnClickListener(this);

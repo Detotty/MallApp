@@ -6,7 +6,6 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
-import android.app.Activity;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
@@ -26,7 +25,6 @@ import android.widget.RadioGroup.OnCheckedChangeListener;
 import android.widget.TextView;
 import android.widget.Toast;
 
-import com.List.Adapter.OfferNewsSearchAdapter;
 import com.List.Adapter.OffersNewsExpandableAdapter;
 import com.List.Adapter.Offers_News_Adapter;
 import com.List.Adapter.RestaurantExpandableAdapter;
@@ -311,7 +309,7 @@ public class FavouritesMainMenuActivity extends SlidingDrawerActivity
 
 
 	private void init() {
-		open_navigation		= (ImageButton) 		findViewById(R.id.navigation);
+		open_navigation		= (ImageButton) 		findViewById(R.id.back);
 		open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
 		segmentText 		= (SegmentedRadioGroup) findViewById(R.id.segment_text);
 		search_feild		= (EditText) 			findViewById(R.id.search_feild);

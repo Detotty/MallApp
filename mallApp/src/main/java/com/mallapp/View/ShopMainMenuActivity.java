@@ -1,6 +1,5 @@
 package com.mallapp.View;
 
-import java.io.IOException;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -8,14 +7,10 @@ import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
-import android.app.ActionBar;
-import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.os.Handler;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
@@ -44,11 +39,8 @@ import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Controllers.ShopFiltration;
-import com.mallapp.Controllers.ShopList;
 import com.mallapp.Model.ShopDetailModel;
-import com.mallapp.Model.Shops;
 import com.mallapp.Model.ShopsModel;
-import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.db.DatabaseHelper;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.layouts.SegmentedRadioGroup;
@@ -199,7 +191,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
     }
 
     private void init() {
-        open_navigation = (ImageButton) findViewById(R.id.navigation);
+        open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
         heading				= (TextView) 			findViewById(R.id.heading);

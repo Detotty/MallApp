@@ -1,6 +1,5 @@
 package com.mallapp.View;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.app.Dialog;
 import android.content.Intent;
@@ -80,7 +79,7 @@ public class DirectionsNParkingCreateObject extends Activity implements OnClickL
 	private void init() {
 
 		mImageImportHelper 	= ImageImportHelper.getInstance(DirectionsNParkingCreateObject.this);
-		open_navigation	= (ImageButton) findViewById(R.id.navigation);
+		open_navigation	= (ImageButton) findViewById(R.id.back);
 		heading			= (TextView) 	findViewById(R.id.heading);
 		parking_location= (ImageButton) findViewById(R.id.parking_picture);
 		parking_decs	= (ImageButton) findViewById(R.id.parking_text);

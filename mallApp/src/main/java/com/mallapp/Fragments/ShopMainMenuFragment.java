@@ -107,7 +107,7 @@ public class ShopMainMenuFragment 	extends Fragment
 		Log.e(TAG, "onActivityCreated");
 		filterShops();
 		
-		open_navigation		= (ImageButton) 		getView().findViewById(R.id.navigation);
+		open_navigation		= (ImageButton) 		getView().findViewById(R.id.back);
 		segmentText 		= (SegmentedRadioGroup) getView().findViewById(R.id.segment_text);
 		search_feild		= (EditText) 			getView().findViewById(R.id.search_feild);
 		cancel_search		= (Button) 				getView().findViewById(R.id.cancel_search);

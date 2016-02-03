@@ -11,7 +11,7 @@
         android:orientation="vertical">
 
         <include  android:id="@+id/scrollView"
-            layout="@layout/activity_detail_header" />
+            layout="@layout/cards_header" />
 
         <include layout="@layout/main_menu_list_search" />
     </LinearLayout>

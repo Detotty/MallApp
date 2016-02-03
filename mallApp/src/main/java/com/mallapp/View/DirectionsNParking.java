@@ -4,12 +4,10 @@ import com.Location.Gps.GPSTracker;
 import com.google.android.gms.maps.CameraUpdateFactory;
 import com.google.android.gms.maps.GoogleMap;
 import com.google.android.gms.maps.MapFragment;
-import com.google.android.gms.maps.model.BitmapDescriptorFactory;
 import com.google.android.gms.maps.model.CameraPosition;
 import com.google.android.gms.maps.model.LatLng;
 import com.google.android.gms.maps.model.MarkerOptions;
 
-import android.app.ActionBar;
 import android.app.Activity;
 import android.content.Intent;
 import android.os.Bundle;
@@ -71,7 +69,7 @@ public class DirectionsNParking  extends Activity implements OnClickListener {
 	}
 
 	private void init() {
-		open_navigation	= (ImageButton) findViewById(R.id.navigation);
+		open_navigation	= (ImageButton) findViewById(R.id.back);
 		heading			= (TextView) 	findViewById(R.id.heading);
 		display_map		= (ImageButton) findViewById(R.id.display_map);
 		parking			= (ImageButton) findViewById(R.id.parking);

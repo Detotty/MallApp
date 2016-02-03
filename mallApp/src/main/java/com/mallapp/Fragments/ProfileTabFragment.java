@@ -35,11 +35,15 @@ import com.mallapp.Model.UserProfileModel;
 import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.FullScreenImage;
+import com.mallapp.View.FullscreenActivity;
 import com.mallapp.View.NotificationActivity;
 import com.mallapp.View.R;
 import com.mallapp.View.RegistrationProfileActivity;
 import com.mallapp.View.Select_Favourite_Center;
 import com.mallapp.View.Select_Interest;
+import com.mallapp.View.SplashScreen;
+import com.mallapp.imagecapture.Image_Scaling;
+import com.mallapp.utils.RegistrationController;
 import com.mallapp.utils.SocialUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
@@ -49,18 +53,21 @@ import java.io.ByteArrayOutputStream;
 import me.drakeet.materialdialog.MaterialDialog;
 
 
-public class ProfileTabFragment extends Fragment{
+public class ProfileTabFragment extends Fragment {
 
 
     View viewHome;
     UserProfileModel user_profile;
     ImageView user_ImageView;
-    ImageButton back,fav;
+    ImageButton back, fav;
     TextView heading;
-//    String link = StaticLiterls.link;
-    String[] list_items, settings_items ;
+    //    String link = StaticLiterls.link;
+    String[] list_items, settings_items;
     public static boolean isUpdate = false;
     MaterialDialog mMaterialDialog;
+    VolleyNetworkUtil volleyNetworkUtil;
+    RegistrationController registrationController;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -88,6 +95,8 @@ public class ProfileTabFragment extends Fragment{
     }
 
     public void initUI() {
+        volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
+        registrationController = new RegistrationController(getActivity());
         profileListview();
         heading = (TextView) viewHome.findViewById(R.id.offer_title);
         user_ImageView = (ImageView) viewHome.findViewById(R.id.user_image);
@@ -104,8 +113,13 @@ public class ProfileTabFragment extends Fragment{
 
         user_profile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
 
-        Picasso.with(getActivity()).load(user_profile.getImageURL()).placeholder(R.drawable.avatar).into(user_ImageView);
+        if (user_profile.getImageBase64String() != null) {
+            byte[] decodedString = Base64.decode(user_profile.getImageBase64String(), Base64.DEFAULT);
+            Bitmap decodedByte = BitmapFactory.decodeByteArray(decodedString, 0, decodedString.length);
+            user_ImageView.setImageBitmap(decodedByte);
+        }
         heading.setText(user_profile.getFullName());
+
 
         sms.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -131,14 +145,13 @@ public class ProfileTabFragment extends Fragment{
                 selectProfileImage("Add Photo!");
             }
         });
-        /*user_ImageView.setOnClickListener(new View.OnClickListener() {
+        user_ImageView.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                Intent i = new Intent(getActivity(), FullScreenImage.class);
-                i.putExtra("img", user_profile.getImageURL());
+                Intent i = new Intent(getActivity(), FullscreenActivity.class);
                 startActivity(i);
             }
-        });*/
+        });
        /* facebook_btn.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -168,6 +181,7 @@ public class ProfileTabFragment extends Fragment{
         });
 */
     }
+
     public Bitmap scaleCenterCrop(Bitmap source, int newHeight, int newWidth) {
         int sourceWidth = source.getWidth();
         int sourceHeight = source.getHeight();
@@ -277,9 +291,10 @@ public class ProfileTabFragment extends Fragment{
                                 @Override
                                 public void onClick(View v) {
                                     mMaterialDialog.dismiss();
-                                    VolleyNetworkUtil volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
                                     volleyNetworkUtil.GetUserSignOut(ApiConstants.MALL_USER_SIGN_OUT + SharedPreferenceUserProfile.getUserId(getActivity()));
-
+                                    SharedPreferenceUserProfile.DeleteUserProfile(getActivity());
+                                    Intent intent = new Intent(getActivity(), SplashScreen.class);
+                                    startActivity(intent);
                                 }
                             })
                             .setNegativeButton(getResources().getString(R.string.cancel_button_title), new View.OnClickListener() {
@@ -358,6 +373,9 @@ public class ProfileTabFragment extends Fragment{
             if (resultCode == Activity.RESULT_OK) {
                 Bitmap photo = (Bitmap) data.getExtras().get("data");
                 user_ImageView.setImageBitmap(photo);
+                user_profile.setImageBase64String(Image_Scaling.encodeTobase64(photo));
+                registrationController.updateUserProfile(user_profile, null);
+                DataHandler.updatePreferences(AppConstants.PROFILE_DATA, user_profile);
             }
         } else if (requestCode == 1) {
 
@@ -375,7 +393,9 @@ public class ProfileTabFragment extends Fragment{
                         return;
                     }
                     user_ImageView.setImageBitmap(bitmapSelectedImage);
-
+                    user_profile.setImageBase64String(Image_Scaling.encodeTobase64(bitmapSelectedImage));
+                    registrationController.updateUserProfile(user_profile, null);
+                    DataHandler.updatePreferences(AppConstants.PROFILE_DATA, user_profile);
 
                 } catch (Exception e) {
                     e.printStackTrace();
@@ -392,7 +412,7 @@ public class ProfileTabFragment extends Fragment{
         return cursor.getString(column_index);
     }
 
-    void loadWebFragments(){
+    void loadWebFragments() {
         /*WebFragment nextFrag= new WebFragment();
         FragmentTransaction transaction = getFragmentManager().beginTransaction();
         transaction.replace(R.id.scrollView, nextFrag);

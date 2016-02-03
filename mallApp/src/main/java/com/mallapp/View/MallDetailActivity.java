@@ -4,7 +4,6 @@ import java.util.ArrayList;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.support.v4.app.FragmentActivity;
 import android.support.v4.app.FragmentManager;
 import android.view.GestureDetector;
 import android.view.View;
@@ -35,11 +34,9 @@ import com.mallapp.Model.BannerImagesModel;
 import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.MallDetailModel;
 import com.mallapp.Model.MallTimingsModel;
-import com.mallapp.Model.RestaurantModel;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
-import com.squareup.picasso.Picasso;
 
 public class MallDetailActivity extends SlidingDrawerActivity implements OnClickListener, MallDataListener, BaseSliderView.OnSliderClickListener, ViewPagerEx.OnPageChangeListener {
 
@@ -79,7 +76,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
 
 
     private void init() {
-        open_navigation = (ImageButton) findViewById(R.id.navigation);
+        open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         mallDetailModel = new MallDetailModel();
         expand = (ImageView) findViewById(R.id.iv_expand);

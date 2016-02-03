@@ -10,6 +10,8 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
+import android.graphics.drawable.Drawable;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
@@ -76,6 +78,7 @@ import com.mallapp.utils.GetCurrentDate;
 import com.mallapp.utils.SharedInstance;
 import com.mallapp.utils.Utils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Target;
 
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -429,6 +432,11 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 //			String user_profile_image = encodeTobase64(profile_image_bitmap);
 			userProfile.setImageBase64String(Image_Scaling.encodeTobase64(profile_image_bitmap));
 		}
+		else{
+			Bitmap bmp = ((BitmapDrawable) profileImageView.getDrawable()).getBitmap();
+			userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bmp));
+		}
+
 		requestType = com.mallapp.ServicesApi.RequestType.UPDATE_USER_PROFILE;
 
 		controller.updateUserProfile(userProfile,this);
@@ -506,21 +514,28 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					profile_image_path = userProfile.getImageURL();
 					userProfile.setFullName(userProfile.getFullName());
 					Log.e("profile_image_path ", "profile_image_path = " + profile_image_path);
-
-					// Retrieves an image specified by the URL, displays it in the UI.
-					ImageRequest request = new ImageRequest(profile_image_path,
-							new Response.Listener<Bitmap>() {
+					Picasso.with(this)
+							.load(profile_image_path)
+							.placeholder(R.drawable.profile_image_placeholder)
+							.into(new Target() {
 								@Override
-								public void onResponse(Bitmap bitmap) {
-									imageLoader.DisplayImage(profile_image_path, profileImageView, true);
+								public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+            /* Save the bitmap or do something with it here */
+
+									//Set it in the ImageView
+									profileImageView.setImageBitmap(bitmap);
 								}
-							}, 0, 0, null,
-							new Response.ErrorListener() {
-								public void onErrorResponse(VolleyError error) {
+
+								@Override
+								public void onBitmapFailed(Drawable errorDrawable) {
+
+								}
+
+								@Override
+								public void onPrepareLoad(Drawable placeHolderDrawable) {
+
 								}
 							});
-// Access the RequestQueue through your singleton class.
-					MallApplication.getInstance().addToRequestQueue(request);
 				}
 
 				String gender = userProfile.getGender();
@@ -534,9 +549,11 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					userProfile.setGender("female");
 				}
 				userProfile.setDeviceType(userProfile.getDeviceType());
-				//userProfile.set(userProfile.getVersion());
+				Bitmap bmp = ((BitmapDrawable) profileImageView.getDrawable()).getBitmap();
+				userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bmp));
+//userProfile.set(userProfile.getVersion());
 				SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
-				DataHandler.updatePreferences(AppConstants.PROFILE_DATA, userProfile);
+//				DataHandler.updatePreferences(AppConstants.PROFILE_DATA, userProfile);
 				//SharedPreferenceUserProfile.SaveUserProfile(userProfile, getApplicationContext());
 
 			}else {
@@ -759,7 +776,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		else if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.PROFILE_DATA))
 		{
 //				UserProfileModel userProfile = (UserProfileModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.PROFILE_DATA);
-				UserProfileModel userProfile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
+				final UserProfileModel userProfile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
 
 			if(userProfile!= null){
 
@@ -785,7 +802,31 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 				String imageUrl = userProfile.getFileName();
 				if(imageUrl!=null && imageUrl.length() > 0) {
-					Picasso.with(this).load(imageUrl).placeholder(R.drawable.profile_image_placeholder).into(profileImageView);
+//					Picasso.with(this).load(imageUrl).placeholder(R.drawable.profile_image_placeholder).into(profileImageView);
+					Picasso.with(this)
+							.load(imageUrl)
+							.placeholder(R.drawable.profile_image_placeholder)
+							.into(new Target() {
+								@Override
+								public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
+            /* Save the bitmap or do something with it here */
+
+									//Set it in the ImageView
+									userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bitmap));
+									profile_image_bitmap = bitmap;
+									profileImageView.setImageBitmap(bitmap);
+								}
+
+								@Override
+								public void onBitmapFailed(Drawable errorDrawable) {
+
+								}
+
+								@Override
+								public void onPrepareLoad(Drawable placeHolderDrawable) {
+
+								}
+							});
 				}
 
 			}

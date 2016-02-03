@@ -7,6 +7,8 @@ public class ApiConstants {
 
     public static final String ACCOUNT_URL_KEY = URL_KEY + "Account/";
 
+    public static final String SETTINGS_URL_KEY = URL_KEY + "Setting/";
+
     public static final String MALL_SERVICE_URL_KEY = URL_KEY + "MallService/";
 
     public static final String USER_INTEREST_SERVICE_URL_KEY = URL_KEY + "UserInterestService/";
@@ -74,4 +76,16 @@ public class ApiConstants {
     public static final String POST_MALL_NOTIFICATION_SETTING = ACCOUNT_URL_KEY + "NotificationSetting";
 
     public static final String POST_DEVICE_IDENTITY = ACCOUNT_URL_KEY + "SaveDeviceIdentity";
+
+    // LOYALTY CARDS URLs
+
+    public static final String SAVE_LOYALTY_CARD = ACCOUNT_URL_KEY + "SaveLoyaltyCard";
+
+    public static final String GET_USER_LOYALTY_CARD = ACCOUNT_URL_KEY + "LoyaltyCard/";
+
+    public static final String GET_BARCODE_TYPES = SETTINGS_URL_KEY + "GetBarcodeTypes";
+
+    public static final String GET_LOYALTY_CARD_TYPES = SETTINGS_URL_KEY + "GetLoyaltyCardTypes";
+
+
 }

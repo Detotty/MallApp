@@ -373,4 +373,33 @@
 	<string name="take_photo">Take Photo</string>
 	<string name="choose_gallery">Choose Gallery</string>
 
+    <string name="title_activity_fullscreen">FullscreenActivity</string>
+    <string name="dummy_button">Dummy Button</string>
+    <string name="dummy_content">DUMMY\nCONTENT</string>
+
+
+	<!-- Loyalty Cards-->
+
+	<string name="loyalty_card_header">Loyalty Cards</string>
+	<string name="preview_barcode_header">Barcode Preview</string>
+	<string name="create">Create</string>
+	<string name="card_name">Card Name</string>
+	<string name="add_card_name">Add card name</string>
+	<string name="card_number">Card Number</string>
+	<string name="add_card_number">Add card number</string>
+	<string name="provider_name">Provider Name</string>
+	<string name="add_provider_name">Add provider name</string>
+	<string name="issue_date">Issue Date</string>
+	<string name="issue_date_placeholder">21-1-2015</string>
+	<string name="expiry_date">Expiry Date</string>
+	<string name="expiry_date_placeholder">20-1-2016</string>
+	<string name="barcode_number">Barcode Number</string>
+	<string name="add_barcode_here">Add barcode here</string>
+	<string name="barcode_type">Barcode Type</string>
+	<string name="description">Description</string>
+	<string name="optional">Optional</string>
+	<string name="front">Front</string>
+	<string name="back">Back</string>
+
+
 </resources>

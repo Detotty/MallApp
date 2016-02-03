@@ -1,7 +1,6 @@
 package com.mallapp.View;
 
 import android.os.Bundle;
-import android.app.Activity;
 import android.view.View;
 import android.widget.ImageButton;
 import android.widget.ListView;
@@ -41,7 +40,7 @@ public class FloorOverviewActivity extends SlidingDrawerActivity implements View
     void init() {
 
         floor_list = (ListView) findViewById(R.id.list_floor);
-        open_navigation = (ImageButton) findViewById(R.id.navigation);
+        open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         heading				= (TextView) 			findViewById(R.id.heading);
 

@@ -154,7 +154,7 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
 
     //region Data Initializations
     private void init() {
-        open_navigation = (ImageButton) findViewById(R.id.navigation);
+        open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         heading = (TextView) findViewById(R.id.heading);
         heading.setText(getResources().getString(R.string.heading_services));

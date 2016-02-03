@@ -120,7 +120,8 @@ public class RegistrationController {
 //                            UserProfile userProfile = gson.fromJson(jsonString, UserProfile.class);
 
                             SharedPreferenceUserProfile.SaveUserProfile(user_profile, context);
-                            listener.onDataReceived(user_profile);
+                            if (listener != null)
+                                listener.onDataReceived(user_profile);
 
                         } else if (jsonObject.has("Message")) {
 
@@ -204,8 +205,8 @@ public class RegistrationController {
 
                         if (listener != null && user_profile != null) {
                             listener.onDataReceived(user_profile);
-                            SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, user_profile);
-                            DataHandler.updatePreferences(AppConstants.PROFILE_DATA, user_profile);
+                            /*SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, user_profile);
+                            DataHandler.updatePreferences(AppConstants.PROFILE_DATA, user_profile);*/
                         }
 //                            else
 //                        ((Code_Verifiction)context).startProfileActivity();
@@ -580,7 +581,7 @@ public class RegistrationController {
                     }
                     adapter.notifyDataSetChanged();
                     if (areAllTrue(interestSelectionModels)) {
-                        is_interest_select_all.setImageResource(R.drawable.interest_p);
+                        is_interest_select_all.setImageResource(R.drawable.offer_fav_p);
                     }
                 }
             }, new Response.ErrorListener() {
@@ -724,18 +725,18 @@ public class RegistrationController {
                     boolean success = jsonObject.getBoolean("Success");
                     if (success) {
                         if (act) {
-                            try{
-                                if (!ProfileTabFragment.isUpdate){
+                            try {
+                                if (!ProfileTabFragment.isUpdate) {
                                     Intent fav = new Intent(context, Select_Interest.class);
                                     ((Activity) context).finish();
                                     context.startActivity(fav);
                                 }
-                            }catch (Exception e){
+                            } catch (Exception e) {
 
                             }
 
                         } else {
-                            if (!ProfileTabFragment.isUpdate){
+                            if (!ProfileTabFragment.isUpdate) {
                                 Intent select_interest = new Intent(context, DashboardTabFragmentActivity.class);
                                 ((Activity) context).finish();
                                 context.startActivity(select_interest);

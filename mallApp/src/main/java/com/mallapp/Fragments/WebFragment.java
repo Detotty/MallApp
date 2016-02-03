@@ -1,11 +1,8 @@
 package com.mallapp.Fragments;
 
 import android.os.Bundle;
-import android.support.v4.app.Fragment;
 import android.support.v4.app.FragmentActivity;
-import android.view.LayoutInflater;
 import android.view.View;
-import android.view.ViewGroup;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
@@ -33,7 +30,7 @@ public class WebFragment extends FragmentActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.fragment_web);
-        ImageButton button_back = (ImageButton) findViewById(R.id.navigation);
+        ImageButton button_back = (ImageButton) findViewById(R.id.back);
         heading = (TextView) findViewById(R.id.heading);
         heading.setText(getIntent().getStringExtra("heading"));
         button_back.setOnClickListener(new View.OnClickListener() {

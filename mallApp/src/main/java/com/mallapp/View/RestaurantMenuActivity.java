@@ -3,7 +3,6 @@ package com.mallapp.View;
 import java.util.ArrayList;
 import java.util.List;
 
-import android.app.ActionBar;
 import android.content.Context;
 import android.os.Bundle;
 import android.support.v4.app.FragmentActivity;
@@ -55,7 +54,7 @@ public class RestaurantMenuActivity extends FragmentActivity implements OnClickL
 	
 		heading				= (TextView) findViewById(R.id.heading);
 		heading.setText("Menu");
-		navigation_button	= (ImageButton) findViewById(R.id.navigation);
+		navigation_button	= (ImageButton) findViewById(R.id.back);
 		navigation_button.setOnClickListener(this);
 		
 		tabs 		= (PagerSlidingTabStrip) findViewById(R.id.tabs);

@@ -47,6 +47,7 @@ import com.mallapp.listeners.MallDataListener;
 import com.mallapp.listeners.RestaurantDataListener;
 import com.mallapp.listeners.ServicesDataListener;
 import com.mallapp.listeners.ShopsDataListener;
+import com.mallapp.listeners.UniversalDataListener;
 import com.mallapp.listeners.VolleyDataReceivedListener;
 import com.mallapp.listeners.VolleyErrorListener;
 
@@ -77,6 +78,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     FloorsDataListener floorsDataListener;
     ShopsDataListener shopsDataListener;
     RestaurantDataListener restaurantDataListener;
+    UniversalDataListener universalDataListener;
     private String requestType;
     GoogleCloudMessaging gcmObj;
 
@@ -91,6 +93,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private final String GET_MALL_NEWSnOFFERS = "GET_MALL_NEWSnOFFERS";
     private final String GET_USER_SIGN_OUT = "GET_USER_SIGN_OUT";
     private final String GET_ACTIVITY_DETAIL = "GET_ACTIVITY_DETAIL";
+    private final String GET_BARCODE_TYPE = "GET_BARCODE_TYPE";
     private final String GET_MALL_SERVICES = "GET_MALL_SERVICES";
     private final String FAVORITE_CATEGORY = "FAVORITE_CATEGORY";
     //endregion
@@ -594,7 +597,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     /*<--------------USER SIGN OUT ---------------->*/
 
     public void GetUserSignOut(String url) {
-        progressDialog = ProgressDialog.show(context,"","Loading");
+//        progressDialog = ProgressDialog.show(context,"","Loading");
         requestType = GET_USER_SIGN_OUT;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.GET, url, null, this, this) {
             @Override
@@ -610,7 +613,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
-    /*<--------------USER SIGN OUT ---------------->*/
+    /*<--------------NOTIFICATION ACK ---------------->*/
 
     public void GetNotAck(String url) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
@@ -629,6 +632,64 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         };
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
+
+
+    /*<---------------GET BARCODE TYPES ---------------->*/
+
+    public ArrayList<String> GetBarcodeTypes(String url, final UniversalDataListener universalDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        try {
+            JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
+
+                @Override
+                public void onResponse(JSONArray jsonArr) {
+                    android.util.Log.d(TAG, jsonArr.toString());
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+
+                    universalDataListener.onDataReceived(null, jsonArr);
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+
+                    if (progressDialog != null)
+                        progressDialog.dismiss();
+
+                    universalDataListener.OnError();
+                    String message = VolleyErrorHelper.getMessage(volleyError, context);
+                    android.util.Log.e("", " error message ..." + message);
+
+                    /*if (message != null && message != "")
+                        Toast.makeText(context, MainMenuConstants.NO_SERVICES_ERROR, Toast.LENGTH_SHORT).show();
+                    else {
+                        String serverError = context.getResources().getString(R.string.shop_error_message);
+                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+                    }*/
+                }
+            }
+            ) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+                    //headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
+
+                    return headers;
+                }
+            };
+
+            // Adding request to request queue
+            MallApplication.getInstance().addToRequestQueue(request, url);
+
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
+
     @Override
     public void onErrorResponse(VolleyError volleyError) {
         switch (requestType) {
@@ -804,7 +865,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             }
             //endregion
 
-            //region GET_MALL_FLOORS
+            //region GET_ACTIVITY_DETAIL
             case GET_ACTIVITY_DETAIL: {
                 try {
                     Gson gson = new Gson();

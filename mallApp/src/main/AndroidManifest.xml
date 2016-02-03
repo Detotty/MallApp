@@ -34,15 +34,18 @@
     <uses-permission android:name="android.permission.READ_PHONE_STATE" />
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE" />
 
-    <!-- GCM Permissions - Start here  -->
+    <!-- GCM Permissions - Start here -->
     <uses-permission android:name="android.permission.GET_ACCOUNTS" />
     <uses-permission android:name="android.permission.WAKE_LOCK" />
+
     <permission
         android:name="com.malllapp.View.permission.C2D_MESSAGE"
         android:protectionLevel="signature" />
+
     <uses-permission android:name="com.mallapp.View.permission.C2D_MESSAGE" />
     <uses-permission android:name="com.google.android.c2dm.permission.RECEIVE" />
-    <!-- GCM Permissions - End here  -->
+
+    <!-- GCM Permissions - End here -->
     <application
         android:name="com.mallapp.Application.MallApplication"
         android:allowBackup="true"
@@ -288,6 +291,27 @@
             android:label="@string/title_activity_notification" >
         </activity>
 
+        <activity
+            android:name=".FullscreenActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:theme="@style/FullscreenTheme" >
+        </activity>
+
+        <activity
+            android:name=".AddCardActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
+            android:name=".BarcodePreviewActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
 
         <receiver
             android:name="com.mallapp.pushnotification.GcmBroadcastReceiver"
@@ -303,11 +327,12 @@
         <!-- Register Service -->
         <service
             android:name="com.mallapp.pushnotification.GCMNotificationIntentService"
-            android:exported="false">
+            android:exported="false" >
             <intent-filter>
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
+
 
     </application>
 
