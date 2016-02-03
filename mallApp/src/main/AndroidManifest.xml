@@ -302,6 +302,7 @@
         <activity
             android:name=".AddCardActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
             android:launchMode="standard"
             android:screenOrientation="portrait" >
         </activity>
@@ -332,7 +333,13 @@
                 <action android:name="com.google.android.c2dm.intent.RECEIVE" />
             </intent-filter>
         </service>
-
+        <!-- Connectivity Receiver-->
+        <receiver android:name="com.mallapp.broadcast.ConnectionChangeReceiver"
+            android:label="NetworkConnection">
+            <intent-filter>
+                <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
+            </intent-filter>
+        </receiver>
 
     </application>
 

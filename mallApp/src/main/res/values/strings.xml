@@ -401,5 +401,14 @@
 	<string name="front">Front</string>
 	<string name="back">Back</string>
 
+	<!-- Loyalty Card Toast Messages-->
+	<string name="enter_card_name">Enter card name</string>
+	<string name="enter_card_num">Enter card number</string>
+	<string name="enter_card_issue">Enter issue date</string>
+	<string name="enter_card_expiry">Enter expiry date</string>
+	<string name="enter_bar_num">Enter barcode number</string>
+	<string name="select_bar_type">Select barcode type</string>
+
+
 
 </resources>

@@ -48,7 +48,7 @@ public class BarcodePreviewActivity  extends Activity implements UniversalDataLi
     void init(){
         btnBack = (ImageButton) findViewById(R.id.back);
         heading = (TextView) findViewById(R.id.heading);
-        et_cardName = (EditText) findViewById(R.id.et_addCard);
+        et_cardName = (EditText) findViewById(R.id.et_CardName);
         et_CardNum = (EditText) findViewById(R.id.et_addNum);
         et_CardProvider = (EditText) findViewById(R.id.et_providerName);
         et_BarcodeNum = (EditText) findViewById(R.id.et_barcodeName);

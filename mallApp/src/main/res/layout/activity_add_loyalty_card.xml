@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/layout_addcard"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:background="@color/greylight"
@@ -133,7 +134,7 @@
                 android:text="@string/card_name"/>
 
             <EditText
-                android:id="@+id/et_addCard"
+                android:id="@+id/et_CardName"
                 style="@style/AddCardEditText"
                 android:hint="@string/add_card_name" >
             </EditText>
