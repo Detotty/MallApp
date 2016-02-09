@@ -8,6 +8,7 @@ import android.content.Intent;
 import android.location.Address;
 import android.location.Geocoder;
 import android.net.Uri;
+import android.provider.MediaStore;
 import android.support.v4.app.FragmentManager;
 import android.util.*;
 import android.view.View;
@@ -226,4 +227,6 @@ public class AppUtils {
 
         mMaterialDialog.show();
     }
+
+
 }

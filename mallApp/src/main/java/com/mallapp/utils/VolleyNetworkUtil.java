@@ -86,6 +86,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     private final String POST_FAV_SHOP = "POST_FAV_SHOP";
     private final String POST_FAV_REST = "POST_FAV_REST";
     private final String POST_NOT_SET = "POST_NOT_SET";
+    private final String POST_LOYALTY_CARD = "POST_LOYALTY_CARD";
     private final String GET_SHOP_DETAIL = "GET_SHOP_DETAIL";
     private final String GET_REST_DETAIL = "GET_REST_DETAIL";
     private final String GET_MALL_DETAIL = "GET_MALL_DETAIL";
@@ -574,6 +575,24 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         MallApplication.getInstance().addToRequestQueue(request, url);
     }
 
+    /*<--------------POST LOYALTY CARD ---------------->*/
+    public void PostLoyaltyCard(String url, JSONObject user, UniversalDataListener universalDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = POST_LOYALTY_CARD;
+        this.universalDataListener = universalDataListener;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, user, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
+
     /*<--------------ACTIVITY DETAILS ---------------->*/
 
     public void GetActivityDetail(String url, ActivityDetailListener activityDetailListener) {
@@ -805,6 +824,23 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     }
                     else{
 
+                    }
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                break;
+            }
+            //endregion
+
+            //region POST_LOYALTY_CARD
+            case POST_LOYALTY_CARD: {
+                try {
+                    boolean success = response.getBoolean("Success");
+                    if (success) {
+                        universalDataListener.onDataReceived(response,null);
+                    }
+                    else{
+                        universalDataListener.OnError();
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

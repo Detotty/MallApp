@@ -408,6 +408,7 @@
 	<string name="enter_card_expiry">Enter expiry date</string>
 	<string name="enter_bar_num">Enter barcode number</string>
 	<string name="select_bar_type">Select barcode type</string>
+	<string name="toast_successful">Successfully Saved</string>
 
 
 

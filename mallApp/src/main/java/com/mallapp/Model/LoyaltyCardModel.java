@@ -11,6 +11,8 @@ public class LoyaltyCardModel implements Serializable {
 
     String CardTitle;
 
+    int CardNumber;
+
     String ProviderName;
 
     String MallId;
@@ -61,6 +63,15 @@ public class LoyaltyCardModel implements Serializable {
     public void setCardTitle (String CardTitle)
     {
         this.CardTitle = CardTitle;
+    }
+
+    public int getCardNumber(){
+        return CardNumber;
+    }
+
+    public void setCardNumber (int CardNumber)
+    {
+        this.CardNumber = CardNumber;
     }
 
     public String getProviderName(){
