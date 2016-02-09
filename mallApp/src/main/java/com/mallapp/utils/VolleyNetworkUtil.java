@@ -523,6 +523,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     }
 
     /*<--------------SHOPS FAVORITE SELECTION ---------------->*/
+
     public void PostFavShop(String url) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
         requestType = POST_FAV_SHOP;
@@ -541,6 +542,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     }
 
     /*<--------------RESTAURANT FAVORITE SELECTION ---------------->*/
+
     public void PostFavRestaurant(String url) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
         requestType = POST_FAV_REST;
@@ -559,6 +561,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     }
 
     /*<--------------POST NOTIFICATION and DEVICE IDENTITY SETTINGS ---------------->*/
+
     public void PostNotSet(String url, JSONObject user) {
 //        progressDialog = ProgressDialog.show(context,"","Loading");
         requestType = POST_NOT_SET;
@@ -576,6 +579,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     }
 
     /*<--------------POST LOYALTY CARD ---------------->*/
+
     public void PostLoyaltyCard(String url, JSONObject user, UniversalDataListener universalDataListener) {
         progressDialog = ProgressDialog.show(context,"","Loading");
         requestType = POST_LOYALTY_CARD;

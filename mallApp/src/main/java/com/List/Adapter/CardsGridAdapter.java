@@ -1,64 +1,98 @@
 package com.List.Adapter;
 
+import android.app.Activity;
 import android.content.Context;
+import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
+import com.mallapp.Model.BarcodeTypeModel;
+import com.mallapp.Model.LoyaltyCardModel;
+import com.mallapp.View.BarcodePreviewActivity;
 import com.mallapp.View.R;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
+
+import java.util.ArrayList;
 
 /**
  * Created by Sharjeel on 1/27/2016.
  */
-public class CardsGridAdapter extends BaseAdapter {
+public class CardsGridAdapter extends ArrayAdapter<LoyaltyCardModel> {
 
     Context mContext;
-    private final String[] web;
-    private final int[] Imageid;
 
-    public CardsGridAdapter(Context c,String[] web,int[] Imageid ) {
+    Activity activity;
+
+    private ArrayList<LoyaltyCardModel> loyaltyCardModelArrayList;
+
+
+    public CardsGridAdapter(Context c, Activity activity, int resource, ArrayList<LoyaltyCardModel> loyaltyCardModelArrayList) {
+        super(c,resource);
         mContext = c;
-        this.Imageid = Imageid;
-        this.web = web;
+        this.activity = activity;
+        this.loyaltyCardModelArrayList = loyaltyCardModelArrayList;
+    }
+
+    static class ViewHolder {
+        TextView title;
+        ImageView card_image;
     }
 
     @Override
     public int getCount() {
-        return 0;
+        return loyaltyCardModelArrayList.size();
     }
 
     @Override
-    public Object getItem(int position) {
-        return null;
+    public LoyaltyCardModel getItem(int position) {
+        return this.loyaltyCardModelArrayList.get(position);
     }
 
     @Override
     public long getItemId(int position) {
-        return 0;
+        return position;
+    }
+
+    @Override
+    public int getPosition(LoyaltyCardModel item) {
+        return super.getPosition(item);
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
-    // TODO Auto-generated method stub
-        View grid;
-        LayoutInflater inflater = (LayoutInflater) mContext
-                .getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        // TODO Auto-generated method stub
+        final ViewHolder holder;
+        View view = convertView;
 
-        if (convertView == null) {
+        if (view == null) {
+            LayoutInflater mInflater = (LayoutInflater) mContext.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+            view = mInflater.inflate(R.layout.grid_cards_layout, null);
+            holder = new ViewHolder();
+            holder.title = (TextView) 	view.findViewById(R.id.grid_text);
+            holder.card_image = (ImageView) 	view.findViewById(R.id.grid_image);
+            view.setTag(holder);
 
-            grid = new View(mContext);
-            grid = inflater.inflate(R.layout.grid_cards_layout, null);
-            TextView textView = (TextView) grid.findViewById(R.id.grid_text);
-            ImageView imageView = (ImageView)grid.findViewById(R.id.grid_image);
-            textView.setText(web[position]);
-            imageView.setImageResource(Imageid[position]);
-        } else {
-            grid = (View) convertView;
-        }
+        }else
+            holder = (ViewHolder) view.getTag();
 
-        return grid;
+        final LoyaltyCardModel fav_obj= getItem(position);
+        holder.title.setText(fav_obj.getCardTitle());
+        Transformation transformation = new RoundedTransformationBuilder()
+                .cornerRadiusDp(5)
+                .oval(false)
+                .build();
+
+        Picasso.with(mContext).load(fav_obj.getFrontImageUrl()).transform(transformation).placeholder(R.drawable.mallapp_placeholder).fit().into(holder.card_image);
+
+
+        return view;
+
     }
 }

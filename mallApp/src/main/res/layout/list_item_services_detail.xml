@@ -10,20 +10,17 @@
 	    android:id="@+id/relativeLayout1"
 	    android:layout_width="fill_parent"
 	    android:layout_height="wrap_content"
-	    android:layout_marginTop="1dp"
-	    android:layout_marginLeft="1dp"
-	    android:layout_marginRight="1dp"
 	    android:background="@android:color/white">
         <ImageView
             android:id="@+id/service_image"
             android:layout_width="fill_parent"
             android:layout_height="200dp"
-            android:background="@drawable/mallapp_placeholder"
             android:contentDescription="@string/app_name" />
         
         <RelativeLayout
             android:layout_width="fill_parent"
             android:layout_height="wrap_content"
+            android:layout_margin="1dp"
             android:background="@drawable/bg_white"
             android:layout_alignBottom="@+id/service_image"
             android:layout_alignParentLeft="true"

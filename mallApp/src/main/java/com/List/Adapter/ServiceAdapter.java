@@ -5,6 +5,7 @@ import java.util.ArrayList;
 import android.app.Activity;
 import android.content.Context;
 import android.content.Intent;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -12,6 +13,7 @@ import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.mallapp.Model.ServicesModel;
 import com.mallapp.View.FullScreenImage;
 import com.mallapp.View.R;
@@ -19,6 +21,7 @@ import com.mallapp.globel.GlobelMainMenu;
 import com.mallapp.imagecapture.ImageLoader;
 import com.mallapp.utils.AppUtils;
 import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 
 public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
@@ -121,7 +124,13 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 			final TextView phone_no 	= (TextView) v.findViewById(R.id.phone_no);
 			address.setText(service_obj.getAddress());
 			phone_no.setText(service_obj.getPhone());
-			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.mallapp_placeholder).fit().into(back_image);
+			Transformation transformation = new RoundedTransformationBuilder()
+					.borderColor(Color.GRAY)
+					.borderWidthDp(1)
+					.cornerRadiusDp(7)
+					.oval(false)
+					.build();
+			Picasso.with(context).load(service_obj.getFacilityImageURL()).transform(transformation).placeholder(R.drawable.mallapp_placeholder).fit().into(back_image);
 
 			phone_no.setOnClickListener(new View.OnClickListener() {
 				@Override

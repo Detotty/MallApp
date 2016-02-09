@@ -19,7 +19,6 @@
     <GridView
         android:layout_below="@+id/header"
         android:numColumns="2"
-        android:paddingLeft="@dimen/margin_left_20"
         android:gravity="center"
         android:stretchMode="columnWidth"
         android:layout_width="fill_parent"

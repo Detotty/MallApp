@@ -3,11 +3,12 @@ package com.mallapp.View;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
-import android.graphics.BitmapFactory;
+import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
@@ -27,21 +28,23 @@ import android.widget.Toast;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
+import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.mallapp.Constants.ApiConstants;
-import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.LoyaltyCardModel;
-import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.imagecapture.Image_Scaling;
 import com.mallapp.listeners.UniversalDataListener;
 import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
+import com.squareup.picasso.Picasso;
+import com.squareup.picasso.Transformation;
 
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
 
+import java.io.ByteArrayOutputStream;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -58,19 +61,22 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     ImageButton btnBack;
 
-    ImageView front_cam, back_cam, barcode, btnDel1, btnDel2;
+    ImageView btn_front_cam, btn_back_cam, barcode, btnDel1, btnDel2, frontCard, backCard;
 
     EditText etCardName, etCardNum, etProviderName, etBarcodeNum, etDescription;
 
     RelativeLayout layout_BarcodeType;
-    LinearLayout  layout_addCard;
+    LinearLayout layout_addCard;
 
     private Date dateOfBirthday;
     private int day;
     private int month;
     private int year;
 
-    static boolean add_photo;
+    public static Bitmap CropedImage;
+    Bitmap bitmapFront, bitmapBack;
+
+    static boolean add_photo, front_image;
 
     VolleyNetworkUtil volleyNetworkUtil;
 
@@ -100,8 +106,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
         btnDel1 = (ImageView) findViewById(R.id.btnDel);
         btnDel2 = (ImageView) findViewById(R.id.btnDel1);
-        front_cam = (ImageView) findViewById(R.id.btnCam);
-        back_cam = (ImageView) findViewById(R.id.btnCam2);
+        btn_front_cam = (ImageView) findViewById(R.id.btnCam);
+        btn_back_cam = (ImageView) findViewById(R.id.btnCam2);
+        frontCard = (ImageView) findViewById(R.id.front_card);
+        backCard = (ImageView) findViewById(R.id.back_card);
         barcode = (ImageView) findViewById(R.id.btnBarcode);
 
         etCardName = (EditText) findViewById(R.id.et_CardName);
@@ -117,8 +125,8 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
         btnDone.setOnClickListener(this);
         btnBack.setOnClickListener(this);
-        front_cam.setOnClickListener(this);
-        back_cam.setOnClickListener(this);
+        btn_front_cam.setOnClickListener(this);
+        btn_back_cam.setOnClickListener(this);
         barcode.setOnClickListener(this);
         btnDel1.setOnClickListener(this);
         btnDel2.setOnClickListener(this);
@@ -130,7 +138,24 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     @Override
     protected void onResume() {
         super.onResume();
+        Transformation transformation = new RoundedTransformationBuilder()
+                .cornerRadiusDp(5)
+                .oval(false)
+                .build();
         bc_type.setText(BarcodePreviewActivity.Barcodetype);
+        if (CropedImage != null) {
+            if (front_image) {
+                Picasso.with(this).load(getImageUri(this, CropedImage)).fit().transform(transformation).into(frontCard);
+                bitmapFront = CropedImage;
+                CropedImage = null;
+                btnDel1.setVisibility(View.VISIBLE);
+            } else {
+                Picasso.with(this).load(getImageUri(this, CropedImage)).fit().transform(transformation).into(backCard);
+                bitmapBack = CropedImage;
+                CropedImage = null;
+                btnDel2.setVisibility(View.VISIBLE);
+            }
+        }
     }
 
     @Override
@@ -138,27 +163,25 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
         if (v.getId() == btnBack.getId()) {
             finish();
-        }
-        else if (v.getId() == tvIssueDate.getId()) {
+        } else if (v.getId() == tvIssueDate.getId()) {
             show_date(true);
-        }
-        else if (v.getId() == tvExpiryDate.getId()) {
+        } else if (v.getId() == tvExpiryDate.getId()) {
             show_date(false);
-        }
-        else if (v.getId() == btnDone.getId()) {
-            if (Utils.isInternetAvailable(this)){
-                if (validation()){
+        } else if (v.getId() == btnDone.getId()) {
+            if (Utils.isInternetAvailable(this)) {
+                if (validation()) {
                     PostCardData();
                 }
-            }
-            else
-                AppUtils.matDialog(this,getResources().getString(R.string.no_internet),getResources().getString(R.string.network_error));
+            } else
+                AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
 
-        } else if (v.getId() == front_cam.getId()) {
+        } else if (v.getId() == btn_front_cam.getId()) {
             add_photo = true;
+            front_image = true;
             selectCardImage("Add Photo!");
-        } else if (v.getId() == back_cam.getId()) {
+        } else if (v.getId() == btn_back_cam.getId()) {
             add_photo = true;
+            front_image = false;
             selectCardImage("Add Photo!");
         } else if (v.getId() == barcode.getId()) {
             add_photo = false;
@@ -166,44 +189,28 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         } else if (v.getId() == layout_BarcodeType.getId()) {
             Intent intent = new Intent(this, BarcodePreviewActivity.class);
             startActivity(intent);
+        }else if (v.getId() == btnDel1.getId()) {
+            frontCard.setImageDrawable(getDrawable(R.drawable.front_card));
+            btnDel1.setVisibility(View.GONE);
+            bitmapFront = null;
+        }else if (v.getId() == btnDel2.getId()) {
+            backCard.setImageDrawable(getDrawable(R.drawable.back_card));
+            btnDel2.setVisibility(View.GONE);
+            bitmapBack = null;
         }
     }
 
     @Override
-     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (add_photo){
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (add_photo) {
             super.onActivityResult(requestCode, resultCode, data);
-
-            if (requestCode == 0) {
-                if (resultCode == Activity.RESULT_OK) {
-                    Bitmap photo = (Bitmap) data.getExtras().get("data");
-                    front_cam.setImageBitmap(photo);
-                    loyaltyCardModel.setFrontBase64ImageString(Image_Scaling.encodeTobase64(photo));
-                }
-            } else if (requestCode == 1) {
-
-                Log.e("", "image from gallery ");
-                if (resultCode == Activity.RESULT_OK) {
-
-                    try {
-                        Uri selectedImageUri = data.getData();
-                        String picturePath = getPath(selectedImageUri);
-                        ;
-                        Bitmap bitmapSelectedImage = BitmapFactory.decodeFile(picturePath);
-
-                        if (bitmapSelectedImage == null) {
-                            selectCardImage("Re-Select Picture");
-                            return;
-                        }
-                        back_cam.setImageBitmap(bitmapSelectedImage);
-                        loyaltyCardModel.setBacksideBase64ImageString(Image_Scaling.encodeTobase64(bitmapSelectedImage));
-
-                    } catch (Exception e) {
-                        e.printStackTrace();
-                    }
-                }
+            if (data != null) {
+                Uri selectedImageUri = data.getData();
+                Intent intent = new Intent(AddCardActivity.this, CropActivity.class);
+                intent.setData(selectedImageUri);
+                startActivity(intent);
             }
-        }else{
+        } else {
             IntentResult result = IntentIntegrator.parseActivityResult(requestCode, resultCode, data);
             if (result != null) {
                 if (result.getContents() == null) {
@@ -214,7 +221,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     Toast.makeText(this, "Scanned: " + result.getFormatName(), Toast.LENGTH_LONG).show();
                     etBarcodeNum.setText(result.getContents());
                     String type = result.getFormatName();
-                    BarcodePreviewActivity.Barcodetype = type.replace("_","-");
+                    BarcodePreviewActivity.Barcodetype = type.replace("_", "-");
                 }
             } else {
                 // This is important, otherwise the result will not be passed to the fragment
@@ -228,15 +235,14 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     private void show_date(final boolean issue) {
         if (dateOfBirthday == null) {
             final Calendar c = Calendar.getInstance();
-            Log.d("","date default:"+c.getTime());
+            Log.d("", "date default:" + c.getTime());
 
             year = c.get(Calendar.YEAR);
             month = c.get(Calendar.MONTH);
             day = c.get(Calendar.DAY_OF_MONTH);
             dateOfBirthday = c.getTime();
-        }
-        else{
-            final  Calendar c = Calendar.getInstance();
+        } else {
+            final Calendar c = Calendar.getInstance();
             c.setTime(dateOfBirthday);
             Log.d("", "user date:" + c.getTime());
 
@@ -251,7 +257,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
-                if ( view.isShown() ) {
+                if (view.isShown()) {
 
                     SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
                     Calendar calendar = Calendar.getInstance();
@@ -261,7 +267,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     System.out.println("Date : " + year + monthOfYear + dayOfMonth);
 
                     Calendar c = Calendar.getInstance();
-                    c.set(year,monthOfYear,dayOfMonth);
+                    c.set(year, monthOfYear, dayOfMonth);
 
                     dateOfBirthday = c.getTime();
 
@@ -279,12 +285,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         }, year, month, day);
 
         Calendar maxDate = Calendar.getInstance();
-        maxDate.set(Calendar.YEAR, 2016 );
+        maxDate.set(Calendar.YEAR, 2016);
         dpd.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
 
         // dpd.getDatePicker().
-
-
 
 
         dpd.show();
@@ -337,8 +341,16 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         return !TextUtils.isEmpty(bc_type.getText().toString());
     }
 
+    private boolean isCardImagesAvailable(){
+        if (bitmapFront == null || bitmapBack == null){
+            showMessage(getResources().getString(R.string.select_card_image));
+            return false;
+        }
+        return true;
+    }
+
     private boolean validation() {
-        return isValidCardName() && isValidCardNum() && isValidIssueDate() && isValidExpiryDate() && isValidBarcodeNum() && isValidBcType();
+        return isCardImagesAvailable() && isValidCardName() && isValidCardNum() && isValidIssueDate() && isValidExpiryDate() && isValidBarcodeNum() && isValidBcType();
     }
     //endregion
 
@@ -379,7 +391,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
 
     //region Post Card Data
-    void PostCardData(){
+    void PostCardData() {
         loyaltyCardModel.setBarcodeType(bc_type.getText().toString());
         loyaltyCardModel.setBarcode(etBarcodeNum.getText().toString());
         loyaltyCardModel.setCardTitle(etCardName.getText().toString());
@@ -389,17 +401,26 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         loyaltyCardModel.setUserId(SharedPreferenceUserProfile.getUserId(this));
         loyaltyCardModel.setUserNotes(etDescription.getText().toString());
         loyaltyCardModel.setCardNumber(Integer.parseInt(etCardNum.getText().toString()));
+        loyaltyCardModel.setFrontBase64ImageString(Image_Scaling.encodeTobase64(bitmapFront));
+        loyaltyCardModel.setBacksideBase64ImageString(Image_Scaling.encodeTobase64(bitmapBack));
 
         Gson gson = new Gson();
         String jsonString = gson.toJson(loyaltyCardModel);
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
-            volleyNetworkUtil.PostLoyaltyCard(ApiConstants.SAVE_LOYALTY_CARD,jsonObject,this);
+            volleyNetworkUtil.PostLoyaltyCard(ApiConstants.SAVE_LOYALTY_CARD, jsonObject, this);
         } catch (JSONException e) {
             e.printStackTrace();
         }
     }
     //endregion
+
+    public Uri getImageUri(Context inContext, Bitmap inImage) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
+        return Uri.parse(path);
+    }
 
 
     @Override

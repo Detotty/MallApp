@@ -314,6 +314,13 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <activity
+            android:name=".CropActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
+
         <receiver
             android:name="com.mallapp.pushnotification.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >

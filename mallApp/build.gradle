@@ -61,6 +61,8 @@ dependencies {
     compile 'com.android.support:support-v4:23.1.1'
     compile 'org.jbundle.util.osgi.wrapped:org.jbundle.util.osgi.wrapped.org.apache.http.client:4.1.2'
     compile 'com.android.support:multidex:1.0.0'
+    compile 'com.naver.android.helloyako:imagecropview:1.0.3'
+    compile 'com.makeramen:roundedimageview:2.2.1'
     // Supports Android 4.0.3 and later (API level 15)
     compile 'com.embarkmobile:zxing-android-minimal:2.0.0@aar'
 

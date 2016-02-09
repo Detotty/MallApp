@@ -6,10 +6,8 @@
 
     <ImageView
         android:id="@+id/grid_image"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:src="@drawable/mallapp_placeholder"
-        android:background="@drawable/roundcorner">
+        android:layout_width="250dp"
+        android:layout_height="125dp">
     </ImageView>
 
     <TextView
@@ -19,6 +17,8 @@
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
         android:layout_centerHorizontal="true"
+        android:textColor="@color/purple"
+        android:textStyle="bold"
         android:text="Card Name"
         android:textSize="12sp" >
     </TextView>
