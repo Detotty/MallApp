@@ -87,5 +87,7 @@ public class ApiConstants {
 
     public static final String GET_LOYALTY_CARD_TYPES = SETTINGS_URL_KEY + "GetLoyaltyCardTypes";
 
+    public static final String DEL_LOYALTY_CARD = ACCOUNT_URL_KEY + "DeleteLoyaltyCard/";
+
 
 }

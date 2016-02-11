@@ -9,7 +9,7 @@ import org.json.JSONObject;
 public interface UniversalDataListener {
 
     public void onDataReceived(JSONObject jsonObject, JSONArray jsonArray);
-    public void OnError();
+    public void OnError(String message);
 
 
 }

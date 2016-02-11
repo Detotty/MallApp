@@ -308,6 +308,14 @@
         </activity>
 
         <activity
+            android:name=".CardDetailsActivity"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:windowSoftInputMode="stateHidden|adjustResize"
+            android:launchMode="standard"
+            android:screenOrientation="portrait" >
+        </activity>
+
+        <activity
             android:name=".BarcodePreviewActivity"
             android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"

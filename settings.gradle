@@ -1,3 +1,4 @@
 include ':parallax'
 include ':libraryviewpager'
 include ':mallApp'
+include ':library'

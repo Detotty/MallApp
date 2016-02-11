@@ -17,6 +17,7 @@ public class MainMenuConstants {
     //  SERVICES CONSTANTS
     public static final String NO_SERVICES_ERROR = "No services found for this mall";
 
+    public static final String LOYALTY_CARD_OBJECT = "LOYALTY_CARD_OBJECT";
 
     //
 

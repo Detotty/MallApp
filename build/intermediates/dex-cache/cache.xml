@@ -2,6 +2,13 @@
 <items version="2" >
 
     <item
+        jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\library\unspecified\jars\classes.jar"
+        jumboMode="false"
+        revision="23.0.2"
+        sha1="385c8fdb3c78a0a9a0cdbf1b15a91ddf961d7c92">
+        <dex dex="J:\Android\Raw\MallApp\mallApp\build\intermediates\pre-dexed\dev\debug\classes-13ffcc618aca2a97650e587e796538d08715f3ea.jar\classes.dex" />
+    </item>
+    <item
         jar="J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.makeramen\roundedimageview\2.2.1\jars\classes.jar"
         jumboMode="false"
         revision="23.0.2"

@@ -3,11 +3,13 @@ package com.mallapp.View;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
+import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
+import android.graphics.BitmapFactory;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.Bundle;
@@ -25,16 +27,20 @@ import android.widget.RelativeLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.google.android.gms.common.api.Api;
 import com.google.gson.Gson;
 import com.google.zxing.integration.android.IntentIntegrator;
 import com.google.zxing.integration.android.IntentResult;
 import com.makeramen.roundedimageview.RoundedTransformationBuilder;
 import com.mallapp.Constants.ApiConstants;
+import com.mallapp.Constants.MainMenuConstants;
+import com.mallapp.Fragments.CardTabFragments;
 import com.mallapp.Model.LoyaltyCardModel;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.imagecapture.Image_Scaling;
 import com.mallapp.listeners.UniversalDataListener;
 import com.mallapp.utils.AppUtils;
+import com.mallapp.utils.BitmapLoadUtils;
 import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
@@ -50,6 +56,8 @@ import java.util.Calendar;
 import java.util.Date;
 import java.util.Locale;
 
+import me.drakeet.materialdialog.MaterialDialog;
+
 /**
  * Created by Sharjeel on 2/2/2016.
  */
@@ -57,7 +65,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     TextView heading, bc_type, tvIssueDate, tvExpiryDate;
 
-    Button btnDone;
+    Button btnDone,btnDelCard;
 
     ImageButton btnBack;
 
@@ -82,6 +90,9 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     LoyaltyCardModel loyaltyCardModel;
 
+    MaterialDialog mMaterialDialog;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -90,6 +101,15 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         loyaltyCardModel = new LoyaltyCardModel();
         init();
+        try{
+            loyaltyCardModel = (LoyaltyCardModel) getIntent().getSerializableExtra(MainMenuConstants.LOYALTY_CARD_OBJECT);
+            setDetails();
+            btnDelCard.setVisibility(View.VISIBLE);
+        }catch (Exception e){
+            loyaltyCardModel = new LoyaltyCardModel();
+            e.printStackTrace();
+        }
+
 
     }
 
@@ -101,6 +121,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         tvIssueDate = (TextView) findViewById(R.id.et_issueDate);
 
         btnDone = (Button) findViewById(R.id.btnDone);
+        btnDelCard = (Button) findViewById(R.id.btnDelCard);
 
         btnBack = (ImageButton) findViewById(R.id.back);
 
@@ -124,6 +145,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         heading.setText(getResources().getString(R.string.create));
 
         btnDone.setOnClickListener(this);
+        btnDelCard.setOnClickListener(this);
         btnBack.setOnClickListener(this);
         btn_front_cam.setOnClickListener(this);
         btn_back_cam.setOnClickListener(this);
@@ -136,7 +158,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     }
 
     @Override
-    protected void onResume() {
+     protected void onResume() {
         super.onResume();
         Transformation transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(5)
@@ -146,12 +168,12 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         if (CropedImage != null) {
             if (front_image) {
                 Picasso.with(this).load(getImageUri(this, CropedImage)).fit().transform(transformation).into(frontCard);
-                bitmapFront = CropedImage;
+                bitmapFront = BitmapLoadUtils.compress(Bitmap.createScaledBitmap(CropedImage, 800, 450, true),10);
                 CropedImage = null;
                 btnDel1.setVisibility(View.VISIBLE);
             } else {
                 Picasso.with(this).load(getImageUri(this, CropedImage)).fit().transform(transformation).into(backCard);
-                bitmapBack = CropedImage;
+                bitmapBack = BitmapLoadUtils.compress(Bitmap.createScaledBitmap(CropedImage, 800, 450, true), 10);
                 CropedImage = null;
                 btnDel2.setVisibility(View.VISIBLE);
             }
@@ -197,6 +219,26 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             backCard.setImageDrawable(getDrawable(R.drawable.back_card));
             btnDel2.setVisibility(View.GONE);
             bitmapBack = null;
+        }else if (v.getId() == btnDelCard.getId()) {
+            mMaterialDialog = new MaterialDialog(AddCardActivity.this)
+                    .setTitle(getResources().getString(R.string.logout_dialog_title))
+                    .setMessage(getResources().getString(R.string.del_card_message))
+                    .setPositiveButton(getResources().getString(R.string.ok), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMaterialDialog.dismiss();
+                            volleyNetworkUtil.PostDelCard(ApiConstants.DEL_LOYALTY_CARD + loyaltyCardModel.getId(), AddCardActivity.this);
+                        }
+                    })
+                    .setNegativeButton(getResources().getString(R.string.cancel_button_title), new View.OnClickListener() {
+                        @Override
+                        public void onClick(View v) {
+                            mMaterialDialog.dismiss();
+
+                        }
+                    });
+
+            mMaterialDialog.show();
         }
     }
 
@@ -417,7 +459,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     public Uri getImageUri(Context inContext, Bitmap inImage) {
         ByteArrayOutputStream bytes = new ByteArrayOutputStream();
-        inImage.compress(Bitmap.CompressFormat.JPEG, 100, bytes);
+        inImage.compress(Bitmap.CompressFormat.JPEG, 50, bytes);
         String path = MediaStore.Images.Media.insertImage(inContext.getContentResolver(), inImage, "Title", null);
         return Uri.parse(path);
     }
@@ -425,11 +467,52 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     @Override
     public void onDataReceived(JSONObject jsonObject, JSONArray jsonArray) {
+        boolean success = false;
+        try {
+            success = jsonObject.getBoolean("Success");
+            if (success) {
+                CardTabFragments.isUpdate = true;
+                finish();
+            }
+            else{
+            }
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
 
     }
 
     @Override
-    public void OnError() {
+    public void OnError(String message) {
+        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+    }
+
+
+
+    void setDetails(){
+        etCardName.setText(loyaltyCardModel.getCardTitle().trim());
+        etProviderName.setText(loyaltyCardModel.getProviderName().trim());
+        etCardNum.setText(String.valueOf(loyaltyCardModel.getCardNumber()).trim());
+        etBarcodeNum.setText(loyaltyCardModel.getBarcode().trim());
+        bc_type.setText(loyaltyCardModel.getBarcodeType().trim());
+        etDescription.setText(loyaltyCardModel.getUserNotes().trim());
+        tvIssueDate.setText(loyaltyCardModel.getIssueDate().substring(0, loyaltyCardModel.getIssueDate().indexOf("T")).trim());
+        tvExpiryDate.setText(loyaltyCardModel.getExpiryDate().substring(0, loyaltyCardModel.getExpiryDate().indexOf("T")).trim());
+        heading.setText(getResources().getString(R.string.edit));
+        Transformation transformation = new RoundedTransformationBuilder()
+                .cornerRadiusDp(5)
+                .oval(false)
+                .build();
+        Picasso.with(this).load(loyaltyCardModel.getFrontImageUrl()).fit().placeholder(R.drawable.front_card).transform(transformation).into(frontCard);
+        Picasso.with(this).load(loyaltyCardModel.getBackImageUrl()).fit().placeholder(R.drawable.back_card).transform(transformation).into(backCard);
+
+        btnDel1.setVisibility(View.VISIBLE);
+        btnDel2.setVisibility(View.VISIBLE);
+        frontCard.buildDrawingCache();
+        bitmapFront = frontCard.getDrawingCache();
+        backCard.buildDrawingCache();
+        bitmapBack = backCard.getDrawingCache();
+        BarcodePreviewActivity.Barcodetype = loyaltyCardModel.getBarcodeType().trim();
 
     }
 

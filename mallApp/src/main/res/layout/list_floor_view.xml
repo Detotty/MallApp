@@ -6,7 +6,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_margin="@dimen/margin_left_15"
-        android:background="@drawable/mallapp_placeholder"
         android:id="@+id/iv_floor"/>
 
     <TextView
@@ -19,6 +18,7 @@
         android:layout_centerInParent="true"/>
 
     <View
+        android:id="@+id/lineView"
         android:layout_width="fill_parent"
         android:layout_marginTop="@dimen/margin_left_5"
         android:layout_height="1dp"

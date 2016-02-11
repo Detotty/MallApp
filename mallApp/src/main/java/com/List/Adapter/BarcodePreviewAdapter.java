@@ -76,7 +76,7 @@ public class BarcodePreviewAdapter extends ArrayAdapter<BarcodeTypeModel> {
 
         final BarcodeTypeModel fav_obj= getItem(position);
         holder.barcode_type.setText(fav_obj.getBarcodeType1());
-        Picasso.with(context).load(fav_obj.getBarcodeImageURL()).into(holder.barcode_image);
+        Picasso.with(context).load(fav_obj.getBarcodeImageURL()).placeholder(R.drawable.mallapp_placeholder).fit().into(holder.barcode_image);
 
         holder.barcode_image.setOnClickListener(new View.OnClickListener() {
             @Override

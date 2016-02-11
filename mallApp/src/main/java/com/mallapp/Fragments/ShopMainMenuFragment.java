@@ -161,7 +161,7 @@ public class ShopMainMenuFragment 	extends Fragment
 						}
 					}
 					Log.e(TAG, "search_array = "+ search_array.size());
-					Log.e(TAG, "search results = "+searchResults.size());
+					Log.e(TAG, "searchField results = "+searchResults.size());
 					
 					if(searchResults!=null && searchResults.size()>0){
 //						adapter_search.setShop_search(searchResults);

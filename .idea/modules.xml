@@ -3,6 +3,7 @@
   <component name="ProjectModuleManager">
     <modules>
       <module fileurl="file://$PROJECT_DIR$/MallApp.iml" filepath="$PROJECT_DIR$/MallApp.iml" />
+      <module fileurl="file://$PROJECT_DIR$/library/library.iml" filepath="$PROJECT_DIR$/library/library.iml" />
       <module fileurl="file://$PROJECT_DIR$/libraryviewpager/libraryviewpager.iml" filepath="$PROJECT_DIR$/libraryviewpager/libraryviewpager.iml" />
       <module fileurl="file://$PROJECT_DIR$/mallApp/mallApp.iml" filepath="$PROJECT_DIR$/mallApp/mallApp.iml" />
       <module fileurl="file://$PROJECT_DIR$/parallax/parallax.iml" filepath="$PROJECT_DIR$/parallax/parallax.iml" />

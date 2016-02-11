@@ -12,6 +12,7 @@ import android.util.*;
 
 import com.naver.android.helloyako.imagecrop.util.GLUtils;
 
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 
 /**
@@ -157,5 +158,13 @@ public class BitmapLoadUtils {
         else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_180) {  return 180; }
         else if (exifOrientation == ExifInterface.ORIENTATION_ROTATE_270) {  return 270; }
         return 0;
+    }
+
+    public static Bitmap compress( Bitmap inImage, int size) {
+        ByteArrayOutputStream bytes = new ByteArrayOutputStream();
+        inImage.compress(Bitmap.CompressFormat.JPEG, size, bytes);
+        byte[] bitmapdata = bytes.toByteArray();
+        Bitmap bitmap = BitmapFactory.decodeByteArray(bitmapdata , 0, bitmapdata.length);
+        return bitmap;
     }
 }

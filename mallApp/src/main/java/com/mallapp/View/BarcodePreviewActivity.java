@@ -77,7 +77,8 @@ public class BarcodePreviewActivity  extends Activity implements UniversalDataLi
     }
 
     @Override
-    public void OnError() {
+    public void OnError(String message) {
 
     }
+
 }

@@ -206,5 +206,6 @@
     <orderEntry type="library" exported="" name="play-services-fitness-8.4.0" level="project" />
     <orderEntry type="module" module-name="parallax" exported="" />
     <orderEntry type="module" module-name="libraryviewpager" exported="" />
+    <orderEntry type="module" module-name="library" exported="" />
   </component>
 </module>

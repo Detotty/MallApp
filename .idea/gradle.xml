@@ -10,6 +10,7 @@
         <option name="modules">
           <set>
             <option value="$PROJECT_DIR$" />
+            <option value="$PROJECT_DIR$/library" />
             <option value="$PROJECT_DIR$/libraryviewpager" />
             <option value="$PROJECT_DIR$/mallApp" />
             <option value="$PROJECT_DIR$/parallax" />

@@ -7,6 +7,8 @@ import java.io.Serializable;
  */
 public class LoyaltyCardModel implements Serializable {
 
+    String Id;
+
     String UserId;
 
     String CardTitle;
@@ -46,6 +48,15 @@ public class LoyaltyCardModel implements Serializable {
     String FrontBase64ImageString;
 
     String BacksideBase64ImageString;
+
+    public String getId(){
+        return Id;
+    }
+
+    public void setId (String Id)
+    {
+        this.Id = Id;
+    }
 
     public String getUserId(){
         return UserId;

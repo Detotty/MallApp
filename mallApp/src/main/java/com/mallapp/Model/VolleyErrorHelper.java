@@ -32,9 +32,10 @@ public class VolleyErrorHelper {
         } else if (isServerProblem(error)) {
             return handleServerError(error, context);
         } else if (isNetworkProblem(error)) {
-            return " Problem occurred while fetching data";
+            return context.getResources().getString(R.string.network_error);
         }
         return context.getResources().getString(R.string.request_error_message);
+
     }
 
     /**

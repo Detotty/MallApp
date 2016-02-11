@@ -678,10 +678,10 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
                     if (progressDialog != null)
                         progressDialog.dismiss();
-
-                    universalDataListener.OnError();
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
-                    android.util.Log.e("", " error message ..." + message);
+
+                    universalDataListener.OnError(message);
+                    android.util.Log.e("Error", " error message ..." + message);
 
                     /*if (message != null && message != "")
                         Toast.makeText(context, MainMenuConstants.NO_SERVICES_ERROR, Toast.LENGTH_SHORT).show();
@@ -713,8 +713,29 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
         return null;
     }
 
+    /*<--------------DELETE LOYALTY CARD ---------------->*/
+
+    public void PostDelCard(String url, UniversalDataListener universalDataListener) {
+        progressDialog = ProgressDialog.show(context,"","Loading");
+        requestType = POST_LOYALTY_CARD;
+        this.universalDataListener = universalDataListener;
+        JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, null, this, this) {
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(context);
+                Log.e("", " token" + token);
+                headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
+                return headers;
+            }
+        };
+        MallApplication.getInstance().addToRequestQueue(request, url);
+    }
+
     @Override
     public void onErrorResponse(VolleyError volleyError) {
+        String message = VolleyErrorHelper.getMessage(volleyError, context);
         switch (requestType) {
             case GET_MALL_NEWSnOFFERS: {
                 mallDataListener.OnError();
@@ -722,6 +743,10 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
             }
             case GET_REST_DETAIL: {
                 restaurantDataListener.OnError();
+                break;
+            }
+            case POST_LOYALTY_CARD: {
+                universalDataListener.OnError(message);
                 break;
             }
         }
@@ -734,7 +759,6 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
 
 //        listener.OnError();
 
-        String message = VolleyErrorHelper.getMessage(volleyError, context);
 
 
 
@@ -844,7 +868,8 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                         universalDataListener.onDataReceived(response,null);
                     }
                     else{
-                        universalDataListener.OnError();
+                        String message = response.getString("Message");
+                        universalDataListener.OnError(message);
                     }
                 } catch (Exception e) {
                     e.printStackTrace();

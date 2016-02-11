@@ -43,6 +43,7 @@ repositories {
 dependencies {
     compile project(':parallax')
     compile project(':libraryviewpager')
+    compile project(':library')
     compile files('libs/acra-4.5.0.jar')
     compile 'com.google.code.gson:gson:2.3.1'
     compile files('libs/ormlite-android-4.48.jar')
