@@ -63,6 +63,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     private final String REFRESH_MALL_ACTIVITIES = "REFRESH_MALL_ACTIVITIES";
     private final String LOADING_MALL_ACTIVITIES = "LOADING_MALL_ACTIVITIES";
     private int pageNo = 1;
+    private int pageSize = 5;
     boolean lastPage = false;
     boolean isPaused = false;
     public static boolean isRefresh = false;
@@ -182,17 +183,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 }
             }
         });
-        /*adapter= new Offers_News_Adapter(context, getActivity(),R.layout.list_item_offers,
-                                                            all_audience,
-															offers_audience, 
-															news_audience,
-															all_audience_images,
-															offers_audience_images,
-															news_audience_images,
-															headerFilter, 
-															Offers_News_Constants.OFFERS_CLICK_TYPE);
-		
-		list.setAdapter(adapter);*/
+
         return rootView;
     }
 
@@ -213,10 +204,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             getLatestListing();
 
         }
-       /* if (headerFilter.equals(Offers_News_Constants.AUDIENCE_FILTER_ALL)){
-            lastPage = false;
-            getLatestListing();
-        }*/
+
+
     }
 
     @Override
@@ -233,7 +222,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
     }
 
     public void pullToRefresh() {
-        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1" + "&MallPlaceId=" + MainMenuConstants.SELECTED_MALL_PLACE_ID + "&PageIndex=" + pageNo + "&PageSize=10";
+        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1" + "&MallPlaceId=" + MainMenuConstants.SELECTED_MALL_PLACE_ID + "&PageIndex=" + pageNo + "&PageSize="+pageSize;
         volleyNetworkUtil.GetMallNewsnOffers(url, this);
     }
 
@@ -274,6 +263,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         return databaseHelper;
     }
 
+
     @Override
     public void onDataReceived(final ArrayList<MallActivitiesModel> mallActivitiesModels) {
         linlaHeaderProgress.setVisibility(View.GONE);
@@ -287,7 +277,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     public void run() {
                         list.removeFooterView(footerView);
                         if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
-                            if (mallActivitiesModels.size() < 10)
+                            if (mallActivitiesModels.size() < pageSize)
                                 lastPage = true;
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
 //                            mallActivitiesListing = mallActivitiesModels;
@@ -335,7 +325,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
                             callAddapter();
                             requestType = "";
-                            if (mallActivitiesModels.size() < 10)
+                            if (mallActivitiesModels.size() < pageSize)
                                 lastPage = true;
                             Log.e("OfferPagerTabFragment", "onCreate position " + position);//+ "... audience..." + ((CategoryListingModel)list.getItemAtPosition(position)).getName());
                         } else {
@@ -354,7 +344,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                     public void run() {
                         list.removeFooterView(footerView);
                         swipeRefreshLayout.setRefreshing(false);
-                        if (mallActivitiesModels.size() < 10)
+                        if (mallActivitiesModels.size() < pageSize)
                             lastPage = true;
                         else
                             lastPage = false;

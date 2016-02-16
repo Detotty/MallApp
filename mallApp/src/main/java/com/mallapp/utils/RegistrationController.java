@@ -73,6 +73,7 @@ public class RegistrationController {
 
     public void updateUserProfile(final UserProfileModel user_profile, RegistrationUserListener registrationUserListener) {
 
+        if (registrationUserListener!=null)
         progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.updating_profile_data_message));
 
         this.listener = registrationUserListener;

@@ -249,20 +249,19 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+ SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=true";
 					volleyNetworkUtil.PostFavShop(url);
 					rest_detail_obj.setFav(false);
-
 					rest_obj.setMallResturantId(mallStoreId);
 					rest_obj.setFav(false);
 					updateShops(rest_obj);
+					RestaurantMainMenuActivity.isRestUpdate=true;
 				}else{
 					is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+SharedPreferenceUserProfile.getUserId(this)+"&EntityId="+mallStoreId+"&IsShop=false"+"&IsDeleted=false";
 					volleyNetworkUtil.PostFavShop(url);
 					rest_detail_obj.setFav(true);
-
 					rest_obj.setMallResturantId(mallStoreId);
 					rest_obj.setFav(true);
 					updateShops(rest_obj);
-
+					RestaurantMainMenuActivity.isRestUpdate=true;
 				}
 			}
 

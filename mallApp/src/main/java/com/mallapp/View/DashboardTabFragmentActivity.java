@@ -44,6 +44,7 @@ import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -182,11 +183,16 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 					&& MainMenuConstants.SELECTED_CENTER_NAME.length()>0
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity = new Intent(DashboardTabFragmentActivity.this, MallDetailActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-				startActivity(activity);
+					if (Utils.isInternetAvailable(context)){
+						MainMenuConstants.uiHandler= uiHandler;
+						DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+						Intent activity = new Intent(DashboardTabFragmentActivity.this, MallDetailActivity.class);
+						activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+						startActivity(activity);
+					}
+					else {
+						AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+					}
 			} else
 				showdailog();
 
@@ -198,10 +204,15 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-				MainMenuConstants.uiHandler= uiHandler;
-				Intent activity = new Intent(DashboardTabFragmentActivity.this, ShopMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-				startActivity(activity);
+					if (Utils.isInternetAvailable(context)){
+						MainMenuConstants.uiHandler= uiHandler;
+						Intent activity = new Intent(DashboardTabFragmentActivity.this, ShopMainMenuActivity.class);
+						activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+						startActivity(activity);
+					}
+					else {
+						AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+					}
 			} else
 				showdailog();
 
@@ -214,11 +225,16 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, RestaurantMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-				startActivity(activity);
+					if (Utils.isInternetAvailable(context)){
+						MainMenuConstants.uiHandler= uiHandler;
+						DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+						Intent activity= new Intent(DashboardTabFragmentActivity.this, RestaurantMainMenuActivity.class);
+						activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+						startActivity(activity);
+					}
+					else {
+						AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+					}
 			} else
 				showdailog();
 
@@ -230,11 +246,16 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 					&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, ServicesMainMenuActivity.class);
-				activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-				startActivity(activity);
+					if (Utils.isInternetAvailable(context)){
+						MainMenuConstants.uiHandler= uiHandler;
+						DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+						Intent activity= new Intent(DashboardTabFragmentActivity.this, ServicesMainMenuActivity.class);
+						activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+						startActivity(activity);
+					}
+					else {
+						AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+					}
 			} else
 				showdailog();
 			break;
@@ -246,13 +267,18 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 						&& !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
 						&& !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-					MainMenuConstants.uiHandler= uiHandler;
-					DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-					Intent activity= new Intent(DashboardTabFragmentActivity.this, FloorOverviewActivity.class);
-					activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-					activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-					startActivity(activity);
-					finish();
+						if (Utils.isInternetAvailable(context)){
+							MainMenuConstants.uiHandler= uiHandler;
+							DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+							Intent activity= new Intent(DashboardTabFragmentActivity.this, FloorOverviewActivity.class);
+							activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+							activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+							startActivity(activity);
+							finish();
+						}
+						else {
+							AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+						}
 				} else
 					showdailog();
 				break;
@@ -270,12 +296,16 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 
 			case 8:{
 
-				MainMenuConstants.uiHandler= uiHandler;
-				DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-				Intent activity= new Intent(DashboardTabFragmentActivity.this, FavouritesMainMenuActivity.class);
-				activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-				startActivity(activity);
-				finish();
+				if (Utils.isInternetAvailable(context)){MainMenuConstants.uiHandler= uiHandler;
+					DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+					Intent activity= new Intent(DashboardTabFragmentActivity.this, FavouritesMainMenuActivity.class);
+					activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+					startActivity(activity);
+					finish();
+				}
+				else {
+					AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+				}
 			}
 			break;
 

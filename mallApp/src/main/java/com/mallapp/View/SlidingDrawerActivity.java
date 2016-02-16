@@ -38,6 +38,7 @@ import com.mallapp.Fragments.RewardsTabFragments;
 import com.mallapp.Model.NavDrawerItem;
 import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.Utils;
 import com.squareup.picasso.Picasso;
 
 @SuppressLint("InflateParams")
@@ -161,12 +162,8 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
 
                     MainMenuConstants.uiHandler= uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    //finish();
                     Intent activity= new Intent(SlidingDrawerActivity.this, DashboardTabFragmentActivity.class);
                     activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    //Bundle b = new Bundle();
-                    //b.putString("favourite", subcatagory);
-                    //activity.putExtras(b);
                     startActivity(activity);
                     finish();
                 }
@@ -177,15 +174,21 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         && MainMenuConstants.SELECTED_CENTER_NAME.length()>0
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
-                    MainMenuConstants.uiHandler= uiHandler;
-                    DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    Intent activity = new Intent(SlidingDrawerActivity.this, MallDetailActivity.class);
-                    activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(activity);
-                    finish();
+
+                    if (Utils.isInternetAvailable(this)){
+                        MainMenuConstants.uiHandler= uiHandler;
+                        DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+                        Intent activity = new Intent(SlidingDrawerActivity.this, MallDetailActivity.class);
+                        activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+                        activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activity);
+                        finish();
+                    }
+                    else {
+                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    }
                 } else
-                    showdailog();
+                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
 
                 break;
 
@@ -195,14 +198,19 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-                    MainMenuConstants.uiHandler= uiHandler;
-                    Intent activity = new Intent(SlidingDrawerActivity.this, ShopMainMenuActivity.class);
-                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-                    startActivity(activity);
-                    finish();
+                    if (Utils.isInternetAvailable(context)){
+                        MainMenuConstants.uiHandler= uiHandler;
+                        Intent activity = new Intent(SlidingDrawerActivity.this, ShopMainMenuActivity.class);
+                        activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+                        startActivity(activity);
+                        finish();
+                    }
+                    else {
+                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    }
                 } else
-                    showdailog();
+                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
 
                 break;
 
@@ -213,15 +221,21 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-                    MainMenuConstants.uiHandler= uiHandler;
-                    DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    Intent activity= new Intent(SlidingDrawerActivity.this, RestaurantMainMenuActivity.class);
-                    activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(activity);
-                    finish();
+
+                    if (Utils.isInternetAvailable(context)){
+                        MainMenuConstants.uiHandler= uiHandler;
+                        DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+                        Intent activity= new Intent(SlidingDrawerActivity.this, RestaurantMainMenuActivity.class);
+                        activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+                        activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activity);
+                        finish();
+                    }
+                    else {
+                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    }
                 } else
-                    showdailog();
+                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
 
                 break;
 
@@ -231,15 +245,21 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-                    MainMenuConstants.uiHandler= uiHandler;
-                    DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    Intent activity= new Intent(SlidingDrawerActivity.this, ServicesMainMenuActivity.class);
-                    activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(activity);
-                    finish();
+
+                    if (Utils.isInternetAvailable(context)){
+                        MainMenuConstants.uiHandler= uiHandler;
+                        DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+                        Intent activity= new Intent(SlidingDrawerActivity.this, ServicesMainMenuActivity.class);
+                        activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+                        activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activity);
+                        finish();
+                    }
+                    else {
+                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    }
                 } else
-                    showdailog();
+                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
                 break;
 
 
@@ -249,15 +269,20 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals("all")
                         && !MainMenuConstants.SELECTED_CENTER_NAME.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)){
 
-                    MainMenuConstants.uiHandler= uiHandler;
-                    DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    Intent activity= new Intent(SlidingDrawerActivity.this, FloorOverviewActivity.class);
-                    activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
-                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(activity);
-                    finish();
+                    if (Utils.isInternetAvailable(context)){
+                        MainMenuConstants.uiHandler= uiHandler;
+                        DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+                        Intent activity= new Intent(SlidingDrawerActivity.this, FloorOverviewActivity.class);
+                        activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
+                        activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activity);
+                        finish();
+                    }
+                    else {
+                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    }
                 } else
-                    showdailog();
+                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
                 break;
 
             case 7: {
@@ -272,13 +297,17 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
 
 
             case 8:{
-
-                    MainMenuConstants.uiHandler= uiHandler;
-                    DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
-                    Intent activity= new Intent(SlidingDrawerActivity.this, FavouritesMainMenuActivity.class);
-                    activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
-                    startActivity(activity);
-                    finish();
+                    if (Utils.isInternetAvailable(context)){
+                        MainMenuConstants.uiHandler= uiHandler;
+                        DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
+                        Intent activity= new Intent(SlidingDrawerActivity.this, FavouritesMainMenuActivity.class);
+                        activity.setFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(activity);
+                        finish();
+                    }
+                    else {
+                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    }
                 }
                 break;
 
@@ -290,24 +319,6 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
 
 
 
-    private void showdailog() {
-        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(this);
-
-        alertDialogBuilder.setTitle(getResources().getString(R.string.center_select_title));
-
-        alertDialogBuilder.setMessage(getResources().getString(R.string.center_select_message));
-
-        alertDialogBuilder.setPositiveButton(getResources().getString(R.string.ok),
-                new DialogInterface.OnClickListener() {
-                    @Override
-                    public void onClick(DialogInterface arg0, int arg1) {
-
-                    }
-                });
-
-        AlertDialog alertDialog = alertDialogBuilder.create();
-        alertDialog.show();
-    }
 
 
     @SuppressLint("HandlerLeak")

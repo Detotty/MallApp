@@ -27,6 +27,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -96,6 +97,10 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
     String mallStoreId;
     private SliderLayout mDemoSlider;
 
+    ScrollView scrollView;
+    LinearLayout error_layout;
+
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -121,6 +126,9 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
         shop_offers = (LinearLayout) findViewById(R.id.shop_offers);
         rel_shop_offers_layout = (LinearLayout) findViewById(R.id.shop_rel_offers);
         shops_offers1 = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
+        scrollView	= (ScrollView) findViewById(R.id.scrollView);
+        error_layout	= (LinearLayout) findViewById(R.id.error_layout);
+
         shop_obj = new ShopsModel();
         shop_name = (TextView) findViewById(R.id.offer_title);
         is_fav = (ImageButton) findViewById(R.id.fav_offer);
@@ -411,6 +419,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
                 shop_obj.setMallStoreId(mallStoreId);
                 shop_obj.setFav(false);
                 updateShops(shop_obj);
+                ShopMainMenuActivity.isShopUpdate = true;
             } else {
                 is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
                 url = ApiConstants.POST_FAV_SHOP_URL_KEY + SharedPreferenceUserProfile.getUserId(this) + "&EntityId=" + mallStoreId + "&IsShop=true" + "&IsDeleted=false";
@@ -420,7 +429,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
                 shop_obj.setMallStoreId(mallStoreId);
                 shop_obj.setFav(true);
                 updateShops(shop_obj);
-
+                ShopMainMenuActivity.isShopUpdate = true;
             }
 
 
@@ -577,7 +586,8 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
     @Override
     public void OnError() {
-
+        scrollView.setVisibility(View.INVISIBLE);
+        error_layout.setVisibility(View.VISIBLE);
     }
 
     @Override

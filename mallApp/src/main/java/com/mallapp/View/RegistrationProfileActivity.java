@@ -433,8 +433,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 			userProfile.setImageBase64String(Image_Scaling.encodeTobase64(profile_image_bitmap));
 		}
 		else{
-			Bitmap bmp = ((BitmapDrawable) profileImageView.getDrawable()).getBitmap();
-			userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bmp));
+			/*Bitmap bmp = ((BitmapDrawable) profileImageView.getDrawable()).getBitmap();
+			userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bmp));*/
 		}
 
 		requestType = com.mallapp.ServicesApi.RequestType.UPDATE_USER_PROFILE;
@@ -801,7 +801,16 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 				}
 
 				String imageUrl = userProfile.getFileName();
-				if(imageUrl!=null && imageUrl.length() > 0) {
+				String decoded = userProfile.getImageBase64String();
+				if (decoded!=null){
+					byte[] imageAsBytes = Base64.decode(decoded.getBytes(), 0);
+					profile_image_bitmap = BitmapFactory.decodeByteArray(imageAsBytes, 0, imageAsBytes.length);
+					profileImageView.setImageBitmap(profile_image_bitmap);
+				}
+				else {
+					profileImageView.setImageResource(R.drawable.profile_image_placeholder);
+				}
+				/*if(imageUrl!=null && imageUrl.length() > 0) {
 //					Picasso.with(this).load(imageUrl).placeholder(R.drawable.profile_image_placeholder).into(profileImageView);
 					Picasso.with(this)
 							.load(imageUrl)
@@ -809,7 +818,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 							.into(new Target() {
 								@Override
 								public void onBitmapLoaded(final Bitmap bitmap, Picasso.LoadedFrom from) {
-            /* Save the bitmap or do something with it here */
+            *//* Save the bitmap or do something with it here *//*
 
 									//Set it in the ImageView
 									userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bitmap));
@@ -827,7 +836,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 								}
 							});
-				}
+				}*/
 
 			}
 

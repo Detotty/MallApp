@@ -3,8 +3,10 @@ package com.mallapp.View;
 import android.os.Bundle;
 import android.view.View;
 import android.widget.ImageButton;
+import android.widget.LinearLayout;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.List.Adapter.FloorOverviewAdapter;
 import com.mallapp.Constants.ApiConstants;
@@ -24,6 +26,9 @@ public class FloorOverviewActivity extends SlidingDrawerActivity implements View
     String url, mallPlaceId;
     FloorOverviewAdapter floorOverviewAdapter;
 
+    LinearLayout error_layout, rootLayout;
+
+
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -38,6 +43,8 @@ public class FloorOverviewActivity extends SlidingDrawerActivity implements View
     }
 
     void init() {
+
+        error_layout	= (LinearLayout) findViewById(R.id.error_layout);
 
         floor_list = (ListView) findViewById(R.id.list_floor);
         open_navigation = (ImageButton) findViewById(R.id.back);
@@ -65,12 +72,19 @@ public class FloorOverviewActivity extends SlidingDrawerActivity implements View
 
     @Override
     public void onDataReceived(ArrayList<FloorOverViewModel> floorOverViewModels) {
-        floorOverviewAdapter = new FloorOverviewAdapter(getApplicationContext(),this, R.layout.list_floor_view, floorOverViewModels);
-        floor_list.setAdapter(floorOverviewAdapter);
+        if (floorOverViewModels.size()>0){
+            floorOverviewAdapter = new FloorOverviewAdapter(getApplicationContext(),this, R.layout.list_floor_view, floorOverViewModels);
+            floor_list.setAdapter(floorOverviewAdapter);
+        }else {
+            String serverError = context.getResources().getString(R.string.floor_error_message);
+            Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+        }
+
     }
 
     @Override
     public void OnError() {
-
+        error_layout.setVisibility(View.VISIBLE);
+        floor_list.setVisibility(View.GONE);
     }
 }

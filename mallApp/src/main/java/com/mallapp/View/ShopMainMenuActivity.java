@@ -73,6 +73,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
 
     String audienceFilter = MainMenuConstants.AUDIENCE_FILTER_ALL;
     public static String mallPlaceId;
+    public static boolean isShopUpdate = false;
 
     static ArrayList<ShopsModel> shopModel_read_audience, shopsearchResults, shopsearch_array;
     ArrayList<ShopsModel> dbList = new ArrayList<>();
@@ -85,6 +86,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
     private DatabaseHelper databaseHelper = null;
     Dao<ShopsModel, Integer> shopsDao;
 
+    LinearLayout error_layout, rootLayout;
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
@@ -102,84 +104,6 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
         init();
 
 
-        search_feild.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int start, int before, int count) {
-
-                String searchString = cs.toString().trim();
-                Log.e(TAG, "" + searchString);
-                int textLength = searchString.length();
-                //Log.e(TAG, ""+textLength);
-
-                if (textLength > 0) {
-
-                    Log.e(TAG, "hide existing lists = " + audienceFilter);
-                    cancel_search.setTextColor(getResources().getColor(R.color.purple));
-                    list_view1.setVisibility(View.GONE);
-                    side_index_scroll.setVisibility(View.GONE);
-//                    shopsearch_array = GlobelShops.shopModel_array;
-
-                    if (shopsearch_array == null || shopsearch_array.size() == 0) {
-                        readShopList();
-                    }
-//					Log.e(TAG, "shopsearch_array = "+ GlobelShops.shop_array.size());
-//					Log.e(TAG, "shopsearch_array = "+ shopsearch_array.size());
-                    shopsearchResults = new ArrayList<ShopsModel>();
-
-                    for (int i = 0; i < shopsearch_array.size(); i++) {
-                        //Log.e(TAG, "shop_name = .....get");
-                        String shop_name = shopsearch_array.get(i).getStoreName().toString();
-                        //Log.e(TAG, "shop_name = ...."+ shop_name);
-                        if (textLength <= shop_name.length()) {
-
-                            if (searchString.equalsIgnoreCase(shop_name.substring(0, textLength)))
-                                shopsearchResults.add(shopsearch_array.get(i));
-                        }
-                    }
-                    Log.e(TAG, "shopsearch_array = " + shopsearch_array.size());
-                    Log.e(TAG, "search results = " + shopsearchResults.size());
-
-                    if (shopsearchResults != null && shopsearchResults.size() > 0) {
-                        adapter_search.setShop_search(shopsearchResults);
-                        list_view_search.setVisibility(View.VISIBLE);
-                        adapter_search.notifyDataSetChanged();
-
-                    } else {
-
-                        if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)) {
-                            side_index_scroll.setVisibility(View.VISIBLE);
-                        } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)
-                                || audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
-
-                            list_view1.setVisibility(View.VISIBLE);
-                        }
-                    }
-                } else {
-                    cancel_search.setTextColor(getResources().getColor(R.color.grey));
-                    Log.e(TAG, "view existing lists");
-                    if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)) {
-                        side_index_scroll.setVisibility(View.VISIBLE);
-                    } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)
-                            || audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
-
-                        list_view1.setVisibility(View.VISIBLE);
-                        list_view_search.setVisibility(View.GONE);
-
-                    }
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
 
         segmentText.setOnCheckedChangeListener(this);
             open_navigation.setOnClickListener(this);
@@ -191,6 +115,9 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
     }
 
     private void init() {
+        error_layout	= (LinearLayout) findViewById(R.id.error_layout);
+        rootLayout	= (LinearLayout) findViewById(R.id.layout_rootList);
+
         open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         segmentText = (SegmentedRadioGroup) findViewById(R.id.segment_text);
@@ -343,6 +270,11 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
     public void onResume() {
         // TODO Auto-generated method stub
         super.onResume();
+        if (isShopUpdate){
+            isShopUpdate =false;
+            String url = ApiConstants.GET_SHOPS_URL_KEY + mallPlaceId;
+            volleyNetworkUtil.GetShops(url, this);
+        }
     }
 
 
@@ -448,42 +380,48 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
 
     @Override
     public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList) {
-        try {
-            /*if (shopsModelArrayList.size()>0)
-            shopModel_read_audience = readShopsList(ShopMainMenuActivity.this);
-            else*/
-            getDBShops();
-//            shopModel_read_audience = shopsModelArrayList;
 
-            if (dbList != null) {
-                for (ShopsModel shop : dbList
-                        ) {
-                    for (int i = 0; i < shopsModelArrayList.size(); i++) {
-                        ShopsModel sh = shopsModelArrayList.get(i);
-                        if (sh.getMallStoreId().equals(shop.getMallStoreId())) {
-                            if (shop.isFav()) {
-                                sh.setFav(true);
-                                shopsModelArrayList.set(i, sh);
+        if (shopsModelArrayList.size()>0){
+            try {
+
+                getDBShops();
+
+                if (dbList != null) {
+                    for (ShopsModel shop : dbList
+                            ) {
+                        for (int i = 0; i < shopsModelArrayList.size(); i++) {
+                            ShopsModel sh = shopsModelArrayList.get(i);
+                            if (sh.getMallStoreId().equals(shop.getMallStoreId())) {
+                                if (shop.isFav()) {
+                                    sh.setFav(true);
+                                    shopsModelArrayList.set(i, sh);
+                                }
                             }
                         }
                     }
                 }
+                shopModel_read_audience = shopsModelArrayList;
+            } catch (Exception ex) {
+                ex.printStackTrace();
             }
-            shopModel_read_audience = shopsModelArrayList;
-        } catch (Exception ex) {
-            ex.printStackTrace();
+
+
+            shopsearchResults = shopsModelArrayList;
+            shopsearch_array = shopsModelArrayList;
+
+            adapter_search = new ShopSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, shopsearchResults,shopsDao);
+            list_view_search.setAdapter(adapter_search);
+            searchFunc();
+            filterShops();
+            displayIndex();
+            initSectionHeaderList();
+            initExpandableList();
+        }else{
+            Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
+            String serverError = context.getResources().getString(R.string.shop_error_message);
+            Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
         }
 
-
-        shopsearchResults = shopsModelArrayList;
-        shopsearch_array = shopsModelArrayList;
-
-        adapter_search = new ShopSearchAdapter(getApplicationContext(), this, R.layout.list_item_shop, shopsearchResults,shopsDao);
-        list_view_search.setAdapter(adapter_search);
-        filterShops();
-        displayIndex();
-        initSectionHeaderList();
-        initExpandableList();
     }
 
     @Override
@@ -493,9 +431,9 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
 
     @Override
     public void OnError() {
-         Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
-         String serverError = context.getResources().getString(R.string.shop_error_message);
-         Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+         error_layout.setVisibility(View.VISIBLE);
+         rootLayout.setVisibility(View.GONE);
+
     }
 
     /*public static void writeShopsList(Context context, ArrayList<ShopsModel> offer_objects) {
@@ -538,6 +476,88 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
         } catch (SQLException e) {
             e.printStackTrace();
         }
+    }
+
+    void searchFunc(){
+        search_feild.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int start, int before, int count) {
+
+                String searchString = cs.toString().trim();
+                Log.e(TAG, "" + searchString);
+                int textLength = searchString.length();
+                //Log.e(TAG, ""+textLength);
+
+                if (textLength > 0) {
+
+                    Log.e(TAG, "hide existing lists = " + audienceFilter);
+                    cancel_search.setTextColor(getResources().getColor(R.color.purple));
+                    list_view1.setVisibility(View.GONE);
+                    side_index_scroll.setVisibility(View.GONE);
+//                    shopsearch_array = GlobelShops.shopModel_array;
+
+                    if (shopsearch_array == null || shopsearch_array.size() == 0) {
+                        readShopList();
+                    }
+//					Log.e(TAG, "shopsearch_array = "+ GlobelShops.shop_array.size());
+//					Log.e(TAG, "shopsearch_array = "+ shopsearch_array.size());
+                    shopsearchResults = new ArrayList<ShopsModel>();
+
+                    for (int i = 0; i < shopsearch_array.size(); i++) {
+                        //Log.e(TAG, "shop_name = .....get");
+                        String shop_name = shopsearch_array.get(i).getStoreName().toString();
+                        //Log.e(TAG, "shop_name = ...."+ shop_name);
+                        if (textLength <= shop_name.length()) {
+
+                            if (searchString.equalsIgnoreCase(shop_name.substring(0, textLength)))
+                                shopsearchResults.add(shopsearch_array.get(i));
+                        }
+                    }
+                    Log.e(TAG, "shopsearch_array = " + shopsearch_array.size());
+                    Log.e(TAG, "search results = " + shopsearchResults.size());
+
+                    if (shopsearchResults != null && shopsearchResults.size() > 0) {
+                        adapter_search.setShop_search(shopsearchResults);
+                        list_view_search.setVisibility(View.VISIBLE);
+                        adapter_search.notifyDataSetChanged();
+
+                    } else {
+
+                        if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)) {
+                            side_index_scroll.setVisibility(View.VISIBLE);
+                        } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)
+                                || audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
+
+                            list_view1.setVisibility(View.VISIBLE);
+                        }
+                    }
+                } else {
+                    cancel_search.setTextColor(getResources().getColor(R.color.grey));
+                    Log.e(TAG, "view existing lists");
+                    if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_ALL)) {
+                        side_index_scroll.setVisibility(View.VISIBLE);
+                    } else if (audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_CATEGORY)
+                            || audienceFilter.equals(MainMenuConstants.AUDIENCE_FILTER_FLOOR)) {
+
+                        list_view1.setVisibility(View.VISIBLE);
+                        list_view_search.setVisibility(View.GONE);
+
+                    }
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 
 

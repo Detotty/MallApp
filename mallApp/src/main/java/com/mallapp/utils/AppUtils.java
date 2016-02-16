@@ -155,6 +155,7 @@ public class AppUtils {
     public static MallActivitiesModel CastToMallActivities(FavoritesModel model){
         MallActivitiesModel mallActivitiesModel = new MallActivitiesModel();
         mallActivitiesModel.setEntityName(model.getEntityName());
+        mallActivitiesModel.setPlaceName(model.getPlaceName());
         mallActivitiesModel.setEntityType(model.getEntityType());
         mallActivitiesModel.setActivityName(model.getEntityType());
         mallActivitiesModel.setActivityTextTitle(model.getActivityTextTitle());

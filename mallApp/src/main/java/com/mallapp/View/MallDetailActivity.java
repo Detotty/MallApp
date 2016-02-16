@@ -13,6 +13,7 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
+import android.widget.ScrollView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -57,6 +58,9 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
     String url;
     String mallStoreId;
     MallDetailModel mallDetailModel;
+
+    ScrollView scrollView;
+    LinearLayout error_layout;
     //endregion
 
 
@@ -76,6 +80,8 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
 
 
     private void init() {
+        scrollView	= (ScrollView) findViewById(R.id.scrollView);
+        error_layout	= (LinearLayout) findViewById(R.id.error_layout);
         open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         mallDetailModel = new MallDetailModel();
@@ -221,7 +227,8 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
 
     @Override
     public void OnError() {
-
+        scrollView.setVisibility(View.INVISIBLE);
+        error_layout.setVisibility(View.VISIBLE);
     }
 
     private void initilizeMap() {

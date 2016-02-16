@@ -65,7 +65,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     TextView heading, bc_type, tvIssueDate, tvExpiryDate;
 
-    Button btnDone,btnDelCard;
+    Button btnDone, btnDelCard;
 
     ImageButton btnBack;
 
@@ -85,12 +85,15 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     Bitmap bitmapFront, bitmapBack;
 
     static boolean add_photo, front_image;
+    boolean isCardLoaded = false;
 
     VolleyNetworkUtil volleyNetworkUtil;
 
     LoyaltyCardModel loyaltyCardModel;
 
     MaterialDialog mMaterialDialog;
+
+
 
 
     @Override
@@ -101,11 +104,13 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         loyaltyCardModel = new LoyaltyCardModel();
         init();
-        try{
+        try {
             loyaltyCardModel = (LoyaltyCardModel) getIntent().getSerializableExtra(MainMenuConstants.LOYALTY_CARD_OBJECT);
             setDetails();
             btnDelCard.setVisibility(View.VISIBLE);
-        }catch (Exception e){
+            isCardLoaded = true;
+
+        } catch (Exception e) {
             loyaltyCardModel = new LoyaltyCardModel();
             e.printStackTrace();
         }
@@ -158,7 +163,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     }
 
     @Override
-     protected void onResume() {
+    protected void onResume() {
         super.onResume();
         Transformation transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(5)
@@ -168,7 +173,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         if (CropedImage != null) {
             if (front_image) {
                 Picasso.with(this).load(getImageUri(this, CropedImage)).fit().transform(transformation).into(frontCard);
-                bitmapFront = BitmapLoadUtils.compress(Bitmap.createScaledBitmap(CropedImage, 800, 450, true),10);
+                bitmapFront = BitmapLoadUtils.compress(Bitmap.createScaledBitmap(CropedImage, 800, 450, true), 10);
                 CropedImage = null;
                 btnDel1.setVisibility(View.VISIBLE);
             } else {
@@ -191,6 +196,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             show_date(false);
         } else if (v.getId() == btnDone.getId()) {
             if (Utils.isInternetAvailable(this)) {
+                if (isCardLoaded){
+                    bitmapFront=((BitmapDrawable)frontCard.getDrawable()).getBitmap();
+                    bitmapBack=((BitmapDrawable)backCard.getDrawable()).getBitmap();
+                }
                 if (validation()) {
                     PostCardData();
                 }
@@ -211,15 +220,15 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         } else if (v.getId() == layout_BarcodeType.getId()) {
             Intent intent = new Intent(this, BarcodePreviewActivity.class);
             startActivity(intent);
-        }else if (v.getId() == btnDel1.getId()) {
+        } else if (v.getId() == btnDel1.getId()) {
             frontCard.setImageDrawable(getDrawable(R.drawable.front_card));
             btnDel1.setVisibility(View.GONE);
             bitmapFront = null;
-        }else if (v.getId() == btnDel2.getId()) {
+        } else if (v.getId() == btnDel2.getId()) {
             backCard.setImageDrawable(getDrawable(R.drawable.back_card));
             btnDel2.setVisibility(View.GONE);
             bitmapBack = null;
-        }else if (v.getId() == btnDelCard.getId()) {
+        } else if (v.getId() == btnDelCard.getId()) {
             mMaterialDialog = new MaterialDialog(AddCardActivity.this)
                     .setTitle(getResources().getString(R.string.logout_dialog_title))
                     .setMessage(getResources().getString(R.string.del_card_message))
@@ -383,8 +392,8 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         return !TextUtils.isEmpty(bc_type.getText().toString());
     }
 
-    private boolean isCardImagesAvailable(){
-        if (bitmapFront == null || bitmapBack == null){
+    private boolean isCardImagesAvailable() {
+        if (bitmapFront == null || bitmapBack == null) {
             showMessage(getResources().getString(R.string.select_card_image));
             return false;
         }
@@ -473,8 +482,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             if (success) {
                 CardTabFragments.isUpdate = true;
                 finish();
-            }
-            else{
+            } else {
             }
         } catch (JSONException e) {
             e.printStackTrace();
@@ -484,12 +492,11 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     @Override
     public void OnError(String message) {
-        Toast.makeText(this,message,Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
     }
 
 
-
-    void setDetails(){
+    void setDetails() {
         etCardName.setText(loyaltyCardModel.getCardTitle().trim());
         etProviderName.setText(loyaltyCardModel.getProviderName().trim());
         etCardNum.setText(String.valueOf(loyaltyCardModel.getCardNumber()).trim());
@@ -499,6 +506,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         tvIssueDate.setText(loyaltyCardModel.getIssueDate().substring(0, loyaltyCardModel.getIssueDate().indexOf("T")).trim());
         tvExpiryDate.setText(loyaltyCardModel.getExpiryDate().substring(0, loyaltyCardModel.getExpiryDate().indexOf("T")).trim());
         heading.setText(getResources().getString(R.string.edit));
+
         Transformation transformation = new RoundedTransformationBuilder()
                 .cornerRadiusDp(5)
                 .oval(false)
@@ -508,10 +516,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
         btnDel1.setVisibility(View.VISIBLE);
         btnDel2.setVisibility(View.VISIBLE);
-        frontCard.buildDrawingCache();
-        bitmapFront = frontCard.getDrawingCache();
-        backCard.buildDrawingCache();
-        bitmapBack = backCard.getDrawingCache();
+
         BarcodePreviewActivity.Barcodetype = loyaltyCardModel.getBarcodeType().trim();
 
     }

@@ -120,11 +120,14 @@
 	<!-- Error Messages -->
 	<string name="request_error_message">Something went wrong. Please try again later</string>
 	<string name="shop_error_message">No shops found for this mall</string>
+	<string name="fav_error_message">No favorites found</string>
+	<string name="floor_error_message">No floor found</string>
 	<string name="rest_error_message">No restaurants found for this mall</string>
 	<string name="service_error_message">No services found for this mall</string>
 	<string name="add_new_place_error_message">Please enter place name</string>
 	<string name="no_internet">No internet</string>
 	<string name="network_error">There is problem with your network connection</string>
+	<string name="loading_error">It appears we have a problem...</string>
 
 	<!--Shops and Restaurant Strings-->
 	<string name="home_page">Go to Homepage</string>

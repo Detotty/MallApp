@@ -28,6 +28,8 @@ import com.mallapp.View.ShopMainMenuActivity;
 import com.mallapp.cache.ShopCacheManager;
 import com.mallapp.globel.GlobelShops;
 import com.mallapp.imagecapture.ImageLoader;
+import com.mallapp.utils.AppUtils;
+import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -201,14 +203,19 @@ public class ShopAdapter extends AmazingAdapter {
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View view) {
-                shop_obj = getItem(position);
-                GlobelShops.shopModel_obj = shop_obj;
-//				GlobelShops.shop_obj= shop_obj;
-                Intent intent = new Intent(activity, ShopDetailActivity.class);
-                intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
-                intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
-                intent.putExtra("MallStoreId", shop_obj.getMallStoreId());
-                activity.getApplication().startActivity(intent);
+                if (Utils.isInternetAvailable(context)){
+                    shop_obj = getItem(position);
+                    GlobelShops.shopModel_obj = shop_obj;
+//				    GlobelShops.shop_obj= shop_obj;
+                    Intent intent = new Intent(activity, ShopDetailActivity.class);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_MULTIPLE_TASK);
+                    intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                    intent.putExtra("MallStoreId", shop_obj.getMallStoreId());
+                    activity.getApplication().startActivity(intent);
+                }
+                else {
+                    AppUtils.matDialog(view.getRootView().getContext(), view.getResources().getString(R.string.no_internet), view.getResources().getString(R.string.network_error));
+                }
             }
         });
 

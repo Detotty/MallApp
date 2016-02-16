@@ -52,6 +52,9 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
     String url, mallPlaceId;
     VolleyNetworkUtil volleyNetworkUtil;
     Map<String, Integer> mapIndex;
+
+    LinearLayout error_layout, rootLayout;
+
     //endregion
 
 
@@ -69,56 +72,7 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         volleyNetworkUtil.GetServices(url, this);
 
-        //region Search Implementation
-        search_feild.addTextChangedListener(new TextWatcher() {
-            @Override
-            public void onTextChanged(CharSequence cs, int start, int before, int count) {
-                String searchString = cs.toString().trim();
-                int textLength = searchString.length();
 
-                if (textLength > 0) {
-                    cancel_search.setTextColor(getResources().getColor(R.color.purple));
-
-                    scroll_side_index.setVisibility(View.GONE);
-//					s_search_array = GlobelMainMenu.services_array;
-                    if (search_array == null || search_array.size() == 0) {
-//                        readServicesList();
-                    }
-                    searchResults = new ArrayList<ServicesModel>();
-
-                    for (int i = 0; i < search_array.size(); i++) {
-
-                        String rest_name = search_array.get(i).getFacilityType().toString();
-                        if (textLength <= rest_name.length()) {
-                            if (searchString.equalsIgnoreCase(rest_name.substring(0, textLength)))
-                                searchResults.add(search_array.get(i));
-                        }
-                    }
-
-                    if (searchResults != null && searchResults.size() > 0) {
-                        adapter_search.setService_search(searchResults);
-                        list_view_search.setVisibility(View.VISIBLE);
-                        adapter_search.notifyDataSetChanged();
-                    } else {
-                        list_view.setVisibility(View.VISIBLE);
-                    }
-                } else {
-                    cancel_search.setTextColor(getResources().getColor(R.color.grey));
-                    list_view.setVisibility(View.VISIBLE);
-                }
-            }
-
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count,
-                                          int after) {
-            }
-
-            @Override
-            public void afterTextChanged(Editable s) {
-
-            }
-        });
-        //endregion
 
         open_navigation.setOnClickListener(this);
         open_drawer.setOnClickListener(this);
@@ -154,6 +108,9 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
 
     //region Data Initializations
     private void init() {
+        error_layout	= (LinearLayout) findViewById(R.id.error_layout);
+        rootLayout	= (LinearLayout) findViewById(R.id.layout_rootList);
+
         open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         heading = (TextView) findViewById(R.id.heading);
@@ -278,42 +235,101 @@ public class ServicesMainMenuActivity extends SlidingDrawerActivity implements O
 
     @Override
     public void onDataReceived(ArrayList<ServicesModel> servicesModels) {
-        services_read = servicesModels;
-        search_array = services_read;
-        searchResults = services_read;
-        displayIndex();
+        if (servicesModels.size()>0){
+            services_read = servicesModels;
+            search_array = services_read;
+            searchResults = services_read;
+            displayIndex();
 
-        adapter = new ServiceAdapter(getApplicationContext(), this, R.layout.list_item, services_read);
-        list_view.setAdapter(adapter);
+            adapter = new ServiceAdapter(getApplicationContext(), this, R.layout.list_item, services_read);
+            list_view.setAdapter(adapter);
 //        list_view.setOnItemClickListener(this);
 
-        adapter_search = new ServiceAdapter(getApplicationContext(), this, R.layout.list_item_shop, searchResults);
-        list_view_search.setAdapter(adapter_search);
-        list_view_search.setOnItemClickListener(new OnItemClickListener() {
+            adapter_search = new ServiceAdapter(getApplicationContext(), this, R.layout.list_item_shop, searchResults);
+            list_view_search.setAdapter(adapter_search);
+            searchFunc();
+            list_view_search.setOnItemClickListener(new OnItemClickListener() {
 
-            @Override
-            public void onItemClick(AdapterView<?> ad, View row, int position, long index) {
+                @Override
+                public void onItemClick(AdapterView<?> ad, View row, int position, long index) {
 
-                Log.e("", ".....on item click listener in adapter... position = " + position + "..... index ........" + index);
-                ServicesModel s = (ServicesModel) ad.getItemAtPosition(position);
-                if (s.isOpened()) {
-                    s.setOpened(false);
-                } else {
-                    s.setOpened(true);
+                    Log.e("", ".....on item click listener in adapter... position = " + position + "..... index ........" + index);
+                    ServicesModel s = (ServicesModel) ad.getItemAtPosition(position);
+                    if (s.isOpened()) {
+                        s.setOpened(false);
+                    } else {
+                        s.setOpened(true);
+                    }
+                    searchResults.set(position, s);
+                    adapter_search.setService_search(searchResults);
+                    adapter_search.notifyDataSetChanged();
+                    //".....id......"+s.getId()+"......... "+ s.isOpened()+"  .... title ......"+ s.getTitle());
+
                 }
-                searchResults.set(position, s);
-                adapter_search.setService_search(searchResults);
-                adapter_search.notifyDataSetChanged();
-                //".....id......"+s.getId()+"......... "+ s.isOpened()+"  .... title ......"+ s.getTitle());
+            });
+        }else{
+            String serverError = context.getResources().getString(R.string.service_error_message);
+            Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+        }
 
-            }
-        });
 
     }
 
     @Override
     public void OnError() {
-        String serverError = context.getResources().getString(R.string.service_error_message);
-        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
+        error_layout.setVisibility(View.VISIBLE);
+        rootLayout.setVisibility(View.GONE);
+    }
+
+    void searchFunc(){
+        search_feild.addTextChangedListener(new TextWatcher() {
+            @Override
+            public void onTextChanged(CharSequence cs, int start, int before, int count) {
+                String searchString = cs.toString().trim();
+                int textLength = searchString.length();
+
+                if (textLength > 0) {
+                    cancel_search.setTextColor(getResources().getColor(R.color.purple));
+
+                    scroll_side_index.setVisibility(View.GONE);
+//					s_search_array = GlobelMainMenu.services_array;
+                    if (search_array == null || search_array.size() == 0) {
+//                        readServicesList();
+                    }
+                    searchResults = new ArrayList<ServicesModel>();
+
+                    for (int i = 0; i < search_array.size(); i++) {
+
+                        String rest_name = search_array.get(i).getFacilityType().toString();
+                        if (textLength <= rest_name.length()) {
+                            if (searchString.equalsIgnoreCase(rest_name.substring(0, textLength)))
+                                searchResults.add(search_array.get(i));
+                        }
+                    }
+
+                    if (searchResults != null && searchResults.size() > 0) {
+                        adapter_search.setService_search(searchResults);
+                        list_view_search.setVisibility(View.VISIBLE);
+                        adapter_search.notifyDataSetChanged();
+                    } else {
+                        list_view.setVisibility(View.VISIBLE);
+                    }
+                } else {
+                    cancel_search.setTextColor(getResources().getColor(R.color.grey));
+                    list_view.setVisibility(View.VISIBLE);
+                }
+            }
+
+            @Override
+            public void beforeTextChanged(CharSequence s, int start, int count,
+                                          int after) {
+            }
+
+            @Override
+            public void afterTextChanged(Editable s) {
+
+            }
+        });
+
     }
 }

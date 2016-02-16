@@ -37,6 +37,8 @@ public class FavoritesModel implements Serializable
 
     private String EndDate;
 
+    private String PlaceName;
+
     public String getActivityTextTitle ()
     {
         return ActivityTextTitle;
@@ -186,6 +188,17 @@ public class FavoritesModel implements Serializable
     {
         this.EndDate = EndDate;
     }
+
+    public String getPlaceName ()
+    {
+        return PlaceName;
+    }
+
+    public void setPlaceName (String PlaceName)
+    {
+        this.PlaceName = PlaceName;
+    }
+
     @Override
     public String toString()
     {

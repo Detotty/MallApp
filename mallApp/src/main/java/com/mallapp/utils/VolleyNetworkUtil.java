@@ -745,6 +745,14 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                 restaurantDataListener.OnError();
                 break;
             }
+            case GET_SHOP_DETAIL: {
+                shopsDataListener.OnError();
+                break;
+            }
+            case GET_MALL_DETAIL: {
+                mallDataListener.OnError();
+                break;
+            }
             case POST_LOYALTY_CARD: {
                 universalDataListener.OnError(message);
                 break;
@@ -817,8 +825,8 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     Gson gson = new Gson();
                     MallDetailModel model = gson.fromJson(String.valueOf(response), MallDetailModel.class);
                     Log.d(TAG, "Mall Detail:" + String.valueOf(response));
-                        if (model != null)
-                            mallDataListener.onMallDetailReceived(model);
+                    if (model != null)
+                        mallDataListener.onMallDetailReceived(model);
                 } catch (Exception e) {
                     e.printStackTrace();
                 }
