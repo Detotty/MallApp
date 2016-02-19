@@ -113,7 +113,7 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 
 		if (type == 0) {
 			ImageView back_image= (ImageView) v.findViewById(R.id.service_image);
-			Picasso.with(context).load(service_obj.getFacilityImageURL()).into(back_image);
+			Picasso.with(context).load(service_obj.getFacilityImageURL()).placeholder(R.drawable.mallapp_placeholder).fit().into(back_image);
 
 			//ImageView img = (ImageView) v.findViewById(R.id.img);
 			//img.setImageResource(c.imageId);

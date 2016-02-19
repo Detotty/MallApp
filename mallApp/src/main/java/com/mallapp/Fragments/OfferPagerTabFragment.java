@@ -417,12 +417,12 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                 break;
             }
         }
-        uihandler.post(new Runnable() {
+        /*uihandler.post(new Runnable() {
             @Override
             public void run() {
 
             }
-        });
+        });*/
     }
 
 

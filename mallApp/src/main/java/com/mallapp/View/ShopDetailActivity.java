@@ -86,7 +86,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
     private TextView tv_about, tv_Detail, shop_name, shop_detail;
     private TextView tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
     private ImageButton back_screen, is_fav, location, timing, social_sharing;
-    private LinearLayout related_shops, shop_offers, social_sharing_layout, location_layout, rel_shop_offers_layout;
+    private LinearLayout related_shops, shop_offers,shop_news, social_sharing_layout, location_layout, rel_shop_offers_layout,rel_shop_news_layout;
     HorizontalScrollView shops_offers1;
     RelativeLayout timing_layout;
     LinearLayout linear_timing_layout;
@@ -124,7 +124,9 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
         shop_map = (ImageView) findViewById(R.id.ivMap);
         expand = (ImageView) findViewById(R.id.iv_expand);
         shop_offers = (LinearLayout) findViewById(R.id.shop_offers);
+        shop_news = (LinearLayout) findViewById(R.id.shop_news);
         rel_shop_offers_layout = (LinearLayout) findViewById(R.id.shop_rel_offers);
+        rel_shop_news_layout = (LinearLayout) findViewById(R.id.rel_news);
         shops_offers1 = (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
         scrollView	= (ScrollView) findViewById(R.id.scrollView);
         error_layout	= (LinearLayout) findViewById(R.id.error_layout);
@@ -163,13 +165,19 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
     private void setShopOffers(MallActivitiesModel[] storeOffers) {
 
         shop_offers.removeAllViews();
-        SharedPreference sharedPreference = new SharedPreference();
-        ArrayList<Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
         if (storeOffers.length > 0) {
+
             for (MallActivitiesModel storeOffersModel : storeOffers
                     ) {
                 View view = add_layoutOffers(storeOffersModel);
-                shop_offers.addView(view);
+                if (storeOffersModel.getActivityName().equals("Offer")){
+                    rel_shop_offers_layout.setVisibility(View.VISIBLE);
+                    shop_offers.addView(view);
+                }
+                else {
+                    rel_shop_news_layout.setVisibility(View.VISIBLE);
+                    shop_news.addView(view);
+                }
             }
         } else {
             rel_shop_offers_layout.setVisibility(View.GONE);
@@ -195,13 +203,12 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
         title.setText(offer_obj.getActivityTextTitle());
         shop_offer.setText(offer_obj.getBriefText());
-        Picasso.with(this).load(offer_obj.getImageURL()).into(shop_logo);
+        Picasso.with(this).load(offer_obj.getImageURL()).placeholder(R.drawable.mallapp_placeholder).into(shop_logo);
 
 
         view.setOnClickListener(new OnClickListener() {
             @Override
             public void onClick(View v) {
-//				GlobelOffersNews.related_offer_obj= offer_obj;
                 Intent intent = new Intent(ShopDetailActivity.this, OffersDetailActivity.class);
                 intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                 intent.putExtra(Offers_News_Constants.MALL_OBJECT, offer_obj);
@@ -508,15 +515,15 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
         tv_about.setText(shopDetail.getAboutText());
         tv_Detail.setText(shopDetail.getBriefText());
         if (shopDetail.getAddress() != null && !shopDetail.getAddress().isEmpty())
-            tv_address.setText(shopDetail.getAddress());
+            tv_address.setText(shopDetail.getAddress().trim());
         else
             tv_address.setVisibility(View.GONE);
         if (shopDetail.getEmail() != null && !shopDetail.getEmail().isEmpty())
-            tv_Email.setText(shopDetail.getEmail());
+            tv_Email.setText(shopDetail.getEmail().trim());
         else
             tv_Email.setVisibility(View.GONE);
         if (shopDetail.getPhone() != null && !shopDetail.getPhone().isEmpty())
-            tv_Phone.setText(shopDetail.getPhone());
+            tv_Phone.setText(shopDetail.getPhone().trim());
         else
             tv_Phone.setVisibility(View.GONE);
         if (shopDetail.getWebURL() == null || shopDetail.getWebURL().isEmpty())

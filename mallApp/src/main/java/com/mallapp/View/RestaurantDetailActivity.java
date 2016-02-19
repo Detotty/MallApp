@@ -71,10 +71,10 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	RestaurantModel rest_obj;
 	RestaurantDetailModel rest_detail_obj;
 	private ImageView 		shop_logo,rest_map,expand;
-	private TextView 		tv_about, tv_Detail, shop_name, rel_offer_title,	 shop_detail;
+	private TextView 		tv_about, tv_Detail, shop_name, rel_offer_title, rel_news_title,	 shop_detail;
 	private TextView 		tv_address, tv_Phone, tv_Email, tv_Web, tv_Timing1, tv_Timing2;
 	private ImageButton	 	back_screen, is_fav , location, timing, social_sharing ;
-	private LinearLayout 	related_shops, 	shop_offers,  social_sharing_layout, location_layout, rel_shop_offers_layout;
+	private LinearLayout 	related_shops, 	shop_offers,shop_news,  social_sharing_layout, location_layout, rel_shop_offers_layout,rel_shop_news_layout;
 	HorizontalScrollView shops_offers1;
 	ScrollView scrollView;
 	RelativeLayout 			timing_layout;
@@ -107,7 +107,9 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 
 		expand	= (ImageView)	findViewById(R.id.iv_expand);
 		shop_offers		= (LinearLayout) findViewById(R.id.shop_offers);
+		shop_news		= (LinearLayout) findViewById(R.id.shop_news);
 		rel_shop_offers_layout		= (LinearLayout) findViewById(R.id.shop_rel_offers);
+		rel_shop_news_layout		= (LinearLayout) findViewById(R.id.rel_news);
 		shops_offers1	= (HorizontalScrollView) findViewById(R.id.horizontalScrollView1);
 		scrollView	= (ScrollView) findViewById(R.id.scrollView);
 		rest_obj = new RestaurantModel();
@@ -119,7 +121,8 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		tv_address 		= (TextView) findViewById(R.id.tv_address);
 		tv_Phone 		= (TextView) findViewById(R.id.tv_phone);
 		tv_Email 		= (TextView) findViewById(R.id.tv_email);
-		rel_offer_title 		= (TextView) findViewById(R.id.textView4);
+		rel_offer_title 		= (TextView) findViewById(R.id.rel_off_title);
+		rel_news_title 		= (TextView) findViewById(R.id.rel_news_title);
 		tv_Web 		= (TextView) findViewById(R.id.tv_web);
 		back_screen = (ImageButton) findViewById(R.id.back);
 		linear_timing_layout	= (LinearLayout) findViewById(R.id.layout_timings);
@@ -146,6 +149,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	private void getRestaurantOffers(RestaurantOffersModel[] storeOffers) {
 
 		rel_offer_title.setText(R.string.rest_offer_title);
+		rel_news_title.setText(R.string.rest_news_title);
 		shop_offers.removeAllViews();
 		SharedPreference sharedPreference 	= new SharedPreference();
 		ArrayList <Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
@@ -153,7 +157,14 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			for (RestaurantOffersModel restaurantOffersModel:storeOffers
 					) {
 				View view =add_layoutOffers(restaurantOffersModel);
-				shop_offers.addView(view);
+				if (restaurantOffersModel.getActivityName().equals("Offer")){
+					rel_shop_offers_layout.setVisibility(View.VISIBLE);
+					shop_offers.addView(view);
+				}
+				else {
+					rel_shop_news_layout.setVisibility(View.VISIBLE);
+					shop_news.addView(view);
+				}
 			}
 		}
 		else {
@@ -304,15 +315,15 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		tv_about.setText(restaurantDetailModel.getAboutText());
 		tv_Detail.setText(restaurantDetailModel.getBriefText());
 		if (restaurantDetailModel.getAddress() != null && !restaurantDetailModel.getAddress().isEmpty())
-			tv_address.setText(restaurantDetailModel.getAddress());
+			tv_address.setText(restaurantDetailModel.getAddress().trim());
 		else
 			tv_address.setVisibility(View.GONE);
 		if (restaurantDetailModel.getEmail() != null && !restaurantDetailModel.getEmail().isEmpty())
-			tv_Email.setText(restaurantDetailModel.getEmail());
+			tv_Email.setText(restaurantDetailModel.getEmail().trim());
 		else
 			tv_Email.setVisibility(View.GONE);
 		if (restaurantDetailModel.getPhone() != null && !restaurantDetailModel.getPhone().isEmpty())
-			tv_Phone.setText(restaurantDetailModel.getPhone());
+			tv_Phone.setText(restaurantDetailModel.getPhone().trim());
 		else
 			tv_Phone.setVisibility(View.GONE);
 		if (restaurantDetailModel.getWebURL() == null || restaurantDetailModel.getWebURL().isEmpty())

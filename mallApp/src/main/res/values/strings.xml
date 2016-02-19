@@ -132,6 +132,7 @@
 	<!--Shops and Restaurant Strings-->
 	<string name="home_page">Go to Homepage</string>
 	<string name="rest_offer_title">The Restaurant Offers</string>
+	<string name="rest_news_title">The Restaurant News</string>
 
 
     <string name="title_activity_registration">RegistrationActivity</string>

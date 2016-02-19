@@ -94,7 +94,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         tv_address = (TextView) findViewById(R.id.tv_address);
         tv_Phone = (TextView) findViewById(R.id.tv_phone);
         tv_Email = (TextView) findViewById(R.id.tv_email);
-        rel_offer_title = (TextView) findViewById(R.id.textView4);
+        rel_offer_title = (TextView) findViewById(R.id.rel_off_title);
         tv_Web = (TextView) findViewById(R.id.tv_web);
         linear_timing_layout = (LinearLayout) findViewById(R.id.layout_timings);
         mDemoSlider = (SliderLayout) findViewById(R.id.slider);
@@ -161,24 +161,28 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         tv_Detail.setText(mallDetailModel.getBriefText());
 
         if (mallDetailModel.getAddress() != null && !mallDetailModel.getAddress().isEmpty())
-            tv_address.setText(mallDetailModel.getAddress());
+            tv_address.setText(mallDetailModel.getAddress().trim());
         else
             tv_address.setVisibility(View.GONE);
         if (mallDetailModel.getEmail() != null && !mallDetailModel.getEmail().isEmpty())
-            tv_Email.setText(mallDetailModel.getEmail());
+            tv_Email.setText(mallDetailModel.getEmail().trim());
         else
             tv_Email.setVisibility(View.GONE);
         if (mallDetailModel.getPhone() != null && !mallDetailModel.getPhone().isEmpty())
-            tv_Phone.setText(mallDetailModel.getPhone());
+            tv_Phone.setText(mallDetailModel.getPhone().trim());
         else
             tv_Phone.setVisibility(View.GONE);
         if (mallDetailModel.getWebURL() == null || mallDetailModel.getWebURL().isEmpty())
             tv_Web.setVisibility(View.GONE);
         MallTimingsModel[] timinigs = mallDetailModel.getMallTimings();
+
         for (MallTimingsModel st : timinigs
                 ) {
+            String t1 = "";
             final RelativeLayout newView = (RelativeLayout) getLayoutInflater().inflate(R.layout.timing_layout, null);
-            String t1 = st.getFromDay() + "-" + st.getToDay();
+            if (! (st.getFromDay().isEmpty()|| st.getToDay().isEmpty()) ){
+                t1 = st.getFromDay() + "-" + st.getToDay();
+            }
             TextView tv = (TextView) newView.findViewById(R.id.tv_d);
             tv.setText(t1);
 
@@ -203,7 +207,6 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
                     newView.setLayoutParams(relativeParams);
                     newView.requestLayout();
                 }
-
                 this.linear_timing_layout.addView(newView);
             }
         }

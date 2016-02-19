@@ -170,7 +170,13 @@
                 </LinearLayout>
             </LinearLayout>
 
-            <include layout="@layout/shop_detail_offers"/>
+            <include
+                android:visibility="gone"
+                layout="@layout/shop_detail_offers"/>
+            <include
+                android:id="@+id/rel_news"
+                android:visibility="gone"
+                layout="@layout/detail_news"/>
         </LinearLayout>
 
 

@@ -16,7 +16,8 @@
     <string name="search">Search</string>
     <string name="restaurant_search_hint">Type Restaurant Name</string>
     <string name="shop_offers">The Shop Offers</string>
-    <string name="related_shop">Related Shops</string>
+    <string name="shop_news">The Shop News</string>
+    <string name="rest_news">The Restaurant News</string>
     
     
     <string name="center_select_title">The Mall App</string>
