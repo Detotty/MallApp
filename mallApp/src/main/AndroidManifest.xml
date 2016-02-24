@@ -329,6 +329,15 @@
             android:screenOrientation="portrait" >
         </activity>
 
+        <activity
+            android:name=".ChatScreen"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden|adjustResize"></activity>
+
+        <activity
+            android:name=".CeRegContacts"
+            android:screenOrientation="portrait"></activity>
+
         <receiver
             android:name="com.mallapp.pushnotification.GcmBroadcastReceiver"
             android:permission="com.google.android.c2dm.permission.SEND" >
@@ -355,6 +364,9 @@
                 <action android:name="android.net.conn.CONNECTIVITY_CHANGE"/>
             </intent-filter>
         </receiver>
+
+        <service android:name="com.chatdbserver.xmpp.XmppService"/>
+
 
     </application>
 

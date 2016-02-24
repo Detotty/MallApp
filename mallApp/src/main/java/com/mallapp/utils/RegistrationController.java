@@ -14,13 +14,18 @@ import com.List.Adapter.FavouriteCenterAdapter;
 import com.List.Adapter.InterestAdapter;
 import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
+import com.android.volley.RequestQueue;
 import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.JsonArrayRequest;
 import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.chatdbserver.xmpp.model.PhoneBookContacts;
+import com.chatdbserver.xmpp.model.SingleChat;
 import com.google.gson.Gson;
 import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.AppConstants;
+import com.mallapp.Constants.GlobelWebURLs;
 import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Model.FacebookProfileModel;
 import com.mallapp.Model.FavouriteCentersModel;
@@ -42,6 +47,7 @@ import com.mallapp.imagecapture.Image_Scaling;
 import com.mallapp.listeners.NearbyListener;
 import com.mallapp.listeners.RegistrationUserListener;
 
+import org.jivesoftware.smack.chat.Chat;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -57,6 +63,7 @@ public class RegistrationController {
 
     private Context context;
     private RegistrationUserListener listener;
+    private com.chatdbserver.xmpp.listener.RegistrationUserListener listenerC;
     ImageView is_interest_select_all;
 
     private String TAG = RegistrationController.class.getSimpleName();
@@ -794,5 +801,74 @@ public class RegistrationController {
         for (InterestSelectionModel b : array) if (!b.isInterested()) return false;
         return true;
     }
+
+    public void getUserProfile(String userId, com.chatdbserver.xmpp.listener.RegistrationUserListener registrationUserListener, final SingleChat sinlgeChat, final Chat chat) {
+        RequestQueue mRequestQueue = Volley.newRequestQueue(MallApplication.appContext);
+
+        try {
+            UserProfileModel user_profile = SharedPreferenceUserProfile.getUserProfile(MallApplication.appContext);
+            if (registrationUserListener != null)
+                this.listenerC = registrationUserListener;
+
+            String url = GlobelWebURLs.GET_OTHER_PROFILE;//+"/"+userId;
+
+            JSONObject jsonObject = new JSONObject();
+
+            jsonObject.put("SecurityToken", SharedPreferenceUserProfile.getUserToken(MallApplication.appContext));
+            jsonObject.put("ProfileID", user_profile.getUserId());
+            jsonObject.put("OtherProfile", userId);
+
+
+            Log.e("OtherProfileObj:", " url ..." + jsonObject.toString());
+            final PhoneBookContacts phoneBookContacts = new PhoneBookContacts();
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+                @Override
+                public void onResponse(JSONObject obj) {
+                    Log.d("Other ProfileModel", "ProfileModel:" + obj.toString());
+
+
+                    try {
+                        String id = obj.getString("ID");
+                        String name = obj.getString("Name");
+                        JSONObject jsonObject_pic = obj.getJSONObject("Picture");
+                        String pic_url = jsonObject_pic.getString("URI");
+                        phoneBookContacts.setUserId(id);
+                        phoneBookContacts.setFirstName(name);
+                        phoneBookContacts.setFileName(pic_url);
+                        phoneBookContacts.setAppUser(true);
+                        phoneBookContacts.setIsContact(true);
+
+                        listenerC.onDataReceived(phoneBookContacts, sinlgeChat, chat);
+
+
+                    } catch (JSONException e) {
+                        e.printStackTrace();
+                    }
+
+                }
+            }, new Response.ErrorListener() {
+                @Override
+                public void onErrorResponse(VolleyError volleyError) {
+                    Log.e("", " user not exist ..." + volleyError.toString());
+
+
+                    if (listener != null)
+                        listener.onConnectionError();
+
+
+                }
+            }) {
+
+
+            };
+
+            mRequestQueue.add(jsonRequest);
+
+        } catch (JSONException e) {
+            e.printStackTrace();
+        }
+
+    }
+
 }
 

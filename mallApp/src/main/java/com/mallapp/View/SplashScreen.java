@@ -8,10 +8,15 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.view.KeyEvent;
 
+import com.chatdbserver.xmpp.IMManager;
+import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelProfile;
+import com.mallapp.Constants.GlobelWebURLs;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.Model.UserProfileModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
+import com.mallapp.utils.CE_Controller;
 import com.mallapp.utils.Log;
 
 
@@ -21,7 +26,8 @@ public class SplashScreen extends Activity {
 	boolean m_bPaused = false;
 	boolean m_bSplashActive = true;
 	private String country_name, phone_no, name,  profile_image;
-	
+	IMManager imManager;
+
 
 	@Override
 	public void onCreate(Bundle icicle) {
@@ -29,6 +35,7 @@ public class SplashScreen extends Activity {
 		setContentView(R.layout.activity_splash_screen);
 		//ActionBar actionBar = getActionBar();
 		//actionBar.hide();
+		imManager=IMManager.getIMManager(getApplicationContext());
 		getPreferenes();
 		Thread splashTimer = new Thread() {
 			public void run() {
@@ -40,7 +47,9 @@ public class SplashScreen extends Activity {
 							ms += 100;
 					}
 					if(	name!=null 	&& name.length()>0){
-						
+						CE_Controller.getInstance().getAllUserContactAndUpdateOnServer();
+						UserProfileModel user_profile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
+						imManager.InitIMManager(GlobelWebURLs.IM_SERVER,GlobelWebURLs.ce_user+user_profile.getUserId(),user_profile.getUserId());
 						Intent tabIntent = new Intent(SplashScreen.this, DashboardTabFragmentActivity.class);
 						startActivity(tabIntent);
 					}else{

@@ -4,6 +4,9 @@ import android.content.Context;
 import android.database.sqlite.SQLiteDatabase;
 import android.util.Log;
 
+import com.chatdbserver.xmpp.model.OpenChats;
+import com.chatdbserver.xmpp.model.PhoneBookContacts;
+import com.chatdbserver.xmpp.model.SingleChat;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.support.ConnectionSource;
@@ -27,12 +30,16 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
      ************************************************/
 
     private static final String DATABASE_NAME = "favorites.db";
-    private static final int DATABASE_VERSION = 4;
+    private static final int DATABASE_VERSION = 5;
 
     private Dao<ShopsModel, Integer> shopsDao;
     private Dao<RestaurantModel, Integer> restaurantsDao;
     private Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDao;
     private Dao<ShopDetailModel, Integer> shopDetailModelIntegerDao;
+
+    private Dao<OpenChats, String> openchatsDao;
+    private Dao<SingleChat, Integer> singblechatDao;
+    private Dao<PhoneBookContacts, String> appcontactsDao;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION, R.raw.ormlite_config);
@@ -52,6 +59,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.createTableIfNotExists(connectionSource, ShopDetailModel.class);
             TableUtils.createTableIfNotExists(connectionSource, RestaurantModel.class);
 
+            TableUtils.createTable(connectionSource, SingleChat.class);
+            TableUtils.createTable(connectionSource, OpenChats.class);
+            TableUtils.createTable(connectionSource, PhoneBookContacts.class);
+
         } catch (SQLException e) {
             Log.e(DatabaseHelper.class.getName(), "Unable to create datbases", e);
         }
@@ -67,6 +78,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             TableUtils.dropTable(connectionSource, MallActivitiesModel.class, true);
             TableUtils.dropTable(connectionSource, ShopDetailModel.class, true);
             TableUtils.dropTable(connectionSource, RestaurantModel.class, true);
+
+            TableUtils.dropTable(connectionSource, SingleChat.class, true);
+            TableUtils.dropTable(connectionSource, OpenChats.class, true);
+
             onCreate(sqliteDatabase, connectionSource);
 
         } catch (SQLException e) {
@@ -102,6 +117,34 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
             shopDetailModelIntegerDao = getDao(ShopDetailModel.class);
         }
         return shopDetailModelIntegerDao;
+    }
+
+    public Dao<SingleChat, Integer> getSinglechatDao() throws SQLException {
+        if (this.singblechatDao == null) {
+            this.singblechatDao = getDao(SingleChat.class);
+        }
+        return this.singblechatDao;
+    }
+
+    public Dao<OpenChats, String> getOpenchatsDao() throws SQLException {
+        if (this.openchatsDao == null) {
+            this.openchatsDao = getDao(OpenChats.class);
+        }
+        return this.openchatsDao;
+    }
+
+    public Dao<PhoneBookContacts, String> getContactsDao() throws SQLException {
+        if (this.appcontactsDao == null) {
+            this.appcontactsDao = getDao(PhoneBookContacts.class);
+        }
+        return this.appcontactsDao;
+    }
+
+    public void close() {
+        super.close();
+        this.singblechatDao = null;
+        this.openchatsDao = null;
+        this.appcontactsDao = null;
     }
 
 }

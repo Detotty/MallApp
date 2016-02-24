@@ -1,0 +1,166 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+       xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+   >
+
+    <!--<LinearLayout
+        android:id="@+id/latest_list_cell"
+        android:layout_width="match_parent"
+        android:layout_height="115dp"
+        android:background="@drawable/latest_list_bg_blue"
+        android:baselineAligned="false"
+        android:descendantFocusability="blocksDescendants"
+        android:weightSum="1" >
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="115dp"
+            android:layout_weight="0.7" >
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/participent_image"
+                android:layout_width="fill_parent"
+                android:layout_height="115dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="2dp"
+                android:padding="1dp"
+                android:visibility="visible"
+                android:scaleType="centerCrop" />
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/announcement_image"
+                android:layout_width="fill_parent"
+                android:layout_height="115dp"
+                android:layout_marginBottom="5dp"
+                android:layout_marginLeft="7dp"
+                android:layout_marginTop="2dp"
+                android:padding="1dp"
+                app:siRadius="5dp"
+                android:visibility="gone"
+                android:scaleType="centerCrop" />
+
+
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:layout_weight="0.35" >
+
+            <LinearLayout
+                android:id="@+id/linearLayout1"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_weight="4"
+                android:orientation="horizontal" >
+
+                <RelativeLayout
+                    android:layout_width="80dp"
+                    android:layout_height="fill_parent"
+                    android:layout_weight="1" >
+
+                    <TextView
+                        android:id="@+id/category"
+                        android:layout_width="match_parent"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_below="@+id/fvrt_star"
+                        android:layout_marginRight="30dp"
+                        android:clickable="false"
+                        android:focusable="false"
+                        android:focusableInTouchMode="false"
+                        android:gravity="center_horizontal"
+                        android:singleLine="true"
+                        android:paddingLeft="15dp"
+                        android:text="Hats"
+                        android:visibility="gone"
+                        android:layout_marginLeft="-13dp"
+                        android:textSize="8dp" />
+
+                    <CheckBox
+                        android:id="@+id/bookmark_flag"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="9dp"
+                        android:visibility="gone"
+                        android:button="@drawable/bookmark_checkbox" />
+
+                    <CheckBox
+                        android:id="@+id/fvrt_star"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentTop="true"
+                        android:layout_marginRight="5dp"
+
+                        android:visibility="gone"
+                        android:layout_toLeftOf="@+id/bookmark_flag"
+                        android:button="@drawable/fvrt_checkbox" />
+
+                </RelativeLayout>
+            </LinearLayout>
+
+
+            <TextView
+                android:id="@+id/user_one"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_below="@+id/linearLayout1"
+                android:layout_marginLeft="7dp"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="55"
+                android:textColor="@color/grey1"
+                android:layout_marginTop="5dp"
+                android:focusableInTouchMode="false"
+                android:singleLine="true"
+                android:textSize="14dp" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/user_two"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/user_one"
+                android:textSize="14dp"
+                android:maxLines="2"
+                android:textColor="@color/grey1"
+                android:text="55ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+                android:layout_alignLeft="@+id/user_one"
+                android:layout_alignStart="@+id/user_one" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:id="@+id/right_button"
+                android:textSize="14dp"
+                android:text="555"
+                android:drawablePadding="@dimen/margin_left_5"
+                android:singleLine="true"
+                android:textColor="@color/grey1"
+                android:layout_marginTop="2dp"
+                android:layout_below="@+id/user_two"
+                android:layout_alignLeft="@+id/user_two"
+                android:layout_alignStart="@+id/user_two" />
+
+            <TextView
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:id="@+id/last_activity"
+                android:textColor="@color/white"
+                android:layout_alignParentBottom="true"
+                android:layout_marginBottom="@dimen/margin_left_10"
+                android:singleLine="true"
+                android:layout_alignLeft="@+id/right_button"
+                android:layout_alignStart="@+id/right_button" />
+
+        </RelativeLayout>
+    </LinearLayout>-->
+
+</LinearLayout>

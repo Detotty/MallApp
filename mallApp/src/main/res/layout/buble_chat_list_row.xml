@@ -1,0 +1,173 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+    android:background="@android:color/transparent"
+    android:orientation="vertical">
+
+    <LinearLayout
+        android:layout_width="fill_parent"
+        android:layout_height="fill_parent"
+        android:orientation="vertical">
+
+        <RelativeLayout
+            android:id="@+id/other_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/other_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_marginLeft="@dimen/margin_left_5"
+                android:src="@drawable/avatar"
+                android:layout_alignTop="@+id/linearLayout3"
+                android:layout_alignParentStart="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginRight="@dimen/margin_left_15"
+                android:layout_marginTop="@dimen/margin_left_10"
+                android:gravity="left"
+                android:orientation="vertical"
+                android:id="@+id/linearLayout3">
+
+                <TextView
+                    android:id="@+id/otherstatus"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_gravity="right"
+                    android:layout_marginRight="10dp"
+                    android:layout_marginTop="0dp"
+                    android:text="Seen"
+                    android:textSize="10dp"
+                    android:visibility="invisible" />
+            </LinearLayout>
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_left"
+                android:gravity="left"
+                android:layout_marginRight="@dimen/margin_left_10"
+                android:orientation="vertical"
+
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"
+                android:layout_alignTop="@+id/linearLayout3"
+                android:layout_toEndOf="@+id/other_image"
+                android:id="@+id/linearLayout4">
+
+
+                <TextView
+                    android:id="@+id/other_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginLeft="15dp"
+                    android:gravity="left"
+                    android:text=""
+                    android:textColor="@color/white"
+                    android:textSize="15dp" />
+                <ImageView
+                    android:id="@+id/img_rcv"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginLeft="15dp"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/otherdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginLeft="15dp"
+
+                    android:text="10:45"
+                    android:textColor="@color/white"
+                    android:textSize="10dp" />
+            </LinearLayout>
+        </RelativeLayout>
+
+        <RelativeLayout
+            android:id="@+id/ur_layout"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:background="@color/white"
+            android:layout_marginTop="@dimen/margin_left_10"
+            android:paddingBottom="@dimen/margin_left_10"
+            >
+
+
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/ur_image"
+                android:layout_width="50dp"
+                android:layout_height="50dp"
+                android:layout_gravity="center_vertical"
+                android:src="@drawable/avatar"
+                android:layout_marginRight="@dimen/margin_left_5"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <LinearLayout
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/chat_right"
+                android:gravity="left"
+                android:layout_marginLeft="@dimen/margin_left_15"
+                android:orientation="vertical"
+                android:paddingLeft="10dp"
+                android:paddingRight="5dp"
+                android:paddingTop="10dp"
+                android:id="@+id/right"
+                android:layout_alignTop="@+id/ur_image"
+                android:layout_toStartOf="@+id/ur_image">
+
+
+                <TextView
+                    android:id="@+id/ur_message"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="5dp"
+                    android:layout_marginRight="15dp"
+                    android:text=""
+                    android:textSize="15dp"
+                    android:textColor="@color/grey" />
+                <ImageView
+                    android:id="@+id/img_gall"
+                    android:layout_width="200dp"
+                    android:layout_height="200dp"
+                    android:layout_marginRight="@dimen/margin_left_20"
+                    android:visibility="gone"
+                    />
+                <TextView
+                    android:id="@+id/urdate"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+
+                    android:layout_marginRight="15dp"
+                    android:text="10:45"
+                    android:textColor="@color/grey"
+                    android:textSize="10dp" />
+
+
+
+            </LinearLayout>
+            <TextView
+                android:id="@+id/urstatus"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:text=""
+                android:textSize="10dp"
+                android:visibility="gone"
+                android:layout_below="@+id/right"
+                android:layout_alignStart="@+id/right" />
+        </RelativeLayout>
+
+
+    </LinearLayout>
+
+</LinearLayout>

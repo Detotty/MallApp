@@ -1,46 +1,79 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:id="@+id/message_view_fragment"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@android:color/white" >
+    android:background="@color/white" >
 
-<!--     <RelativeLayout -->
-<!--         android:id="@+id/top" -->
-<!--         android:layout_width="fill_parent" -->
-<!--         android:layout_height="55dp" -->
-<!--         android:background="@drawable/top_bar" > -->
-        
-<!--         <ImageButton -->
-<!--             android:id="@+id/compose_new_message" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:layout_alignParentRight="true" -->
-<!--             android:layout_centerVertical="true" -->
-<!--             android:layout_marginRight="10dp" -->
-<!--             android:background="@android:color/transparent" -->
-<!--             android:src="@drawable/compose_button" -->
-<!--             android:visibility="visible" -->
-<!--             android:contentDescription="@string/app_name" -->
-<!--             /> -->
+    <LinearLayout
+        android:id="@+id/headerId"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentTop="true"
+        android:background="@color/purple"
+        android:orientation="horizontal"
+        android:weightSum="2"
+        android:paddingBottom="@dimen/margin_left_10"
+        android:paddingTop="@dimen/margin_left_10" >
 
-<!--         <TextView -->
-<!--             android:id="@+id/endorsement_name" -->
-<!--             android:layout_width="wrap_content" -->
-<!--             android:layout_height="wrap_content" -->
-<!--             android:layout_centerVertical="true" -->
-<!--             android:layout_centerHorizontal="true" -->
-<!--             android:text="Recent Chat" -->
-<!--             android:textColor="@android:color/white" -->
-<!--             android:textSize="25sp" /> -->
-<!--     </RelativeLayout> -->
+        <EditText
+            android:id="@+id/search_latest"
+            android:layout_width="290dp"
+            android:layout_height="40dp"
+            android:layout_marginLeft="10dp"
+            android:layout_weight="1.6"
+            android:background="@drawable/shape_round_rectangle"
+            android:drawableLeft="@drawable/search"
+            android:ems="10"
+            android:imeOptions="actionDone"
+            android:gravity="center_vertical"
+            android:hint="@string/search"
+            android:inputType="text" >
 
-<!--     <ListView -->
-<!--         android:id="@+id/recent_chat_list" -->
-<!--         android:layout_width="match_parent" -->
-<!--         android:layout_height="wrap_content" -->
-<!--         android:listSelector="@color/grey2" -->
-<!--         android:layout_below="@+id/top" > -->
+            <requestFocus />
 
-<!--     </ListView> -->
-    
+        </EditText>
+        <ImageButton
+            android:id="@+id/chat_btn"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:layout_weight="0.4"
+            android:layout_marginRight="@dimen/margin_left_5"
+            android:background="@drawable/chat_icon_d"
+            android:layout_gravity="center_vertical"
+            android:layout_marginLeft="@dimen/margin_left_10"
+            android:visibility="visible"
+            />
+    </LinearLayout>
+
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:layout_below="@+id/headerId"
+        android:orientation="vertical" >
+
+        <ListView
+            android:id="@+id/listView"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:visibility="gone" >
+        </ListView>
+
+        <TextView
+            android:id="@+id/noRecordtextView"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerInParent="true"
+            android:text="@string/no_chats"
+            android:textAppearance="?android:attr/textAppearanceLarge"
+            android:visibility="gone" />
+
+
+
+
+
+    </RelativeLayout>
+
 </RelativeLayout>

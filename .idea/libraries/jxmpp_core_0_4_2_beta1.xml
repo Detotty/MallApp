@@ -1,0 +1,9 @@
+<component name="libraryTable">
+  <library name="jxmpp-core-0.4.2-beta1">
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/mallApp/libs/jxmpp-core-0.4.2-beta1.jar!/" />
+    </CLASSES>
+    <JAVADOC />
+    <SOURCES />
+  </library>
+</component>
