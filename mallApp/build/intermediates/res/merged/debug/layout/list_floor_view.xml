@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent" android:layout_height="match_parent">
+
+    <ImageView
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="@dimen/margin_left_15"
+        android:background="@drawable/mallapp_placeholder"
+        android:id="@+id/iv_floor"/>
+
+    <TextView
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="@string/floor_name"
+        android:layout_below="@+id/iv_floor"
+        android:id="@+id/tv_floor_name"
+        android:textColor="@color/black"
+        android:layout_centerInParent="true"/>
+
+    <View
+        android:layout_width="fill_parent"
+        android:layout_marginTop="@dimen/margin_left_5"
+        android:layout_height="1dp"
+        android:layout_below="@+id/tv_floor_name"
+        android:background="@color/grey"/>
+
+</RelativeLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/list_floor_view.xml -->

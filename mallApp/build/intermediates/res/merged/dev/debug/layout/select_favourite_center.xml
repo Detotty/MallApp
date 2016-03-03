@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bar">
+
+		<ImageView
+			android:id="@+id/back"
+			android:layout_width="wrap_content"
+			android:layout_height="wrap_content"
+			android:layout_centerVertical="true"
+			android:visibility="gone"
+			android:layout_margin="@dimen/margin_left_10"
+			android:src="@drawable/back_screen_indicator"/>
+		<TextView
+		    android:id="@+id/endorsement_name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_centerHorizontal="true"
+		    android:textColor="@android:color/white"
+		    android:textSize="22sp"
+		    android:visibility="visible"
+		    android:text="@string/fav_center1" />
+
+		
+    </RelativeLayout>
+    
+<!--     <LinearLayout -->
+<!--     	android:layout_width="fill_parent" -->
+<!--     	android:layout_height="wrap_content" -->
+<!--     	android:background="#E5E4E2" -->
+    	
+<!--     	android:padding="7dp"> -->
+
+<!--         <Button -->
+<!--             android:id="@+id/all_centers" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:background="@drawable/left" -->
+<!--             android:textSize="14sp" -->
+<!--             android:textColor="@color/purple" -->
+<!--             android:text="@string/all_" -->
+<!--             style="?android:attr/buttonBarButtonStyle" -->
+<!--              /> -->
+
+<!--         <Button -->
+<!--             android:id="@+id/nearby_centers" -->
+<!--             android:layout_width="wrap_content" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:background="@drawable/right" -->
+<!--             android:textSize="12sp" -->
+<!--             android:textColor="@color/purple" -->
+<!--             style="?android:attr/buttonBarButtonStyle" -->
+<!--             android:text="@string/nearby_" /> -->
+		
+<!-- 	</LinearLayout> -->
+	
+    <LinearLayout
+		android:layout_width="fill_parent"
+		android:layout_height="wrap_content"
+		android:paddingLeft="45dp"
+		android:paddingRight="45dp"
+		android:paddingTop="5dp"
+		android:paddingBottom="5dp"
+		android:background="#E5E4E2"
+		android:gravity="center"
+		android:id="@+id/filter"
+		android:weightSum="1" >
+        
+		<Button
+		    android:id="@+id/all_centers"
+		    android:layout_weight="0.5"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/all_fav"
+		    android:textSize="18sp"
+            android:textColor="@color/purple"
+            android:text="@string/all_"
+		    style="?android:attr/buttonBarButtonStyle"
+		     />
+		<Button 
+		    android:id="@+id/nearby_centers"
+			android:layout_weight="0.5"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:background="@drawable/nearby_fav"
+		    android:textSize="18sp"
+            android:textColor="@color/purple"
+            android:text="@string/nearby_" 
+		    style="?android:attr/buttonBarButtonStyle"
+		     />
+	</LinearLayout>
+    
+    
+
+   	<RelativeLayout
+        android:id="@+id/view2"
+    	android:layout_width="fill_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:gravity="center_horizontal"
+		android:visibility="visible">
+        
+        <ListView
+            android:id="@+id/search_list"
+			android:layout_alignParentTop="true"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			android:layout_above="@+id/next_screen">
+        </ListView>
+
+        <Button
+            android:id="@+id/next_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/continue_selector"
+           	android:text="@string/next_"
+           	android:textColor="@color/white"
+           	android:textSize="18sp"
+           	/>
+
+    </RelativeLayout>
+</LinearLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/select_favourite_center.xml -->

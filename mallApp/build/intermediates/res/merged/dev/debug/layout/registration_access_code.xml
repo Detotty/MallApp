@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout 
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:background="@color/purple"
+    android:paddingLeft="20dp"
+    android:paddingRight="20dp"
+    android:paddingTop="5dp" >
+    
+    
+    <ImageButton
+		    android:id="@+id/back_screen"
+		    android:layout_width="20dp"
+		    android:layout_height="wrap_content"
+		    android:src="@drawable/back_screen_indicator"
+		    android:layout_marginTop="10dp"
+		    android:background="@color/transparent"
+		    android:contentDescription="@string/app_name" />
+
+    <TextView
+        android:id="@+id/textView1"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:textColor="@android:color/white"
+        android:layout_marginTop="30dp"
+        android:textSize="18sp"
+        android:textStyle="italic"
+        android:text="@string/access_code_country_1" />
+
+    <EditText
+        android:id="@+id/verify_code"
+        android:layout_marginTop="20dp"
+        android:background="@drawable/text_field"
+        android:layout_width="match_parent"
+        android:paddingLeft="10dp"
+        android:layout_height="wrap_content"
+        android:hint="@string/access_code_country_2"
+        android:inputType="phone"
+        android:maxLength="4"
+        android:ems="10" >
+
+        <requestFocus />
+    </EditText>
+
+     <Button
+        android:id="@+id/v_continue"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/continue_selector"
+        android:text="@string/continue_"
+	    android:textColor="@color/white"/>
+
+     <TextView
+         android:id="@+id/code_not_receive_text1"
+         android:layout_width="wrap_content"
+         android:layout_height="wrap_content"
+         android:text="@string/access_code_country_3"
+         android:layout_marginTop="25dp"
+         android:textColor="@android:color/white"
+         android:textSize="14sp" />
+
+    <TextView
+        android:id="@+id/code_not_receive_text"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="center_horizontal"
+        android:text="@string/access_code_country_5"
+        android:layout_marginTop="25dp"
+        android:textColor="@android:color/white"
+        android:textSize="14sp" />
+
+</LinearLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/registration_access_code.xml -->

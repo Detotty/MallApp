@@ -1,0 +1,78 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:layout_gravity="center"
+    android:background="@drawable/barcode_bg"
+    android:padding="10dp" >
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:background="@android:color/transparent"
+        android:text="@string/cancel"
+        android:textColor="@color/purple"
+        android:textSize="19sp" />
+
+    <Button
+        android:id="@+id/done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentRight="true"
+        android:background="@android:color/transparent"
+        android:text="@string/done"
+        android:textColor="@color/purple"
+        android:textSize="19sp" />
+
+    <EditText
+        android:id="@+id/decs"
+        android:hint="@string/Parking"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cancel"
+        android:background="@drawable/text_field"
+        android:gravity="center_vertical"
+        android:completionThreshold="1"
+        android:ems="10"
+        android:inputType="textMultiLine"
+        android:maxLength="100"
+        android:paddingLeft="15dp"
+        android:paddingRight="15dp">
+        
+        <requestFocus />
+    </EditText>
+
+<!--     <ScrollView -->
+<!--         android:layout_width="fill_parent" -->
+<!--         android:layout_height="wrap_content" -->
+<!--         android:layout_below="@+id/autoComplete" -->
+<!--         android:layout_marginBottom="5dp" -->
+<!--         android:layout_marginTop="10dp" > -->
+
+<!--         <LinearLayout -->
+<!--             android:layout_width="match_parent" -->
+<!--             android:layout_height="wrap_content" -->
+<!--             android:orientation="vertical" > -->
+
+<!--             <com.salamplanet.layouts.FlowLayout -->
+<!--                 xmlns:f="http://schemas.android.com/apk/res/com.salamplanet.main" -->
+<!--                 android:id="@+id/containerLayout_" -->
+<!--                 android:layout_width="wrap_content" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 android:paddingLeft="6dip" -->
+<!--                 android:paddingRight="12dip" -->
+<!--                 f:horizontalSpacing="6dip" -->
+<!--                 f:verticalSpacing="12dip" > -->
+<!--             </com.salamplanet.layouts.FlowLayout> -->
+
+<!--             <com.salamplanet.main.create_endorsement.PredicateLayout -->
+<!--                 android:id="@+id/containerLayout" -->
+<!--                 android:layout_width="fill_parent" -->
+<!--                 android:layout_height="wrap_content" -->
+<!--                 /> -->
+<!--         </LinearLayout> -->
+<!--     </ScrollView> -->
+
+</RelativeLayout><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/add_tags.xml -->

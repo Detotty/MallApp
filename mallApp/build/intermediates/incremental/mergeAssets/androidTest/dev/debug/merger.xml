@@ -1,0 +1,2 @@
+<?xml version="1.0" encoding="utf-8"?>
+<merger version="3"><dataSet config="main"><source path="J:\Android\Raw\MallApp\mallApp\src\androidTest\assets"/></dataSet><dataSet config="dev"><source path="J:\Android\Raw\MallApp\mallApp\src\androidTestDev\assets"/></dataSet></merger>

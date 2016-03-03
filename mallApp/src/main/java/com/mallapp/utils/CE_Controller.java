@@ -6,7 +6,9 @@ import android.database.Cursor;
 import android.provider.ContactsContract;
 import android.telephony.TelephonyManager;
 import android.util.*;
+import android.util.Log;
 
+import com.android.volley.AuthFailureError;
 import com.android.volley.Request;
 import com.android.volley.RequestQueue;
 import com.android.volley.Response;
@@ -181,19 +183,28 @@ public class CE_Controller implements Runnable {
 
 
             JSONObject jsonObject = new JSONObject();
-            jsonObject.put("SecurityToken", SharedPreferenceUserProfile.getUserToken(MallApplication.appContext));
-            jsonObject.put("ProfileID", user_profile.getUserId());
+            jsonObject.put("SecurityToken", "h7IoVKTbHiDuE4cLTOIsKCw2NY4Nnxgj"/*SharedPreferenceUserProfile.getUserToken(MallApplication.appContext)*/);
+            jsonObject.put("ProfileID", "12"/*user_profile.getUserId()*/);
             JSONArray jsonArray = new JSONArray();
+            JSONObject[] jo = new JSONObject[numberList.size()];
+
 
             for (int i = 0; i < numberList.size(); i++) {
                 jsonArray.put(numberList.get(i));
+                jo[i] =  new JSONObject();
+                jo[i].put("Mobile",numberList.get(i));
+
             }
             jsonObject.put("PhoneNumbers", jsonArray);
+            JSONArray ja = new JSONArray(jo);
+            JSONObject json = new JSONObject();
+            json.put("Contact",ja);
 
+// populate the array
 
-            android.util.Log.e("Done", "" + jsonObject.toString());
+            android.util.Log.e("Done", "" + json.toString());
             if (ConnectionDetector.isInternetAvailable(MallApplication.appContext)) {
-                postData(jsonObject);
+                postData(json);
             }
 
 
@@ -214,16 +225,15 @@ public class CE_Controller implements Runnable {
 //            Log.e("Response", "CEContacts = " + result);
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(MallApplication.appContext);
-
-        JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
-                GlobelWebURLs.GET_CE_USERS, jsonStr, new Response.Listener<JSONObject>() {
+        CustomRequest jsonObjReq = new CustomRequest(Request.Method.POST,
+                "http://52.28.59.218:5001/api/User/UserContacts", jsonStr, new Response.Listener<JSONArray>() {
 
             @Override
-            public void onResponse(JSONObject response) {
+            public void onResponse(JSONArray response) {
                 try {
                     android.util.Log.e("Response ce_contacts", response.toString());
-                    JSONArray jsonArray = response.getJSONArray("data");
-                    contactBookResponse(jsonArray);
+//                    JSONArray jsonArray = response.getJSONArray("data");
+                    contactBookResponse(response);
                 } catch (Exception e) {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
@@ -236,12 +246,20 @@ public class CE_Controller implements Runnable {
                 VolleyLog.d("Error", "Error: " + error.getMessage());
 
             }
-        });
+        }){
+            @Override
+            public Map<String, String> getHeaders() throws AuthFailureError {
+                Map<String, String> headers = new HashMap<String, String>();
+                String token = SharedPreferenceUserProfile.getUserToken(MallApplication.appContext);
+                Log.e("", " token:" + token);
+//                    headers.put("Content-Type", "application/json");
+                headers.put("Auth-Token", token);
 
+                return headers;
+            }
+        };
         // Adding request to request queue
         mRequestQueue.add(jsonObjReq);
-
-
     }
 
 
@@ -260,21 +278,21 @@ public class CE_Controller implements Runnable {
             phoneBookContacts = new PhoneBookContacts();
             try {
                 JSONObject object = jsonArray.getJSONObject(i);
-                phoneNumber = object.getString("PhoneNumber");
+                phoneNumber = object.getString("MobileNumber");
                 comObj.setPhone_number(phoneNumber);
                 phoneBookContacts.setMobilePhone(phoneNumber);
-                if (!object.isNull("LightProfileInfo")) {
+                if (true) {
 
-                    JSONObject jsonObject_profileInfo = object.getJSONObject("LightProfileInfo");
-                    profile_id = jsonObject_profileInfo.getString("ID");
-                    name = jsonObject_profileInfo.getString("Name");
+//                    JSONObject jsonObject_profileInfo = object.getJSONObject("LightProfileInfo");
+                    profile_id = object.getString("UserId");
+                    name = object.getString("FullName");
                     android.util.Log.e("CEUser", "name:" + name);
                     comObj.setProfile_id(profile_id);
                     comObj.setName(name);
                     phoneBookContacts.setFirstName(name);
                     phoneBookContacts.setUserId(profile_id);
 
-                    JSONObject pictureObj = jsonObject_profileInfo.getJSONObject("Picture");
+                    /*JSONObject pictureObj = jsonObject_profileInfo.getJSONObject("Picture");
                     profile_pic_url = pictureObj.getString("URI");
 
                     if (profile_pic_url == "null") {
@@ -284,7 +302,7 @@ public class CE_Controller implements Runnable {
                         comObj.setProfile_pic_url(profile_pic_url);
                         phoneBookContacts.setFileName(profile_pic_url);
 
-                    }
+                    }*/
                     phoneBookContacts.setAppUser(true);
                     phoneBookContacts.setIsContact(true);
                     IMManager.getIMManager(MallApplication.appContext).saveContactById(phoneBookContacts);

@@ -1,0 +1,101 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+    
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/top_bar">
+		<TextView
+		    android:id="@+id/endorsement_name"
+		    android:layout_width="wrap_content"
+		    android:layout_height="wrap_content"
+		    android:layout_centerVertical="true"
+		    android:layout_centerHorizontal="true"
+		    android:textColor="@android:color/white"
+		    android:textSize="22sp"
+		    android:visibility="visible"
+		    android:text="@string/fav_interest" />
+
+		<ImageButton
+		    android:id="@+id/back_screen"
+		    android:layout_width="40dp"
+		    android:layout_height="wrap_content"
+		    android:layout_alignParentLeft="true"
+		    android:layout_centerVertical="true"
+		    
+		    android:src="@drawable/back_screen_indicator"
+		    android:background="@color/transparent"
+		    android:contentDescription="@string/app_name" />
+    </RelativeLayout>
+
+    <RelativeLayout
+		android:id="@+id/select_header"
+	    android:layout_width="fill_parent"
+	    android:layout_height="wrap_content"
+	    android:background="@color/white"
+	    android:paddingTop="15dp"
+	    android:paddingBottom="15dp" >
+	    <ImageView
+	        android:id="@+id/is_select_all_interst"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentRight="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginRight="20dp"
+	        android:src="@drawable/offer_fav_r"
+	        android:contentDescription="@string/app_name" />
+	    <TextView
+	        android:id="@+id/interst_title"
+	        android:layout_width="wrap_content"
+	        android:layout_height="wrap_content"
+	        android:layout_alignParentLeft="true"
+	        android:layout_centerVertical="true"
+	        android:layout_marginLeft="20dp"
+	        android:textSize="20sp"
+	        android:textStyle="bold"
+	        android:textColor="@color/purple"
+	        android:text="@string/fav_interest1" />
+	</RelativeLayout>
+	<View 
+	    android:layout_width="fill_parent"
+	    android:layout_height="1dp"
+	    android:background="@color/purple"/>
+	
+   	<RelativeLayout
+        android:id="@+id/view2"
+    	android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@drawable/background"
+        android:gravity="center_horizontal"
+		android:visibility="visible"
+         >
+        
+        <ListView
+            android:id="@+id/search_list"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+			android:layout_alignParentTop="true"
+			android:layout_above="@+id/next_screen"
+			>
+        </ListView>
+
+        <Button
+            android:id="@+id/next_screen"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentBottom="true"
+            android:layout_marginBottom="10dp"
+            android:layout_centerHorizontal="true"
+            android:background="@drawable/continue_selector"
+           	android:text="@string/next_"
+           	android:textColor="@color/white"
+           	android:textSize="18sp"
+			/>
+
+    </RelativeLayout>
+
+</LinearLayout>
+<!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/select_interest.xml -->

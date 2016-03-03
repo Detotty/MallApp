@@ -29,9 +29,19 @@ import android.widget.ListView;
 import android.widget.TextView;
 
 import com.List.Adapter.NavDrawerListAdapter;
+import com.android.volley.Request;
+import com.android.volley.RequestQueue;
+import com.android.volley.Response;
+import com.android.volley.VolleyError;
+import com.android.volley.VolleyLog;
+import com.android.volley.toolbox.JsonObjectRequest;
+import com.android.volley.toolbox.Volley;
+import com.chatdbserver.xmpp.IMManager;
 import com.google.android.gms.gcm.GoogleCloudMessaging;
+import com.mallapp.Application.MallApplication;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
+import com.mallapp.Constants.GlobelWebURLs;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Fragments.CardTabFragments;
@@ -40,6 +50,7 @@ import com.mallapp.Fragments.OffersTabFragment;
 import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Fragments.RewardsTabFragments;
 import com.mallapp.Model.NavDrawerItem;
+import com.mallapp.Model.UserProfileModel;
 import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.AppUtils;
@@ -48,6 +59,7 @@ import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
+import org.json.JSONException;
 import org.json.JSONObject;
 
 @SuppressLint("InflateParams")
@@ -75,6 +87,10 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
     static Context context;
     GoogleCloudMessaging gcmObj;
 	String regId;
+
+	UserProfileModel user_profile;
+	RequestQueue mRequestQueue;
+	IMManager imManager;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -88,6 +104,10 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		if (regId.equals("")){
 			gcmObj = GoogleCloudMessaging.getInstance(context);
 			registerWithGcm(context);
+			user_profile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
+			mRequestQueue = Volley.newRequestQueue(MallApplication.appContext);
+			imManager=IMManager.getIMManager(getApplicationContext());
+			IM_SingUp();
 		}
 		initDrawer();
 		initTabs();
@@ -476,6 +496,79 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		}.execute(null, null, null);
 	}
 
+	public void IM_SingUp() {
 
+		String url = "http://ec2-52-29-132-13.eu-central-1.compute.amazonaws.com:9090/userservice?user=" + GlobelWebURLs.ce_user + user_profile.getUserId() + "&pass=" + user_profile.getUserId();
+		Log.e("Post Url", "" + url);
+		JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+				url, null, new Response.Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				Log.e("IM sign up", response.toString());
+				JSONObject status = null;
+				String code="";
+				try {
+					status = response.getJSONObject("status");
+					code=status.getString("code");
+					if(code.equals("200"))
+					{
+						IM_Company_Register();
+					}
+
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+
+				}
+
+			}
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				VolleyLog.e("Error", "Error: " + error.getMessage());
+
+			}
+		});
+
+		// Adding request to request queue
+		mRequestQueue.add(jsonObjReq);
+	}
+
+	public void IM_Company_Register() {
+		String url = "http://ec2-52-29-132-13.eu-central-1.compute.amazonaws.com:9090/companyservice?cmd=addusr&companyid="+GlobelWebURLs.ce_company+"&username=" + GlobelWebURLs.ce_user + user_profile.getUserId();
+		Log.e("Post Url", "" + url);
+
+		JsonObjectRequest jsonObjReq = new JsonObjectRequest(Request.Method.POST,
+				url, null, new Response.Listener<JSONObject>() {
+
+			@Override
+			public void onResponse(JSONObject response) {
+				Log.e("IM sign up Company", response.toString());
+				JSONObject status = null;
+				String code="";
+				try {
+					status = response.getJSONObject("status");
+					code=status.getString("code");
+					if(code.equals("200"))
+					{
+						imManager.InitIMManager(GlobelWebURLs.IM_SERVER, GlobelWebURLs.ce_user + user_profile.getUserId(), user_profile.getUserId());
+					}
+
+				} catch (JSONException e) {
+					e.printStackTrace();
+				}
+			}
+		}, new Response.ErrorListener() {
+
+			@Override
+			public void onErrorResponse(VolleyError error) {
+				VolleyLog.e("Error", "Error: " + error.getMessage());
+
+			}
+		});
+		mRequestQueue.add(jsonObjReq);
+	}
 
 }
