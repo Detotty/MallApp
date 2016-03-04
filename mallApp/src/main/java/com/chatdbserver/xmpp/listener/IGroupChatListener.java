@@ -1,5 +1,7 @@
 package com.chatdbserver.xmpp.listener;
 
+import com.chatdbserver.xmpp.model.SingleChat;
+
 import org.jivesoftware.smack.packet.Message;
 
 public interface IGroupChatListener {
@@ -7,5 +9,5 @@ public interface IGroupChatListener {
 
     void leavegroup(String str);
 
-    void newGroupMessageArrived(Message message);
+    void newGroupMessageArrived(SingleChat singleChat,String jid);
 }

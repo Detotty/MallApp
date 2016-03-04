@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="utf-8"?>
+<selector xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <item android:state_pressed="true"><shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <corners android:radius="4dp" />
+
+            <gradient android:angle="90" android:centerColor="#efe0e3" android:endColor="#efe0e3" android:startColor="#efe0e3" />
+
+        </shape></item>
+    <item android:state_focused="true"><shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <corners android:radius="4dp" />
+
+            <gradient android:angle="90" android:centerColor="#efe0e3" android:endColor="#efe0e3" android:startColor="#efe0e3" />
+        </shape></item>
+    <item><shape xmlns:android="http://schemas.android.com/apk/res/android" android:shape="rectangle">
+            <corners android:radius="4dp" />
+
+            <gradient android:angle="90" android:centerColor="#f5f3f3" android:endColor="#f5f3f3" android:startColor="#f5f3f3" />
+        </shape></item>
+
+</selector><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/drawable/pop_up_window_white_btn_selector.xml -->

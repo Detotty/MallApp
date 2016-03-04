@@ -802,7 +802,7 @@ public class RegistrationController {
         return true;
     }
 
-    public void getUserProfile(String userId, com.chatdbserver.xmpp.listener.RegistrationUserListener registrationUserListener, final SingleChat sinlgeChat, final Chat chat) {
+    public void getUserProfile(String userId, com.chatdbserver.xmpp.listener.RegistrationUserListener registrationUserListener, final SingleChat sinlgeChat, final Chat chat, final String grp_id) {
         RequestQueue mRequestQueue = Volley.newRequestQueue(MallApplication.appContext);
 
         try {
@@ -810,38 +810,36 @@ public class RegistrationController {
             if (registrationUserListener != null)
                 this.listenerC = registrationUserListener;
 
-            String url = GlobelWebURLs.GET_OTHER_PROFILE;//+"/"+userId;
+            String url;
 
-            JSONObject jsonObject = new JSONObject();
+            if (userId.contains(GlobelWebURLs.IM_SERVER))
+                url = ApiConstants.GET_OTHER_PROFILE+userId.split("@")[0];
+            else
+                url = ApiConstants.GET_OTHER_PROFILE+userId;
 
-            jsonObject.put("SecurityToken", SharedPreferenceUserProfile.getUserToken(MallApplication.appContext));
-            jsonObject.put("ProfileID", user_profile.getUserId());
-            jsonObject.put("OtherProfile", userId);
-
-
-            Log.e("OtherProfileObj:", " url ..." + jsonObject.toString());
             final PhoneBookContacts phoneBookContacts = new PhoneBookContacts();
-            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, jsonObject, new Response.Listener<JSONObject>() {
+            JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
                 @Override
                 public void onResponse(JSONObject obj) {
                     Log.d("Other ProfileModel", "ProfileModel:" + obj.toString());
 
 
                     try {
-                        String id = obj.getString("ID");
-                        String name = obj.getString("Name");
-                        JSONObject jsonObject_pic = obj.getJSONObject("Picture");
-                        String pic_url = jsonObject_pic.getString("URI");
-                        phoneBookContacts.setUserId(id);
-                        phoneBookContacts.setFirstName(name);
-                        phoneBookContacts.setFileName(pic_url);
+                        UserProfileModel user_profile = null;
+                        Gson gson = new Gson();
+                        user_profile = gson.fromJson(obj.toString(), UserProfileModel.class);
+                        phoneBookContacts.setUserId(user_profile.getUserId());
+                        phoneBookContacts.setFirstName(user_profile.getFullName());
+                        phoneBookContacts.setFileName(user_profile.getImageURL());
                         phoneBookContacts.setAppUser(true);
                         phoneBookContacts.setIsContact(true);
+                        if (chat == null)
+                            listenerC.onGrpDataReceived(phoneBookContacts, sinlgeChat, chat, grp_id);
+                        else
+                            listenerC.onDataReceived(phoneBookContacts, sinlgeChat, chat);
 
-                        listenerC.onDataReceived(phoneBookContacts, sinlgeChat, chat);
 
-
-                    } catch (JSONException e) {
+                    } catch (Exception e) {
                         e.printStackTrace();
                     }
 
@@ -858,13 +856,21 @@ public class RegistrationController {
 
                 }
             }) {
+                @Override
+                public Map<String, String> getHeaders() throws AuthFailureError {
+                    Map<String, String> headers = new HashMap<String, String>();
+                    String token = SharedPreferenceUserProfile.getUserToken(context);
+                    Log.e("", " token:" + token);
+//                    headers.put("Content-Type", "application/json");
+                    headers.put("Auth-Token", token);
 
-
+                    return headers;
+                }
             };
 
             mRequestQueue.add(jsonRequest);
 
-        } catch (JSONException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
 

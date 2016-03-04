@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-373:12
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-390:12
 	package
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:4:5-31
 		INJECTED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml
@@ -286,7 +286,7 @@ MERGED from [com.google.android.gms:play-services-gcm:8.4.0] J:\Android\Raw\Mall
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:46:22-79
 application
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:49:5-371:19
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:49:5-388:19
 MERGED from [MallApp:parallax:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\AndroidManifest.xml:11:5-16:19
 MERGED from [com.android.support:support-v4:23.1.1] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:22:5-20
 MERGED from [MallApp:libraryviewpager:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\AndroidManifest.xml:9:5-20
@@ -917,56 +917,86 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:332:9-335
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:335:13-67
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:333:13-39
-activity#com.mallapp.View.CeRegContacts
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:337:9-339:61
+activity#com.mallapp.View.GroupChatScreen
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:337:9-342:66
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:339:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:341:13-49
+	android:launchMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:340:13-43
+	android:windowSoftInputMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:342:13-54
+	android:configChanges
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:339:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:338:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:338:13-44
+activity#com.mallapp.View.InviteContacts
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:343:9-348:66
+	android:screenOrientation
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:347:13-49
+	android:launchMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:346:13-43
+	android:windowSoftInputMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:348:13-54
+	android:configChanges
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:345:13-74
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:344:13-43
+activity#com.mallapp.View.GroupParticipants
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:350:9-352:61
+	android:screenOrientation
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:352:13-49
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:351:13-46
+activity#com.mallapp.View.CeRegContacts
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:354:9-356:61
+	android:screenOrientation
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:356:13-49
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:355:13-42
 receiver#com.mallapp.pushnotification.GcmBroadcastReceiver
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:341:9-350:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:358:9-367:20
 	android:permission
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:343:13-73
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:360:13-73
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:342:13-77
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:359:13-77
 intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.mallapp.View
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:344:13-349:29
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:361:13-366:29
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:345:17-81
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:362:17-81
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:345:25-78
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:362:25-78
 action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:346:17-86
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:363:17-86
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:346:25-83
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:363:25-83
 category#com.mallapp.View
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:348:17-61
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:365:17-61
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:348:27-58
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:365:27-58
 service#com.mallapp.pushnotification.GCMNotificationIntentService
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:353:9-359:19
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:370:9-376:19
 	android:exported
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:355:13-37
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:372:13-37
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:354:13-85
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:371:13-85
 intent-filter#com.google.android.c2dm.intent.RECEIVE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:356:13-358:29
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:373:13-375:29
 receiver#com.mallapp.broadcast.ConnectionChangeReceiver
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:361:9-366:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:378:9-383:20
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:362:13-46
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:379:13-46
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:361:19-80
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:378:19-80
 intent-filter#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:363:13-365:29
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:380:13-382:29
 action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:364:17-78
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:381:17-78
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:364:25-76
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:381:25-76
 service#com.chatdbserver.xmpp.XmppService
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:368:9-68
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:385:9-68
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:368:18-66
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:385:18-66
 activity#com.google.android.gms.ads.AdActivity
 ADDED from [com.google.android.gms:play-services-ads:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.4.0\AndroidManifest.xml:26:9-29:64
 	android:configChanges

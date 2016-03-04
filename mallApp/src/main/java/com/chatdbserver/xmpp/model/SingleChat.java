@@ -34,7 +34,8 @@ public class SingleChat implements Serializable {
     private String removeUrl;
     @DatabaseField
     String packetId;
-
+    @DatabaseField(canBeNull = false, foreign = true, foreignAutoRefresh = true)
+    PhoneBookContacts phoneBookContacts;
     public String getPacketId(){
         return packetId;
     }
@@ -141,5 +142,12 @@ public class SingleChat implements Serializable {
 
     public void setMsgtime(String msgtime) {
         this.msgtime = msgtime;
+    }
+    public PhoneBookContacts getPhoneBookContacts() {
+        return phoneBookContacts;
+    }
+
+    public void setPhoneBookContacts(PhoneBookContacts phoneBookContacts) {
+        this.phoneBookContacts = phoneBookContacts;
     }
 }

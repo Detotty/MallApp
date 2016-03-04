@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.os.Bundle;
 import android.support.v4.content.ContextCompat;
 import android.text.Editable;
@@ -14,11 +15,14 @@ import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
 import android.widget.BaseAdapter;
+import android.widget.CheckBox;
+import android.widget.CompoundButton;
 import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.ListView;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import com.chatdbserver.xmpp.IMManager;
 import com.chatdbserver.xmpp.listener.IPresenceListener;
@@ -54,6 +58,9 @@ public class CeRegContacts extends Activity implements IPresenceListener {
     TextView done;
     EditText grp_title;
     IMManager imManager;
+    String user_pic = "";
+    String name = "";
+    ArrayList<String> selected_profiles = new ArrayList<>();
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,11 +118,13 @@ public class CeRegContacts extends Activity implements IPresenceListener {
     @Override
     protected void onPause() {
         super.onPause();
+
     }
 
     @Override
     protected void onDestroy() {
         super.onDestroy();
+        imManager.setPresenceListener(null);
     }
 
     private void CrowdEyesContactList() {
@@ -127,6 +136,20 @@ public class CeRegContacts extends Activity implements IPresenceListener {
                 return lhs.getFirstName().compareTo(rhs.getFirstName());
             }
         });
+        for (int i = 0; i < contactListCE.size(); i++) {
+            PhoneBookContacts phoneBookContacts = contactListCE.get(i);
+            String id = phoneBookContacts.getUserId();
+            if (id.equals(user_profile.getUserId()) || id.startsWith(GlobelWebURLs.ce_claim)) {
+                contactListCE.remove(phoneBookContacts);
+            }
+        }
+        for (int i = 0; i < contactListCE.size(); i++) {
+            PhoneBookContacts phoneBookContacts = contactListCE.get(i);
+            String id = phoneBookContacts.getUserId();
+            if (id.equals(user_profile.getUserId()) || id.startsWith(GlobelWebURLs.ce_claim)) {
+                contactListCE.remove(phoneBookContacts);
+            }
+        }
         CEadapter = new CeContactListBaseAdapter(getApplicationContext(), contactListCE);
         contactListView.setAdapter(CEadapter);
 //        } else {
@@ -154,6 +177,7 @@ public class CeRegContacts extends Activity implements IPresenceListener {
     class ViewHolder {
         TextView name, status;
         ImageView user_img;
+        CheckBox checkBox;
 
 
     }
@@ -190,10 +214,15 @@ public class CeRegContacts extends Activity implements IPresenceListener {
                 holder.name = (TextView) convertView.findViewById(R.id.txt_name);
                 holder.status = (TextView) convertView.findViewById(R.id.status_txt);
                 holder.user_img = (ImageView) convertView.findViewById(R.id.img_blocked);
-
+                holder.checkBox = (CheckBox) convertView.findViewById(R.id.checkBox);
                 convertView.setTag(holder);
             } else {
                 holder = (ViewHolder) convertView.getTag();
+            }
+            if (contactModelArrayList.get(position).getUserId().equals(user_profile.getUserId())) {
+                convertView.setVisibility(View.GONE);
+            } else {
+                convertView.setVisibility(View.VISIBLE);
             }
             if (!contactModelArrayList.get(position).getFirstName().equals("")) {
                 holder.name.setText(contactModelArrayList.get(position).getFirstName());
@@ -206,31 +235,64 @@ public class CeRegContacts extends Activity implements IPresenceListener {
 
                 if (contactModelArrayList.get(position).getStatus()) {
                     holder.status.setText(R.string.online);
-                    holder.status.setTextColor(ContextCompat.getColor(con, R.color.purple));
+                    holder.status.setTextColor(Color.parseColor("#FF048DB6"));
                 } else {
                     holder.status.setText(R.string.offline);
-                    holder.status.setTextColor(ContextCompat.getColor(con, R.color.grey));
+                    holder.status.setTextColor(Color.parseColor("#ACACAC"));
 
 
                 }
             }
+            final String pro_id = contactModelArrayList.get(position).getUserId();
+
+            holder.checkBox.setOnCheckedChangeListener(new CompoundButton.OnCheckedChangeListener() {
+
+                @Override
+                public void onCheckedChanged(CompoundButton buttonView, boolean isChecked) {
+                    if (isChecked) {
+                        selected_profiles.add(GlobelWebURLs.ce_user + pro_id);
+                        user_pic = contactModelArrayList.get(position).getFileName();
+                        name = contactModelArrayList.get(position).getFirstName();
+                    } else {
+                        selected_profiles.remove(GlobelWebURLs.ce_user + pro_id);
+                    }
+
+                }
+            });
+
+            done.setOnClickListener(new View.OnClickListener() {
+                @Override
+                public void onClick(View v) {
+                    Intent intent;
+                    if (selected_profiles.size() == 1) {
+                        intent = new Intent(CeRegContacts.this, ChatScreen.class);
+                        intent.putExtra("user_id", selected_profiles.get(0));
+                        intent.putExtra("user_name", name);
+                        intent.putExtra("user_pic", user_pic);
+                        startActivity(intent);
+                        finish();
+                    } else {
+                        if (grp_title.getText().toString().trim().equals("")) {
+                            Toast.makeText(CeRegContacts.this, "Please Enter Group Title first", Toast.LENGTH_LONG).show();
+                        } else {
+                            intent = new Intent(CeRegContacts.this, GroupChatScreen.class);
+                            intent.putStringArrayListExtra("group_members", selected_profiles);
+                            intent.putExtra("group_title", grp_title.getText().toString().trim() + GlobelWebURLs.ce_group);
+                            intent.putExtra("create", true);
+                            startActivity(intent);
+                            finish();
+                        }
+                    }
+                }
+            });
+
             contactListView.setOnItemClickListener(new AdapterView.OnItemClickListener() {
+                boolean check = true;
 
                 @Override
                 public void onItemClick(AdapterView<?> parent, View view, int position, long id) {
-                    Intent intent;
-                    String pro_id = contactModelArrayList.get(position).getUserId();
-                    String user_pic = contactModelArrayList.get(position).getFileName();
-
-
-                    intent = new Intent(CeRegContacts.this, ChatScreen.class);
-                    intent.putExtra("user_id", GlobelWebURLs.ce_user + pro_id);
-                    intent.putExtra("user_name", contactModelArrayList.get(position).getFirstName());
-                    intent.putExtra("user_pic", user_pic);
-                    startActivity(intent);
-                    finish();
-
-
+                    CheckBox checkBox = (CheckBox) view.findViewById(R.id.checkBox);
+                    checkBox.setChecked(!checkBox.isChecked());
                 }
             });
             return convertView;
@@ -291,7 +353,6 @@ public class CeRegContacts extends Activity implements IPresenceListener {
 
         CEadapter = new CeContactListBaseAdapter(getApplicationContext(), searchCeContactList);
         contactListView.setAdapter(CEadapter);
-        contactListView.setFastScrollAlwaysVisible(true);
         CEadapter.notifyDataSetChanged();
     }
 

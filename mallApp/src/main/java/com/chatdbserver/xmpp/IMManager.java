@@ -8,6 +8,7 @@ import com.chatdbserver.utils.IMUtils;
 import com.chatdbserver.utils.IMessageStatus;
 import com.chatdbserver.xmpp.db.IMDBManager;
 import com.chatdbserver.xmpp.listener.IGroupChatListener;
+import com.chatdbserver.xmpp.listener.IGroupMsgTabListener;
 import com.chatdbserver.xmpp.listener.IPresenceListener;
 import com.chatdbserver.xmpp.listener.IXMPPChatListener;
 import com.chatdbserver.xmpp.listener.IXMPPMessageTabListener;
@@ -16,8 +17,12 @@ import com.chatdbserver.xmpp.listener.RegistrationUserListener;
 import com.chatdbserver.xmpp.model.OpenChats;
 import com.chatdbserver.xmpp.model.PhoneBookContacts;
 import com.chatdbserver.xmpp.model.SingleChat;
+import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelWebURLs;
 import com.mallapp.Constants.UserChatConstants;
+import com.mallapp.Model.UserProfileModel;
+import com.mallapp.SharedPreferences.DataHandler;
+import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.RegistrationController;
 
 import org.jivesoftware.smack.AbstractXMPPConnection;
@@ -27,6 +32,7 @@ import org.jivesoftware.smack.MessageListener;
 import org.jivesoftware.smack.SmackException;
 import org.jivesoftware.smack.SmackException.NoResponseException;
 import org.jivesoftware.smack.SmackException.NotConnectedException;
+import org.jivesoftware.smack.XMPPConnection;
 import org.jivesoftware.smack.XMPPException;
 import org.jivesoftware.smack.XMPPException.XMPPErrorException;
 import org.jivesoftware.smack.chat.Chat;
@@ -47,12 +53,14 @@ import org.jivesoftware.smackx.chatstates.ChatStateListener;
 import org.jivesoftware.smackx.chatstates.ChatStateManager;
 import org.jivesoftware.smackx.muc.DiscussionHistory;
 import org.jivesoftware.smackx.muc.HostedRoom;
+import org.jivesoftware.smackx.muc.InvitationListener;
 import org.jivesoftware.smackx.muc.MultiUserChat;
 import org.jivesoftware.smackx.muc.MultiUserChatManager;
 import org.jivesoftware.smackx.offline.OfflineMessageManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptManager;
 import org.jivesoftware.smackx.receipts.DeliveryReceiptRequest;
 import org.jivesoftware.smackx.receipts.ReceiptReceivedListener;
+import org.jivesoftware.smackx.xdata.Form;
 
 import java.io.IOException;
 import java.sql.SQLException;
@@ -67,7 +75,7 @@ import java.util.Map;
 import java.util.Vector;
 
 public class IMManager implements ChatMessageListener, RosterListener, ReceiptReceivedListener,
-        RegistrationUserListener, MessageListener, ChatStateListener, ChatManagerListener {
+        RegistrationUserListener, MessageListener, ChatStateListener, ChatManagerListener, InvitationListener {
 
     private static IMManager imManager;
     private Context appContext;
@@ -81,13 +89,20 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     private OfflineMessageManager offlineMessageManager;
     private DeliveryReceiptManager deliveryReceiptManager;
     MultiUserChat multiUserChat;
+    public UserProfileModel userProfile;
     private HashMap<String, Chat> openxmppChats;
 
     private Chat activeChat;
     private AbstractXMPPConnection xmppConnection;
     private Roster rosterManager;
 
+    @Override
+    public void invitationReceived(XMPPConnection xmppConnection, MultiUserChat multiUserChat, String s, String s1, String s2, Message message) {
+        Log.e("invite from", "" + message.getFrom());
+        Log.e("invite msg", "" + message.getBody());
+        acceptInvite(GlobelWebURLs.ce_user + userProfile.getUserId(), userProfile.getUserId(), message.getFrom());
 
+    }
 
 
     /* renamed from: com.apps.xmpp.IMManager.1 */
@@ -104,10 +119,10 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
                 IMManager.this.chatmanager.addChatListener(IMManager.this);
 
                 IMManager.this.multiChatManager = MultiUserChatManager.getInstanceFor(IMManager.this.xmppConnection);
+                IMManager.this.multiChatManager.addInvitationListener(IMManager.this);
                 IMManager.this.rosterManager = Roster.getInstanceFor(IMManager.this.xmppConnection);
 
                 IMManager.this.rosterManager.addRosterListener(IMManager.this);
-
                 ChatStateManager.getInstance(IMManager.this.xmppConnection);
 
                 IMManager.this.deliveryReceiptManager = DeliveryReceiptManager.getInstanceFor(xmppConnection);
@@ -147,7 +162,7 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
             IMManager.this.xmppConnection = new XMPPTCPConnection(((Builder) ((Builder) ((Builder) ((Builder) ((Builder)
                     XMPPTCPConnectionConfiguration.builder().setUsernameAndPassword(
                             this.val$usrName, this.val$password))
-                    .setServiceName(this.val$serverName) )
+                    .setServiceName(this.val$serverName))
                     .setHost(this.val$serverName))
                     .setSecurityMode(SecurityMode.disabled))
                     .setPort(5222))
@@ -173,6 +188,7 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     public static IMManager getIMManager(Context appContext) {
         if (imManager == null) {
             imManager = new IMManager(appContext);
+
         }
         return imManager;
     }
@@ -183,6 +199,7 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         appContext.startService(new Intent(appContext, XmppService.class));
         this.openxmppChats = new HashMap();
         this.imDBManager = new IMDBManager(appContext);
+        this.userProfile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
         try {
             this.imDBManager.loadDaos();
         } catch (SQLException e) {
@@ -224,6 +241,12 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     public void setGroupChatListener(IGroupChatListener groupchatListner) {
         if (XmppService.instance() != null) {
             XmppService.instance().setIxmppGroupChatListener(groupchatListner);
+        }
+    }
+
+    public void setGroupTabChatListener(IGroupMsgTabListener iGroupMsgTabListener) {
+        if (XmppService.instance() != null) {
+            XmppService.instance().setIxmppTabGroupChatListener(iGroupMsgTabListener);
         }
     }
 
@@ -287,30 +310,30 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         }
     }
 
-    public List<PhoneBookContacts> getAppContacts(){
+    public List<PhoneBookContacts> getAppContacts() {
         List<PhoneBookContacts> phoneBookContacts = null;
-        try{
+        try {
             phoneBookContacts = this.imDBManager.getAllContacts();
-        }catch (SQLException e){
-            e.printStackTrace();
-        }
-        return  phoneBookContacts;
-    }
-
-    public PhoneBookContacts getContactById(String userId){
-        PhoneBookContacts phoneBookContacts = null;
-        try{
-            phoneBookContacts = this.imDBManager.getAppContactOfId(userId);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
         return phoneBookContacts;
     }
 
-    public void saveContactById(PhoneBookContacts phoneBookContacts){
-        try{
+    public PhoneBookContacts getContactById(String userId) {
+        PhoneBookContacts phoneBookContacts = null;
+        try {
+            phoneBookContacts = this.imDBManager.getAppContactOfId(userId);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return phoneBookContacts;
+    }
+
+    public void saveContactById(PhoneBookContacts phoneBookContacts) {
+        try {
             this.imDBManager.saveContact(phoneBookContacts);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
 
@@ -328,7 +351,7 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     }
 
     public void disConnect() throws NotConnectedException {
-        if (this.xmppConnection!=null && this.xmppConnection.isConnected()) {
+        if (this.xmppConnection != null && this.xmppConnection.isConnected()) {
             this.xmppConnection.disconnect(new Presence(Type.unavailable));
         }
     }
@@ -340,7 +363,7 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         return this.xmppConnection.isAuthenticated();
     }
 
-    public AbstractXMPPConnection getXmppConnection(){
+    public AbstractXMPPConnection getXmppConnection() {
         return this.xmppConnection;
     }
 
@@ -403,14 +426,14 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         }
     }
 
-    public void unactiveChat(){
-            try {
+    public void unactiveChat() {
+        try {
 
-                activeChat = null;
+            activeChat = null;
 
-            } catch (Exception e) {
-                e.printStackTrace();
-            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
 
     }
 
@@ -418,9 +441,9 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     public void processMessage(Chat chat, Message message) {
         String from = IMUtils.getUserFromJID(message.getFrom());
 
-        Log.i("Incoming message", "messsage:"+ from +":"+ message.getBody() + ": Participant:"+ chat.getParticipant().toString());
+        Log.i("Incoming message", "messsage:" + from + ":" + message.getBody() + ": Participant:" + chat.getParticipant().toString());
 
-        if(message.getBody()!=null) {
+        if (message.getBody() != null) {
 
             SingleChat singleChat = new SingleChat();
             singleChat.setMessage(message.getBody());
@@ -429,16 +452,16 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
             singleChat.setMsgtime(getCurrentTimeStamp());
 
             PhoneBookContacts contact = getContactById(from);
-            if(contact == null){
+            if (contact == null) {
 
                 String userId = from;
-                if( userId.contains("_") )
+                if (userId.contains("_"))
                     userId = userId.split("_")[1];
 
                 RegistrationController registrationController = new RegistrationController(appContext);
-                registrationController.getUserProfile(userId,this,singleChat,chat);
+                registrationController.getUserProfile(userId, this, singleChat, chat, "");
 
-            }else {
+            } else {
 
                 if (((Chat) this.openxmppChats.get(from)) == null) {
                     this.openxmppChats.put(from, chat);
@@ -454,16 +477,13 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
                 saveMsgToDB(from, singleChat);
 
 
-                if (XmppService.instance().getIxmppChatListener() != null && IMUtils.getUserFromJID(activeChat.getParticipant()).equals(from) ) {
+                if (XmppService.instance().getIxmppChatListener() != null && IMUtils.getUserFromJID(activeChat.getParticipant()).equals(from)) {
                     XmppService.instance().getIxmppChatListener().newMessageArrived(singleChat);
-                }
-                else if (XmppService.instance().getIxmppMessageTabListener() != null) {
+                } else if (XmppService.instance().getIxmppMessageTabListener() != null) {
                     XmppService.instance().getIxmppMessageTabListener().newMessageArrived(singleChat);
-                }
-                else if(XmppService.instance().getIxmppTabCountListener() != null){
+                } else if (XmppService.instance().getIxmppTabCountListener() != null) {
                     XmppService.instance().getIxmppTabCountListener().updateUnreadCount(0);
-                }
-                else{
+                } else {
 //                    Intent intent = new Intent(UserChatConstants.Broadcast_Update_Tab_Count);
 //                    LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
 //
@@ -478,16 +498,16 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     }
 
     public boolean sendGroupMessage(String message) {
-//        if (!this.multiUserChat.isJoined()) {
-//            return false;
-//        }
-//        Message msg = this.multiUserChat.createMessage();
-//        msg.setBody(message);
-//        try {
-//            this.multiUserChat.sendMessage(msg);
-//        } catch (NotConnectedException e) {
-//            e.printStackTrace();
-//        }
+        if (!this.multiUserChat.isJoined()) {
+            return false;
+        }
+        Message msg = this.multiUserChat.createMessage();
+        msg.setBody(message);
+        try {
+            this.multiUserChat.sendMessage(msg);
+        } catch (NotConnectedException e) {
+            e.printStackTrace();
+        }
         return true;
     }
 
@@ -535,7 +555,49 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         }
     }
 
+    public boolean createGroup(String roomNameJid) {
+
+        try {
+            this.multiUserChat = this.multiChatManager.getMultiUserChat(roomNameJid);
+            this.multiUserChat.create(roomNameJid);
+            Form form = multiUserChat.getConfigurationForm();
+            Form submitForm = form.createAnswerForm();
+            submitForm.setAnswer("muc#roomconfig_publicroom", true);
+            submitForm.setAnswer("muc#roomconfig_persistentroom", true);
+            multiUserChat.sendConfigurationForm(submitForm);
+            Log.e("Group created : ", roomNameJid);
+            return true;
+        } catch (Exception e) {
+            e.printStackTrace();
+            return false;
+        }
+    }
+
     public void joinRoom(String roomNameJid, String nickname) {
+        try {
+            this.multiUserChat = this.multiChatManager.getMultiUserChat(roomNameJid);
+            this.multiUserChat.addMessageListener(XmppService.instance());
+            this.multiUserChat.addParticipantListener(XmppService.instance());
+            this.multiUserChat.addParticipantStatusListener(XmppService.instance());
+            if (this.disccussionHistory == null) {
+                this.disccussionHistory = new DiscussionHistory();
+                this.disccussionHistory.setMaxStanzas(0);
+            }
+
+            this.multiUserChat.join(nickname, nickname.substring(7), disccussionHistory, 500);
+            Log.e("Group Joined", "" + nickname.substring(7));
+        } catch (NoResponseException e) {
+            e.printStackTrace();
+        } catch (XMPPErrorException e2) {
+            e2.printStackTrace();
+        } catch (NotConnectedException e3) {
+            e3.printStackTrace();
+        } catch (SmackException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void inviteRoom(String roomNameJid, String nickname) {
         try {
             this.multiUserChat = this.multiChatManager.getMultiUserChat(roomNameJid);
             this.multiUserChat.addMessageListener(XmppService.instance());
@@ -545,21 +607,61 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
                 this.disccussionHistory = new DiscussionHistory();
                 this.disccussionHistory.setMaxStanzas(10);
             }
-            this.multiUserChat.join(nickname, "", this.disccussionHistory, 500);
-        } catch (NoResponseException e) {
-            e.printStackTrace();
-        } catch (XMPPErrorException e2) {
-            e2.printStackTrace();
+//            List<Occupant> occupants = multiUserChat.getParticipants();
+//            ArrayList<String> arrayList = new ArrayList<>();
+//            for (int i = 0; i < occupants.size(); i++) {
+//                String string = occupants.get(i).getJid();
+//                arrayList.add(string);
+//            }
+            this.multiUserChat.invite(nickname + "@" + GlobelWebURLs.IM_SERVER, "group chat");
+
+            Log.e("Group Joined", "" + nickname.substring(7));
+
         } catch (NotConnectedException e3) {
             e3.printStackTrace();
+        } catch (SmackException e) {
+            e.printStackTrace();
         }
     }
 
+    public MultiUserChat acceptInvite(String user, String password, String roomsName) {
+        try {
+            MultiUserChat muc = this.multiChatManager.getMultiUserChat(roomsName);
 
+            muc.addMessageListener(XmppService.instance());
+            muc.addParticipantListener(XmppService.instance());
+            muc.addParticipantStatusListener(XmppService.instance());
+
+            if (this.disccussionHistory == null) {
+                this.disccussionHistory = new DiscussionHistory();
+                this.disccussionHistory.setMaxStanzas(10);
+            }
+            muc.join(user, password, this.disccussionHistory, 500);
+            System.out.println("The conference room success....");
+            return muc;
+        } catch (XMPPException e) {
+            e.printStackTrace();
+            System.out.println("The conference room to fail....");
+            return null;
+        } catch (NotConnectedException e) {
+            e.printStackTrace();
+        } catch (NoResponseException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     public void updateMsgToDB(String jid, SingleChat singleChat) {
         try {
             this.imDBManager.updateChat(jid, singleChat);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
+
+    public void updateOpenChats(String jid, PhoneBookContacts phoneBookContacts) {
+        try {
+            this.imDBManager.updateOpenChats(jid, phoneBookContacts);
         } catch (SQLException e) {
             e.printStackTrace();
         }
@@ -574,14 +676,14 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         return null;
     }
 
-	public List<String> getUnreadMessages() {
-		try {
-			return this.imDBManager.getListOfUnreadMsges();
-		} catch (SQLException e) {
-			e.printStackTrace();
-		}
-		return null;
-	}
+    public List<String> getUnreadMessages() {
+        try {
+            return this.imDBManager.getListOfUnreadMsges();
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+        return null;
+    }
 
     private void saveMsgToDB(String jid, SingleChat singleChat) {
         try {
@@ -591,20 +693,26 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         }
     }
 
+    public void saveGroupMsgToDB(String jid, SingleChat singleChat, PhoneBookContacts phoneBookContacts) {
+        try {
+            this.imDBManager.saveGroupChat(jid, singleChat, phoneBookContacts);
+        } catch (SQLException e) {
+            e.printStackTrace();
+        }
+    }
 
-    public void addConnectionListener(ConnectionListener listener){
+
+    public void addConnectionListener(ConnectionListener listener) {
 
         this.xmppConnection.addConnectionListener(listener);
 
 
-
-
     }
 
-    public void readChatMessages(String jid){
-        try{
+    public void readChatMessages(String jid) {
+        try {
             this.imDBManager.readOpenChatMessages(jid);
-        }catch (SQLException e){
+        } catch (SQLException e) {
             e.printStackTrace();
         }
     }
@@ -629,23 +737,23 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
         Log.d("TAG", "presenceChanged: " + presence.getFrom() + ":" + presence.getStatus());
 
         System.out.println("User:" + presence.getFrom());
-        System.out.println("Name:"+ presence.getType().name() );
-        System.out.println("Status:" + presence.getStatus() );
+        System.out.println("Name:" + presence.getType().name());
+        System.out.println("Status:" + presence.getStatus());
         System.out.println("Mode:" + presence.getMode());
         System.out.println("Proriy:" + presence.getPriority());
         System.out.println("To:" + presence.getTo());
 
-                String id = presence.getFrom().split("@")[0];
+        String id = presence.getFrom().split("@")[0];
         id = id.split("_")[1];
         PhoneBookContacts contacts = new PhoneBookContacts();
         contacts.setUserId(id);
 
         contacts = imManager.getContactById(id);
 
-        if(contacts == null){
+        if (contacts == null) {
             // fetch user details
 
-        }else {
+        } else {
 
             if (presence.getType() == Type.available)
                 contacts.setStatus(true);
@@ -665,7 +773,7 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     @Override
     public void processMessage(Message message) {
 
-         Log.i("processMessage","Incoming message :"+ message.getFrom() +":"+ message.getBody());
+        Log.i("processMessage", "Incoming message :" + message.getFrom() + ":" + message.getBody());
 
     }
 
@@ -686,17 +794,16 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     @Override
     public void onReceiptReceived(String s, String s1, String s2, Stanza stanza) {
 
-                Log.i("Message Delivered  To=", s + ", From =  " + s1 + " , ID= " + s2 +", Ext:"+stanza.getExtensions().get(0));
+        Log.i("Message Delivered  To=", s + ", From =  " + s1 + " , ID= " + s2 + ", Ext:" + stanza.getExtensions().get(0));
 
-                System.out.println("to:" + stanza.getTo() + ":" + stanza.getFrom());
+        System.out.println("to:" + stanza.getTo() + ":" + stanza.getFrom());
 
         String id = s.split("@")[0];
 
 
         SingleChat singleChat = getMsgByPacketId(s2);
 
-        if(singleChat!=null){
-
+        if (singleChat != null) {
 
 
             singleChat.setMsgStatus(IMessageStatus.MESSAGEDELIVERED);
@@ -705,10 +812,10 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
             updateMsgToDB(id, singleChat);
 
 
-            if(XmppService.instance().getIxmppChatListener()!=null)
+            if (XmppService.instance().getIxmppChatListener() != null)
                 XmppService.instance().getIxmppChatListener().messageDelivered(singleChat);
 
-            else if(XmppService.instance().getIxmppTabCountListener() != null){
+            else if (XmppService.instance().getIxmppTabCountListener() != null) {
                 XmppService.instance().getIxmppTabCountListener().updateUnreadCount(0);
             }
 
@@ -718,33 +825,32 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     }
 
 
-    private void retrieveOfflineMessages(){
+    private void retrieveOfflineMessages() {
 
         try {
 
-        Iterator<Message> it =  offlineMessageManager.getMessages().iterator();
-        System.out.println(offlineMessageManager.supportsFlexibleRetrieval());
+            Iterator<Message> it = offlineMessageManager.getMessages().iterator();
+            System.out.println(offlineMessageManager.supportsFlexibleRetrieval());
 
-        System.out.println("Number of offline messages:: " + offlineMessageManager.getMessageCount());
+            System.out.println("Number of offline messages:: " + offlineMessageManager.getMessageCount());
 
-        Map<String,ArrayList<Message>> offlineMsgs = new HashMap<String,ArrayList<Message>>();
-        while (it.hasNext()) {
-            org.jivesoftware.smack.packet.Message message = it.next();
-            System.out
-                    .println("receive offline messages, the Received from [" + message.getFrom()
-                            + "] the message:" + message.getBody());
-            String fromUser = message.getFrom().split("/")[0];
+            Map<String, ArrayList<Message>> offlineMsgs = new HashMap<String, ArrayList<Message>>();
+            while (it.hasNext()) {
+                org.jivesoftware.smack.packet.Message message = it.next();
+                System.out
+                        .println("receive offline messages, the Received from [" + message.getFrom()
+                                + "] the message:" + message.getBody());
+                String fromUser = message.getFrom().split("/")[0];
 
-            if(offlineMsgs.containsKey(fromUser))
-            {
-                offlineMsgs.get(fromUser).add(message);
-            }else{
-                ArrayList<Message> temp = new ArrayList<Message>();
-                temp.add(message);
-                offlineMsgs.put(fromUser, temp);
+                if (offlineMsgs.containsKey(fromUser)) {
+                    offlineMsgs.get(fromUser).add(message);
+                } else {
+                    ArrayList<Message> temp = new ArrayList<Message>();
+                    temp.add(message);
+                    offlineMsgs.put(fromUser, temp);
+                }
             }
-        }
-        // Deal with a collection of offline messages ...
+            // Deal with a collection of offline messages ...
 
             offlineMessageManager.deleteMessages();
             xmppConnection.sendStanza(new Presence(Type.available));
@@ -760,27 +866,25 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     }
 
     @Override
-    public void onDataReceived(PhoneBookContacts contacts,SingleChat singleChat, Chat chat) {
+    public void onDataReceived(PhoneBookContacts contacts, SingleChat singleChat, Chat chat) {
 
-        String from = GlobelWebURLs.ce_user+contacts.getUserId();
+        String from = GlobelWebURLs.ce_user + contacts.getUserId();
 
-          if (((Chat) this.openxmppChats.get(from)) == null) {
+        if (((Chat) this.openxmppChats.get(from)) == null) {
             this.openxmppChats.put(from, chat);
         }
 
 
-            saveContactById(contacts);
+        saveContactById(contacts);
 
         saveMsgToDB(from, singleChat);
 
 
         if (XmppService.instance().getIxmppMessageTabListener() != null) {
             XmppService.instance().getIxmppMessageTabListener().newMessageArrived(singleChat);
-        }
-        else if(XmppService.instance().getIxmppTabCountListener() != null){
+        } else if (XmppService.instance().getIxmppTabCountListener() != null) {
             XmppService.instance().getIxmppTabCountListener().updateUnreadCount(0);
-        }
-        else{
+        } else {
 //            Intent intent = new Intent(UserChatConstants.Broadcast_Update_Tab_Count);
 //            LocalBroadcastManager.getInstance(appContext).sendBroadcast(intent);
 //
@@ -791,9 +895,15 @@ public class IMManager implements ChatMessageListener, RosterListener, ReceiptRe
     }
 
     @Override
+    public void onGrpDataReceived(PhoneBookContacts userProfileModel, SingleChat singleChat, Chat chat, String grp_id) {
+
+    }
+
+    @Override
     public void onConnectionError() {
 
     }
+
     public static String getCurrentTimeStamp() {
         SimpleDateFormat sdfDate = new SimpleDateFormat("dd-MM-yyyy HH:mm");//dd/MM/yyyy
         Date now = new Date();

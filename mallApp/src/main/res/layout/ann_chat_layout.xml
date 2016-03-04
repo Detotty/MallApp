@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:id="@+id/announcement"
+    android:layout_width="match_parent"
+    android:layout_height="80dp"
+    android:layout_below="@+id/header"
+    android:background="@color/grey_cells"
+    android:orientation="vertical">
+
+
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/announcement_img"
+        android:layout_width="60dp"
+        android:layout_height="match_parent"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_centerVertical="true"
+        android:layout_margin="@dimen/margin_left_10"
+        android:src="@drawable/eugene"
+        />
+
+    <TextView
+        android:id="@+id/announcement_name"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignTop="@+id/announcement_img"
+        android:layout_toEndOf="@+id/announcement_img"
+        android:layout_toRightOf="@+id/announcement_img"
+        android:singleLine="true"
+        android:text="Hoodie"
+        android:textSize="15dp"
+        android:textStyle="bold" />
+
+    <TextView
+        android:id="@+id/announcement_location"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/announcement_time"
+        android:layout_marginBottom="@dimen/margin_left_5"
+        android:layout_toEndOf="@+id/announcement_img"
+        android:layout_toRightOf="@+id/announcement_img"
+        android:singleLine="true"
+        android:text="Lahore,Punjab ,Pakistan"
+        android:textSize="12dp" />
+
+    <TextView
+        android:id="@+id/announcement_time"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/announcement_img"
+        android:layout_toEndOf="@+id/announcement_img"
+        android:layout_toRightOf="@+id/announcement_img"
+        android:singleLine="true"
+        android:text="Jan,2015"
+        android:textSize="12dp" />
+
+</RelativeLayout>

@@ -14,6 +14,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.util.Base64;
 
+import com.chatdbserver.xmpp.model.PhoneBookContacts;
 import com.mallapp.View.R;
 
 import java.io.ByteArrayOutputStream;
@@ -22,6 +23,7 @@ import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Locale;
 import java.util.TimeZone;
 import java.util.regex.Pattern;
@@ -34,6 +36,7 @@ public class StaticLiterls {
 
     public static Bitmap announceR_IMG;
     public static Bitmap announcement_bitmap;
+    public static List<PhoneBookContacts> particpantsList=new ArrayList<>();
 
     public static String reward;
     public static boolean bookmark_fvrt = true;

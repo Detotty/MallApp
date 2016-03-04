@@ -5,7 +5,7 @@
     android:layout_height="match_parent"
     android:background="@color/white" >
 
-    <LinearLayout
+    <RelativeLayout
         android:id="@+id/headerId"
         android:layout_width="fill_parent"
         android:layout_height="wrap_content"
@@ -16,24 +16,16 @@
         android:weightSum="2"
         android:paddingBottom="@dimen/margin_left_10"
         android:paddingTop="@dimen/margin_left_10" >
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_centerHorizontal="true"
+            android:layout_centerVertical="true"
+            android:textColor="@color/white"
+            android:textStyle="bold"
+            android:textSize="@dimen/margin_left_20"
+            android:text="@string/recent_chats"/>
 
-        <EditText
-            android:id="@+id/search_latest"
-            android:layout_width="290dp"
-            android:layout_height="40dp"
-            android:layout_marginLeft="10dp"
-            android:layout_weight="1.6"
-            android:background="@drawable/shape_round_rectangle"
-            android:drawableLeft="@drawable/search"
-            android:ems="10"
-            android:imeOptions="actionDone"
-            android:gravity="center_vertical"
-            android:hint="@string/search"
-            android:inputType="text" >
-
-            <requestFocus />
-
-        </EditText>
         <ImageButton
             android:id="@+id/chat_btn"
             android:layout_width="40dp"
@@ -44,8 +36,9 @@
             android:layout_gravity="center_vertical"
             android:layout_marginLeft="@dimen/margin_left_10"
             android:visibility="visible"
-            />
-    </LinearLayout>
+            android:layout_alignParentTop="true"
+            android:layout_alignParentEnd="true" />
+    </RelativeLayout>
 
 
     <RelativeLayout

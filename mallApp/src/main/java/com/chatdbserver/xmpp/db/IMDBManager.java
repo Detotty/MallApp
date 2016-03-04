@@ -84,8 +84,8 @@ public class IMDBManager {
         List<OpenChats> openChatsList = getOpenChatsfromDB();
 
         int i = 0;
-        for(OpenChats openChats: openChatsList){
-            if(openChats.getNumOfUnreadMsgs() >0)
+        for (OpenChats openChats : openChatsList) {
+            if (openChats.getNumOfUnreadMsgs() > 0)
                 i++;
         }
 
@@ -93,13 +93,13 @@ public class IMDBManager {
 
     }
 
-    public List<String> getListOfUnreadMsges() throws SQLException{
-        List<OpenChats> openChatsList  = getOpenChatsfromDB();
+    public List<String> getListOfUnreadMsges() throws SQLException {
+        List<OpenChats> openChatsList = getOpenChatsfromDB();
 
-        List<String> unreaList = new  ArrayList<String>();
+        List<String> unreaList = new ArrayList<String>();
 
-        for(OpenChats openChats: openChatsList){
-            if(openChats.getLastMessage().getMsgStatus() == IMessageStatus.MESSAGEUNREAD){
+        for (OpenChats openChats : openChatsList) {
+            if (openChats.getLastMessage().getMsgStatus() == IMessageStatus.MESSAGEUNREAD) {
                 unreaList.add(openChats.getPhoneBookContacts().getFirstName() + " " +
                         openChats.getLastMessage().getMessage());
             }
@@ -117,15 +117,14 @@ public class IMDBManager {
                 while (iterator.hasNext()) {
                     SingleChat singleChat = iterator.next();
 
-                    if (singleChat.getMsgStatus() == IMessageStatus.MESSAGEUNREAD){
+                    if (singleChat.getMsgStatus() == IMessageStatus.MESSAGEUNREAD) {
                         singleChat.setMsgStatus(IMessageStatus.MESSAGEREAD);
                         this.singlechatDao.update(singleChat);
                     }
                     chatVector.add(singleChat);
 
                 }
-            }
-            finally {
+            } finally {
                 iterator.close();
             }
         }
@@ -144,12 +143,13 @@ public class IMDBManager {
         return true;
     }
 
+
     public SingleChat getMsgByPacketId(String packetId) throws SQLException {
         QueryBuilder<OpenChats, String> openChats = this.openchatsDao.queryBuilder();
         QueryBuilder<SingleChat, Integer> singleChats = this.singlechatDao.queryBuilder();
 
 
-        singleChats.where().eq("packetId",packetId);
+        singleChats.where().eq("packetId", packetId);
 
         SingleChat sinlge = this.singlechatDao.queryForFirst(singleChats.prepare());
 
@@ -160,22 +160,53 @@ public class IMDBManager {
 
     }
 
+    public boolean updateOpenChats(String jid, PhoneBookContacts phoneBookContacts) throws SQLException {
+        OpenChats openChat1 = (OpenChats) this.openchatsDao.queryForId(jid);
+        if (openChat1 != null) {
+
+            openChat1.setPhoneBookContacts(phoneBookContacts);
+            this.appcontactDao.update(phoneBookContacts);
+            this.openchatsDao.update(openChat1);
+        }
+
+        return true;
+    }
+
     public void saveChat(String jid, SingleChat singleChat) throws SQLException {
         OpenChats openChat1 = (OpenChats) this.openchatsDao.queryForId(jid);
+        PhoneBookContacts phoneBookContacts = null;
         if (openChat1 == null) {
             openChat1 = new OpenChats(jid);
             Log.d("saving chat", "saved chat jid:" + jid);
-            PhoneBookContacts phoneBookContacts = null;
-            phoneBookContacts = getAppContactOfId(jid);
 
+            phoneBookContacts = getAppContactOfId(jid);
             openChat1.setPhoneBookContacts(phoneBookContacts);
             this.openchatsDao.createOrUpdate(openChat1);
         }
         if (singleChat != null) {
             singleChat.setOpenchats(openChat1);
+            phoneBookContacts = getAppContactOfId(jid);
+            singleChat.setPhoneBookContacts(phoneBookContacts);
             this.singlechatDao.createOrUpdate(singleChat);
         }
     }
+
+    public void saveGroupChat(String jid, SingleChat singleChat, PhoneBookContacts phoneBookContacts) throws SQLException {
+        OpenChats openChat1 = (OpenChats) this.openchatsDao.queryForId(jid);
+        if (openChat1 == null) {
+            openChat1 = new OpenChats(jid);
+            Log.d("saving chat", "saved chat jid:" + jid);
+//            openChat1.setParticipants((ForeignCollection<ParticipantsModel>) arrayList);
+            openChat1.setPhoneBookContacts(phoneBookContacts);
+            this.openchatsDao.createOrUpdate(openChat1);
+        }
+        if (singleChat != null) {
+            singleChat.setOpenchats(openChat1);
+            singleChat.setPhoneBookContacts(phoneBookContacts);
+            this.singlechatDao.createOrUpdate(singleChat);
+        }
+    }
+
 
     public void saveContact(PhoneBookContacts contact) throws SQLException {
         PhoneBookContacts phoneBookContacts = (PhoneBookContacts) this.appcontactDao.queryForId(contact.getUserId());
@@ -190,11 +221,10 @@ public class IMDBManager {
     }
 
 
-
     public List<PhoneBookContacts> getAllContacts() throws SQLException {
-        List<PhoneBookContacts> oChats ;
+        List<PhoneBookContacts> oChats;
         QueryBuilder<PhoneBookContacts, String> queryBuilder = this.appcontactDao.queryBuilder();
-        queryBuilder.where().eq("IsContact",true);
+        queryBuilder.where().eq("IsContact", true);
 
         oChats = this.appcontactDao.query(queryBuilder.prepare());
 
@@ -203,9 +233,9 @@ public class IMDBManager {
 
 
     public PhoneBookContacts getAppContactOfId(String userId) throws SQLException {
-        if( userId.contains("_") )
+        if (userId.contains("_"))
             userId = userId.split("_")[1];
-        if( userId.contains("@") )
+        if (userId.contains("@"))
             userId = userId.split("@")[0];
 
         PhoneBookContacts savedContact = (PhoneBookContacts) this.appcontactDao.queryForId(userId);
@@ -228,13 +258,12 @@ public class IMDBManager {
                 while (iterator.hasNext()) {
                     SingleChat singleChat = iterator.next();
 
-                    if (singleChat.getMsgStatus() == IMessageStatus.MESSAGEUNREAD){
+                    if (singleChat.getMsgStatus() == IMessageStatus.MESSAGEUNREAD) {
                         chatVector.add(singleChat);
                     }
 
                 }
-            }
-            finally {
+            } finally {
                 iterator.close();
             }
         }

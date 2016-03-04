@@ -335,6 +335,23 @@
             android:windowSoftInputMode="stateHidden|adjustResize"></activity>
 
         <activity
+            android:name=".GroupChatScreen"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+        <activity
+            android:name=".InviteContacts"
+            android:configChanges="orientation|keyboardHidden|screenSize"
+            android:launchMode="singleTop"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateHidden"></activity>
+
+        <activity
+            android:name=".GroupParticipants"
+            android:screenOrientation="portrait"></activity>
+
+        <activity
             android:name=".CeRegContacts"
             android:screenOrientation="portrait"></activity>
 

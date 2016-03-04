@@ -1,0 +1,27 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<RelativeLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:background="@color/purple"
+    android:layout_height="27dp">
+    <TextView
+        android:id="@+id/list_header_title"
+        android:layout_width="wrap_content"
+        android:layout_height="23dp"
+        android:layout_alignParentLeft="true"
+        android:layout_centerVertical="true"
+        android:paddingLeft="20dp"
+        android:gravity="right|center_vertical"
+        android:textColor="@color/white"
+        android:textStyle="bold" />
+    
+    <LinearLayout
+        android:layout_below="@+id/list_header_title"
+        android:layout_width="match_parent"
+        android:visibility="gone"
+        android:background="@android:color/transparent"
+        android:layout_height="2dp"
+        android:orientation="vertical" />
+</RelativeLayout>
+<!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/list_header.xml -->

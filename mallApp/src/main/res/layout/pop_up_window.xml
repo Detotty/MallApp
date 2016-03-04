@@ -1,0 +1,66 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="fill_parent"
+    android:layout_height="fill_parent"
+
+    android:id="@+id/parent_layout"
+    android:background="#99000000"
+    android:paddingLeft="6dp"
+    android:paddingRight="6dp"
+     >
+    <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical"
+        android:layout_alignParentBottom="true"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true">
+    <Button
+        android:id="@+id/btn1"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/pop_up_window_white_btn_selector"
+        android:minHeight="40dp"
+        android:textColor="#acacac"
+        android:text="dog"
+        android:textSize="16dp" />
+
+    <Button
+        android:id="@+id/btn2"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/pop_up_window_white_btn_selector"
+        android:minHeight="60dp"
+        android:text="dog"
+        android:textColor="@color/purple"
+        android:textSize="21dp" />
+
+    <Button
+        android:id="@+id/cancel"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="1dp"
+        android:background="@drawable/pop_up_window_white_btn_selector"
+        android:minHeight="55dp"
+        android:text="@string/cancel"
+
+        android:textColor="@color/purple"
+        android:textSize="21dp"
+        />
+    <Button
+        android:id="@+id/cancelone"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginBottom="3dp"
+        android:layout_marginTop="4dp"
+        android:background="@drawable/pop_up_window_white_btn_selector"
+        android:minHeight="55dp"
+        android:text="@string/cancel"
+        android:textColor="@color/purple"
+        android:textSize="22dp"
+        android:visibility="gone"
+        android:textStyle="bold" />
+</LinearLayout>
+</RelativeLayout>

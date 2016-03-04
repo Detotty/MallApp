@@ -111,5 +111,15 @@
         <item name="android:background">@drawable/text_field</item>
         <item name="android:textSize">16sp</item>
     </style>
+
+    <style name="AnimationPopup">
+        <item name="android:windowEnterAnimation">@anim/popup_show</item>
+        <item name="android:windowExitAnimation">@anim/popup_hide</item>
+    </style>
+
+    <style name="CheckBoxTheme" parent="Theme.AppCompat">
+        <item name="colorAccent">@color/purple</item>
+        <item name="android:textColorSecondary">@color/purple</item>
+    </style>
     
 </resources>

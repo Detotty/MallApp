@@ -2,10 +2,12 @@ package com.mallapp.Constants;
 
 public class ApiConstants {
 
-    public static final String URL_KEY = "http://52.28.59.218:5001/api/";
+    public static final String URL_KEY = "http://52.28.59.218:20080/api/";
 
 
     public static final String ACCOUNT_URL_KEY = URL_KEY + "Account/";
+
+    public static final String USER_URL_KEY = URL_KEY + "User/";
 
     public static final String SETTINGS_URL_KEY = URL_KEY + "Setting/";
 
@@ -88,6 +90,10 @@ public class ApiConstants {
     public static final String GET_LOYALTY_CARD_TYPES = SETTINGS_URL_KEY + "GetLoyaltyCardTypes";
 
     public static final String DEL_LOYALTY_CARD = ACCOUNT_URL_KEY + "DeleteLoyaltyCard/";
+
+    public static final String GET_MALL_CONTACTS = USER_URL_KEY + "UserContacts";
+
+    public static final String GET_OTHER_PROFILE = USER_URL_KEY + "UserInfo/";
 
 
 }

@@ -5,19 +5,23 @@ package com.mallapp.Constants;
  */
 public class GlobelWebURLs {
     //test server
-    public static final String URL_KEY 	="https://crowdeyews-test.azurewebsites.net/WCFService.svc/";
+    public static final String URL_KEY = "https://crowdeyews-test.azurewebsites.net/WCFService.svc/";
     //Production Server
 //	public static final String URL_KEY 	="https://crowdeyesprod.azurewebsites.net/WCFService.svc/";
     //XMPP server
-    public static final String IM_SERVER	 					=	"ec2-52-29-132-13.eu-central-1.compute.amazonaws.com";
+    public static final String IM_SERVER = "ec2-52-29-132-13.eu-central-1.compute.amazonaws.com";
     //CE_user
-//	public static final String ce_user	 						=	"ce_";
+//	public static final String ce_user = "ce_";
     //CE_test_user
-    public static final String ce_user	 						=	"cetest_";
+    public static final String ce_user = "cetest_";
     //CE_Company
-//	public static final String ce_company	 					=	"crowdeyes";
+//	public static final String ce_company =	"crowdeyes";
     //CE_test_company
-    public static final String ce_company	 					=	"crowdeyestesting";
+    public static final String ce_company = "crowdeyestesting";
+    //CE_group_ref
+    public static final String ce_group = "@conference.ec2-52-29-132-13.eu-central-1.compute.amazonaws.com";
+    //CE_claim
+    public static final String ce_claim = "ce_claim_";
 
 
     public static final String SEND_SMS_URL_KEY 				=	URL_KEY+"SendValidationCode";

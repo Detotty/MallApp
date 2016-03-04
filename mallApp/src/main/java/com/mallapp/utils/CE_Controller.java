@@ -19,6 +19,7 @@ import com.android.volley.toolbox.Volley;
 import com.chatdbserver.xmpp.IMManager;
 import com.chatdbserver.xmpp.model.PhoneBookContacts;
 import com.mallapp.Application.MallApplication;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Constants.GlobelWebURLs;
 import com.mallapp.Model.ContactModel;
@@ -226,7 +227,7 @@ public class CE_Controller implements Runnable {
 
         RequestQueue mRequestQueue = Volley.newRequestQueue(MallApplication.appContext);
         CustomRequest jsonObjReq = new CustomRequest(Request.Method.POST,
-                "http://52.28.59.218:5001/api/User/UserContacts", jsonStr, new Response.Listener<JSONArray>() {
+                ApiConstants.GET_MALL_CONTACTS, jsonStr, new Response.Listener<JSONArray>() {
 
             @Override
             public void onResponse(JSONArray response) {
@@ -278,7 +279,7 @@ public class CE_Controller implements Runnable {
             phoneBookContacts = new PhoneBookContacts();
             try {
                 JSONObject object = jsonArray.getJSONObject(i);
-                phoneNumber = object.getString("MobileNumber");
+                phoneNumber = object.getString("MobilePhone");
                 comObj.setPhone_number(phoneNumber);
                 phoneBookContacts.setMobilePhone(phoneNumber);
                 if (true) {
@@ -292,8 +293,7 @@ public class CE_Controller implements Runnable {
                     phoneBookContacts.setFirstName(name);
                     phoneBookContacts.setUserId(profile_id);
 
-                    /*JSONObject pictureObj = jsonObject_profileInfo.getJSONObject("Picture");
-                    profile_pic_url = pictureObj.getString("URI");
+                    profile_pic_url = object.getString("ImageURL");
 
                     if (profile_pic_url == "null") {
                         comObj.setProfile_pic_url("null");
@@ -302,7 +302,7 @@ public class CE_Controller implements Runnable {
                         comObj.setProfile_pic_url(profile_pic_url);
                         phoneBookContacts.setFileName(profile_pic_url);
 
-                    }*/
+                    }
                     phoneBookContacts.setAppUser(true);
                     phoneBookContacts.setIsContact(true);
                     IMManager.getIMManager(MallApplication.appContext).saveContactById(phoneBookContacts);

@@ -428,6 +428,19 @@
 	<string name="last_activity">"Last Activity: "</string>
 	<string name="settings">Settings</string>
 	<string name="comment">" Comment"</string>
+	<string name="recent_chats">Recent Chats</string>
+	<string name="grp_msg">" has added "</string>
+	<string name="grp_msg1">" to group."</string>
+	<string name="add_participants">Add Participant</string>
+	<string name="show_participants">Show Participants</string>
+	<string name="mobile">Mobile</string>
+	<string name="invite">invite</string>
+	<string name="ma_share_msg">Hi, I have joined MallApp which is a service that helps people help find malls news and offers. Get the mal info by downloading MallApp to your smartphone.</string>
+	<string name="cant_chat">Can\'t chat with yourself</string>
+	<string name="delivered">Delivered</string>
+	<string name="canceled">Closed</string>
+	<string name="announcement_handed_over">Announcement has been handed over</string>
+
 
 
 
