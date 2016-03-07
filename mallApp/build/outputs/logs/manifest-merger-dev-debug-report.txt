@@ -1,6 +1,6 @@
 -- Merging decision tree log ---
 manifest
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-390:12
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:2:1-381:12
 	package
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:4:5-31
 		INJECTED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml
@@ -286,7 +286,7 @@ MERGED from [com.google.android.gms:play-services-gcm:8.4.0] J:\Android\Raw\Mall
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:46:22-79
 application
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:49:5-388:19
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:49:5-379:19
 MERGED from [MallApp:parallax:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\AndroidManifest.xml:11:5-16:19
 MERGED from [com.android.support:support-v4:23.1.1] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.android.support\support-v4\23.1.1\AndroidManifest.xml:22:5-20
 MERGED from [MallApp:libraryviewpager:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\libraryviewpager\unspecified\AndroidManifest.xml:9:5-20
@@ -635,67 +635,55 @@ ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:175:9-181
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:176:13-55
 activity#com.mallapp.View.ServicesMainMenuActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:182:9-188:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:182:9-186:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:186:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:185:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:185:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:187:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:184:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:184:13-42
 	android:name
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:183:13-53
 activity#com.mallapp.View.FavouritesMainMenuActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:189:9-195:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:187:9-191:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:193:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:190:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:192:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:194:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:191:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:189:13-42
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:190:13-55
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:188:13-55
 activity#com.mallapp.View.DirectionsNParking
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:196:9-202:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:192:9-198:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:200:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:196:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:199:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:195:13-42
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:201:13-61
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:197:13-61
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:198:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:194:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:197:13-47
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:193:13-47
 activity#com.mallapp.View.DirectionsNParkingCreateObject
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:203:9-209:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:199:9-203:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:207:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:202:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:206:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:208:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:205:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:201:13-42
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:204:13-59
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:200:13-59
 activity#com.mallapp.View.LiveMap
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:210:9-216:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:204:9-210:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:214:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:208:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:213:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:207:13-42
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:215:13-61
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:209:13-61
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:212:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:206:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:211:13-36
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:205:13-36
 meta-data#com.google.android.gms.version
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:218:9-220:69
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:212:9-214:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:21:9-23:69
@@ -728,275 +716,265 @@ MERGED from [com.google.android.gms:play-services-basement:8.4.0] J:\Android\Raw
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:21:9-23:69
 MERGED from [com.google.android.gms:play-services-basement:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-basement\8.4.0\AndroidManifest.xml:21:9-23:69
 	android:value
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:220:13-66
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:214:13-66
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:219:13-58
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:213:13-58
 meta-data#com.google.android.geo.API_KEY
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:221:9-223:71
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:215:9-217:71
 	android:value
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:223:13-68
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:217:13-68
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:222:13-58
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:216:13-58
 activity#com.mallapp.View.RegistrationActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:225:9-232:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:219:9-226:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:230:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:224:13-49
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:228:13-64
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:222:13-64
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:229:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:223:13-42
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:231:13-61
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:225:13-61
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:227:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:221:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:226:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:220:13-49
 activity#com.mallapp.View.WebViewActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:233:9-240:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:227:9-232:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:238:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:231:13-49
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:236:13-59
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:229:13-59
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:237:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:239:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:235:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:230:13-42
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:234:13-44
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:228:13-44
 activity#com.mallapp.Fragments.WebFragment
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:241:9-248:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:233:9-238:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:246:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:237:13-49
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:244:13-59
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:235:13-59
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:245:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:247:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:243:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:236:13-42
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:242:13-61
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:234:13-61
 activity#com.mallapp.View.MapFullScreenActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:249:9-257:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:239:9-245:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:254:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:243:13-49
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:252:13-67
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:241:13-67
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:253:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:256:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:251:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:242:13-42
 	android:theme
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:255:13-79
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:244:13-79
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:250:13-50
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:240:13-50
 activity#com.mallapp.View.MapDirectionActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:258:9-266:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:246:9-252:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:263:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:250:13-49
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:261:13-67
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:248:13-67
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:262:13-42
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:265:13-61
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:260:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:249:13-42
 	android:theme
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:264:13-79
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:251:13-79
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:259:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:247:13-49
 activity#com.facebook.FacebookActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:267:9-271:75
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:253:9-257:75
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:270:13-45
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:256:13-45
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:269:13-96
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:255:13-96
 	android:theme
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:271:13-72
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:257:13-72
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:268:13-57
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:254:13-57
 provider#com.facebook.FacebookContentProvider
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:273:9-276:39
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:259:9-262:39
 	android:authorities
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:275:13-90
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:261:13-90
 	android:exported
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:276:13-36
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:262:13-36
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:274:13-64
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:260:13-64
 activity#com.mallapp.View.FloorOverviewActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:278:9-281:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:264:9-267:20
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:280:13-66
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:266:13-66
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:279:13-50
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:265:13-50
 activity#com.mallapp.View.FullScreenImage
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:282:9-288:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:268:9-274:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:286:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:272:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:285:13-43
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:271:13-43
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:284:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:270:13-74
 	android:theme
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:287:13-79
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:273:13-79
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:283:13-44
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:269:13-44
 activity#com.mallapp.View.NotificationActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:289:9-292:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:275:9-278:20
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:291:13-64
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:277:13-64
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:290:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:276:13-49
+activity#com.mallapp.View.LanguageChangeActivity
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:280:9-283:20
+	android:label
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:282:13-64
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:281:13-51
 activity#com.mallapp.View.FullscreenActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:294:9-300:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:285:9-291:20
+	android:screenOrientation
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:289:13-49
+	android:launchMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:288:13-43
+	android:configChanges
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:287:13-74
+	android:theme
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:290:13-51
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:286:13-47
+activity#com.mallapp.View.AddCardActivity
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:293:9-299:20
 	android:screenOrientation
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:298:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:297:13-43
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:296:13-74
-	android:theme
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:299:13-51
-	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:295:13-47
-activity#com.mallapp.View.AddCardActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:302:9-308:20
-	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:307:13-49
-	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:306:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:297:13-42
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:305:13-67
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:296:13-67
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:304:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:295:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:303:13-44
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:294:13-44
 activity#com.mallapp.View.CardDetailsActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:310:9-316:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:301:9-307:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:315:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:306:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:314:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:305:13-42
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:313:13-67
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:304:13-67
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:312:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:303:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:311:13-48
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:302:13-48
 activity#com.mallapp.View.BarcodePreviewActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:318:9-323:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:309:9-314:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:322:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:313:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:321:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:312:13-42
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:320:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:311:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:319:13-51
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:310:13-51
 activity#com.mallapp.View.CropActivity
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:325:9-330:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:316:9-321:20
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:329:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:320:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:328:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:319:13-42
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:327:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:318:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:326:13-41
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:317:13-41
 activity#com.mallapp.View.ChatScreen
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:332:9-335:79
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:323:9-326:79
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:334:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:325:13-49
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:335:13-67
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:326:13-67
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:333:13-39
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:324:13-39
 activity#com.mallapp.View.GroupChatScreen
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:337:9-342:66
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:328:9-333:66
 	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:341:13-49
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:332:13-49
 	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:340:13-43
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:331:13-43
 	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:342:13-54
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:333:13-54
 	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:339:13-74
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:330:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:338:13-44
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:329:13-44
 activity#com.mallapp.View.InviteContacts
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:343:9-348:66
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:334:9-339:66
+	android:screenOrientation
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:338:13-49
+	android:launchMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:337:13-43
+	android:windowSoftInputMode
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:339:13-54
+	android:configChanges
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:336:13-74
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:335:13-43
+activity#com.mallapp.View.GroupParticipants
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:341:9-343:61
+	android:screenOrientation
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:343:13-49
+	android:name
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:342:13-46
+activity#com.mallapp.View.CeRegContacts
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:345:9-347:61
 	android:screenOrientation
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:347:13-49
-	android:launchMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:346:13-43
-	android:windowSoftInputMode
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:348:13-54
-	android:configChanges
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:345:13-74
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:344:13-43
-activity#com.mallapp.View.GroupParticipants
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:350:9-352:61
-	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:352:13-49
-	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:351:13-46
-activity#com.mallapp.View.CeRegContacts
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:354:9-356:61
-	android:screenOrientation
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:356:13-49
-	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:355:13-42
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:346:13-42
 receiver#com.mallapp.pushnotification.GcmBroadcastReceiver
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:358:9-367:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:349:9-358:20
 	android:permission
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:360:13-73
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:351:13-73
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:359:13-77
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:350:13-77
 intent-filter#com.google.android.c2dm.intent.RECEIVE+com.google.android.c2dm.intent.REGISTRATION+com.mallapp.View
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:361:13-366:29
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:352:13-357:29
 action#com.google.android.c2dm.intent.RECEIVE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:362:17-81
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:353:17-81
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:362:25-78
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:353:25-78
 action#com.google.android.c2dm.intent.REGISTRATION
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:363:17-86
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:354:17-86
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:363:25-83
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:354:25-83
 category#com.mallapp.View
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:365:17-61
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:356:17-61
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:365:27-58
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:356:27-58
 service#com.mallapp.pushnotification.GCMNotificationIntentService
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:370:9-376:19
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:361:9-367:19
 	android:exported
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:372:13-37
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:363:13-37
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:371:13-85
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:362:13-85
 intent-filter#com.google.android.c2dm.intent.RECEIVE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:373:13-375:29
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:364:13-366:29
 receiver#com.mallapp.broadcast.ConnectionChangeReceiver
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:378:9-383:20
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:369:9-374:20
 	android:label
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:379:13-46
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:370:13-46
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:378:19-80
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:369:19-80
 intent-filter#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:380:13-382:29
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:371:13-373:29
 action#android.net.conn.CONNECTIVITY_CHANGE
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:381:17-78
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:372:17-78
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:381:25-76
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:372:25-76
 service#com.chatdbserver.xmpp.XmppService
-ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:385:9-68
+ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:376:9-68
 	android:name
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:385:18-66
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:376:18-66
 activity#com.google.android.gms.ads.AdActivity
 ADDED from [com.google.android.gms:play-services-ads:8.4.0] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\com.google.android.gms\play-services-ads\8.4.0\AndroidManifest.xml:26:9-29:64
 	android:configChanges

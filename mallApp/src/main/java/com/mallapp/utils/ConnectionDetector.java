@@ -43,6 +43,7 @@ public class ConnectionDetector {
 
         }
     }
+
     @SuppressWarnings("deprecation")
     public static void showAlertDialog(final Context context, String title, String message, Boolean status) {
         AlertDialog alertDialog = new AlertDialog.Builder(context).create();

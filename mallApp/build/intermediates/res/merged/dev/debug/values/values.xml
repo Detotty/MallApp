@@ -274,6 +274,11 @@
 	</string-array>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/navigation_list.xml -->
     <eat-comment/>
+    <string-array name="language_items">
+        <item>Phone Default</item>
+        <item>English</item>
+        <item>Danish</item>
+    </string-array>
     <string-array name="nav_drawer_icons">
         <item>mall_home</item>
         <item>mall_info</item>
@@ -1227,6 +1232,11 @@
     <eat-comment/>
     <string name="create_calendar_message">Allow Ad to create a calendar event?</string>
     <string name="create_calendar_title">Create calendar event</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
+    <eat-comment/>
+    <string name="dan_language">Danish</string>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/res/values/admob_strings.xml -->
+    <eat-comment/>
     <string name="decline">Decline</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.makeramen/roundedimageview/2.2.1/res/values/values.xml -->
     <eat-comment/>
@@ -1253,6 +1263,7 @@
     <string name="edit_interests">Interests</string>
     <string name="edit_profile">Edit Profile</string>
     <string name="email">Email</string>
+    <string name="eng_language">English</string>
     <string name="enter_bar_num">Enter barcode number</string>
     <string name="enter_card_expiry">Enter expiry date</string>
     <string name="enter_card_issue">Enter issue date</string>
@@ -1386,6 +1397,7 @@
     <string name="parking_heading">Where is my car</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="ph_def">Phone Default</string>
     <string name="phone_no">Phone Number</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-location/8.4.0/res/values/location_strings.xml -->
     <eat-comment/>
@@ -2666,6 +2678,17 @@
         <item name="android:textStyle">bold</item>
         <item name="android:textSize">18sp</item>
         <item name="android:typeface">sans</item>
+    </style>
+    <style name="LanguageActivityText">
+        <item name="android:layout_width">wrap_content</item>
+        <item name="android:layout_height">wrap_content</item>
+        <item name="android:layout_marginLeft">15dp</item>
+        <item name="android:layout_centerVertical">true</item>
+        <item name="android:layout_alignParentLeft">true</item>
+        <item name="android:layout_alignParentStart">true</item>
+        <item name="android:textColor">@color/purple</item>
+        <item name="android:textSize">20sp</item>
+        <item name="android:textStyle">bold</item>
     </style>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.facebook.android/facebook-android-sdk/4.7.0/res/values/values.xml -->
     <eat-comment/>

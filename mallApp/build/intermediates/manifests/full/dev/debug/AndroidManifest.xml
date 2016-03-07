@@ -201,17 +201,13 @@
         </activity>
         <activity
             android:name="com.mallapp.View.ServicesMainMenuActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.mallapp.View.FavouritesMainMenuActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.mallapp.View.DirectionsNParking"
@@ -222,10 +218,8 @@
         </activity>
         <activity
             android:name="com.mallapp.View.DirectionsNParkingCreateObject"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.mallapp.View.LiveMap"
@@ -252,37 +246,29 @@
         </activity>
         <activity
             android:name="com.mallapp.View.WebViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_webview"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.mallapp.Fragments.WebFragment"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_webview"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.mallapp.View.MapFullScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_maps"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" >
         </activity>
         <activity
             android:name="com.mallapp.View.MapDirectionActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_maps"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" >
         </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -308,6 +294,10 @@
         </activity>
         <activity
             android:name="com.mallapp.View.NotificationActivity"
+            android:label="@string/title_activity_notification" >
+        </activity>
+        <activity
+            android:name="com.mallapp.View.LanguageChangeActivity"
             android:label="@string/title_activity_notification" >
         </activity>
         <activity

@@ -245,6 +245,7 @@ public class OffersTabFragment extends Fragment
         pager.setAdapter(adapter);
         tabs.setViewPager(pager);
         tabs.setTextColor(Color.parseColor("#663399"));
+        tabs.setIndicatorColor(Color.parseColor("#663399"));
         final int pageMargin = (int) TypedValue.applyDimension(TypedValue.COMPLEX_UNIT_DIP, 4,
                 getResources().getDisplayMetrics());
         pager.setPageMargin(pageMargin);

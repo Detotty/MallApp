@@ -48,7 +48,7 @@ import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
 import com.mallapp.utils.VolleyNetworkUtil;
 
-public class OfferPagerTabFragment extends Fragment implements MallDataListener {
+public class OfferPagerTabFragment extends Fragment implements MallDataListener, AbsListView.OnScrollListener {
 
     private static Context context;
     private static final String ARG_POSITION = "position";
@@ -283,7 +283,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
 //                            mallActivitiesListing = mallActivitiesModels;
 
                             callAddapter();
-                            list.setOnScrollListener(new AbsListView.OnScrollListener() {
+
+                            /*list.setOnScrollListener(new AbsListView.OnScrollListener() {
                                 @Override
                                 public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -303,7 +304,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                             pullToRefresh();
                                         }
                                 }
-                            });
+                            });*/
                         } else {
 //                            list.setAdapter(null);
 //                            mallActivitiesListing = null;
@@ -361,7 +362,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                             FilteredOffersNewsList(mallActivitiesListing);
                             callAddapter();
 //                            adapter.notifyDataSetChanged();
-                            list.setOnScrollListener(new AbsListView.OnScrollListener() {
+                            /*list.setOnScrollListener(new AbsListView.OnScrollListener() {
                                 @Override
                                 public void onScrollStateChanged(AbsListView view, int scrollState) {
 
@@ -379,7 +380,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
                                             pullToRefresh();
                                         }
                                 }
-                            });
+                            });*/
                         }
                         adapter.notifyDataSetChanged();
                     }
@@ -565,6 +566,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
         list.setAdapter(adapter);
         list.setSelectionFromTop(index, top);
         adapter.notifyDataSetChanged();
+        list.setOnScrollListener(this);
     }
 
 
@@ -593,5 +595,24 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener 
             FavouriteCentersModel centers = TITLES_Centers.get(position - 1);
             MainMenuConstants.SELECTED_MALL_PLACE_ID = centers.getMallPlaceId();
         }
+    }
+
+    @Override
+    public void onScrollStateChanged(AbsListView view, int scrollState) {
+
+    }
+
+    @Override
+    public void onScroll(AbsListView view, int firstVisibleItem, int visibleItemCount, int totalItemCount) {
+        Log.d("", "VisibleItemCount:" + visibleItemCount + ":: adapter count:" + adapter.getCount() + "::" + firstVisibleItem + "::" + totalItemCount + ":: calculation :" + (totalItemCount - visibleItemCount));
+        if (adapter.getCount() > 0)
+            if (!lastPage && (totalItemCount - visibleItemCount) <= (firstVisibleItem) && requestType != LAZY_LOADING) {
+                requestType = LAZY_LOADING;
+                MallIdSelection();
+                pageNo++;
+                list.addFooterView(footerView);
+                pullToRefresh();
+            }
+
     }
 }

@@ -1,0 +1,128 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical" >
+
+    <LinearLayout
+        android:id="@+id/header"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+
+        <include layout="@layout/shop_main_menu_header" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lang_def"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/LanguageActivityText"
+                android:id="@+id/textView_ph_def"
+                android:text="@string/ph_def"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shop_expand_right"
+                android:id="@+id/imageView1"
+                android:visibility="visible"
+                android:layout_marginRight="@dimen/margin_left_15"
+                android:layout_alignTop="@+id/textView_ph_def"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:id="@+id/imageViewTick1"
+                android:background="#acacac"
+                android:layout_alignParentBottom="true" />
+
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lang_eng"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/LanguageActivityText"
+                android:id="@+id/textView_eng"
+                android:text="@string/eng_language"
+                android:textColor="@color/purple" />
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shop_expand_right"
+                android:id="@+id/imageView2"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/margin_left_15"
+                android:layout_alignTop="@+id/textView_eng"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:id="@+id/imageViewTick2"
+                android:background="#acacac"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/lang_dan"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="vertical">
+        <RelativeLayout
+            android:layout_width="fill_parent"
+            android:layout_height="50dp"
+            android:background="@color/white">
+
+            <TextView
+                style="@style/LanguageActivityText"
+                android:text="@string/dan_language"
+                android:id="@+id/textView_dan"/>
+
+            <ImageView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:background="@drawable/shop_expand_right"
+                android:id="@+id/imageView3"
+                android:visibility="gone"
+                android:layout_marginRight="@dimen/margin_left_15"
+                android:layout_alignTop="@+id/textView_dan"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentEnd="true" />
+
+            <ImageView
+                android:layout_width="fill_parent"
+                android:layout_height="1dp"
+                android:background="#acacac"
+                android:layout_alignParentBottom="true"
+                />
+        </RelativeLayout>
+    </LinearLayout>
+
+
+
+</LinearLayout>
+<!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/layout/activity_language.xml -->

@@ -36,6 +36,7 @@ import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.FullScreenImage;
 import com.mallapp.View.FullscreenActivity;
+import com.mallapp.View.LanguageChangeActivity;
 import com.mallapp.View.NotificationActivity;
 import com.mallapp.View.R;
 import com.mallapp.View.RegistrationProfileActivity;
@@ -278,6 +279,12 @@ public class ProfileTabFragment extends Fragment {
                             R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.notification))) {
                     Intent intent = new Intent(getActivity(), NotificationActivity.class);
+                    startActivity(intent);
+                    getActivity().overridePendingTransition(R.anim.slidout_left,
+                            R.anim.slidein_left);
+
+                }else if (textView_prfile.getText().toString().equals(getString(R.string.change_language))) {
+                    Intent intent = new Intent(getActivity(), LanguageChangeActivity.class);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);

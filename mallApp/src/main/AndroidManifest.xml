@@ -181,17 +181,13 @@
         </activity>
         <activity
             android:name=".ServicesMainMenuActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".FavouritesMainMenuActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".DirectionsNParking"
@@ -202,10 +198,8 @@
         </activity>
         <activity
             android:name=".DirectionsNParkingCreateObject"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".LiveMap"
@@ -232,37 +226,29 @@
         </activity>
         <activity
             android:name=".WebViewActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_webview"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name="com.mallapp.Fragments.WebFragment"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_webview"
             android:launchMode="standard"
-            android:screenOrientation="portrait"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:screenOrientation="portrait" >
         </activity>
         <activity
             android:name=".MapFullScreenActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_maps"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" >
         </activity>
         <activity
             android:name=".MapDirectionActivity"
-            android:configChanges="orientation|keyboardHidden|screenSize"
             android:label="@string/title_activity_fullscreen_maps"
             android:launchMode="standard"
             android:screenOrientation="portrait"
-            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar"
-            android:windowSoftInputMode="stateAlwaysVisible" >
+            android:theme="@android:style/Theme.Holo.Light.Dialog.NoActionBar" >
         </activity>
         <activity
             android:name="com.facebook.FacebookActivity"
@@ -288,6 +274,11 @@
         </activity>
         <activity
             android:name=".NotificationActivity"
+            android:label="@string/title_activity_notification" >
+        </activity>
+
+        <activity
+            android:name=".LanguageChangeActivity"
             android:label="@string/title_activity_notification" >
         </activity>
 

@@ -50,7 +50,7 @@ public class ImageLoader {
     	
     }
     
-    final int stub_id = R.drawable.shop_logo1;
+    final int stub_id = R.drawable.shop;
 
     public void DisplayImage(String url, ImageView imageView){
     	imageViews.put(imageView, url);

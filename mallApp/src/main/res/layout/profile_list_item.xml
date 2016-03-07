@@ -21,7 +21,7 @@
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:background="@drawable/back_screen_indicator"
+            android:background="@drawable/shop_expand_right"
             android:id="@+id/textView11"
             android:layout_marginRight="@dimen/margin_left_15"
             android:layout_alignTop="@+id/textView_item_pro"

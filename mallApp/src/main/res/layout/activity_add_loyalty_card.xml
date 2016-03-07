@@ -243,7 +243,7 @@
                     android:layout_alignParentRight="true"
                     android:layout_centerVertical="true"
                     android:layout_marginRight="10dp"
-                    android:src="@drawable/back_screen_indicator"
+                    android:src="@drawable/shop_expand_right"
                     android:background="@color/transparent"
                     android:contentDescription="@string/app_name" />
             </RelativeLayout>

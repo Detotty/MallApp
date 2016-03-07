@@ -37,4 +37,11 @@
         <item>Notifications</item>
         <item>Change Language</item>
     </string-array>
+
+    <string-array name="language_items" >
+        <item>Phone Default</item>
+        <item>English</item>
+        <item>Danish</item>
+    </string-array>
+
 </resources>
