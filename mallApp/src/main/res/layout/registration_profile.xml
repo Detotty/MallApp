@@ -187,7 +187,7 @@
 			android:layout_marginTop="15dp"
 			android:paddingLeft="40dp"
 			android:paddingRight="40dp"
-			android:background="@drawable/registration_button_background"
+			android:background="@drawable/profile_update_selector"
 			android:text="@string/continue_"
 			android:textColor="@color/white"
 			android:contentDescription="@string/app_name"/>

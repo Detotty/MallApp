@@ -1116,7 +1116,7 @@
     <eat-comment/>
     <string name="announcement_handed_over">Announcement has been handed over</string>
     <string name="app_name">MallApp 0.0.8</string>
-    <string name="app_name1">Mall App</string>
+    <string name="app_name1">The Mall App</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <string name="appbar_scrolling_view_behavior" translatable="false">android.support.design.widget.AppBarLayout$ScrollingViewBehavior</string>
@@ -1409,6 +1409,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="provider_name">Provider Name</string>
     <string name="recent_chats">Recent Chats</string>
+    <string name="reg_suc">Registration successful</string>
     <string name="register_country_1">Select your country, enter your phone number and press continue</string>
     <string name="register_country_10">SMS faild, please try again.</string>
     <string name="register_country_11">SMS sent.</string>
@@ -1424,9 +1425,9 @@
     <string name="register_dummy2">consectetaur cilium adepisicing pecu,</string>
     <string name="register_dummy3">sed do eiusmod tempor incidedunt ut</string>
     <string name="register_dummy4">labore et dolore magna aliqua.</string>
-    <string name="register_error_email_message">Please enter email.</string>
-    <string name="register_error_email_validity_message">Please enter valid email.</string>
-    <string name="register_error_name_message">Please enter name.</string>
+    <string name="register_error_email_message">Please enter email</string>
+    <string name="register_error_email_validity_message">Please enter a valid email</string>
+    <string name="register_error_name_message">Please enter name</string>
     <string name="register_profile_1">Add photo</string>
     <string name="register_profile_2">Your Name</string>
     <string name="register_profile_3">Sync with Facebook</string>
@@ -1454,6 +1455,8 @@
     <eat-comment/>
     <string name="select_bar_type">Select barcode type</string>
     <string name="select_card_image">Select loyalty card images</string>
+    <string name="select_center">Please select at least one center</string>
+    <string name="select_interest">Please select at least one interest</string>
     <string name="sending_phone_number_dialog_message">Sending Verification Code</string>
     <string name="service_error_message">No services found for this mall</string>
     <string name="settings">Settings</string>
@@ -1506,7 +1509,10 @@
     <string name="title_settings">Settings</string>
     <string name="toast_no_card">No data found</string>
     <string name="toast_successful">Successfully Saved</string>
+    <string name="up_suc">Updated successfully</string>
     <string name="update">Update</string>
+    <string name="updating_center_data_message">Updating Centers</string>
+    <string name="updating_interest_data_message">Updating Interests</string>
     <string name="updating_profile_data_message">Updating Profile</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/shop_strings.xml -->
     <eat-comment/>

@@ -10,6 +10,7 @@ import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.drawable.BitmapDrawable;
 import android.graphics.drawable.Drawable;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.LayoutInflater;
@@ -27,6 +28,10 @@ import com.daimajia.slider.library.SliderLayout;
 import com.daimajia.slider.library.SliderTypes.BaseSliderView;
 import com.daimajia.slider.library.SliderTypes.TextSliderView;
 import com.daimajia.slider.library.Tricks.ViewPagerEx;
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
 import com.j256.ormlite.dao.Dao;
 import com.mallapp.Application.MallApplication;
@@ -49,6 +54,7 @@ import com.mallapp.socialsharing.Facebook_Login;
 import com.mallapp.socialsharing.Twitter_Integration;
 import com.mallapp.utils.BadgeUtils;
 import com.mallapp.utils.GlobelOffersNews;
+import com.mallapp.utils.SocialUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -69,7 +75,8 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 	VolleyNetworkUtil volleyNetworkUtil;
 	private DatabaseHelper databaseHelper = null;
 	boolean fav = false;
-
+	CallbackManager callbackManager;
+	ShareDialog shareDialog;
 
 
 	@Override
@@ -78,6 +85,9 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 		setContentView(R.layout.offer_detail_activity);
 		volleyNetworkUtil = new VolleyNetworkUtil(this);
 		getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_ALWAYS_HIDDEN); //UG4fewnT7&RV
+		FacebookSdk.sdkInitialize(getApplicationContext());
+		callbackManager = CallbackManager.Factory.create();
+		shareDialog = new ShareDialog(this);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 //		offer_object= GlobelOffersNews.offer_obj;
@@ -85,7 +95,7 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 		fav = offer_object.isFav();
 		init();
 		BadgeUtils.clearBadge(MallApplication.appContext);
-		volleyNetworkUtil.GetActivityDetail(ApiConstants.GET_NEWS_OFFERS_DETAIL_URL_KEY+offer_object.getActivityId()+"&languageId=1",this);
+		volleyNetworkUtil.GetActivityDetail(ApiConstants.GET_NEWS_OFFERS_DETAIL_URL_KEY+offer_object.getActivityId() + "&languageId=1",this);
 	}
 
 	private void setOfferDetail() {
@@ -186,12 +196,19 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 				social_sharing_layout.setVisibility(View.GONE);
 		
 		}*/else if(v.getId()== face_book.getId()){
-		
+			ShareLinkContent linkContent = new ShareLinkContent.Builder()
+					.setContentTitle("Hello Facebook")
+					.setContentDescription(
+							"The 'Hello Facebook' sample  showcases simple Facebook integration")
+					.setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+					.build();
+
+			shareDialog.show(linkContent);
 			/*Facebook_Login fb_profile= new Facebook_Login(getApplicationContext(), 	OffersDetailActivity.this, true );
 			fb_profile.loginToFacebook();*/
 			
 		}else if(v.getId()== twitter.getId()){
-		
+			SocialUtils.postToTwitter(this, getResources().getString(R.string.request_error_message) + "\n");
 			/*Twitter_Integration twitter= new Twitter_Integration(getApplicationContext(), OffersDetailActivity.this);
 			twitter.post_twitter();*/
 			
@@ -305,5 +322,11 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 	@Override
 	public void OnError() {
 
+	}
+
+	@Override
+	protected void onActivityResult(final int requestCode, final int resultCode, final Intent data) {
+		super.onActivityResult(requestCode, resultCode, data);
+		callbackManager.onActivityResult(requestCode, resultCode, data);
 	}
 }

@@ -5,6 +5,7 @@ import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
 import android.app.Dialog;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.database.Cursor;
@@ -25,6 +26,7 @@ import android.view.Gravity;
 import android.view.View;
 import android.view.Window;
 import android.view.WindowManager;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.AdapterView;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -175,8 +177,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 		controller = new RegistrationController(this);
 		requestType = RequestType.GET_USER_PROFILE;
-		controller.getUserProfile(ApiConstants.PROFILE_GET_URL_KEY,this);
-		setUserProfile();
+		controller.getUserProfile(ApiConstants.PROFILE_GET_URL_KEY, this);
+//		setUserProfile();
 
 		DOBEditText.setOnClickListener(dobEditTextListener);
 		locationTextView.setOnClickListener(locationTextViewListener);
@@ -393,9 +395,9 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 	protected void saveUserProfile() {
 
-		nameString = nameEditText.getText().toString();
-		emailString = emailEditText.getText().toString();
-		locationString = locationTextView.getText().toString();
+		nameString = nameEditText.getText().toString().trim();
+		emailString = emailEditText.getText().toString().trim();
+		locationString = locationTextView.getText().toString().trim();
 
 		DOBString = DOBEditText.getText().toString();
 		int selectedId = gender_group.getCheckedRadioButtonId();
@@ -444,7 +446,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 	}
 
 	@Override
-	public void onDataReceived(UserProfileModel userProfile) {
+	public void onDataReceived(final UserProfileModel userProfile) {
 
 		if(requestType.equals(RequestType.UPDATE_USER_PROFILE)) {
 
@@ -452,7 +454,10 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 			SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
 			DataHandler.updatePreferences(AppConstants.PROFILE_DATA, userProfile);
 
-			Toast.makeText(getApplicationContext(), "Registration Successful!", Toast.LENGTH_LONG).show();
+			if (ProfileTabFragment.isUpdate){
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.up_suc), Toast.LENGTH_LONG).show();
+			}else
+				Toast.makeText(getApplicationContext(), getResources().getString(R.string.reg_suc), Toast.LENGTH_LONG).show();
 
 //			Intent tabIntent = new Intent(RegistrationProfileActivity.this, DashBoardCrowedEye.class);
 
@@ -524,6 +529,8 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 
 									//Set it in the ImageView
 									profileImageView.setImageBitmap(bitmap);
+									userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bitmap));
+									DataHandler.updatePreferences(AppConstants.PROFILE_DATA, userProfile);
 								}
 
 								@Override
@@ -549,8 +556,7 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 					userProfile.setGender("female");
 				}
 				userProfile.setDeviceType(userProfile.getDeviceType());
-				Bitmap bmp = ((BitmapDrawable) profileImageView.getDrawable()).getBitmap();
-				userProfile.setImageBase64String(Image_Scaling.encodeTobase64(bmp));
+
 //userProfile.set(userProfile.getVersion());
 				SharedInstance.getInstance().getSharedHashMap().put(AppConstants.PROFILE_DATA, userProfile);
 //				DataHandler.updatePreferences(AppConstants.PROFILE_DATA, userProfile);
@@ -578,10 +584,9 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 		location_dialog.requestWindowFeature(Window.FEATURE_NO_TITLE);
 		location_dialog.setContentView(R.layout.add_location);
 		location_dialog.getWindow().setLayout(WindowManager.LayoutParams.MATCH_PARENT, WindowManager.LayoutParams.MATCH_PARENT);
-
+		location_dialog.getWindow().setSoftInputMode(WindowManager.LayoutParams.SOFT_INPUT_STATE_VISIBLE);
 		Button confirm = (Button) location_dialog.findViewById(R.id.cancel);
 		Button done = (Button) location_dialog.findViewById(R.id.done);
-
 		UserLocationModel userLocationModel = null;
 
 //		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
@@ -708,8 +713,11 @@ public class RegistrationProfileActivity extends Activity implements Registratio
 //		if(SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION)) {
 //			UserLocationModel userLocationModel = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
 			UserLocationModel userLocationModel = (UserLocationModel) DataHandler.getObjectPreferences(AppConstants.USER_LOCATION, UserLocationModel.class);
-			String userLocation = userLocationModel.getCityName()+","+ userLocationModel.getCountryName();
-			locationTextView.setText(userLocation);
+			if (userLocationModel.getCityName()!=null){
+				String userLocation = userLocationModel.getCityName()+","+ userLocationModel.getCountryName();
+				locationTextView.setText(userLocation);
+			}
+
 //		}
 
 

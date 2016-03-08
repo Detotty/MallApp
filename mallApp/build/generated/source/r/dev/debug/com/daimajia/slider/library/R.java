@@ -433,7 +433,7 @@ public final class R {
 		public static final int abc_textfield_search_activated_mtrl_alpha = 0x7f020042;
 		public static final int abc_textfield_search_default_mtrl_alpha = 0x7f020043;
 		public static final int abc_textfield_search_material = 0x7f020044;
-		public static final int indicator_corner_bg = 0x7f0200ff;
+		public static final int indicator_corner_bg = 0x7f0200fe;
 	}
 	public static final class id {
 		public static final int Accordion = 0x7f0e005d;

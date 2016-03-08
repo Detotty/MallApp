@@ -407,7 +407,7 @@ public class GroupChatScreen extends Activity implements IGroupChatListener {
                 holder.participant_name.setVisibility(View.GONE);
 //                holder.urMsgStatus.setVisibility(View.VISIBLE);
 
-//                Picasso.with(con).load(messageVector.get(position).getPhoneBookContacts().getFileName()).placeholder(R.drawable.avatar).into(holder.urImage);
+                Picasso.with(con).load(messageVector.get(position).getPhoneBookContacts().getFileName()).placeholder(R.drawable.avatar).into(holder.urImage);
 
 
                 holder.urDate.setText(messageVector.get(position).getMsgtime());

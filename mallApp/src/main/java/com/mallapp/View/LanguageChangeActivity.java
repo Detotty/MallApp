@@ -69,6 +69,5 @@ public class LanguageChangeActivity extends Activity implements View.OnClickList
             SelectDan.setVisibility(View.VISIBLE);
 
         }
-
     }
 }

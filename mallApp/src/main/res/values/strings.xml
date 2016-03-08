@@ -2,7 +2,7 @@
 <resources>
 
     <string name="app_name">MallApp 0.0.8</string>
-    <string name="app_name1">Mall App</string>
+    <string name="app_name1">The Mall App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
     <string name="fb_app_id">869358796518933</string>
@@ -51,6 +51,10 @@
 	<string name="registration_with_phone_button_title">Register with Phone</string>
 	<string name="registration_wtih_facebook_button_title">Register with Facebook</string>
 	<string name="notifications">Notifications</string>
+	<string name="reg_suc">Registration successful</string>
+	<string name="up_suc">Updated successfully</string>
+	<string name="select_center">Please select at least one center</string>
+	<string name="select_interest">Please select at least one interest</string>
 
 
 	<string name="access_code_country">Sent SMS successfully</string>
@@ -67,9 +71,9 @@
 	<string name="register_profile_1">Add photo</string>
 	<string name="register_profile_2">Your Name</string>
 	<string name="register_profile_3">Sync with Facebook</string>
-	<string name="register_error_name_message">Please enter name.</string>
-	<string name="register_error_email_message">Please enter email.</string>
-	<string name="register_error_email_validity_message">Please enter valid email.</string>
+	<string name="register_error_name_message">Please enter name</string>
+	<string name="register_error_email_message">Please enter email</string>
+	<string name="register_error_email_validity_message">Please enter a valid email</string>
 
 	<string name="location_msg1">Location services disabled</string>
 	<string name="location_msg2">Mall App needs access to your location. Please turn on location access.</string>
@@ -112,6 +116,8 @@
 	<string name="verifying_code_dialog_message">Verifying Verification Code</string>
 	<string name="registration_with_fb_dialog_message">Registration with Facebook</string>
 	<string name="updating_profile_data_message">Updating Profile</string>
+	<string name="updating_center_data_message">Updating Centers</string>
+	<string name="updating_interest_data_message">Updating Interests</string>
 	<string name="loading_data_message">Loading</string>
 	<string name="wait">Please wait...</string>
 	<string name="login_in_message">Signing In</string>

@@ -160,7 +160,7 @@ public class Select_Interest extends Activity implements OnClickListener {
 				controller.PostMallInterestSelection(ApiConstants.POST_SELECTED_INTEREST_URL_KEY + "?UserId=" + UserID + "&CategoryId="+CatID,false);
 
 			}else
-				AlertMessages.show_alert(Select_Interest.this, "The Mall App", "Please select at least one interest.", "OK");
+				AlertMessages.show_alert(Select_Interest.this, getResources().getString(R.string.app_name1), getResources().getString(R.string.select_interest), getResources().getString(R.string.ok));
 			
 		}else if(v.getId()== back.getId()){
 			try{

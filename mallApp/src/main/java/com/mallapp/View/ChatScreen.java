@@ -102,7 +102,7 @@ public class ChatScreen extends Activity implements IXMPPChatListener {
     }
 
     @Override
-    protected void onPause() {
+     protected void onPause() {
         super.onPause();
         im.setChatListener(null);
     }

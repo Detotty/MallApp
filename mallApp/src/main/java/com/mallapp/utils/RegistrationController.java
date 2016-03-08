@@ -722,7 +722,11 @@ public class RegistrationController {
 
     public void PostMallInterestSelection(String url, final boolean act) {
 
-        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
+        if (act)
+            progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.updating_center_data_message));
+        else
+            progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.updating_interest_data_message));
+
 
         JsonObjectRequest jsonRequest = new JsonObjectRequest(Request.Method.POST, url, null, new Response.Listener<JSONObject>() {
             @Override
@@ -732,6 +736,9 @@ public class RegistrationController {
                 try {
                     boolean success = jsonObject.getBoolean("Success");
                     if (success) {
+                        if (ProfileTabFragment.isUpdate) {
+                            Toast.makeText(context, context.getResources().getString(R.string.up_suc), Toast.LENGTH_LONG).show();
+                        }
                         if (act) {
                             try {
                                 if (!ProfileTabFragment.isUpdate) {

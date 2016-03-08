@@ -135,7 +135,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 				controller.PostMallInterestSelection(ApiConstants.POST_FAV_MALL_URL_KEY+"?UserId="+UserID+"&MallPlaceId="+MallPlaceID,true);
 
 			}else
-				AlertMessages.show_alert(Select_Favourite_Center.this, "The Mall App", "Please select at least one center.", "OK");
+				AlertMessages.show_alert(Select_Favourite_Center.this, getResources().getString(R.string.app_name1), getResources().getString(R.string.select_center), getResources().getString(R.string.ok));
 
 		}else if(v.getId()== all.getId()){
 

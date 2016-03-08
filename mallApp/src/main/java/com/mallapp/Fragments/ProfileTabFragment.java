@@ -5,6 +5,7 @@ import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageInfo;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -28,6 +29,10 @@ import android.widget.LinearLayout;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.facebook.CallbackManager;
+import com.facebook.FacebookSdk;
+import com.facebook.share.model.ShareLinkContent;
+import com.facebook.share.widget.ShareDialog;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.AppConstants;
 import com.mallapp.Model.UserProfile;
@@ -44,6 +49,7 @@ import com.mallapp.View.Select_Favourite_Center;
 import com.mallapp.View.Select_Interest;
 import com.mallapp.View.SplashScreen;
 import com.mallapp.imagecapture.Image_Scaling;
+import com.mallapp.utils.BuildConfig;
 import com.mallapp.utils.RegistrationController;
 import com.mallapp.utils.SocialUtils;
 import com.mallapp.utils.VolleyNetworkUtil;
@@ -61,14 +67,15 @@ public class ProfileTabFragment extends Fragment {
     UserProfileModel user_profile;
     ImageView user_ImageView;
     ImageButton back, fav;
-    TextView heading;
+    TextView heading, tv_Build;
     //    String link = StaticLiterls.link;
     String[] list_items, settings_items;
     public static boolean isUpdate = false;
     MaterialDialog mMaterialDialog;
     VolleyNetworkUtil volleyNetworkUtil;
     RegistrationController registrationController;
-
+    CallbackManager callbackManager;
+    ShareDialog shareDialog;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         // TODO Auto-generated method stub
@@ -80,6 +87,9 @@ public class ProfileTabFragment extends Fragment {
                              Bundle savedInstanceState) {
         // TODO Auto-generated method stub
         viewHome = inflater.inflate(R.layout.fragment_parent_tab_profile, container, false);
+        FacebookSdk.sdkInitialize(getActivity());
+        callbackManager = CallbackManager.Factory.create();
+        shareDialog = new ShareDialog(this);
         /*if (link.equals("")) {
             SignUpWebservice.getPlayStoreLink();
             link = StaticLiterls.link;
@@ -99,6 +109,7 @@ public class ProfileTabFragment extends Fragment {
         registrationController = new RegistrationController(getActivity());
         profileListview();
         heading = (TextView) viewHome.findViewById(R.id.offer_title);
+        tv_Build = (TextView) viewHome.findViewById(R.id.textView10);
         user_ImageView = (ImageView) viewHome.findViewById(R.id.user_image);
         back = (ImageButton) viewHome.findViewById(R.id.back);
         fav = (ImageButton) viewHome.findViewById(R.id.fav_offer);
@@ -111,6 +122,9 @@ public class ProfileTabFragment extends Fragment {
         back.setVisibility(View.GONE);
         fav.setVisibility(View.GONE);
 
+        int versionCode = BuildConfig.VERSION_CODE;
+        String versionName = BuildConfig.VERSION_NAME;
+        tv_Build.setText(getResources().getString(R.string.build_verion)+" "+versionName+" "+versionCode);
         user_profile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
 
         if (user_profile.getImageBase64String() != null) {
@@ -121,6 +135,19 @@ public class ProfileTabFragment extends Fragment {
         heading.setText(user_profile.getFullName());
 
 
+        facebook_btn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                ShareLinkContent linkContent = new ShareLinkContent.Builder()
+                        .setContentTitle("Hello Facebook")
+                        .setContentDescription(
+                                "The 'Hello Facebook' sample  showcases simple Facebook integration")
+                        .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                        .build();
+
+                shareDialog.show(linkContent);
+            }
+        });
         sms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -283,7 +310,7 @@ public class ProfileTabFragment extends Fragment {
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
 
-                }else if (textView_prfile.getText().toString().equals(getString(R.string.change_language))) {
+                } else if (textView_prfile.getText().toString().equals(getString(R.string.change_language))) {
                     Intent intent = new Intent(getActivity(), LanguageChangeActivity.class);
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
@@ -374,6 +401,7 @@ public class ProfileTabFragment extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
 
         super.onActivityResult(requestCode, resultCode, data);
+        callbackManager.onActivityResult(requestCode, resultCode, data);
 
         if (requestCode == 0) {
             if (resultCode == Activity.RESULT_OK) {
@@ -425,4 +453,5 @@ public class ProfileTabFragment extends Fragment {
         transaction.addToBackStack(null);
         transaction.commit();*/
     }
+
 }
