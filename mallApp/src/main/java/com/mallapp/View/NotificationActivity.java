@@ -58,7 +58,7 @@ public class NotificationActivity extends Activity {
 
                 if (isChecked) {
                     try {
-                        jsonObject.put("IsEnabled",true);
+                        jsonObject.put("IsEnabled",1);
                         volleyNetworkUtil.PostNotSet(ApiConstants.POST_MALL_NOTIFICATION_SETTING,jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();
@@ -66,7 +66,7 @@ public class NotificationActivity extends Activity {
                     DataHandler.updatePreferences(AppConstants.PREF_NOT_KEY,true);
                 } else {
                     try {
-                        jsonObject.put("IsEnabled",false);
+                        jsonObject.put("IsEnabled",0);
                         volleyNetworkUtil.PostNotSet(ApiConstants.POST_MALL_NOTIFICATION_SETTING, jsonObject);
                     } catch (JSONException e) {
                         e.printStackTrace();

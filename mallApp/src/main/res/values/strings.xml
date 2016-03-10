@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
 
-    <string name="app_name">MallApp 0.0.8</string>
+    <string name="app_name">The Mall App</string>
     <string name="app_name1">The Mall App</string>
     <string name="hello_world">Hello world!</string>
     <string name="action_settings">Settings</string>
@@ -167,7 +167,11 @@
 	<string name="eng_language">English</string>
 	<string name="dan_language">Danish</string>
 	<string name="logout_dialog_title">Mall App</string>
+	<string name="help_url">http://108.163.184.34/mallappwp/?page_id=47</string>
+	<string name="privacy_url">http://108.163.184.34/mallappwp/?page_id=58</string>
+	<string name="about_url">http://108.163.184.34/mallappwp/?page_id=27</string>
 	<string name="logout_dialog_message">Are you sure you want to logout?</string>
+	<string name="mall_app_invite_msg">Hi, I have joined MallApp which is service that help you find the best offers for mall near you. Join the MallApp by downloading MallApp to your smartphone. \n https://play.google.com/store/apps/details?id=com.crowdeyes.View</string>
 
 
 	<!-- Country Strings-->
@@ -405,9 +409,9 @@
 	<string name="provider_name">Provider Name</string>
 	<string name="add_provider_name">Add provider name</string>
 	<string name="issue_date">Issue Date</string>
-	<string name="issue_date_placeholder">21-1-2015</string>
+	<string name="issue_date_placeholder">MM DD, YYYY</string>
 	<string name="expiry_date">Expiry Date</string>
-	<string name="expiry_date_placeholder">20-1-2016</string>
+	<string name="expiry_date_placeholder">MM DD, YYYY</string>
 	<string name="barcode_number">Barcode Number</string>
 	<string name="add_barcode_here">Add barcode here</string>
 	<string name="barcode_type">Barcode Type</string>
@@ -427,6 +431,12 @@
 	<string name="toast_successful">Successfully Saved</string>
 	<string name="toast_no_card">No data found</string>
 	<string name="del_card_message">Do you want to delete this card?</string>
+	<string name="exp_card_message">Expiry date must be after issue date</string>
+	<string name="iss_card_message">Issue date must be before expiry date</string>
+	<string name="iss_emp_message">Please first enter issue date</string>
+	<string name="card_add_message">Adding card</string>
+	<string name="card_type_mismatch">Card type mismatch</string>
+	<string name="card_added">Card added successfully</string>
 
 	<!-- Message Tab-->
 	<string name="no_chats">No record found</string>

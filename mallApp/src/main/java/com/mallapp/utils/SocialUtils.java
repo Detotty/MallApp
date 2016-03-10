@@ -34,7 +34,7 @@ public class SocialUtils {
     public static void sendEmail(Context context, String msg) {
         Intent gmailIntent = new Intent();
         gmailIntent.setClassName("com.google.android.gm", "com.google.android.gm.ComposeActivityGmail");
-        gmailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.app_name));
+        gmailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, context.getResources().getString(R.string.app_name1));
         gmailIntent.putExtra(android.content.Intent.EXTRA_TEXT, msg);
         try {
             context.startActivity(gmailIntent);
@@ -47,4 +47,6 @@ public class SocialUtils {
         Uri uri = Uri.parse(tweetUrl);
         context.startActivity(new Intent(Intent.ACTION_VIEW, uri));
     }
+
+
 }

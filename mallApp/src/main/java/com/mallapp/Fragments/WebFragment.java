@@ -22,6 +22,7 @@ public class WebFragment extends FragmentActivity {
     WebView r;
     ProgressBar Pbar;
     TextView heading;
+    String url;
 
 
     public WebFragment() { }
@@ -33,6 +34,7 @@ public class WebFragment extends FragmentActivity {
         ImageButton button_back = (ImageButton) findViewById(R.id.back);
         heading = (TextView) findViewById(R.id.heading);
         heading.setText(getIntent().getStringExtra("heading"));
+        url = getIntent().getStringExtra("url");
         button_back.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -56,7 +58,7 @@ public class WebFragment extends FragmentActivity {
         r.getSettings().setBuiltInZoomControls(true);
 
         r.setWebViewClient(new ourViewClient());
-        r.loadUrl("https://www.google.com.pk/");
+        r.loadUrl(url);
 
 
         Pbar = (ProgressBar) findViewById(R.id.progressBar);

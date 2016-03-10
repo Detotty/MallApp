@@ -13,7 +13,7 @@ public class LoyaltyCardModel implements Serializable {
 
     String CardTitle;
 
-    int CardNumber;
+    Long CardNumber;
 
     String ProviderName;
 
@@ -76,11 +76,11 @@ public class LoyaltyCardModel implements Serializable {
         this.CardTitle = CardTitle;
     }
 
-    public int getCardNumber(){
+    public Long getCardNumber(){
         return CardNumber;
     }
 
-    public void setCardNumber (int CardNumber)
+    public void setCardNumber (Long CardNumber)
     {
         this.CardNumber = CardNumber;
     }

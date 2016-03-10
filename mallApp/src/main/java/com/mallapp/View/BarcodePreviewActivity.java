@@ -61,7 +61,6 @@ public class BarcodePreviewActivity  extends Activity implements UniversalDataLi
                 finish();
             }
         });
-
     }
 
     @Override
@@ -74,6 +73,13 @@ public class BarcodePreviewActivity  extends Activity implements UniversalDataLi
         ArrayList<BarcodeTypeModel> model = gson.fromJson(data, listType);
         barcodePreviewAdapter = new BarcodePreviewAdapter(getApplicationContext(),this, R.layout.list_floor_view, model);
         BarcodetypeList.setAdapter(barcodePreviewAdapter);
+        for (BarcodeTypeModel bar: model
+             ) {
+            if (bar.getBarcodeType1().replace("_", "-").equals(Barcodetype)){
+                BarcodetypeList.setSelection(model.indexOf(bar));
+            }
+        }
+
     }
 
     @Override

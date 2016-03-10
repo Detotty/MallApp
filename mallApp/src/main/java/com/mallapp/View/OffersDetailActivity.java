@@ -197,10 +197,10 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 		
 		}*/else if(v.getId()== face_book.getId()){
 			ShareLinkContent linkContent = new ShareLinkContent.Builder()
-					.setContentTitle("Hello Facebook")
+					.setContentTitle("The Mall App")
 					.setContentDescription(
-							"The 'Hello Facebook' sample  showcases simple Facebook integration")
-					.setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+							getResources().getString(R.string.mall_app_invite_msg))
+					.setContentUrl(Uri.parse("http://www.crowdeyes.com"))
 					.build();
 
 			shareDialog.show(linkContent);
@@ -208,21 +208,16 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 			fb_profile.loginToFacebook();*/
 			
 		}else if(v.getId()== twitter.getId()){
-			SocialUtils.postToTwitter(this, getResources().getString(R.string.request_error_message) + "\n");
+			SocialUtils.postToTwitter(this, getResources().getString(R.string.mall_app_invite_msg) + "\n");
 			/*Twitter_Integration twitter= new Twitter_Integration(getApplicationContext(), OffersDetailActivity.this);
 			twitter.post_twitter();*/
 			
 		}else if(v.getId()== email.getId()){
-			Intent emailIntent = new Intent(android.content.Intent.ACTION_SEND);  
-			emailIntent.setType("plain/text");  
-			emailIntent.putExtra(android.content.Intent.EXTRA_SUBJECT, "Share with friends");
-			emailIntent.putExtra(android.content.Intent.EXTRA_TEXT,"This mail from endorsement" );
-			startActivity(emailIntent);
+			SocialUtils.sendEmail(this, getResources().getString(R.string.mall_app_invite_msg) + "\n");
+
 		}else if(v.getId()== message.getId()){
-			Intent sendIntent = new Intent(Intent.ACTION_VIEW);
-	        sendIntent.putExtra("sms_body", "Content of the SMS goes here..."); 
-	        sendIntent.setType("vnd.android-dir/mms-sms");
-	        startActivity(sendIntent);
+			SocialUtils.sendSms(this, getResources().getString(R.string.mall_app_invite_msg) + "\n");
+
 		}
 	}
 

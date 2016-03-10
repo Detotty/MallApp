@@ -235,7 +235,7 @@
                     style="@style/AddCardTextView"
                     android:textColor="@color/black"
                     android:layout_below="@+id/tv_barcodetype"
-                    android:text="@string/barcode_type"/>
+                    android:text=""/>
                 <ImageButton
                     android:id="@+id/back"
                     android:layout_width="40dp"

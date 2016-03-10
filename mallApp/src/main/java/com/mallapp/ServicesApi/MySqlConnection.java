@@ -1,17 +1,20 @@
 package com.mallapp.ServicesApi;
 
 import java.io.BufferedReader;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
+import java.net.HttpURLConnection;
+import java.net.MalformedURLException;
 import java.net.URI;
+import java.net.URL;
 import java.util.ArrayList;
 
 import org.apache.http.HttpEntity;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.HttpClient;
-import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.conn.params.ConnManagerParams;
@@ -22,12 +25,16 @@ import org.apache.http.params.HttpParams;
 import org.apache.http.protocol.HTTP;
 import org.json.JSONObject;
 
+import com.mallapp.Application.MallApplication;
+import com.mallapp.Constants.ApiConstants;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.utils.StringUtils;
 
 import android.content.Context;
 import android.os.StrictMode;
 import android.util.Log;
+
+import javax.net.ssl.HttpsURLConnection;
 
 public class MySqlConnection {
 
@@ -198,5 +205,46 @@ public class MySqlConnection {
 		}
 		return null;
 	}
+
+	// HTTP POST request
+	public static  String sendPost(JSONObject jsonObject) throws Exception {
+
+		String url = ApiConstants.SAVE_LOYALTY_CARD;
+		URL obj = new URL(url);
+		HttpURLConnection con = (HttpURLConnection) obj.openConnection();
+
+		//add reuqest header
+		con.setRequestMethod("POST");
+		con.setRequestProperty("Content-Type", "application/json");
+		con.setRequestProperty("Auth-Token", SharedPreferenceUserProfile.getUserToken(MallApplication.appContext));
+		String urlParameters = "sn=C02G8416DRJM&cn=&locale=&caller=&num=12345";
+
+		// Send post request
+		con.setDoOutput(true);
+		DataOutputStream wr = new DataOutputStream(con.getOutputStream());
+		wr.writeBytes(jsonObject.toString());
+		wr.flush();
+		wr.close();
+
+		int responseCode = con.getResponseCode();
+		System.out.println("\nSending 'POST' request to URL : " + url);
+		System.out.println("Post parameters : " + urlParameters);
+		System.out.println("Response Code : " + responseCode);
+
+		BufferedReader in = new BufferedReader(
+				new InputStreamReader(con.getInputStream()));
+		String inputLine;
+		StringBuffer response = new StringBuffer();
+
+		while ((inputLine = in.readLine()) != null) {
+			response.append(inputLine);
+		}
+		in.close();
+
+		//print result
+		System.out.println(response.toString());
+		return response.toString();
+	}
+
 
 }

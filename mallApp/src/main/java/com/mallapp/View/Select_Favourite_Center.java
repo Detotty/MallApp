@@ -50,7 +50,6 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 //		if (SharedInstance.getInstance().getSharedHashMap().containsKey(AppConstants.USER_LOCATION))
 //			model = (UserLocationModel) SharedInstance.getInstance().getSharedHashMap().get(AppConstants.USER_LOCATION);
 		model = (UserLocationModel) DataHandler.getObjectPreferences(AppConstants.USER_LOCATION, UserLocationModel.class);
-
 		centers_listM= new ArrayList<FavouriteCentersModel>();
 		list_view= (ListView) findViewById(R.id.search_list);
 		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers_listM);
@@ -186,7 +185,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 			locationB.setLatitude(Double.parseDouble(fv.getLatitude()));
 			locationB.setLongitude(Double.parseDouble(fv.getLongitude()));
 			float distance = locationA.distanceTo(locationB);;
-			if (distance<10000){
+			if (distance<2000){
 				centers.add(fv);
 			}
 		}

@@ -139,10 +139,10 @@ public class ProfileTabFragment extends Fragment {
             @Override
             public void onClick(View v) {
                 ShareLinkContent linkContent = new ShareLinkContent.Builder()
-                        .setContentTitle("Hello Facebook")
+                        .setContentTitle("The Mall App")
                         .setContentDescription(
-                                "The 'Hello Facebook' sample  showcases simple Facebook integration")
-                        .setContentUrl(Uri.parse("http://developers.facebook.com/android"))
+                                getResources().getString(R.string.mall_app_invite_msg))
+                        .setContentUrl(Uri.parse("http://www.crowdeyes.com"))
                         .build();
 
                 shareDialog.show(linkContent);
@@ -151,19 +151,19 @@ public class ProfileTabFragment extends Fragment {
         sms.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SocialUtils.sendSms(getActivity(), getResources().getString(R.string.request_error_message) + "\n");
+                SocialUtils.sendSms(getActivity(), getResources().getString(R.string.mall_app_invite_msg) + "\n");
             }
         });
         email.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SocialUtils.sendEmail(getActivity(), getResources().getString(R.string.request_error_message) + "\n");
+                SocialUtils.sendEmail(getActivity(), getResources().getString(R.string.mall_app_invite_msg) + "\n");
             }
         });
         twitter.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                SocialUtils.postToTwitter(getActivity(), getResources().getString(R.string.request_error_message) + "\n");
+                SocialUtils.postToTwitter(getActivity(), getResources().getString(R.string.mall_app_invite_msg) + "\n");
             }
         });
         camera.setOnClickListener(new View.OnClickListener() {
@@ -289,18 +289,21 @@ public class ProfileTabFragment extends Fragment {
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.help))) {
                     Intent intent = new Intent(getActivity(), WebFragment.class);
                     intent.putExtra("heading", getString(R.string.help));
+                    intent.putExtra("url", getString(R.string.help_url));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.privacy_policy))) {
                     Intent intent = new Intent(getActivity(), WebFragment.class);
                     intent.putExtra("heading", getString(R.string.privacy_policy));
+                    intent.putExtra("url", getString(R.string.privacy_url));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);
                 } else if (textView_prfile.getText().toString().equals(getString(R.string.about_us))) {
                     Intent intent = new Intent(getActivity(), WebFragment.class);
                     intent.putExtra("heading", getString(R.string.about_us));
+                    intent.putExtra("url", getString(R.string.about_url));
                     startActivity(intent);
                     getActivity().overridePendingTransition(R.anim.slidout_left,
                             R.anim.slidein_left);

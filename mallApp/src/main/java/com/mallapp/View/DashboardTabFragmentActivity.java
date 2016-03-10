@@ -57,6 +57,7 @@ import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.Log;
 import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
+import com.readystatesoftware.viewbadger.BadgeView;
 import com.squareup.picasso.Picasso;
 
 import org.json.JSONException;
@@ -91,6 +92,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 	UserProfileModel user_profile;
 	RequestQueue mRequestQueue;
 	IMManager imManager;
+	BadgeView badgeChat;
     
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -111,8 +113,9 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		}
 		initDrawer();
 		initTabs();
-        
-    }
+
+
+	}
 
 	@SuppressLint("InflateParams")
 	private void initDrawer() {
@@ -347,7 +350,10 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		View view3 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_cards, null); 
 //		View view4 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_rewards, null);
 		View view5 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_profile, null);
-		
+		/*badgeChat = new BadgeView(this, view2);
+		badgeChat.setVisibility(View.VISIBLE);
+		badgeChat.setText("2");
+		badgeChat.show();*/
 //		View view1 = getLayoutInflater().inflate(R.layout.tab_indicator_offers, 	mTabHost, false);
 //		View view2 = getLayoutInflater().inflate(R.layout.tab_indicator_messages, 	mTabHost, false);
 //		View view3 = getLayoutInflater().inflate(R.layout.tab_indicator_cards, 		mTabHost, false);

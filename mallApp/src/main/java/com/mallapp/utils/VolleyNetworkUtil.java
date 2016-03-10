@@ -158,12 +158,6 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     android.util.Log.e("", " error message ..." + message);
 
-                    /*if (message != null && message != "")
-                        Toast.makeText(context, "No shops found for this mall", Toast.LENGTH_SHORT).show();
-                    else {
-                        String serverError = context.getResources().getString(R.string.shop_error_message);
-                        Toast.makeText(context, serverError, Toast.LENGTH_SHORT).show();
-                    }*/
                 }
             }
             ) {
@@ -581,7 +575,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
     /*<--------------POST LOYALTY CARD ---------------->*/
 
     public void PostLoyaltyCard(String url, JSONObject user, UniversalDataListener universalDataListener) {
-        progressDialog = ProgressDialog.show(context,"","Loading");
+        progressDialog = ProgressDialog.show(context,"","Adding Card");
         requestType = POST_LOYALTY_CARD;
         this.universalDataListener = universalDataListener;
         JsonObjectRequest request = new JsonObjectRequest(Request.Method.POST, url, user, this, this) {
@@ -943,7 +937,7 @@ public class VolleyNetworkUtil implements VolleyErrorListener, VolleyDataReceive
                 try {
                     Gson gson = new Gson();
                     MallActivitiesModel model = gson.fromJson(String.valueOf(response), MallActivitiesModel.class);
-                    Log.d(TAG, "Shop Detail:" + String.valueOf(response));
+                    Log.d(TAG, "Mall Activity Detail:" + String.valueOf(response));
                     if (model != null)
                         activityDetailListener.onDataReceived(model);
                 } catch (Exception e) {

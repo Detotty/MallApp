@@ -383,9 +383,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
 
         if (shopsModelArrayList.size()>0){
             try {
-
                 getDBShops();
-
                 if (dbList != null) {
                     for (ShopsModel shop : dbList
                             ) {

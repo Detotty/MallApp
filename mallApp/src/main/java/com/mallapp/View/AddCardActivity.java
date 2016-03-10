@@ -10,8 +10,10 @@ import android.content.Intent;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.TextUtils;
@@ -36,11 +38,13 @@ import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Fragments.CardTabFragments;
 import com.mallapp.Model.LoyaltyCardModel;
+import com.mallapp.ServicesApi.MySqlConnection;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.imagecapture.Image_Scaling;
 import com.mallapp.listeners.UniversalDataListener;
 import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.BitmapLoadUtils;
+import com.mallapp.utils.StaticLiterls;
 import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
@@ -51,6 +55,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import java.io.ByteArrayOutputStream;
+import java.text.ParseException;
 import java.text.SimpleDateFormat;
 import java.util.Calendar;
 import java.util.Date;
@@ -100,7 +105,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_add_loyalty_card);
-
+        BarcodePreviewActivity.Barcodetype = "";
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         loyaltyCardModel = new LoyaltyCardModel();
         init();
@@ -109,13 +114,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             setDetails();
             btnDelCard.setVisibility(View.VISIBLE);
             isCardLoaded = true;
-
         } catch (Exception e) {
             loyaltyCardModel = new LoyaltyCardModel();
             e.printStackTrace();
         }
-
-
     }
 
     void init() {
@@ -148,7 +150,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         layout_addCard = (LinearLayout) findViewById(R.id.layout_addcard);
 
         heading.setText(getResources().getString(R.string.create));
-
+        heading.setTextColor(Color.parseColor("#faebd7"));
         btnDone.setOnClickListener(this);
         btnDelCard.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -322,10 +324,44 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
                     dateOfBirthday = c.getTime();
 
-                    if (issue)
-                        tvIssueDate.setText("" + sdf.format(calendar.getTime()));
-                    else
-                        tvExpiryDate.setText("" + sdf.format(calendar.getTime()));
+                    if (issue){
+                        try {
+
+                            if (!tvExpiryDate.getText().toString().isEmpty()) {
+                                Calendar cal = Calendar.getInstance();
+                                SimpleDateFormat sdfs = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+                                cal.setTime(sdfs.parse(tvExpiryDate.getText().toString()));
+                                if(calendar.before(cal)){
+                                    tvIssueDate.setText("" + sdf.format(calendar.getTime()));
+                                }else {
+                                    showMessage(getResources().getString(R.string.iss_card_message));
+                                }
+                            } else {
+                                tvIssueDate.setText("" + sdf.format(calendar.getTime()));
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
+                    else{
+                        try {
+
+                            if (!tvIssueDate.getText().toString().isEmpty()) {
+                                Calendar cal = Calendar.getInstance();
+                                SimpleDateFormat sdfs = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
+                                cal.setTime(sdfs.parse(tvIssueDate.getText().toString()));
+                                if(calendar.after(cal)){
+                                    tvExpiryDate.setText("" + sdf.format(calendar.getTime()));
+                                }else {
+                                    showMessage(getResources().getString(R.string.exp_card_message));
+                                }
+                            } else {
+                                showMessage(getResources().getString(R.string.iss_emp_message));
+                            }
+                        } catch (ParseException e) {
+                            e.printStackTrace();
+                        }
+                    }
 
                     monthOfYear = monthOfYear + 1;
                     // locationTextView.requestFocus();
@@ -335,9 +371,11 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             }
         }, year, month, day);
 
-        Calendar maxDate = Calendar.getInstance();
-        maxDate.set(Calendar.YEAR, 2016);
-        dpd.getDatePicker().setMaxDate(maxDate.getTimeInMillis());
+        if (!issue) {
+            Calendar maxDate = Calendar.getInstance();
+            maxDate.set(Calendar.YEAR, 2016);
+            dpd.getDatePicker().setMinDate(maxDate.getTimeInMillis() - 1000);
+        }
 
         // dpd.getDatePicker().
 
@@ -451,7 +489,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         loyaltyCardModel.setProviderName(etProviderName.getText().toString());
         loyaltyCardModel.setUserId(SharedPreferenceUserProfile.getUserId(this));
         loyaltyCardModel.setUserNotes(etDescription.getText().toString());
-        loyaltyCardModel.setCardNumber(Integer.parseInt(etCardNum.getText().toString()));
+        loyaltyCardModel.setCardNumber(Long.parseLong(etCardNum.getText().toString()));
         loyaltyCardModel.setFrontBase64ImageString(Image_Scaling.encodeTobase64(bitmapFront));
         loyaltyCardModel.setBacksideBase64ImageString(Image_Scaling.encodeTobase64(bitmapBack));
 
@@ -460,6 +498,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
             volleyNetworkUtil.PostLoyaltyCard(ApiConstants.SAVE_LOYALTY_CARD, jsonObject, this);
+//            AddCard(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -481,7 +520,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             success = jsonObject.getBoolean("Success");
             if (success) {
                 CardTabFragments.isUpdate = true;
-                finish();
+                AppUtils.matDialogFinish(this, getResources().getString(R.string.app_name1), getResources().getString(R.string.card_added),this);
             } else {
             }
         } catch (JSONException e) {
@@ -493,6 +532,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     @Override
     public void OnError(String message) {
         Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, getResources().getString(R.string.card_type_mismatch), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -518,8 +558,40 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         btnDel2.setVisibility(View.VISIBLE);
 
         BarcodePreviewActivity.Barcodetype = loyaltyCardModel.getBarcodeType().trim();
-
     }
+
+
+
+    void AddCard( final JSONObject jsonObject) {
+        new AsyncTask<Void, Void, String>() {
+            protected void onPreExecute() {
+                StaticLiterls.showProgressDialog(AddCardActivity.this);
+            }
+
+            @Override
+            protected String doInBackground(Void... params) {
+                String success = null;
+                try {
+                    success = MySqlConnection.sendPost(jsonObject);
+                } catch (Exception e) {
+                    e.printStackTrace();
+                }
+                return success;
+            }
+
+            @Override
+            protected void onPostExecute(String success) {
+                StaticLiterls.DismissesDialog();
+                try {
+                    JSONObject  json = new JSONObject(success);
+                    onDataReceived(json, null);
+                } catch (JSONException e) {
+                    e.printStackTrace();
+                }
+            }
+        }.execute(null, null, null);
+    }
+
 
 
 }

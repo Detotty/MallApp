@@ -150,7 +150,6 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 					fav_obj.setIsfav(true);
 					holder.is_center.setImageResource(R.drawable.offer_fav_p);
 					CentersCacheManager.updateCenters(context, fav_obj,position);
-					
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
 				}

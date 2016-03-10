@@ -1082,6 +1082,7 @@
     <string name="abc_toolbar_collapse_description">Collapse</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
+    <string name="about_url">http://108.163.184.34/mallappwp/?page_id=27</string>
     <string name="about_us">About Us</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-ads/8.4.0/res/values/admob_strings.xml -->
     <eat-comment/>
@@ -1115,7 +1116,7 @@
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/strings.xml -->
     <eat-comment/>
     <string name="announcement_handed_over">Announcement has been handed over</string>
-    <string name="app_name">MallApp 0.0.8</string>
+    <string name="app_name">The Mall App</string>
     <string name="app_name1">The Mall App</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/design/23.1.1/res/values/values.xml -->
     <eat-comment/>
@@ -1145,8 +1146,11 @@
     <string name="cancel_button_title">Cancel</string>
     <string name="canceled">Closed</string>
     <string name="cant_chat">Can\'t chat with yourself</string>
+    <string name="card_add_message">Adding card</string>
+    <string name="card_added">Card added successfully</string>
     <string name="card_name">Card Name</string>
     <string name="card_number">Card Number</string>
+    <string name="card_type_mismatch">Card type mismatch</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/res/values/cast_strings.xml -->
     <eat-comment/>
     <string name="cast_notification_connected_message">Connected to <ns1:g id="name">%1$s</ns1:g></string>
@@ -1270,8 +1274,9 @@
     <string name="enter_card_name">Enter card name</string>
     <string name="enter_card_num">Enter card number</string>
     <string name="enter_location">Enter Location</string>
+    <string name="exp_card_message">Expiry date must be after issue date</string>
     <string name="expiry_date">Expiry Date</string>
-    <string name="expiry_date_placeholder">20-1-2016</string>
+    <string name="expiry_date_placeholder">MM DD, YYYY</string>
     <string name="fav_center1">Select your favourite Center</string>
     <string name="fav_error_message">No favorites found</string>
     <string name="fav_interest">Select your interest</string>
@@ -1310,10 +1315,13 @@
     <eat-comment/>
     <string name="hello_world">Hello world!</string>
     <string name="help">Help</string>
+    <string name="help_url">http://108.163.184.34/mallappwp/?page_id=47</string>
     <string name="home_page">Go to Homepage</string>
     <string name="invite">invite</string>
+    <string name="iss_card_message">Issue date must be before expiry date</string>
+    <string name="iss_emp_message">Please first enter issue date</string>
     <string name="issue_date">Issue Date</string>
-    <string name="issue_date_placeholder">21-1-2015</string>
+    <string name="issue_date_placeholder">MM DD, YYYY</string>
     <string name="last_activity">"Last Activity: "</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.makeramen/roundedimageview/2.2.1/res/values/values.xml -->
     <eat-comment/>
@@ -1345,6 +1353,7 @@
     <string name="loyalty_card_header">Loyalty Cards</string>
     <string name="ma_share_msg">Hi, I have joined MallApp which is a service that helps people help find malls news and offers. Get the mal info by downloading MallApp to your smartphone.</string>
     <string name="male">Male</string>
+    <string name="mall_app_invite_msg">Hi, I have joined MallApp which is service that help you find the best offers for mall near you. Join the MallApp by downloading MallApp to your smartphone. \n https://play.google.com/store/apps/details?id=com.crowdeyes.View</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/keys.xml -->
     <eat-comment/>
     <string name="mapkey_mallapp_debug_ayesha">AIzaSyA5w03WI_-iQWIMYWb8Qy9H8KXe9h5XlhI</string>
@@ -1407,6 +1416,7 @@
     <eat-comment/>
     <string name="preview_barcode_header">Barcode Preview</string>
     <string name="privacy_policy">Privacy Policy</string>
+    <string name="privacy_url">http://108.163.184.34/mallappwp/?page_id=58</string>
     <string name="provider_name">Provider Name</string>
     <string name="recent_chats">Recent Chats</string>
     <string name="reg_suc">Registration successful</string>

@@ -229,6 +229,21 @@ public class AppUtils {
         mMaterialDialog.show();
     }
 
+    public static void matDialogFinish(Context con,String title, String msg,final Activity act){
+        mMaterialDialog = new MaterialDialog(con)
+                .setTitle(title)
+                .setMessage(msg)
+                .setPositiveButton("OK", new View.OnClickListener() {
+                    @Override
+                    public void onClick(View v) {
+                        mMaterialDialog.dismiss();
+                        act.finish();
+                    }
+                });
+
+        mMaterialDialog.show();
+    }
+
 
 
 }

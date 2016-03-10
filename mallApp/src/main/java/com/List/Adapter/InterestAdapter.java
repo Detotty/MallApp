@@ -96,7 +96,7 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 
 		
 		
-		holder.is_interest.setOnClickListener(new OnClickListener() {
+		/*holder.is_interest.setOnClickListener(new OnClickListener() {
 			@Override
 			public void onClick(View v) {
 				InterestSelectionModel fav_obj= getItem(position);
@@ -113,7 +113,7 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
 				}
 			}
-		});
+		});*/
 		
 		view.setOnClickListener(new OnClickListener() {
 			
@@ -125,6 +125,7 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 					fav_obj.setInterested(false);
 					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.offer_fav_r);
+					is_interest_select_all.setImageResource(R.drawable.offer_fav_r);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.search_area));
 				}else{
 					fav_obj.setInterested(true);
