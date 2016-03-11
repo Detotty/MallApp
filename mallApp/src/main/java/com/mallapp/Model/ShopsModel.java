@@ -52,6 +52,8 @@ public class ShopsModel implements Serializable
     @DatabaseField(columnName = "IsFav")
     private boolean IsFav;
 
+    private boolean IsFavorite;
+
     public String getBriefText ()
     {
         return BriefText;
@@ -193,12 +195,22 @@ public class ShopsModel implements Serializable
 
     public boolean isFav ()
     {
-        return IsFav;
+        return IsFavorite;
     }
 
-    public void setFav (boolean IsFav)
+    public void setFav (boolean IsFavorite)
     {
-        this.IsFav = IsFav;
+        this.IsFavorite = IsFavorite;
+    }
+
+    public boolean isFavorite ()
+    {
+        return IsFavorite;
+    }
+
+    public void setFavorite (boolean IsFavorite)
+    {
+        this.IsFavorite = IsFavorite;
     }
 
     @Override

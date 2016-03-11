@@ -81,7 +81,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     RelativeLayout layout_BarcodeType;
     LinearLayout layout_addCard;
 
-    private Date dateOfBirthday;
+    private Date dateOfBirthday,exp;
     private int day;
     private int month;
     private int year;
@@ -150,7 +150,6 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         layout_addCard = (LinearLayout) findViewById(R.id.layout_addcard);
 
         heading.setText(getResources().getString(R.string.create));
-        heading.setTextColor(Color.parseColor("#faebd7"));
         btnDone.setOnClickListener(this);
         btnDelCard.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -274,7 +273,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     Toast.makeText(this, "Scanned: " + result.getFormatName(), Toast.LENGTH_LONG).show();
                     etBarcodeNum.setText(result.getContents());
                     String type = result.getFormatName();
-                    BarcodePreviewActivity.Barcodetype = type.replace("_", "-");
+                    BarcodePreviewActivity.Barcodetype = AppUtils.getBarcodeType(type);
                 }
             } else {
                 // This is important, otherwise the result will not be passed to the fragment
@@ -286,32 +285,50 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
 
     private void show_date(final boolean issue) {
-        if (dateOfBirthday == null) {
-            final Calendar c = Calendar.getInstance();
-            Log.d("", "date default:" + c.getTime());
+        if (issue){
+            if (dateOfBirthday == null) {
+                final Calendar c = Calendar.getInstance();
+                Log.d("", "date default:" + c.getTime());
 
-            year = c.get(Calendar.YEAR);
-            month = c.get(Calendar.MONTH);
-            day = c.get(Calendar.DAY_OF_MONTH);
-            dateOfBirthday = c.getTime();
-        } else {
-            final Calendar c = Calendar.getInstance();
-            c.setTime(dateOfBirthday);
-            Log.d("", "user date:" + c.getTime());
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+                dateOfBirthday = c.getTime();
+            } else {
+                final Calendar c = Calendar.getInstance();
+                c.setTime(dateOfBirthday);
+                Log.d("", "user date:" + c.getTime());
 
-            year = c.get(Calendar.YEAR);
-            month = c.get(Calendar.MONTH);
-            day = c.get(Calendar.DAY_OF_MONTH);
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+            }
+        }else{
+            if (exp == null) {
+                final Calendar c = Calendar.getInstance();
+                Log.d("", "date default:" + c.getTime());
 
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+                exp = c.getTime();
+            } else {
+                final Calendar c = Calendar.getInstance();
+                c.setTime(exp);
+                Log.d("", "user date:" + c.getTime());
 
+                year = c.get(Calendar.YEAR);
+                month = c.get(Calendar.MONTH);
+                day = c.get(Calendar.DAY_OF_MONTH);
+            }
         }
+
         // Launch Date Picker Dialog
         DatePickerDialog dpd = new DatePickerDialog(this, new DatePickerDialog.OnDateSetListener() {
             @Override
             public void onDateSet(DatePicker view, int year, int monthOfYear, int dayOfMonth) {
 
                 if (view.isShown()) {
-
                     SimpleDateFormat sdf = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
                     Calendar calendar = Calendar.getInstance();
                     calendar.set(year, monthOfYear, dayOfMonth);
@@ -322,11 +339,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     Calendar c = Calendar.getInstance();
                     c.set(year, monthOfYear, dayOfMonth);
 
-                    dateOfBirthday = c.getTime();
 
                     if (issue){
                         try {
-
+                            dateOfBirthday = c.getTime();
                             if (!tvExpiryDate.getText().toString().isEmpty()) {
                                 Calendar cal = Calendar.getInstance();
                                 SimpleDateFormat sdfs = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
@@ -345,7 +361,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     }
                     else{
                         try {
-
+                            exp = c.getTime();
                             if (!tvIssueDate.getText().toString().isEmpty()) {
                                 Calendar cal = Calendar.getInstance();
                                 SimpleDateFormat sdfs = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
@@ -375,6 +391,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             Calendar maxDate = Calendar.getInstance();
             maxDate.set(Calendar.YEAR, 2016);
             dpd.getDatePicker().setMinDate(maxDate.getTimeInMillis() - 1000);
+        }else{
+            Calendar maxDate = Calendar.getInstance();
+            maxDate.set(Calendar.YEAR, 2016);
+            dpd.getDatePicker().setMaxDate(maxDate.getTimeInMillis() - 1000);
         }
 
         // dpd.getDatePicker().

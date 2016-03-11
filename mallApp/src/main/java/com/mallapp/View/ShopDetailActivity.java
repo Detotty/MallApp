@@ -508,7 +508,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
 
     @Override
     public void onShopDetailReceived(ShopDetailModel shopDetail) {
-        getDBShops();
+//        getDBShops();
         shop_detail_obj = shopDetail;
         initilizeMap();
         shop_name.setText(shopDetail.getName());
@@ -563,7 +563,14 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
                 this.linear_timing_layout.addView(newView);
             }
         }
-        for (ShopsModel shopsModel : dbList
+        if (shop_detail_obj.isFav()) {
+            is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+//            shop_detail_obj.setFav(true);
+        } else {
+            is_fav.setImageResource(R.drawable.ofer_detail_heart);
+//            shop_detail_obj.setFav(false);
+        }
+        /*for (ShopsModel shopsModel : dbList
                 ) {
             if (shopsModel.getMallStoreId().equals(mallStoreId)) {
                 if (shopsModel.isFav()) {
@@ -574,7 +581,7 @@ public class ShopDetailActivity extends FragmentActivity implements OnClickListe
                     shop_detail_obj.setFav(false);
                 }
             }
-        }
+        }*/
         lat = Double.parseDouble(shopDetail.getLatitude());
         lng = Double.parseDouble(shopDetail.getLongitude());
         locationName = shopDetail.getAddress();

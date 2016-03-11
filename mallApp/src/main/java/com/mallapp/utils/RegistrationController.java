@@ -417,9 +417,9 @@ public class RegistrationController {
 
     //******-------Get Mall List Api Call-----*********
 
-    public void GetMallList(String url, final FavouriteCenterAdapter adapter, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList, final NearbyListener nearbyListener, final ListView listView) {
+    public void GetMallList(String url, final NearbyListener nearbyListener) {
         progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
-//        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
+        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
         try {
 
             JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
@@ -438,16 +438,15 @@ public class RegistrationController {
 
                             // adding movie to movies array
                             favouriteCentersArrayList.add(fav);
-                            adapter.notifyDataSetChanged();
 
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
                     nearbyListener.onMallDataReceived(favouriteCentersArrayList);
-                    CentersCacheManager.saveFavorites(context, favouriteCentersArrayList);
+                   /* CentersCacheManager.saveFavorites(context, favouriteCentersArrayList);
                     String urls = ApiConstants.GET_USER_MALL_URL_KEY + SharedPreferenceUserProfile.getUserId(context);
-                    GetSubscribedMallList(urls, adapter, listView, favouriteCentersArrayList);
+                    GetSubscribedMallList(urls, adapter, listView, favouriteCentersArrayList);*/
 //                    adapter.notifyDataSetChanged();
                 }
             }, new Response.ErrorListener() {
@@ -492,9 +491,9 @@ public class RegistrationController {
     }
 
 
-    public void GetSubscribedMallList(String url, final FavouriteCenterAdapter adapter, final ListView listView, final ArrayList<FavouriteCentersModel> favouriteCentersArrayList) {
-        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
-//        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
+    public void GetSubscribedMallList(String url, final NearbyListener nearbyListener) {
+//        progressDialog = ProgressDialog.show(context, "", context.getResources().getString(R.string.loading_data_message));
+        final ArrayList<FavouriteCentersModel> favouriteCentersArrayList = new ArrayList<FavouriteCentersModel>();
         try {
             JsonArrayRequest request = new JsonArrayRequest(url, new Response.Listener<JSONArray>() {
 
@@ -509,17 +508,12 @@ public class RegistrationController {
                         try {
                             JSONObject obj = jsonArr.getJSONObject(i);
                             FavouriteCentersModel fav = new Gson().fromJson(String.valueOf(obj), FavouriteCentersModel.class);
-                            for (FavouriteCentersModel f : favouriteCentersArrayList) {
-                                if (f.getMallPlaceId().equals(fav.getMallPlaceId())) {
-                                    fav.setIsfav(true);
-                                    favouriteCentersArrayList.set(favouriteCentersArrayList.indexOf(f), fav);
-                                }
-                            }
+                            favouriteCentersArrayList.add(fav);
                         } catch (JSONException e) {
                             e.printStackTrace();
                         }
                     }
-                    adapter.notifyDataSetChanged();
+                    nearbyListener.onMallDataReceived(favouriteCentersArrayList);
                 }
             }, new Response.ErrorListener() {
                 @Override

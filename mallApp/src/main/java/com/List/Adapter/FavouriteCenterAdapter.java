@@ -110,7 +110,7 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 
 		if(fav_obj.isIsfav()){
 			holder.is_center.setImageResource(R.drawable.offer_fav_p);
-			CentersCacheManager.updateCenters(context, fav_obj, position);
+//			CentersCacheManager.updateCenters(context, fav_obj, position);
 			holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 			holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
 		}
@@ -145,11 +145,11 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 					holder.is_center.setImageResource(R.drawable.offer_fav_r);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
-					CentersCacheManager.updateCenters(context, fav_obj,position);
+//					CentersCacheManager.updateCenters(context, fav_obj,position);
 				}else{
 					fav_obj.setIsfav(true);
 					holder.is_center.setImageResource(R.drawable.offer_fav_p);
-					CentersCacheManager.updateCenters(context, fav_obj,position);
+//					CentersCacheManager.updateCenters(context, fav_obj,position);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));
 				}
@@ -166,11 +166,11 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 					holder.is_center.setImageResource(R.drawable.offer_fav_r);
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.search_area));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.search_area));
-					CentersCacheManager.updateCenters(context, fav_obj,position);
+//					CentersCacheManager.updateCenters(context, fav_obj,position);
 				}else{
 					fav_obj.setIsfav(true);
 					holder.is_center.setImageResource(R.drawable.offer_fav_p);
-					CentersCacheManager.updateCenters(context, fav_obj,position);
+//					CentersCacheManager.updateCenters(context, fav_obj,position);
 					
 					holder.center_title.setTextColor(context.getResources().getColor(R.color.purple));
 					holder.center_city.setTextColor(context.getResources().getColor(R.color.purple));

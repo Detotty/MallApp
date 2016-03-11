@@ -45,6 +45,8 @@ public class FavouriteCentersModel implements Serializable
 
     private boolean isfav;
 
+    private boolean IsFavorite;
+
     public String getCountryName ()
     {
         return CountryName;
@@ -226,11 +228,11 @@ public class FavouriteCentersModel implements Serializable
     }
 
     public boolean isIsfav() {
-        return isfav;
+        return IsFavorite;
     }
 
-    public void setIsfav(boolean isfav) {
-        this.isfav = isfav;
+    public void setIsfav(boolean IsFavorite) {
+        this.IsFavorite = IsFavorite;
     }
 
     @Override

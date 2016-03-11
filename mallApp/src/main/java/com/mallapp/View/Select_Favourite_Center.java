@@ -52,12 +52,12 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		model = (UserLocationModel) DataHandler.getObjectPreferences(AppConstants.USER_LOCATION, UserLocationModel.class);
 		centers_listM= new ArrayList<FavouriteCentersModel>();
 		list_view= (ListView) findViewById(R.id.search_list);
-		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers_listM);
-		list_view.setAdapter(adapter);
+//		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, centers_listM);
+//		list_view.setAdapter(adapter);
 //		ActionBar actionBar = getActionBar();
 //		actionBar.hide();
 		controller = new RegistrationController(this);
-			controller.GetMallList(ApiConstants.GET_MALL_URL_KEY+model.getCountryCode()+"&languageId=1",adapter,centers_listM,this,list_view);
+			controller.GetMallList(ApiConstants.GET_MALL_URL_KEY+model.getCountryCode()+"&languageId=1",this);
 //		SendVerificationCode.GetMallList("http://52.28.59.218:5001/api/MallService/GetMalls?countryCode=PK&languageId=1");
 //		getCenterList();
 		
@@ -113,16 +113,22 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 	public void onClick(View v) {
 		
 		if(v.getId()== next.getId()){
-			
-			int count= CentersCacheManager.countCenters(getApplicationContext());
 			ArrayList<FavouriteCentersModel> selectedCenters = new ArrayList<>();
+			int count = 0;
+			for(int i = 0; i < adapter.getCount(); i++){
+				if (adapter.getItem(i).isIsfav()){
+					selectedCenters.add(adapter.getItem(i));
+					count++;
+				}
+			}
+			/*int count= CentersCacheManager.countCenters(getApplicationContext());
 			try {
 				selectedCenters = CentersCacheManager.readSelectedObjectList(this);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
 				e.printStackTrace();
-			}
+			}*/
 			if(count>0){
 
 				StringBuilder sb = new StringBuilder();
@@ -164,7 +170,8 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 
 	@Override
 	public void onMallDataReceived(ArrayList<FavouriteCentersModel> mallList) {
-
+		adapter= new FavouriteCenterAdapter(getApplicationContext(), R.layout.list_item_favourite, mallList);
+		list_view.setAdapter(adapter);
 		nearByCenters = mallList;
 	}
 

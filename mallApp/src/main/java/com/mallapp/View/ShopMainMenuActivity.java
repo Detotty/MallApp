@@ -382,7 +382,7 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
     public void onDataReceived(ArrayList<ShopsModel> shopsModelArrayList) {
 
         if (shopsModelArrayList.size()>0){
-            try {
+            /*try {
                 getDBShops();
                 if (dbList != null) {
                     for (ShopsModel shop : dbList
@@ -401,9 +401,9 @@ public class ShopMainMenuActivity extends SlidingDrawerActivity
                 shopModel_read_audience = shopsModelArrayList;
             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
+            }*/
 
-
+            shopModel_read_audience = shopsModelArrayList;
             shopsearchResults = shopsModelArrayList;
             shopsearch_array = shopsModelArrayList;
 

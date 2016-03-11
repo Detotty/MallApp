@@ -82,6 +82,8 @@ public class ShopDetailModel implements Serializable
     @DatabaseField(columnName = "isFav")
     private boolean isFav;
 
+    private boolean IsFavorite;
+
     public String getPhone ()
     {
         return Phone;
@@ -336,12 +338,12 @@ public class ShopDetailModel implements Serializable
 
     public boolean isFav ()
     {
-        return isFav;
+        return IsFavorite;
     }
 
-    public void setFav (boolean isFav)
+    public void setFav (boolean isFavorite)
     {
-        this.isFav = isFav;
+        this.IsFavorite = isFavorite;
     }
 
     @Override

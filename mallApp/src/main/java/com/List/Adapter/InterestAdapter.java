@@ -132,6 +132,9 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 					InterestCacheManager.updateCenters(context, fav_obj, position);
 					holder.is_interest.setImageResource(R.drawable.offer_fav_p);
 					holder.interst_title.setTextColor(context.getResources().getColor(R.color.purple));
+					if (isAllFav()){
+						is_interest_select_all.setImageResource(R.drawable.offer_fav_p);
+					}
 				}
 			
 			}
@@ -148,5 +151,14 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 
 	public interface OnDataChangeListener{
 		public void onDataChanged(int size);
+	}
+	boolean isAllFav(){
+		ArrayList<InterestSelectionModel> interst_ = InterestCacheManager.getAllCenters(context);
+		for (InterestSelectionModel in: interst_
+			 ) {
+			if (!in.isInterested())
+				return false;
+		}
+		return true;
 	}
 }

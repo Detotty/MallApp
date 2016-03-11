@@ -1353,7 +1353,7 @@
     <string name="loyalty_card_header">Loyalty Cards</string>
     <string name="ma_share_msg">Hi, I have joined MallApp which is a service that helps people help find malls news and offers. Get the mal info by downloading MallApp to your smartphone.</string>
     <string name="male">Male</string>
-    <string name="mall_app_invite_msg">Hi, I have joined MallApp which is service that help you find the best offers for mall near you. Join the MallApp by downloading MallApp to your smartphone. \n https://play.google.com/store/apps/details?id=com.crowdeyes.View</string>
+    <string name="mall_app_invite_msg">Hi, I have joined MallApp which is service that help you find the best offers for mall near you. Join the MallApp by downloading MallApp to your smartphone. \n https://play.google.com/store/apps/details?id=com.mallapp.View</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/keys.xml -->
     <eat-comment/>
     <string name="mapkey_mallapp_debug_ayesha">AIzaSyA5w03WI_-iQWIMYWb8Qy9H8KXe9h5XlhI</string>

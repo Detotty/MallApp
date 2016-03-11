@@ -43,13 +43,15 @@ import com.mallapp.View.R;
 import com.mallapp.cache.CentersCacheManager;
 import com.mallapp.layouts.SegmentedRadioGroup;
 import com.mallapp.listeners.MallDataListener;
+import com.mallapp.listeners.NearbyListener;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
+import com.mallapp.utils.RegistrationController;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
 public class OffersTabFragment extends Fragment
-        implements OnCheckedChangeListener {
+        implements OnCheckedChangeListener, NearbyListener {
 
     String TAG = getClass().getCanonicalName();
 
@@ -67,19 +69,25 @@ public class OffersTabFragment extends Fragment
     private ArrayList<String> TITLES = new ArrayList<String>();
     String audienceFilter = Offers_News_Constants.AUDIENCE_FILTER_ALL;
     VolleyNetworkUtil volleyNetworkUtil;
+    RegistrationController registrationController;
     public static Handler uihandler;
     int tabPos = 0;
     public static int pos = 0;
     RadioButton radio_all, radio_offer, radio_news;
-
+    String urls;
+    static boolean onResume = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.e(TAG, " on create OffersTabFragment ");
         context = getActivity().getApplicationContext();
-        TITLES = FavouriteCentersFiltration.getFavTITLES(context);
+//        TITLES = FavouriteCentersFiltration.getFavTITLES(context);
 //        volleyNetworkUtil = new VolleyNetworkUtil(context);
         uihandler = MainMenuConstants.uiHandler;
+        registrationController = new RegistrationController(context);
+        urls = ApiConstants.GET_USER_MALL_URL_KEY + SharedPreferenceUserProfile.getUserId(context);
+        registrationController.GetSubscribedMallList(urls,this);
         super.onCreate(savedInstanceState);
+
     }
 
     @Override
@@ -130,8 +138,9 @@ public class OffersTabFragment extends Fragment
 
             }
         });
-        callInOnResume();
-
+        if (onResume){
+            callInOnResume();
+        }
         //	return inflater.inflate(R.layout.fragment_parent_tab_offer, container, false);
         return view;
     }
@@ -193,8 +202,9 @@ public class OffersTabFragment extends Fragment
         if (ProfileTabFragment.isUpdate || OfferPagerTabFragment.isRefresh) {
             ProfileTabFragment.isUpdate = false;
             OfferPagerTabFragment.isRefresh = false;
-            TITLES = FavouriteCentersFiltration.getFavTITLES(context);
-            callInOnResume();
+            registrationController.GetSubscribedMallList(urls, this);
+           /* TITLES = FavouriteCentersFiltration.getFavTITLES(context);
+            callInOnResume();*/
         }
     }
 
@@ -202,6 +212,7 @@ public class OffersTabFragment extends Fragment
     public void onDestroyView() {
         Log.e(TAG, "destory view");
         destoryAllInstences();
+        onResume = true;
         super.onDestroyView();
     }
 
@@ -324,4 +335,16 @@ public class OffersTabFragment extends Fragment
     };
 
 
+    @Override
+    public void onMallDataReceived(ArrayList<FavouriteCentersModel> mallList) {
+        GlobelOffersNews.TITLES_centers = mallList;
+        TITLES = new ArrayList<>();
+        TITLES.add(Offers_News_Constants.AUDIENCE_FILTER_ALL);
+        for (FavouriteCentersModel favouriteCentersModel: mallList
+             ) {
+            TITLES.add(favouriteCentersModel.getName());
+        }
+        GlobelOffersNews.TITLES = TITLES;
+        callInOnResume();
+    }
 }

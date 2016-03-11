@@ -20,10 +20,10 @@ public final class R {
 	}
 	public static final class drawable {
 		public static final int button = 0x7f020058;
-		public static final int material_card = 0x7f020122;
-		public static final int material_card_nos = 0x7f020123;
-		public static final int material_card_nos_pressed = 0x7f020124;
-		public static final int material_dialog_window = 0x7f020125;
+		public static final int material_card = 0x7f020123;
+		public static final int material_card_nos = 0x7f020124;
+		public static final int material_card_nos_pressed = 0x7f020125;
+		public static final int material_dialog_window = 0x7f020126;
 	}
 	public static final class id {
 		public static final int btn_n = 0x7f0e0199;

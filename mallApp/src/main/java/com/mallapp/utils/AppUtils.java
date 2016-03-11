@@ -244,6 +244,25 @@ public class AppUtils {
         mMaterialDialog.show();
     }
 
+    public static String getBarcodeType(String barcodeType){
+
+        if(barcodeType.contains("CODE_128")){
+            return "Code128";
+        }else if(barcodeType.contains("CODE_39")){
+            return "Code39";
+        }else if(barcodeType.contains("CODE_11")){
+            return "Code11";
+        }else if(barcodeType.contains("CODE_93")){
+            return "Code93";
+        }else if(barcodeType.contains("ITF")){
+            return "ITF-14";
+        }else if(barcodeType.contains("CODABAR")){
+            return "Codabar";
+        }else{
+            return barcodeType.replace("_", "-");
+        }
+    }
+
 
 
 }

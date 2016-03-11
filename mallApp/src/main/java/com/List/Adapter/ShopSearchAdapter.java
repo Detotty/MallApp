@@ -135,13 +135,13 @@ public class ShopSearchAdapter extends ArrayAdapter<ShopsModel>{
 				if(!shop_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					shop_obj.setFav(true);
-					updateShops(shop_obj);
+//					updateShops(shop_obj);
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=false";
 					volleyNetworkUtil.PostFavShop(url);
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					shop_obj.setFav(false);
-					updateShops(shop_obj);
+//					updateShops(shop_obj);
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+shop_obj.getMallStoreId()+"&IsShop=true"+"&IsDeleted=true";
 					volleyNetworkUtil.PostFavShop(url);
 				}

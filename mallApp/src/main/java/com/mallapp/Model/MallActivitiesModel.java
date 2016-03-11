@@ -79,6 +79,8 @@ public class MallActivitiesModel implements Serializable{
     @DatabaseField(columnName = "isFav")
     private boolean isFav;
 
+    private boolean IsFavorite;
+
     public String getEntityLogo ()
     {
         return EntityLogo;

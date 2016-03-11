@@ -41,8 +41,8 @@
 	<string name="register_country_7">Phone Number Verification</string>
 	<string name="register_country_8">Is this your correct number?</string>
 	<string name="register_country_9">An SMS with your Access code will be sent into this number.</string>
-	<string name="register_country_10">SMS faild, please try again.</string>
-	<string name="register_country_11">SMS sent.</string>\n
+	<string name="register_country_10">SMS faild, please try again</string>
+	<string name="register_country_11">SMS sent</string>\n
 	<string name="register_welcome">Welcome to The Mall App</string>
 	<string name="register_dummy1">Lorem ipsum dolor sit er elit lamet,</string>
 	<string name="register_dummy2">consectetaur cilium adepisicing pecu,</string>
@@ -76,7 +76,7 @@
 	<string name="register_error_email_validity_message">Please enter a valid email</string>
 
 	<string name="location_msg1">Location services disabled</string>
-	<string name="location_msg2">Mall App needs access to your location. Please turn on location access.</string>
+	<string name="location_msg2">Mall App needs access to your location. Please turn on location access</string>
 	<string name="location_msg3">Check Network Connection</string>
 	<string name="location_msg4">Location services disabled</string>
 	<string name="location_msg5">Location services disabled</string>
@@ -171,7 +171,7 @@
 	<string name="privacy_url">http://108.163.184.34/mallappwp/?page_id=58</string>
 	<string name="about_url">http://108.163.184.34/mallappwp/?page_id=27</string>
 	<string name="logout_dialog_message">Are you sure you want to logout?</string>
-	<string name="mall_app_invite_msg">Hi, I have joined MallApp which is service that help you find the best offers for mall near you. Join the MallApp by downloading MallApp to your smartphone. \n https://play.google.com/store/apps/details?id=com.crowdeyes.View</string>
+	<string name="mall_app_invite_msg">Hi, I have joined MallApp which is service that help you find the best offers for mall near you. Join the MallApp by downloading MallApp to your smartphone. \n https://play.google.com/store/apps/details?id=com.mallapp.View</string>
 
 
 	<!-- Country Strings-->

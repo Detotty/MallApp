@@ -142,7 +142,7 @@ public class ProfileTabFragment extends Fragment {
                         .setContentTitle("The Mall App")
                         .setContentDescription(
                                 getResources().getString(R.string.mall_app_invite_msg))
-                        .setContentUrl(Uri.parse("http://www.crowdeyes.com"))
+                        .setContentUrl(Uri.parse("http://mallappbackend.zap-itsolutions.com/"))
                         .build();
 
                 shareDialog.show(linkContent);

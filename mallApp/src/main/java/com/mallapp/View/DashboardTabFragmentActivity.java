@@ -113,8 +113,6 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		}
 		initDrawer();
 		initTabs();
-
-
 	}
 
 	@SuppressLint("InflateParams")
@@ -350,21 +348,18 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
 		View view3 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_cards, null); 
 //		View view4 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_rewards, null);
 		View view5 = LayoutInflater.from(DashboardTabFragmentActivity.this).inflate(R.layout.tab_indicator_profile, null);
-		/*badgeChat = new BadgeView(this, view2);
-		badgeChat.setVisibility(View.VISIBLE);
-		badgeChat.setText("2");
-		badgeChat.show();*/
+
 //		View view1 = getLayoutInflater().inflate(R.layout.tab_indicator_offers, 	mTabHost, false);
 //		View view2 = getLayoutInflater().inflate(R.layout.tab_indicator_messages, 	mTabHost, false);
 //		View view3 = getLayoutInflater().inflate(R.layout.tab_indicator_cards, 		mTabHost, false);
 //		View view4 = getLayoutInflater().inflate(R.layout.tab_indicator_rewards, 	mTabHost, false);
 //		View view5 = getLayoutInflater().inflate(R.layout.tab_indicator_profile, 	mTabHost, false);
 
-		mTabHost.addTab(mTabHost.newTabSpec("Offer")	.setIndicator(view1),OffersTabFragment.class, 	null);
-		mTabHost.addTab(mTabHost.newTabSpec("Messages")	.setIndicator(view2),MessagesTabFragments.class,null);
-		mTabHost.addTab(mTabHost.newTabSpec("Cards")	.setIndicator(view3),CardTabFragments.class, 	null);
+		mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tabs_offer))	.setIndicator(view1),OffersTabFragment.class, 	null);
+		mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tabs_message))	.setIndicator(view2),MessagesTabFragments.class,null);
+		mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tabs_cards))	.setIndicator(view3),CardTabFragments.class, 	null);
 //		mTabHost.addTab(mTabHost.newTabSpec("Rewards")	.setIndicator(view4),RewardsTabFragments.class, null);
-		mTabHost.addTab(mTabHost.newTabSpec("Profile")	.setIndicator(view5),ProfileTabFragment.class, 	null);
+		mTabHost.addTab(mTabHost.newTabSpec(getResources().getString(R.string.tabs_profile))	.setIndicator(view5),ProfileTabFragment.class, 	null);
 	
 	}
 	
