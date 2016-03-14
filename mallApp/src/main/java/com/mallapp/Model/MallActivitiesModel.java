@@ -323,12 +323,12 @@ public class MallActivitiesModel implements Serializable{
 
     public boolean isFav ()
     {
-        return isFav;
+        return IsFavorite;
     }
 
     public void setFav (boolean isFav)
     {
-        this.isFav = isFav;
+        this.IsFavorite = isFav;
     }
 
     @Override

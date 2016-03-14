@@ -136,7 +136,7 @@ public class RestaurantSearchAdapter extends ArrayAdapter<RestaurantModel>{
 				if(!rest_obj.isFav()){
 					holder.is_fav.setImageResource(R.drawable.offer_fav_p);
 					rest_obj.setFav(true);
-					updateRestaurants(rest_obj);
+//					updateRestaurants(rest_obj);
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsShop=false"+"&IsDeleted=false";
 					volleyNetworkUtil.PostFavRestaurant(url);
 
@@ -144,7 +144,7 @@ public class RestaurantSearchAdapter extends ArrayAdapter<RestaurantModel>{
 				}else{
 					holder.is_fav.setImageResource(R.drawable.offer_fav);
 					rest_obj.setFav(false);
-					updateRestaurants(rest_obj);
+//					updateRestaurants(rest_obj);
 					url = ApiConstants.POST_FAV_SHOP_URL_KEY+UserId+"&EntityId="+rest_obj.getMallResturantId()+"&IsShop=false"+"&IsDeleted=true";
 					volleyNetworkUtil.PostFavRestaurant(url);
 //					RestaurantCacheManager.updateRestaurant(context, rest_obj, "");

@@ -172,13 +172,13 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 				is_fav.setImageResource(R.drawable.ofer_detail_heart);
 				volleyNetworkUtil.PostFavNnO(url + SharedPreferenceUserProfile.getUserId(this) + "&ActivityId=" + offer_object.getActivityId() + "&isDeleted=true");
 						offer_object.setFav(false);
-				updateMalls(offer_object);
+//				updateMalls(offer_object);
 				OfferPagerTabFragment.isRefresh = true;
 			}else{
 				is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
 				volleyNetworkUtil.PostFavNnO(url + SharedPreferenceUserProfile.getUserId(this) + "&ActivityId=" + offer_object.getActivityId() + "&isDeleted=false");
 				offer_object.setFav(true);
-				updateMalls(offer_object);
+//				updateMalls(offer_object);
 				OfferPagerTabFragment.isRefresh = true;
 			}
 		}else if(v.getId() == go_to_shop.getId()){
@@ -309,9 +309,8 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 	@Override
 	public void onDataReceived(MallActivitiesModel mallActivitiesModels) {
 		offer_object = mallActivitiesModels;
-		offer_object.setFav(fav);
+//		offer_object.setFav(fav);
 		setOfferDetail();
-
 	}
 
 	@Override

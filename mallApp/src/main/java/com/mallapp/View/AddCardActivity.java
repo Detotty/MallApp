@@ -517,8 +517,8 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         String jsonString = gson.toJson(loyaltyCardModel);
         try {
             JSONObject jsonObject = new JSONObject(jsonString);
-            volleyNetworkUtil.PostLoyaltyCard(ApiConstants.SAVE_LOYALTY_CARD, jsonObject, this);
-//            AddCard(jsonObject);
+//            volleyNetworkUtil.PostLoyaltyCard(ApiConstants.SAVE_LOYALTY_CARD, jsonObject, this);
+            AddCard(jsonObject);
         } catch (JSONException e) {
             e.printStackTrace();
         }
@@ -551,8 +551,8 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     @Override
     public void OnError(String message) {
-        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
-//        Toast.makeText(this, getResources().getString(R.string.card_type_mismatch), Toast.LENGTH_SHORT).show();
+//        Toast.makeText(this, message, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, getResources().getString(R.string.card_type_mismatch), Toast.LENGTH_SHORT).show();
     }
 
 
@@ -595,6 +595,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     success = MySqlConnection.sendPost(jsonObject);
                 } catch (Exception e) {
                     e.printStackTrace();
+                    return "";
                 }
                 return success;
             }
@@ -603,10 +604,15 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             protected void onPostExecute(String success) {
                 StaticLiterls.DismissesDialog();
                 try {
-                    JSONObject  json = new JSONObject(success);
-                    onDataReceived(json, null);
+                    if (!success.isEmpty()){
+                        JSONObject  json = new JSONObject(success);
+                        onDataReceived(json, null);
+                    }else
+                        OnError(success);
+
                 } catch (JSONException e) {
                     e.printStackTrace();
+                    OnError(success);
                 }
             }
         }.execute(null, null, null);

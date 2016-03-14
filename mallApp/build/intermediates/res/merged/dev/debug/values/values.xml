@@ -1340,7 +1340,7 @@
     <string name="loading_error">It appears we have a problem...</string>
     <string name="location">Add Location</string>
     <string name="location_msg1">Location services disabled</string>
-    <string name="location_msg2">Mall App needs access to your location. Please turn on location access.</string>
+    <string name="location_msg2">Mall App needs access to your location. Please turn on location access</string>
     <string name="location_msg3">Check Network Connection</string>
     <string name="location_msg4">Location services disabled</string>
     <string name="location_msg5">Location services disabled</string>
@@ -1421,8 +1421,8 @@
     <string name="recent_chats">Recent Chats</string>
     <string name="reg_suc">Registration successful</string>
     <string name="register_country_1">Select your country, enter your phone number and press continue</string>
-    <string name="register_country_10">SMS faild, please try again.</string>
-    <string name="register_country_11">SMS sent.</string>
+    <string name="register_country_10">SMS faild, please try again</string>
+    <string name="register_country_11">SMS sent</string>
     <string name="register_country_2">Select Country</string>
     <string name="register_country_3">Number without the country code</string>
     <string name="register_country_4">Receive push notifications/SMS</string>

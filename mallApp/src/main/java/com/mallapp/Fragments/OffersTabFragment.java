@@ -75,7 +75,7 @@ public class OffersTabFragment extends Fragment
     public static int pos = 0;
     RadioButton radio_all, radio_offer, radio_news;
     String urls;
-    static boolean onResume = false;
+    public static boolean onResume = false;
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.e(TAG, " on create OffersTabFragment ");

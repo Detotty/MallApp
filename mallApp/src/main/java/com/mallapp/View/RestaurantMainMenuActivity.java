@@ -376,7 +376,7 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
     public void onDataReceived(ArrayList<RestaurantModel> restaurantModelArrayList) {
 
         if (restaurantModelArrayList.size()>0){
-            try {
+            /*try {
                 getDBRestaurants();
                 if (dbList != null) {
                     for (RestaurantModel rest : dbList
@@ -395,9 +395,9 @@ public class RestaurantMainMenuActivity extends SlidingDrawerActivity
                 restaurant_read_audience = restaurantModelArrayList;
             } catch (Exception ex) {
                 ex.printStackTrace();
-            }
+            }*/
 
-
+            restaurant_read_audience = restaurantModelArrayList;
             searchResults = restaurantModelArrayList;
             search_array = restaurantModelArrayList;
 

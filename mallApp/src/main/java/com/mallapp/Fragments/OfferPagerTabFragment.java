@@ -279,7 +279,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
                         if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
                             if (mallActivitiesModels.size() < pageSize)
                                 lastPage = true;
-                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
+                            mallActivitiesListing = mallActivitiesModels;
+//                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
 //                            mallActivitiesListing = mallActivitiesModels;
 
                             callAddapter();
@@ -323,7 +324,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
                         list.removeFooterView(footerView);
                         if (mallActivitiesModels != null && mallActivitiesModels.size() > 0) {
 //                            mallActivitiesListing.addAll(FavouriteSelection(context, mallActivitiesModels));
-                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
+                            mallActivitiesListing = mallActivitiesModels;
+//                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
                             callAddapter();
                             requestType = "";
                             if (mallActivitiesModels.size() < pageSize)
@@ -351,14 +353,16 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
                             lastPage = false;
                         if (mallActivitiesListing != null && mallActivitiesListing.size() > 0) {
                             mallActivitiesListing.clear();
-                            ArrayList<MallActivitiesModel> news = FavouriteSelection(context, mallActivitiesModels);
+                            ArrayList<MallActivitiesModel> news = mallActivitiesModels;
+//                            ArrayList<MallActivitiesModel> news = FavouriteSelection(context, mallActivitiesModels);
                             mallActivities_All.clear();
                             mallActivities_News.clear();
                             mallActivities_Offers.clear();
                             mallActivitiesListing.addAll(0, news);
                             callAddapter();
                         } else {
-                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
+                            mallActivitiesListing = mallActivitiesModels;
+//                            mallActivitiesListing = FavouriteSelection(context, mallActivitiesModels);
                             FilteredOffersNewsList(mallActivitiesListing);
                             callAddapter();
 //                            adapter.notifyDataSetChanged();

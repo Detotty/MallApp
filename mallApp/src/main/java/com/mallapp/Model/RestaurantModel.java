@@ -55,6 +55,8 @@ public class RestaurantModel implements Serializable
     @DatabaseField(columnName = "IsFav")
     private boolean IsFav;
 
+    private boolean IsFavorite;
+
     public String getRestaurantName ()
     {
         return RestaurantName;
@@ -205,12 +207,12 @@ public class RestaurantModel implements Serializable
 
     public boolean isFav ()
     {
-        return IsFav;
+        return IsFavorite;
     }
 
-    public void setFav (boolean IsFav)
+    public void setFav (boolean IsFavorite)
     {
-        this.IsFav = IsFav;
+        this.IsFavorite = IsFavorite;
     }
 
     @Override

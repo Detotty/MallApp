@@ -53,6 +53,8 @@ public class RestaurantDetailModel implements Serializable
 
     private boolean isFav;
 
+    private boolean IsFavorite;
+
     public String getPhone ()
     {
         return Phone;
@@ -275,12 +277,12 @@ public class RestaurantDetailModel implements Serializable
 
     public boolean isFav ()
     {
-        return isFav;
+        return IsFavorite;
     }
 
-    public void setFav (boolean isFav)
+    public void setFav (boolean IsFavorite)
     {
-        this.isFav = isFav;
+        this.IsFavorite = IsFavorite;
     }
 
     @Override

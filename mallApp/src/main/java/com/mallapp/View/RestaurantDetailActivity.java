@@ -262,7 +262,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 					rest_detail_obj.setFav(false);
 					rest_obj.setMallResturantId(mallStoreId);
 					rest_obj.setFav(false);
-					updateShops(rest_obj);
+//					updateShops(rest_obj);
 					RestaurantMainMenuActivity.isRestUpdate=true;
 				}else{
 					is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
@@ -271,7 +271,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 					rest_detail_obj.setFav(true);
 					rest_obj.setMallResturantId(mallStoreId);
 					rest_obj.setFav(true);
-					updateShops(rest_obj);
+//					updateShops(rest_obj);
 					RestaurantMainMenuActivity.isRestUpdate=true;
 				}
 			}
@@ -308,7 +308,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 
 	@Override
 	public void onRestaurantDetailReceived(RestaurantDetailModel restaurantDetailModel) {
-		getDBRestaurants();
+//		getDBRestaurants();
 		rest_detail_obj = restaurantDetailModel;
 		initilizeMap();
 		shop_name.setText(restaurantDetailModel.getName());
@@ -362,7 +362,15 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 				this.linear_timing_layout.addView(newView);
 			}
 		}
-		for (RestaurantModel restaurantModel:dbList
+		if (rest_detail_obj.isFav()){
+			is_fav.setImageResource(R.drawable.ofer_detail_heart_p);
+			rest_detail_obj.setFav(true);
+		}
+		else {
+			is_fav.setImageResource(R.drawable.ofer_detail_heart);
+			rest_detail_obj.setFav(false);
+		}
+		/*for (RestaurantModel restaurantModel:dbList
 				) {
 			if (restaurantModel.getMallResturantId().equals(mallStoreId)){
 				if (restaurantModel.isFav()){
@@ -374,7 +382,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 					rest_detail_obj.setFav(false);
 				}
 			}
-		}
+		}*/
 		lat = Double.parseDouble(restaurantDetailModel.getLatitude());
 		lng = Double.parseDouble(restaurantDetailModel.getLongitude());
 		locationName = restaurantDetailModel.getAddress();

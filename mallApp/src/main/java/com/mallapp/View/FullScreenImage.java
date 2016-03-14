@@ -34,6 +34,7 @@ public class FullScreenImage extends FragmentActivity {
 
         try {
             String url = i.getExtras().getString("url");
+            if (url!=null || url =="null")
             Picasso.with(this).load(url).placeholder(R.drawable.mallapp_placeholder).into(img);
         } catch (Exception e) {
             e.printStackTrace();

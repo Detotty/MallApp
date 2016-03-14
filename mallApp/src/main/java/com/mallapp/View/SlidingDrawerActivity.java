@@ -32,6 +32,7 @@ import com.mallapp.Constants.MainMenuConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Fragments.CardTabFragments;
 import com.mallapp.Fragments.MessagesTabFragments;
+import com.mallapp.Fragments.OfferPagerTabFragment;
 import com.mallapp.Fragments.OffersTabFragment;
 import com.mallapp.Fragments.ProfileTabFragment;
 import com.mallapp.Fragments.RewardsTabFragments;
@@ -159,7 +160,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
         //fragment= null;
         switch (position) {
             case 1:{
-
+                    OffersTabFragment.onResume = false;
                     MainMenuConstants.uiHandler= uiHandler;
                     DashboardTabFragmentActivity.uiHandler.sendEmptyMessage(1);
                     Intent activity= new Intent(SlidingDrawerActivity.this, DashboardTabFragmentActivity.class);

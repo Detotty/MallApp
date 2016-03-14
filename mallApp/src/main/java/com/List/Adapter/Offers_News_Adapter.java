@@ -175,14 +175,14 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
                     url = ApiConstants.POST_FAV_OFFERS_URL_KEY+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=false";
                     volleyNetworkUtil.PostFavNnO(url);
                     url = "";
-                    updateMalls(offer_obj);
+//                    updateMalls(offer_obj);
                 } else {
                     holder.is_fav.setImageResource(R.drawable.offer_fav);
                     offer_obj.setFav(false);
                     url = ApiConstants.POST_FAV_OFFERS_URL_KEY+UserId+"&ActivityId="+offer_obj.getActivityId()+"&isDeleted=true";
                     volleyNetworkUtil.PostFavNnO(url);
                     url = "";
-                    updateMalls(offer_obj);
+//                    updateMalls(offer_obj);
                 }
             }
         });
