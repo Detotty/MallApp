@@ -414,7 +414,7 @@ MERGED from [com.embarkmobile:zxing-android-integration:2.0.0] J:\Android\Raw\Ma
 	android:largeHeap
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:54:9-33
 	android:theme
-		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:55:9-68
+		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:55:9-47
 		REJECTED from [MallApp:parallax:unspecified] J:\Android\Raw\MallApp\mallApp\build\intermediates\exploded-aar\MallApp\parallax\unspecified\AndroidManifest.xml:15:9-40
 	tools:replace
 		ADDED from J:\Android\Raw\MallApp\mallApp\src\main\AndroidManifest.xml:56:9-51

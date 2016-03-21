@@ -25,7 +25,7 @@ public class RestaurantDetailModel implements Serializable
 
     private String TwitterURL;
 
-    private RestaurantOffersModel[] RestaurantOffers;
+    private MallActivitiesModel[] RestaurantOffers;
 
     private String Floor;
 
@@ -145,12 +145,12 @@ public class RestaurantDetailModel implements Serializable
         this.TwitterURL = TwitterURL;
     }
 
-    public RestaurantOffersModel[] getRestaurantOffers ()
+    public MallActivitiesModel[] getRestaurantOffers ()
     {
         return RestaurantOffers;
     }
 
-    public void setRestaurantOffers (RestaurantOffersModel[] RestaurantOffers)
+    public void setRestaurantOffers (MallActivitiesModel[] RestaurantOffers)
     {
         this.RestaurantOffers = RestaurantOffers;
     }

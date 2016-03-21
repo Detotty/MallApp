@@ -48,7 +48,7 @@
             android:drawableRight="@drawable/go_to_shop_indicator"
             android:text="@string/go_to_shop"
             android:textColor="@color/white"
-            android:textSize="@dimen/text_18"
+            android:textSize="@dimen/text_15"
             android:textStyle="italic"
             android:visibility="gone" />
 

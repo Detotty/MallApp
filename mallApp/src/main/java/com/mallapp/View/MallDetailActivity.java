@@ -60,7 +60,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
     MallDetailModel mallDetailModel;
 
     ScrollView scrollView;
-    LinearLayout error_layout;
+    LinearLayout error_layout, timeLayout;
     //endregion
 
 
@@ -82,6 +82,7 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
     private void init() {
         scrollView	= (ScrollView) findViewById(R.id.scrollView);
         error_layout	= (LinearLayout) findViewById(R.id.error_layout);
+        timeLayout	= (LinearLayout) findViewById(R.id.time_layout);
         open_navigation = (ImageButton) findViewById(R.id.back);
         open_drawer = (ImageButton) findViewById(R.id.navigation_drawer);
         mallDetailModel = new MallDetailModel();
@@ -175,6 +176,8 @@ public class MallDetailActivity extends SlidingDrawerActivity implements OnClick
         if (mallDetailModel.getWebURL() == null || mallDetailModel.getWebURL().isEmpty())
             tv_Web.setVisibility(View.GONE);
         MallTimingsModel[] timinigs = mallDetailModel.getMallTimings();
+        if (!(timinigs.length>0))
+            timeLayout.setVisibility(View.GONE);
 
         for (MallTimingsModel st : timinigs
                 ) {

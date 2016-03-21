@@ -17,6 +17,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -105,7 +107,7 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         ImageButton is_fav;
         ImageView back_image, entity_logo, activity_type;
     }
-
+    private int lastPosition = -1;
     @SuppressLint("InflateParams")
     @Override
     public View getView(final int position, View convertView, ViewGroup parent) {
@@ -132,6 +134,9 @@ public class Offers_News_Adapter extends ArrayAdapter<MallActivitiesModel> {
         } else {
             holder = (ViewHolder) view.getTag();
         }
+        Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        view.startAnimation(animation);
+        lastPosition = position;
 ///////////////////////////////////////////////////////////////////////////////////////////		
         offer_obj = getItem(position);
         Drawable d = null;

@@ -1148,9 +1148,13 @@
     <string name="cant_chat">Can\'t chat with yourself</string>
     <string name="card_add_message">Adding card</string>
     <string name="card_added">Card added successfully</string>
+    <string name="card_back">Back</string>
+    <string name="card_del">Card deleted successfully</string>
+    <string name="card_front">Front</string>
     <string name="card_name">Card Name</string>
     <string name="card_number">Card Number</string>
-    <string name="card_type_mismatch">Card type mismatch</string>
+    <string name="card_type_mismatch">Barcode type mismatch</string>
+    <string name="card_up">Card updated successfully</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.google.android.gms/play-services-cast/8.4.0/res/values/cast_strings.xml -->
     <eat-comment/>
     <string name="cast_notification_connected_message">Connected to <ns1:g id="name">%1$s</ns1:g></string>
@@ -1291,6 +1295,7 @@
     <string name="floor_error_message">No floor found</string>
     <string name="floor_name">Floor Name</string>
     <string name="front">Front</string>
+    <string name="go_to_rest">Go to Restaurant</string>
     <string name="go_to_shop">Go to Shop</string>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/debug/res/values/google_maps_api.xml -->
     <eat-comment/>
@@ -2766,6 +2771,17 @@
     <style name="MessengerButtonText.White.Small">
     <item name="android:drawableLeft">@drawable/messenger_bubble_small_blue</item>
   </style>
+    <!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/values/styles.xml -->
+    <eat-comment/>
+    <style name="MyMaterialTheme" parent="MyMaterialTheme.Base">
+    </style>
+    <style name="MyMaterialTheme.Base" parent="Theme.AppCompat.Light.NoActionBar">
+        <item name="windowNoTitle">true</item>
+        <item name="windowActionBar">false</item>
+        <item name="colorPrimary">@color/purple</item>
+        <item name="colorPrimaryDark">@color/purple</item>
+        <item name="colorAccent">@color/purple</item>
+    </style>
     <!-- From: file:/J:/Android/Raw/MallApp/mallApp/build/intermediates/exploded-aar/com.android.support/appcompat-v7/23.1.1/res/values/values.xml -->
     <eat-comment/>
     <style name="Platform.AppCompat" parent="android:Theme">

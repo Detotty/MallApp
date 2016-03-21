@@ -140,6 +140,7 @@ public class CardDetailsActivity extends Activity implements View.OnClickListene
         }else if (v.getId() == btnDone.getId()) {
             if (Utils.isInternetAvailable(this)) {
                 Intent intent = new Intent(this, AddCardActivity.class);
+                intent.putExtra("add", false);
                 intent.putExtra(MainMenuConstants.LOYALTY_CARD_OBJECT,loyaltyCardModel);
                 startActivity(intent);
                 finish();

@@ -7,6 +7,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
@@ -62,6 +64,7 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 		ImageView is_center, center_image;
 	}
 
+	private int lastPosition = -1;
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
@@ -85,8 +88,11 @@ public class FavouriteCenterAdapter extends ArrayAdapter<FavouriteCentersModel>{
 			
 		}else
 			holder = (ViewHolder) view.getTag();
-		
-		
+
+		Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+		view.startAnimation(animation);
+		lastPosition = position;
+
 		FavouriteCentersModel fav_obj= getItem(position);
 		holder.center_title.setText(fav_obj.getName());
 		holder.center_add.setText(fav_obj.getPlaceName());

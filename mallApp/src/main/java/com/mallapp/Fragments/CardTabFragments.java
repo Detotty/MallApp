@@ -100,6 +100,7 @@ public class CardTabFragments extends Fragment implements UniversalDataListener 
             @Override
             public void onClick(View v) {
                 Intent intent = new Intent(getActivity(), AddCardActivity.class);
+                intent.putExtra("add", true);
                 startActivity(intent);
             }
         });

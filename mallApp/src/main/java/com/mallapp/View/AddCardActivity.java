@@ -81,7 +81,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     RelativeLayout layout_BarcodeType;
     LinearLayout layout_addCard;
 
-    private Date dateOfBirthday,exp;
+    private Date dateOfBirthday, exp;
     private int day;
     private int month;
     private int year;
@@ -91,14 +91,14 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
     static boolean add_photo, front_image;
     boolean isCardLoaded = false;
+    boolean isDel = false;
+    boolean isAdd = false;
 
     VolleyNetworkUtil volleyNetworkUtil;
 
     LoyaltyCardModel loyaltyCardModel;
 
     MaterialDialog mMaterialDialog;
-
-
 
 
     @Override
@@ -108,6 +108,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         BarcodePreviewActivity.Barcodetype = "";
         volleyNetworkUtil = new VolleyNetworkUtil(this);
         loyaltyCardModel = new LoyaltyCardModel();
+        isAdd = getIntent().getBooleanExtra("add", true);
         init();
         try {
             loyaltyCardModel = (LoyaltyCardModel) getIntent().getSerializableExtra(MainMenuConstants.LOYALTY_CARD_OBJECT);
@@ -149,7 +150,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         layout_BarcodeType = (RelativeLayout) findViewById(R.id.barcode_type);
         layout_addCard = (LinearLayout) findViewById(R.id.layout_addcard);
 
-        heading.setText(getResources().getString(R.string.create));
+        if (isAdd)
+            heading.setText(getResources().getString(R.string.create));
+        else
+            heading.setText(getResources().getString(R.string.update));
         btnDone.setOnClickListener(this);
         btnDelCard.setOnClickListener(this);
         btnBack.setOnClickListener(this);
@@ -197,9 +201,9 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             show_date(false);
         } else if (v.getId() == btnDone.getId()) {
             if (Utils.isInternetAvailable(this)) {
-                if (isCardLoaded){
-                    bitmapFront=((BitmapDrawable)frontCard.getDrawable()).getBitmap();
-                    bitmapBack=((BitmapDrawable)backCard.getDrawable()).getBitmap();
+                if (isCardLoaded) {
+                    bitmapFront = ((BitmapDrawable) frontCard.getDrawable()).getBitmap();
+                    bitmapBack = ((BitmapDrawable) backCard.getDrawable()).getBitmap();
                 }
                 if (validation()) {
                     PostCardData();
@@ -223,11 +227,11 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             startActivity(intent);
         } else if (v.getId() == btnDel1.getId()) {
             frontCard.setImageDrawable(getDrawable(R.drawable.front_card));
-            btnDel1.setVisibility(View.GONE);
+            btnDel1.setVisibility(View.INVISIBLE);
             bitmapFront = null;
         } else if (v.getId() == btnDel2.getId()) {
             backCard.setImageDrawable(getDrawable(R.drawable.back_card));
-            btnDel2.setVisibility(View.GONE);
+            btnDel2.setVisibility(View.INVISIBLE);
             bitmapBack = null;
         } else if (v.getId() == btnDelCard.getId()) {
             mMaterialDialog = new MaterialDialog(AddCardActivity.this)
@@ -237,6 +241,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                         @Override
                         public void onClick(View v) {
                             mMaterialDialog.dismiss();
+                            isDel = true;
                             volleyNetworkUtil.PostDelCard(ApiConstants.DEL_LOYALTY_CARD + loyaltyCardModel.getId(), AddCardActivity.this);
                         }
                     })
@@ -285,7 +290,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
 
 
     private void show_date(final boolean issue) {
-        if (issue){
+        if (issue) {
             if (dateOfBirthday == null) {
                 final Calendar c = Calendar.getInstance();
                 Log.d("", "date default:" + c.getTime());
@@ -303,7 +308,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                 month = c.get(Calendar.MONTH);
                 day = c.get(Calendar.DAY_OF_MONTH);
             }
-        }else{
+        } else {
             if (exp == null) {
                 final Calendar c = Calendar.getInstance();
                 Log.d("", "date default:" + c.getTime());
@@ -340,16 +345,16 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                     c.set(year, monthOfYear, dayOfMonth);
 
 
-                    if (issue){
+                    if (issue) {
                         try {
                             dateOfBirthday = c.getTime();
                             if (!tvExpiryDate.getText().toString().isEmpty()) {
                                 Calendar cal = Calendar.getInstance();
                                 SimpleDateFormat sdfs = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
                                 cal.setTime(sdfs.parse(tvExpiryDate.getText().toString()));
-                                if(calendar.before(cal)){
+                                if (calendar.before(cal)) {
                                     tvIssueDate.setText("" + sdf.format(calendar.getTime()));
-                                }else {
+                                } else {
                                     showMessage(getResources().getString(R.string.iss_card_message));
                                 }
                             } else {
@@ -358,17 +363,16 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
                         } catch (ParseException e) {
                             e.printStackTrace();
                         }
-                    }
-                    else{
+                    } else {
                         try {
                             exp = c.getTime();
                             if (!tvIssueDate.getText().toString().isEmpty()) {
                                 Calendar cal = Calendar.getInstance();
                                 SimpleDateFormat sdfs = new SimpleDateFormat("MMM dd, yyyy", Locale.getDefault());
                                 cal.setTime(sdfs.parse(tvIssueDate.getText().toString()));
-                                if(calendar.after(cal)){
+                                if (calendar.after(cal)) {
                                     tvExpiryDate.setText("" + sdf.format(calendar.getTime()));
-                                }else {
+                                } else {
                                     showMessage(getResources().getString(R.string.exp_card_message));
                                 }
                             } else {
@@ -391,7 +395,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             Calendar maxDate = Calendar.getInstance();
             maxDate.set(Calendar.YEAR, 2016);
             dpd.getDatePicker().setMinDate(maxDate.getTimeInMillis() - 1000);
-        }else{
+        } else {
             Calendar maxDate = Calendar.getInstance();
             maxDate.set(Calendar.YEAR, 2016);
             dpd.getDatePicker().setMaxDate(maxDate.getTimeInMillis() - 1000);
@@ -540,7 +544,13 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             success = jsonObject.getBoolean("Success");
             if (success) {
                 CardTabFragments.isUpdate = true;
-                AppUtils.matDialogFinish(this, getResources().getString(R.string.app_name1), getResources().getString(R.string.card_added),this);
+                if (isDel)
+                    AppUtils.matDialogFinish(this, getResources().getString(R.string.app_name1), getResources().getString(R.string.card_del), this);
+                else if (isAdd) {
+                    AppUtils.matDialogFinish(this, getResources().getString(R.string.app_name1), getResources().getString(R.string.card_added), this);
+                } else
+                    AppUtils.matDialogFinish(this, getResources().getString(R.string.app_name1), getResources().getString(R.string.card_up), this);
+
             } else {
             }
         } catch (JSONException e) {
@@ -581,8 +591,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     }
 
 
-
-    void AddCard( final JSONObject jsonObject) {
+    void AddCard(final JSONObject jsonObject) {
         new AsyncTask<Void, Void, String>() {
             protected void onPreExecute() {
                 StaticLiterls.showProgressDialog(AddCardActivity.this);
@@ -604,10 +613,10 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             protected void onPostExecute(String success) {
                 StaticLiterls.DismissesDialog();
                 try {
-                    if (!success.isEmpty()){
-                        JSONObject  json = new JSONObject(success);
+                    if (!success.isEmpty()) {
+                        JSONObject json = new JSONObject(success);
                         onDataReceived(json, null);
-                    }else
+                    } else
                         OnError(success);
 
                 } catch (JSONException e) {
@@ -617,7 +626,6 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             }
         }.execute(null, null, null);
     }
-
 
 
 }

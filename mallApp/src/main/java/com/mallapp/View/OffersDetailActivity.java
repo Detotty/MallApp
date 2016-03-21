@@ -74,7 +74,7 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 	Dao<MallActivitiesModel, Integer> mallActivitiesModelIntegerDaol;
 	VolleyNetworkUtil volleyNetworkUtil;
 	private DatabaseHelper databaseHelper = null;
-	boolean fav = false;
+	boolean fav = false, isRest = true;
 	CallbackManager callbackManager;
 	ShareDialog shareDialog;
 
@@ -102,8 +102,15 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 		offer_title.setText(offer_object.getActivityTextTitle());
 		shope_name.setText(offer_object.getMallName());
 		offer_detail.setText(offer_object.getDetailText());
-
-		if (offer_object.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_SHOP)){
+		if (offer_object.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_SHOP) || offer_object.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_RESTAURANT)){
+			if (offer_object.getEntityType().equals(Offers_News_Constants.ENTITY_TYPE_SHOP)){
+				isRest = false;
+				go_to_shop.setText(getResources().getString(R.string.go_to_shop));
+			}
+			else{
+				isRest = true;
+				go_to_shop.setText(getResources().getString(R.string.go_to_rest));
+			}
 			go_to_shop.setVisibility(View.VISIBLE);
 		}
 		boolean fav	= offer_object.isFav();
@@ -185,9 +192,16 @@ public class OffersDetailActivity extends Activity implements ActivityDetailList
 		
 			/*Shops rest_obj= readShopList();
 			GlobelShops.rest_obj= rest_obj;*/
-			Intent activity= new Intent(OffersDetailActivity.this, ShopDetailActivity.class);
-			activity.putExtra("MallStoreId", offer_object.getEntityId());
-			startActivity(activity);
+			if (!isRest){
+				Intent activity= new Intent(OffersDetailActivity.this, ShopDetailActivity.class);
+				activity.putExtra("MallStoreId", offer_object.getEntityId());
+				startActivity(activity);
+			}else{
+				Intent activity= new Intent(OffersDetailActivity.this, RestaurantDetailActivity.class);
+				activity.putExtra("MallStoreId", offer_object.getEntityId());
+				startActivity(activity);
+			}
+
 		
 		}/*else if(v.getId() == social_sharing.getId()){
 			if(social_sharing_layout.getVisibility()== View.GONE)

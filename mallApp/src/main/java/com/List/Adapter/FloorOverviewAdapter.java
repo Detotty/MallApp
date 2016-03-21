@@ -8,6 +8,8 @@ import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -61,6 +63,8 @@ public class FloorOverviewAdapter extends ArrayAdapter<FloorOverViewModel> {
         ImageView floor_image;
     }
 
+
+    private int lastPosition = -1;
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
 
@@ -77,6 +81,10 @@ public class FloorOverviewAdapter extends ArrayAdapter<FloorOverViewModel> {
 
         }else
             holder = (ViewHolder) view.getTag();
+
+        Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+        view.startAnimation(animation);
+        lastPosition = position;
 
         final FloorOverViewModel fav_obj= getItem(position);
         holder.floor_title.setText(fav_obj.getName());

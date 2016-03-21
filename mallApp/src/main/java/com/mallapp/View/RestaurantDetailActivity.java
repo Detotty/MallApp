@@ -23,6 +23,7 @@ import com.j256.ormlite.stmt.QueryBuilder;
 import com.mallapp.Constants.ApiConstants;
 import com.mallapp.Constants.Offers_News_Constants;
 import com.mallapp.Model.BannerImagesModel;
+import com.mallapp.Model.MallActivitiesModel;
 import com.mallapp.Model.Offers_News;
 import com.mallapp.Model.RestaurantDetailModel;
 import com.mallapp.Model.RestaurantModel;
@@ -146,7 +147,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	//endregion
 
 	//region Restaurant Offers
-	private void getRestaurantOffers(RestaurantOffersModel[] storeOffers) {
+	private void getRestaurantOffers(MallActivitiesModel[] storeOffers) {
 
 		rel_offer_title.setText(R.string.rest_offer_title);
 		rel_news_title.setText(R.string.rest_news_title);
@@ -154,7 +155,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		SharedPreference sharedPreference 	= new SharedPreference();
 		ArrayList <Offers_News> offers_list = sharedPreference.getOffersNews(getApplicationContext());
 		if (storeOffers.length>0){
-			for (RestaurantOffersModel restaurantOffersModel:storeOffers
+			for (MallActivitiesModel restaurantOffersModel:storeOffers
 					) {
 				View view =add_layoutOffers(restaurantOffersModel);
 				if (restaurantOffersModel.getActivityName().equals("Offer")){
@@ -181,7 +182,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 	}
 
 	@SuppressLint("InflateParams")
-	private View add_layoutOffers(final RestaurantOffersModel offer_obj) {
+	private View add_layoutOffers(final MallActivitiesModel offer_obj) {
 		String image_nam = null, offer_name = null;
 
 		final View view 	= getLayoutInflater().inflate(R.layout.list_item_shop_offers, null);
@@ -191,7 +192,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 
 		title.setText(offer_obj.getActivityTextTitle());
 		shop_offer.setText(offer_obj.getBriefText());
-		Picasso.with(this).load(offer_obj.getImageURL()).into(shop_logo);
+		Picasso.with(this).load(offer_obj.getImageURL()).placeholder(R.drawable.mallapp_placeholder).into(shop_logo);
 
 
 
@@ -199,10 +200,10 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 			@Override
 			public void onClick(View v) {
 //				GlobelOffersNews.related_offer_obj= offer_obj;
-				/*Intent intent= new Intent(ShopDetailActivity.this, OffersRelatedDetailActivity.class);
+				Intent intent= new Intent(RestaurantDetailActivity.this, OffersDetailActivity.class);
 				intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
 				intent.putExtra(Offers_News_Constants.MALL_OBJECT, offer_obj);
-				startActivity(intent);*/
+				startActivity(intent);
 			}
 		});
 		return view;
@@ -329,7 +330,7 @@ public class RestaurantDetailActivity extends FragmentActivity implements OnClic
 		if (restaurantDetailModel.getWebURL() == null || restaurantDetailModel.getWebURL().isEmpty())
 			tv_Web.setVisibility(View.GONE);
 		RestaurantTimingsModel[] timinigs = restaurantDetailModel.getResturantTimings();
-		RestaurantOffersModel[] storeOffers = restaurantDetailModel.getRestaurantOffers();
+		MallActivitiesModel[] storeOffers = restaurantDetailModel.getRestaurantOffers();
 		getRestaurantOffers(storeOffers);
 		for (RestaurantTimingsModel st : timinigs
 				) {

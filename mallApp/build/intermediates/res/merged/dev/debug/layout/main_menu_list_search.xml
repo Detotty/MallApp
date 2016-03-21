@@ -36,7 +36,7 @@
 	            android:paddingLeft="@dimen/margin_left_15"
 	            android:paddingRight="@dimen/margin_left_15"
 	            android:text="@string/cancel"
-	            android:textSize="@dimen/text_20" />
+	            android:textSize="@dimen/text_15" />
 
 
 </LinearLayout>

@@ -29,7 +29,7 @@
             android:visibility="visible"
             android:text="@string/done"
             android:textStyle="bold"
-            android:textSize="20sp"
+            android:textSize="18sp"
             android:textColor="@color/white"
             android:background="@color/transparent"
             android:contentDescription="@string/app_name" />

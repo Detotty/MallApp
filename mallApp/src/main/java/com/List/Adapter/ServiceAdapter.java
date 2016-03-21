@@ -9,6 +9,8 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -91,6 +93,7 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 
 	ServicesModel service_obj;
 
+	private int lastPosition = -1;
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 	
@@ -105,7 +108,11 @@ public class ServiceAdapter extends ArrayAdapter<ServicesModel>{
 				v = inflater.inflate(R.layout.list_item_services_detail, parent, false);
 			}
 		}
-		
+
+		Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+		v.startAnimation(animation);
+		lastPosition = position;
+
 		service_obj	= getItem(position);
 		TextView title 		= (TextView) v.findViewById(R.id.title);
 		TextView decs 		= (TextView) v.findViewById(R.id.detail);

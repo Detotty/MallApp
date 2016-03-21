@@ -192,7 +192,7 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 			locationB.setLatitude(Double.parseDouble(fv.getLatitude()));
 			locationB.setLongitude(Double.parseDouble(fv.getLongitude()));
 			float distance = locationA.distanceTo(locationB);;
-			if (distance<2000){
+			if (distance<20000){
 				centers.add(fv);
 			}
 		}

@@ -8,6 +8,8 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.View.OnClickListener;
 import android.view.ViewGroup;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.widget.ArrayAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -59,6 +61,7 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 		ImageView is_interest;
 	}
 
+	private int lastPosition = -1;
 	@Override
 	public View getView(final int position, View convertView, ViewGroup parent) {
 		final ViewHolder holder;
@@ -74,8 +77,11 @@ public class InterestAdapter extends ArrayAdapter<InterestSelectionModel>{
 			
 		}else 
 			holder = (ViewHolder) view.getTag();
-		
-		
+
+		Animation animation = AnimationUtils.loadAnimation(getContext(), (position > lastPosition) ? R.anim.up_from_bottom : R.anim.down_from_top);
+		view.startAnimation(animation);
+		lastPosition = position;
+
 		InterestSelectionModel interst_obj= getItem(position);
 		holder.interst_title.setText(interst_obj.getCategoryText());
 		boolean is_interts= interst_obj.isInterested();

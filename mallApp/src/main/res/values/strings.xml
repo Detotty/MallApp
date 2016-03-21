@@ -91,6 +91,7 @@
 	<string name="share">Share</string>
     <string name="share_points"> 5pts</string>
     <string name="go_to_shop">Go to Shop</string>
+    <string name="go_to_rest">Go to Restaurant</string>
     <string name="related_offers">Related Offers</string>
 
 	<string name="cancel_button_title">Cancel</string>
@@ -435,8 +436,12 @@
 	<string name="iss_card_message">Issue date must be before expiry date</string>
 	<string name="iss_emp_message">Please first enter issue date</string>
 	<string name="card_add_message">Adding card</string>
-	<string name="card_type_mismatch">Card type mismatch</string>
+	<string name="card_type_mismatch">Barcode type mismatch</string>
 	<string name="card_added">Card added successfully</string>
+	<string name="card_up">Card updated successfully</string>
+	<string name="card_del">Card deleted successfully</string>
+	<string name="card_front">Front</string>
+	<string name="card_back">Back</string>
 
 	<!-- Message Tab-->
 	<string name="no_chats">No record found</string>
