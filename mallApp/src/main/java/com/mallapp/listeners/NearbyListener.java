@@ -10,5 +10,5 @@ import java.util.ArrayList;
  */
 public interface NearbyListener {
     public void onMallDataReceived(ArrayList<FavouriteCentersModel> mallList);
-
+    public void onError();
 }

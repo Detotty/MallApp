@@ -6,7 +6,10 @@ import android.content.Context;
 import android.content.SharedPreferences;
 import static com.mallapp.Constants.AppConstants.FILE_NAME_SHARED_PREF;
 import com.google.gson.Gson;
+import com.mallapp.Model.FavouriteCentersModel;
 import com.mallapp.utils.Utils;
+
+import java.util.ArrayList;
 
 /**
  * Created by Sharjeel on 1/12/2016.
@@ -135,6 +138,43 @@ public class DataHandler {
         editor.remove(key);
         editor.commit();
 
+    }
+
+
+    public static void updateStringArrayListPreferences(ArrayList<String> array, String arrayName) {
+        SharedPreferences prefs = context.getSharedPreferences("preferencename", 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(arrayName + "_size", array.size());
+        for(int i=0;i<array.size();i++)
+            editor.putString(arrayName + "_" + i, array.get(i));
+        editor.commit();
+    }
+
+    public static ArrayList<String> getStringArrayListPreference(String arrayName) {
+        SharedPreferences prefs = context.getSharedPreferences("preferencename", 0);
+        int size = prefs.getInt(arrayName + "_size", 0);
+        ArrayList<String> array = new ArrayList<>();
+        for(int i=0;i<size;i++)
+            array.add(prefs.getString(arrayName + "_" + i, null));
+        return array;
+    }
+
+    public static void updatePreferences(ArrayList<FavouriteCentersModel> array, String arrayName) {
+        SharedPreferences prefs = context.getSharedPreferences("preferencename", 0);
+        SharedPreferences.Editor editor = prefs.edit();
+        editor.putInt(arrayName +"_size", array.size());
+        for(int i=0;i<array.size();i++)
+            updatePreferences(arrayName+i, array.get(i));
+        editor.commit();
+    }
+
+    public static ArrayList<FavouriteCentersModel> getArrayPreference(String arrayName) {
+        SharedPreferences prefs = context.getSharedPreferences("preferencename", 0);
+        int size = prefs.getInt(arrayName + "_size", 0);
+        ArrayList<FavouriteCentersModel> array = new ArrayList<>();
+        for(int i=0;i<size;i++)
+            array.add((FavouriteCentersModel) getObjectPreferences(arrayName+i,FavouriteCentersModel.class));
+        return array;
     }
 
 }

@@ -175,6 +175,11 @@ public class Select_Favourite_Center extends Activity implements OnClickListener
 		nearByCenters = mallList;
 	}
 
+	@Override
+	public void onError() {
+
+	}
+
 	void CalculateNearByCenters(){
 		Location locationA = new Location("point A");
 		Location locationB = new Location("point B");

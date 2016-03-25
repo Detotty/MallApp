@@ -10,6 +10,16 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         layout="@layout/list_footer_loader"/>
+
+    <include
+        android:id="@+id/error_layout"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        layout="@layout/no_data_layout"/>
+
     <android.support.v4.widget.SwipeRefreshLayout xmlns:android="http://schemas.android.com/apk/res/android"
         android:id="@+id/swipe_refresh_layout"
         android:layout_width="match_parent"
@@ -19,6 +29,7 @@
 
 
         <ListView
+
             android:id="@+id/mallapp_listview"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"

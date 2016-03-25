@@ -37,6 +37,7 @@ import com.mallapp.Controllers.FavouriteCentersFiltration;
 import com.mallapp.Controllers.OffersNewsFiltration;
 import com.mallapp.Model.FavouriteCenters;
 import com.mallapp.Model.FavouriteCentersModel;
+import com.mallapp.SharedPreferences.DataHandler;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
 import com.mallapp.View.DashboardTabFragmentActivity;
 import com.mallapp.View.R;
@@ -44,9 +45,11 @@ import com.mallapp.cache.CentersCacheManager;
 import com.mallapp.layouts.SegmentedRadioGroup;
 import com.mallapp.listeners.MallDataListener;
 import com.mallapp.listeners.NearbyListener;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.GlobelOffersNews;
 import com.mallapp.utils.Log;
 import com.mallapp.utils.RegistrationController;
+import com.mallapp.utils.Utils;
 import com.mallapp.utils.VolleyNetworkUtil;
 import com.squareup.picasso.Picasso;
 
@@ -76,6 +79,7 @@ public class OffersTabFragment extends Fragment
     RadioButton radio_all, radio_offer, radio_news;
     String urls;
     public static boolean onResume = false;
+
     @Override
     public void onCreate(Bundle savedInstanceState) {
         Log.e(TAG, " on create OffersTabFragment ");
@@ -85,7 +89,7 @@ public class OffersTabFragment extends Fragment
         uihandler = MainMenuConstants.uiHandler;
         registrationController = new RegistrationController(context);
         urls = ApiConstants.GET_USER_MALL_URL_KEY + SharedPreferenceUserProfile.getUserId(context);
-        registrationController.GetSubscribedMallList(urls,this);
+        registrationController.GetSubscribedMallList(urls, this);
         super.onCreate(savedInstanceState);
 
     }
@@ -138,8 +142,11 @@ public class OffersTabFragment extends Fragment
 
             }
         });
-        if (onResume){
-            callInOnResume();
+        if (onResume) {
+            if (Utils.isInternetAvailable(context))
+                callInOnResume();
+            else
+                AppUtils.internetDialog(getActivity(), getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
         }
         //	return inflater.inflate(R.layout.fragment_parent_tab_offer, container, false);
         return view;
@@ -236,7 +243,10 @@ public class OffersTabFragment extends Fragment
                 radio_news.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.p_news_radio), null, null, null);
                 radio_offer.setCompoundDrawablesWithIntrinsicBounds(context.getResources().getDrawable(R.drawable.offers_radio), null, null, null);
             }
-            callInOnResume();
+            if (Utils.isInternetAvailable(context))
+                callInOnResume();
+            else
+                AppUtils.internetDialog(getActivity(), getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
         }
     }
 
@@ -338,13 +348,34 @@ public class OffersTabFragment extends Fragment
     @Override
     public void onMallDataReceived(ArrayList<FavouriteCentersModel> mallList) {
         GlobelOffersNews.TITLES_centers = mallList;
+        DataHandler.updatePreferences(GlobelOffersNews.TITLES_centers, "TITLES_centers");
         TITLES = new ArrayList<>();
         TITLES.add(Offers_News_Constants.AUDIENCE_FILTER_ALL);
-        for (FavouriteCentersModel favouriteCentersModel: mallList
-             ) {
+        for (FavouriteCentersModel favouriteCentersModel : mallList
+                ) {
             TITLES.add(favouriteCentersModel.getName());
         }
         GlobelOffersNews.TITLES = TITLES;
+        DataHandler.updateStringArrayListPreferences(TITLES, "Titles");
         callInOnResume();
+    }
+
+    @Override
+    public void onError() {
+        TITLES = new ArrayList<>();
+        TITLES = DataHandler.getStringArrayListPreference("Titles");
+        if (TITLES.size()>0){
+            GlobelOffersNews.TITLES_centers = DataHandler.getArrayPreference("TITLES_centers");
+            GlobelOffersNews.TITLES = TITLES;
+            callInOnResume();
+        }
+        else{
+            TITLES.add(Offers_News_Constants.AUDIENCE_FILTER_ALL);
+            callInOnResume();
+        }
+
+
+
+
     }
 }

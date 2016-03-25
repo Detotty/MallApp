@@ -98,6 +98,7 @@
 	<string name="done_title">Done</string>
 	<string name="location_title">Location</string>
 	<string name="location_text_view_place_holder">Enter location</string>
+	<string name="no_data">No offers and news available for this mall</string>
 
 
 	<string name="name">Name</string>

@@ -186,10 +186,10 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         finish();
                     }
                     else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
-                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
+                    AppUtils.internetDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
 
                 break;
 
@@ -208,10 +208,10 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         finish();
                     }
                     else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
-                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
+                    AppUtils.internetDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
 
                 break;
 
@@ -233,10 +233,10 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         finish();
                     }
                     else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
-                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
+                    AppUtils.internetDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
 
                 break;
 
@@ -257,10 +257,10 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         finish();
                     }
                     else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
-                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
+                    AppUtils.internetDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
                 break;
 
 
@@ -280,10 +280,10 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         finish();
                     }
                     else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
-                    AppUtils.matDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
+                    AppUtils.internetDialog(this, getResources().getString(R.string.center_select_title), getResources().getString(R.string.center_select_message));
                 break;
 
             case 7: {
@@ -307,7 +307,7 @@ public class SlidingDrawerActivity extends FragmentActivity implements OnItemCli
                         finish();
                     }
                     else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 }
                 break;

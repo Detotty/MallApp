@@ -18,6 +18,7 @@ import android.view.ViewGroup;
 import android.widget.AbsListView;
 import android.widget.LinearLayout;
 import android.widget.ListView;
+import android.widget.TextView;
 
 import com.List.Adapter.Offers_News_Adapter;
 import com.j256.ormlite.android.apptools.OpenHelperManager;
@@ -82,7 +83,8 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
     ArrayList<MallActivitiesModel> mallActivities_All,
             mallActivities_Offers,
             mallActivities_News;
-
+    LinearLayout erroLayout;
+    TextView tvNoData;
 
     public static OfferPagerTabFragment newInstance(
             int position, Handler handler, Context c,
@@ -149,7 +151,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
         View rootView = inflater.inflate(R.layout.endorsement_view_pager_list, container, false);
         footerView = inflater.inflate(R.layout.list_footer_loader, null);
         list = (ListView) rootView.findViewById(R.id.mallapp_listview);
+        tvNoData = (TextView) rootView.findViewById(R.id.tv_error);
         linlaHeaderProgress = (LinearLayout) rootView.findViewById(R.id.listfooterlayout);
+        erroLayout = (LinearLayout) rootView.findViewById(R.id.error_layout);
         volleyNetworkUtil = new VolleyNetworkUtil(getActivity());
         requestType = LOADING_MALL_ACTIVITIES;
 
@@ -175,8 +179,6 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
                     mallActivities_Offers.clear();
                     dbList.clear();
                     getLatestListing();
-                } else {
-                    swipeRefreshLayout.setRefreshing(false);
                 }
             }
         });
@@ -189,7 +191,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
         super.onResume();
         if (!isPaused)
             pageNo = 1;
-        if (isRefresh){
+        if (isRefresh) {
             isRefresh = false;
             swipeRefreshLayout.setRefreshing(true);
             pageNo = 1;
@@ -218,7 +220,7 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
     }
 
     public void pullToRefresh() {
-        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1" + "&MallPlaceId=" + MainMenuConstants.SELECTED_MALL_PLACE_ID + "&PageIndex=" + pageNo + "&PageSize="+pageSize;
+        String url = ApiConstants.GET_NEWS_OFFERS_URL_KEY + SharedPreferenceUserProfile.getUserId(context) + "&LanguageId=1" + "&MallPlaceId=" + MainMenuConstants.SELECTED_MALL_PLACE_ID + "&PageIndex=" + pageNo + "&PageSize=" + pageSize;
         volleyNetworkUtil.GetMallNewsnOffers(url, this);
     }
 
@@ -276,6 +278,12 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
                             callAddapter();
 
                         } else {
+                            if (adapter == null) {
+                                erroLayout.setVisibility(View.VISIBLE);
+                                list.setVisibility(View.GONE);
+                                tvNoData.setText(getResources().getString(R.string.no_data));
+                            }
+
 //                            list.setAdapter(null);
 //                            mallActivitiesListing = null;
 //                            Toast.makeText(context, "No Mall Activity Found!", Toast.LENGTH_SHORT).show();
@@ -348,6 +356,9 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
     public void OnError() {
         switch (requestType) {
             case REFRESH_MALL_ACTIVITIES: {
+                erroLayout.setVisibility(View.VISIBLE);
+                list.setVisibility(View.GONE);
+                linlaHeaderProgress.setVisibility(View.GONE);
                 /*if (adapter!= null)
                  adapter.clear();
 
@@ -359,7 +370,10 @@ public class OfferPagerTabFragment extends Fragment implements MallDataListener,
             break;
 
             case LOADING_MALL_ACTIVITIES: {
-                /*if (mallActivities_All!=null) {
+                erroLayout.setVisibility(View.VISIBLE);
+                list.setVisibility(View.GONE);
+                linlaHeaderProgress.setVisibility(View.GONE);
+/*if (mallActivities_All!=null) {
                     mallActivities_All.clear();
                     if (adapter!=null)
                     adapter.notifyDataSetChanged();

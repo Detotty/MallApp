@@ -521,7 +521,7 @@ public class RegistrationController {
 
                     if (progressDialog != null)
                         progressDialog.dismiss();
-
+                    nearbyListener.onError();
                     String message = VolleyErrorHelper.getMessage(volleyError, context);
                     Log.e("", " error message ..." + message);
 

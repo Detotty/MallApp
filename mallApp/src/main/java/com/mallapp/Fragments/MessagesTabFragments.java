@@ -63,7 +63,6 @@ public class MessagesTabFragments extends Fragment implements IXMPPMessageTabLis
         super.onCreate(savedInstanceState);
 
         user_profile = (UserProfileModel) DataHandler.getObjectPreferences(AppConstants.PROFILE_DATA, UserProfileModel.class);
-
     }
 
     @Override

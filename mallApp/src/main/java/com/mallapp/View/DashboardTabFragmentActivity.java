@@ -215,7 +215,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
                         activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
                         startActivity(activity);
                     } else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
                     showdailog();
@@ -234,7 +234,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
                         activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
                         startActivity(activity);
                     } else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
                     showdailog();
@@ -255,7 +255,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
                         activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
                         startActivity(activity);
                     } else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
                     showdailog();
@@ -275,7 +275,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
                         activity.putExtra(Offers_News_Constants.MALL_PLACE_ID, AppUtils.MallIdSelection(context, OffersTabFragment.pos));
                         startActivity(activity);
                     } else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
                     showdailog();
@@ -297,7 +297,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
                         startActivity(activity);
                         finish();
                     } else {
-                        AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                        AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                     }
                 } else
                     showdailog();
@@ -324,7 +324,7 @@ public class DashboardTabFragmentActivity extends FragmentActivity implements On
                     startActivity(activity);
                     finish();
                 } else {
-                    AppUtils.matDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
+                    AppUtils.internetDialog(this, getResources().getString(R.string.no_internet), getResources().getString(R.string.network_error));
                 }
             }
             break;

@@ -263,6 +263,28 @@ public class AppUtils {
         }
     }
 
+    public static void internetDialog(Context con,String title, String msg) {
+        AlertDialog.Builder alertDialogBuilder = new AlertDialog.Builder(
+                con);
+        // set title
+        alertDialogBuilder.setTitle(title);
+        // set dialog message
+        alertDialogBuilder
+                .setMessage(msg)
+                .setCancelable(true)
+                .setPositiveButton(con.getResources().getString(R.string.ok), new DialogInterface.OnClickListener() {
+                    public void onClick(DialogInterface dialog, int id) {
+                        dialog.cancel();
+                    }
+                });
+
+        // create alert dialog
+        AlertDialog alertDialog = alertDialogBuilder.create();
+
+        // show it
+        alertDialog.show();
+    }
+
 
 
 }
