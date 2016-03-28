@@ -1,6 +1,0 @@
-<?xml version="1.0" encoding="utf-8"?>
-<selector xmlns:android="http://schemas.android.com/apk/res/android" >
-    <item android:state_checked="false" android:drawable="@drawable/edit_profile_radibutton" />
-    <item android:state_checked="true" android:drawable="@drawable/edit_profile_radiobutton_p" />
-    <item android:drawable="@drawable/edit_profile_radibutton" /> <!-- default -->
-</selector><!-- From: file:/J:/Android/Raw/MallApp/mallApp/src/main/res/drawable/edit_profile_radionbtn.xml -->

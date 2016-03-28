@@ -164,7 +164,8 @@ public class RestaurantAdapter extends AmazingAdapter {
 		holder.title.setText(rest_obj.getRestaurantName());
 		holder.decs.setText(rest_obj.getBriefText());
 		holder.floor_no.setText(rest_obj.getFloor());
-		Picasso.with(context).load(rest_obj.getLogoURL()).into(holder.back_image);
+		if (!rest_obj.getLogoURL().isEmpty())
+			Picasso.with(context).load(rest_obj.getLogoURL()).into(holder.back_image);
 
 
 

@@ -173,6 +173,7 @@ public class ShopAdapter extends AmazingAdapter {
         holder.title.setText(shop_obj.getStoreName());
         holder.decs.setText(shop_obj.getBriefText());
         holder.floor_no.setText(shop_obj.getFloor());
+        if (!shop_obj.getLogoURL().isEmpty())
         Picasso.with(context).load(shop_obj.getLogoURL()).into(holder.back_image);
 
 
