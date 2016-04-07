@@ -131,7 +131,7 @@ public class PhoneRegistrationActivity extends Activity implements OnClickListen
 			String phone_N= CountryZipCode + ph.trim();
 			phoneNoVerification(phone_N);
 		}else{
-			AlertMessages.show_alert(PhoneRegistrationActivity.this, getResources().getString(R.string.app_name1), "Please accept, recieving push notifications/SMS", "OK");
+			AlertMessages.show_alert(PhoneRegistrationActivity.this, getResources().getString(R.string.app_name1), getResources().getString(R.string.push_msg), getResources().getString(R.string.ok));
 		}
 	}
 	

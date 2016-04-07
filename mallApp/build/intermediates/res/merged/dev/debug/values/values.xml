@@ -1095,6 +1095,7 @@
     <string name="access_code_country_3">If you do not receive your access code with in 60 second. Let us...</string>
     <string name="access_code_country_4">Please enter code.</string>
     <string name="access_code_country_5"><u>Resend code</u></string>
+    <string name="access_code_country_6">Code sent</string>
     <string name="action_settings">Settings</string>
     <string name="add_barcode_here">Add barcode here</string>
     <string name="add_card_name">Add card name</string>
@@ -1424,6 +1425,7 @@
     <string name="privacy_policy">Privacy Policy</string>
     <string name="privacy_url">http://108.163.184.34/mallappwp/?page_id=58</string>
     <string name="provider_name">Provider Name</string>
+    <string name="push_msg">Please accept, receiving push notifications/SMS</string>
     <string name="recent_chats">Recent Chats</string>
     <string name="reg_suc">Registration successful</string>
     <string name="register_country_1">Select your country, enter your phone number and press continue</string>

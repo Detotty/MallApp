@@ -185,7 +185,7 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
  
     @Override
     public View getGroupView(int groupPosition, boolean isExpanded, View convertView, ViewGroup parent) {
-    
+
     	String headerTitle = (String) getGroup(groupPosition);
     	int count_ = getChildrenCount(groupPosition);
     	if (convertView == null) {
@@ -193,13 +193,21 @@ public class ShopExpandableAdapter extends BaseExpandableListAdapter {
             		this._context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
             convertView = infalInflater.inflate(R.layout.list_item_shop_expand_header, parent, false);
         }
-    	
+
     	TextView header = (TextView) convertView.findViewById(R.id.heading);
     	TextView count 	= (TextView) convertView.findViewById(R.id.count);
+    	final ImageView indi 	= (ImageView) convertView.findViewById(R.id.indicator);
     	//lblListHeader.setTypeface(null, Typeface.BOLD);
     	header.setText(headerTitle);
     	count.setText(count_+" Shops");
-    	
+
+
+		/*convertView.setOnClickListener(new OnClickListener() {
+			@Override
+			public void onClick(View v) {
+				indi.setImageDrawable(activity.getDrawable(R.drawable.shop_expand_close));
+			}
+		});*/
     	return convertView;
     }
  

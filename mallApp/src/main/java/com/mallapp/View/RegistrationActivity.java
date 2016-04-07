@@ -1,10 +1,18 @@
 package com.mallapp.View;
 
+import android.*;
+import android.Manifest;
+import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.content.res.Resources;
+import android.os.Build;
 import android.os.Bundle;
 import android.app.Activity;
 import android.os.StrictMode;
+import android.provider.MediaStore;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.ContextCompat;
 import android.util.Log;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -37,6 +45,7 @@ import org.json.JSONObject;
 
 import java.util.Arrays;
 
+
 public class RegistrationActivity extends Activity {
 
     public static final int REQUEST_CODE_FOR_COUNTRY = 1;
@@ -49,7 +58,7 @@ public class RegistrationActivity extends Activity {
     CallbackManager callbackManager;
     private Resources res;
     private static String FB_APP_ID = SocialSharingConstants.FB_APP_ID;
-
+    final private int REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS = 124;
 //    private Facebook facebook = new Facebook(FB_APP_ID);
 
     @Override
@@ -73,8 +82,18 @@ public class RegistrationActivity extends Activity {
 //        String token = SharedPreferenceUserProfile.getUserToken(this);
 
 //        if( token == null )
-
+        if (Build.VERSION.SDK_INT >= 23) {
+            int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.ACCESS_FINE_LOCATION);
+            if (hasWriteContactsPermission  != PackageManager.PERMISSION_GRANTED) {
+                requestPermissions(new String[]{android.Manifest.permission.ACCESS_FINE_LOCATION},
+                        REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS);
+                return;
+            }else{
+                Utils.getDefaultLocation(this);
+            }
+        } else {
             Utils.getDefaultLocation(this);
+        }
         FacebookSdk.sdkInitialize(this.getApplicationContext());
 
         callbackManager = CallbackManager.Factory.create();
@@ -332,5 +351,23 @@ public class RegistrationActivity extends Activity {
         startActivity(intent);
 
     }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_MULTIPLE_PERMISSIONS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Utils.getDefaultLocation(this);
+                } else {
+                    // Permission Denied
+                    Toast.makeText(RegistrationActivity.this, "Location Permission Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
+
 
 }

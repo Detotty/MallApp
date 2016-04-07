@@ -1,5 +1,7 @@
 package com.mallapp.View;
 
+import android.*;
+import android.Manifest;
 import android.app.Activity;
 import android.app.AlertDialog;
 import android.app.DatePickerDialog;
@@ -7,6 +9,7 @@ import android.app.FragmentTransaction;
 import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
@@ -14,8 +17,10 @@ import android.graphics.Color;
 import android.graphics.drawable.BitmapDrawable;
 import android.net.Uri;
 import android.os.AsyncTask;
+import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.support.v4.view.ViewPager;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.View;
@@ -467,7 +472,7 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
     }
     //endregion
 
-
+    final private int REQUEST_CODE_ASK_PERMISSIONS = 123;
     //region Card Images Selection
     private void selectCardImage(String dialogTitle) {
         final CharSequence[] options = {getResources().getString(R.string.take_photo), getResources().getString(R.string.choose_gallery), getResources().getString(R.string.cancel)};
@@ -478,8 +483,23 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
             public void onClick(DialogInterface dialog, int item) {
 
                 if (options[item].equals(getString(R.string.take_photo))) {
-                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
-                    startActivityForResult(takePictureIntent, 0);
+                    if (Build.VERSION.SDK_INT > Build.VERSION_CODES.LOLLIPOP_MR1) {
+                        int hasWriteContactsPermission = checkSelfPermission(Manifest.permission.CAMERA);
+                        int hasWriteConstactsPermission = checkSelfPermission(Manifest.permission.READ_EXTERNAL_STORAGE);
+                        if (hasWriteContactsPermission  != PackageManager.PERMISSION_GRANTED || hasWriteConstactsPermission  != PackageManager.PERMISSION_GRANTED) {
+                            requestPermissions(new String[]{android.Manifest.permission.CAMERA, Manifest.permission.READ_EXTERNAL_STORAGE},
+                                    REQUEST_CODE_ASK_PERMISSIONS);
+                            return;
+                        }else{
+                            Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                            startActivityForResult(takePictureIntent, 0);
+                        }
+                    }else{
+                        Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                        startActivityForResult(takePictureIntent, 0);
+                    }
+
+
                 } else if (options[item].equals(getString(R.string.choose_gallery))) {
                     Intent photoPickerIntent = new Intent(Intent.ACTION_PICK);
                     photoPickerIntent.setType("image/*");
@@ -627,5 +647,21 @@ public class AddCardActivity extends Activity implements View.OnClickListener, U
         }.execute(null, null, null);
     }
 
-
+    @Override
+    public void onRequestPermissionsResult(int requestCode, String[] permissions, int[] grantResults) {
+        switch (requestCode) {
+            case REQUEST_CODE_ASK_PERMISSIONS:
+                if (grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                    Intent takePictureIntent = new Intent(MediaStore.ACTION_IMAGE_CAPTURE);
+                    startActivityForResult(takePictureIntent, 0);
+                } else {
+                    // Permission Denied
+                    Toast.makeText(AddCardActivity.this, "Camera Permission Denied", Toast.LENGTH_SHORT)
+                            .show();
+                }
+                break;
+            default:
+                super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+    }
 }

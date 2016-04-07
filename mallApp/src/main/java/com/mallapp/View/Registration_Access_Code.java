@@ -17,6 +17,7 @@ import android.widget.TextView;
 import android.widget.Toast;
 
 import com.mallapp.Model.UserProfileModel;
+import com.mallapp.utils.AppUtils;
 import com.mallapp.utils.SendVerificationCode;
 import com.mallapp.Model.UserProfile;
 import com.mallapp.SharedPreferences.SharedPreferenceUserProfile;
@@ -114,6 +115,9 @@ public class Registration_Access_Code extends Activity implements OnClickListene
 		
 		if(v.getId() == code_not_receive.getId()){
 			final UserProfileModel userProfile=	SharedPreferenceUserProfile.getUserCountry(getApplicationContext());
+				Toast toast = Toast.makeText(getApplicationContext(), getResources().getString(R.string.access_code_country_6), Toast.LENGTH_LONG);
+				toast.setGravity(Gravity.TOP | Gravity.CENTER_HORIZONTAL, 0, 0);
+				toast.show();
 			new Thread() {
 				@Override
 				public void run() {

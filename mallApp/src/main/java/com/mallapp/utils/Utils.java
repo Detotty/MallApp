@@ -103,7 +103,7 @@ public class Utils {
             }catch (Exception e) {
                 e.printStackTrace();
                 //countryEditText.setText("");
-                Toast.makeText(context, R.string.location_msg3, Toast.LENGTH_LONG).show();
+//                Toast.makeText(context, R.string.location_msg3, Toast.LENGTH_LONG).show();
             }
 
 

@@ -55,6 +55,7 @@
 	<string name="up_suc">Updated successfully</string>
 	<string name="select_center">Please select at least one center</string>
 	<string name="select_interest">Please select at least one interest</string>
+	<string name="push_msg">Please accept, receiving push notifications/SMS</string>
 
 
 	<string name="access_code_country">Sent SMS successfully</string>
@@ -64,6 +65,7 @@
 	<string name="access_code_country_2">Access code</string>
 	<string name="access_code_country_3">If you do not receive your access code with in 60 second. Let us...</string>
 	<string name="access_code_country_4">Please enter code.</string>
+	<string name="access_code_country_6">Code sent</string>
 	<string name="access_code_country_5"><u>Resend code</u></string>
 	
 	

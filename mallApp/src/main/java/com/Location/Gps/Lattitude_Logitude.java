@@ -317,7 +317,7 @@ public class Lattitude_Logitude extends Service implements LocationListener {
 
 		Geocoder geocoder;
 
-		geocoder = new Geocoder(this, Locale.getDefault());
+		geocoder = new Geocoder(mContext, Locale.getDefault());
 
 		try {
 			addresses = geocoder.getFromLocation(latitude, longitude, 1);

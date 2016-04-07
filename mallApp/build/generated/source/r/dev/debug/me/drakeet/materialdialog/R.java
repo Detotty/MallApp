@@ -40,8 +40,8 @@ public final class R {
 		public static final int layout_materialdialog = 0x7f03005f;
 	}
 	public static final class string {
-		public static final int action_settings = 0x7f070086;
-		public static final int app_name = 0x7f070093;
-		public static final int hello_world = 0x7f0700ee;
+		public static final int action_settings = 0x7f070087;
+		public static final int app_name = 0x7f070094;
+		public static final int hello_world = 0x7f0700ef;
 	}
 }

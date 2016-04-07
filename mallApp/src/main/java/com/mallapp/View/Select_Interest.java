@@ -184,8 +184,8 @@ public class Select_Interest extends Activity implements OnClickListener {
 	public void onBackPressed() {
 		// TODO Auto-generated method stub
 		super.onBackPressed();
-		Intent select_interest= new Intent(Select_Interest.this, Select_Favourite_Center.class);
+		/*Intent select_interest= new Intent(Select_Interest.this, Select_Favourite_Center.class);
 		finish();
-		startActivity(select_interest);
+		startActivity(select_interest);*/
 	}
 }

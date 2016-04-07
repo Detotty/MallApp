@@ -131,15 +131,18 @@ public class AppUtils {
                 String location = city;
                 Geocoder gc = new Geocoder(context);
                 List<Address> addresses= gc.getFromLocationName(location, 1); // get the found Address Objects
-                UserLocationModel model = new UserLocationModel();
-                model.setCountryName(addresses.get(0).getCountryName());
-                model.setLatitude(addresses.get(0).getLatitude());
-                model.setLongitude(addresses.get(0).getLongitude());
-                model.setCountryCode(addresses.get(0).getCountryCode());
-                model.setCityName(addresses.get(0).getLocality());
+                if (addresses.size()>0){
+                    UserLocationModel model = new UserLocationModel();
+                    model.setCountryName(addresses.get(0).getCountryName());
+                    model.setLatitude(addresses.get(0).getLatitude());
+                    model.setLongitude(addresses.get(0).getLongitude());
+                    model.setCountryCode(addresses.get(0).getCountryCode());
+                    model.setCityName(addresses.get(0).getLocality());
 
 //                SharedInstance.getInstance().getSharedHashMap().put(AppConstants.USER_LOCATION, model);
-                DataHandler.updatePreferences(AppConstants.USER_LOCATION, model);
+                    DataHandler.updatePreferences(AppConstants.USER_LOCATION, model);
+                }
+
                 /*List<LatLng> ll = new ArrayList<LatLng>(addresses.size()); // A list to save the coordinates if they are available
                 for(Address a : addresses){
                     if(a.hasLatitude() && a.hasLongitude()){
